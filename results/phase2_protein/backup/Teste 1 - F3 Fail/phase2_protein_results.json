@@ -1,0 +1,92 @@
+{
+    "eps_hat_train": 0.0,
+    "eps_hat_test": 0.13,
+    "eps_hat_injection": 0.27,
+    "eps_controls": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+    ],
+    "eps_hat_bins_alt": 0.0,
+    "gates": {
+        "passed_all": false,
+        "results": [
+            {
+                "name": "F1_injection_recovery",
+                "passed": true,
+                "metrics": {
+                    "eps_hat": 0.27,
+                    "eps_true": 0.25,
+                    "abs_err": 0.020000000000000018
+                },
+                "thresholds": {
+                    "tol_abs": 0.05
+                },
+                "notes": "Injected reweighting must be recovered within tolerance."
+            },
+            {
+                "name": "F2_controls_collapse",
+                "passed": true,
+                "metrics": {
+                    "median_eps_controls": 0.0,
+                    "fraction_below_tol": 1.0,
+                    "max_eps_controls": 0.0,
+                    "n": 10.0
+                },
+                "thresholds": {
+                    "tol": 0.05,
+                    "required_fraction": 0.6666666666666666
+                },
+                "notes": "Controls must collapse robustly (median & majority)."
+            },
+            {
+                "name": "F3_holdout_generalization",
+                "passed": false,
+                "metrics": {
+                    "eps_train": 0.0,
+                    "eps_test": 0.13,
+                    "abs_delta": 0.13
+                },
+                "thresholds": {
+                    "max_delta": 0.1
+                },
+                "notes": "Epsilon estimate should generalize to held-out time window."
+            },
+            {
+                "name": "F5_sensitivity",
+                "passed": true,
+                "metrics": {
+                    "eps_binsA": 0.0,
+                    "eps_binsB": 0.0,
+                    "abs_delta": 0.0
+                },
+                "thresholds": {
+                    "max_delta": 0.12
+                },
+                "notes": "Estimate should be stable under discretization changes."
+            }
+        ]
+    },
+    "metadata": {
+        "state_columns": [
+            "phi",
+            "psi"
+        ],
+        "n_bins": 3,
+        "train_ratio": 0.75,
+        "frame_stride": 10,
+        "pdb_file": "alanine-dipeptide-nowater.pdb",
+        "xtc_files": [
+            "alanine-dipeptide-0-250ns-nowater.xtc",
+            "alanine-dipeptide-1-250ns-nowater.xtc",
+            "alanine-dipeptide-2-250ns-nowater.xtc"
+        ]
+    }
+}

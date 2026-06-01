@@ -1,0 +1,100 @@
+{
+    "eps_hat_train": 0.03,
+    "eps_hat_test": 0.0,
+    "eps_hat_injection": 0.14,
+    "eps_controls": [
+        0.0,
+        0.0,
+        0.03,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.03,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+    ],
+    "eps_hat_bins_alt": 0.03,
+    "gates": {
+        "passed_all": false,
+        "results": [
+            {
+                "name": "F1_injection_recovery",
+                "passed": false,
+                "metrics": {
+                    "eps_hat": 0.14,
+                    "eps_true": 0.008,
+                    "abs_err": 0.132
+                },
+                "thresholds": {
+                    "tol_abs": 0.05
+                },
+                "notes": "Injected reweighting must be recovered within tolerance."
+            },
+            {
+                "name": "F2_controls_collapse",
+                "passed": true,
+                "metrics": {
+                    "median_eps_controls": 0.0,
+                    "fraction_below_tol": 1.0,
+                    "max_eps_controls": 0.03,
+                    "n": 12.0
+                },
+                "thresholds": {
+                    "tol": 0.05,
+                    "required_fraction": 0.75
+                },
+                "notes": "Controls must collapse robustly (median & majority)."
+            },
+            {
+                "name": "F3_holdout_generalization",
+                "passed": true,
+                "metrics": {
+                    "eps_train": 0.03,
+                    "eps_test": 0.0,
+                    "abs_delta": 0.03
+                },
+                "thresholds": {
+                    "max_delta": 0.1
+                },
+                "notes": "Epsilon estimate should generalize to held-out time window."
+            },
+            {
+                "name": "F5_sensitivity",
+                "passed": true,
+                "metrics": {
+                    "eps_binsA": 0.03,
+                    "eps_binsB": 0.03,
+                    "abs_delta": 0.0
+                },
+                "thresholds": {
+                    "max_delta": 0.12
+                },
+                "notes": "Estimate should be stable under discretization changes."
+            }
+        ]
+    },
+    "metadata": {
+        "eeg_state_columns": [
+            "delta_power",
+            "alpha_power"
+        ],
+        "rng_state_columns": [
+            "x0",
+            "x1"
+        ],
+        "include_stage_code_in_joint_state": false,
+        "eeg_n_bins": 3,
+        "rng_n_bins": 2,
+        "effective_n_bins": 3,
+        "alignment_mode": "truncate_to_shortest",
+        "train_ratio": 0.75,
+        "rng_use_bits": true,
+        "rng_sequence_length": 1024,
+        "f3_holdout_mode": "block_interleaved",
+        "f3_eps_hat_train": 0.03,
+        "f3_eps_hat_test": 0.0
+    }
+}

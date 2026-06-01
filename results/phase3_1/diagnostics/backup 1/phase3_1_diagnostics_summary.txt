@@ -1,0 +1,57 @@
+==============================================================================
+CDR Phase III.1 Diagnostics
+==============================================================================
+
+1. Registered run status
+------------------------------------------------------------------------------
+status: null_result
+interpretation: Phase III.1 did not reveal robust joint structure beyond the single-domain baselines under the current design.
+failed_gates: ['F6_incremental_joint_lift', 'F7_subject_generalization', 'F8_complexity_penalty', 'F9_proxy_ablation_stability']
+eps_joint_test: 0.0
+eps_eeg_test: 0.1
+eps_rng_test: 0.0
+
+2. Existing model ranking
+------------------------------------------------------------------------------
+best_by_bic_test: model=B0_eeg_only | eps_test=0.1 | BIC_test=6987.064981197803 | LL_test=-3203.9881730958105 | states=9
+best_by_ll_test: model=B0_eeg_only | eps_test=0.1 | BIC_test=6987.064981197803 | LL_test=-3203.9881730958105 | states=9
+best_by_eps_test: model=B0_eeg_only | eps_test=0.1 | BIC_test=6987.064981197803 | LL_test=-3203.9881730958105 | states=9
+
+3. Subject-by-model diagnostic
+------------------------------------------------------------------------------
+subjects: ['SC4001', 'SC4002', 'SC4011', 'SC4012', 'SC4021', 'SC4022', 'SC4031', 'SC4032', 'SC4041', 'SC4042']
+models: ['B0_eeg_only', 'B1_rng_only', 'M0_observed_compact', 'M1_eeg_informational', 'M2_rng_quantum_proxy', 'M3_informational_joint', 'M4_latent_joint', 'M5_augmented_final']
+
+positive_eps_rows:
+  {'subject_id': 'SC4002', 'model': 'M3_informational_joint', 'eps_test': 0.08, 'eps_eeg_baseline': 0.0, 'eps_rng_baseline': 0.0, 'lift_over_baseline': 0.08, 'bic_test': 6406.533708641829, 'll_test': -2913.189490834814}
+  {'subject_id': 'SC4011', 'model': 'B0_eeg_only', 'eps_test': 0.01, 'eps_eeg_baseline': 0.01, 'eps_rng_baseline': 0.07, 'lift_over_baseline': -0.060000000000000005, 'bic_test': 6963.257268855605, 'll_test': -3191.9014246308084}
+  {'subject_id': 'SC4011', 'model': 'B1_rng_only', 'eps_test': 0.07, 'eps_eeg_baseline': 0.01, 'eps_rng_baseline': 0.07, 'lift_over_baseline': 0.0, 'bic_test': 7591.299823784713, 'll_test': -3672.615069375825}
+  {'subject_id': 'SC4011', 'model': 'M5_augmented_final', 'eps_test': 0.01, 'eps_eeg_baseline': 0.01, 'eps_rng_baseline': 0.07, 'lift_over_baseline': -0.060000000000000005, 'bic_test': 16585.208849548704, 'll_test': -5502.491705770424}
+  {'subject_id': 'SC4022', 'model': 'B1_rng_only', 'eps_test': 0.8, 'eps_eeg_baseline': 0.0, 'eps_rng_baseline': 0.8, 'lift_over_baseline': 0.0, 'bic_test': 7510.7035971979185, 'll_test': -3632.579248569986}
+  {'subject_id': 'SC4031', 'model': 'B0_eeg_only', 'eps_test': 0.08, 'eps_eeg_baseline': 0.08, 'eps_rng_baseline': 0.0, 'lift_over_baseline': 0.0, 'bic_test': 7426.172331301599, 'll_test': -3423.1251472251347}
+  {'subject_id': 'SC4032', 'model': 'M2_rng_quantum_proxy', 'eps_test': 0.08, 'eps_eeg_baseline': 0.0, 'eps_rng_baseline': 0.0, 'lift_over_baseline': 0.08, 'bic_test': 10397.493343963963, 'll_test': -4909.9432280481915}
+  {'subject_id': 'SC4042', 'model': 'B0_eeg_only', 'eps_test': 0.1, 'eps_eeg_baseline': 0.1, 'eps_rng_baseline': 0.0, 'lift_over_baseline': 0.0, 'bic_test': 6987.064981197803, 'll_test': -3203.9881730958105}
+  {'subject_id': 'SC4042', 'model': 'M1_eeg_informational', 'eps_test': 0.07, 'eps_eeg_baseline': 0.1, 'eps_rng_baseline': 0.0, 'lift_over_baseline': -0.03, 'bic_test': 12720.271348154372, 'll_test': -5142.462996358707}
+
+positive_lift_rows:
+  {'subject_id': 'SC4002', 'model': 'M3_informational_joint', 'eps_test': 0.08, 'eps_eeg_baseline': 0.0, 'eps_rng_baseline': 0.0, 'lift_over_baseline': 0.08, 'bic_test': 6406.533708641829, 'll_test': -2913.189490834814}
+  {'subject_id': 'SC4032', 'model': 'M2_rng_quantum_proxy', 'eps_test': 0.08, 'eps_eeg_baseline': 0.0, 'eps_rng_baseline': 0.0, 'lift_over_baseline': 0.08, 'bic_test': 10397.493343963963, 'll_test': -4909.9432280481915}
+
+4. SC4011 internal diagnostic
+------------------------------------------------------------------------------
+model=B0_eeg_only | eps_train=0.0 | eps_test=0.0 | lift_over_baseline=0.0 | bic_test=2668.6556819618418 | ll_test=-1095.2134087518366
+model=B1_rng_only | eps_train=0.01 | eps_test=0.0 | lift_over_baseline=0.0 | bic_test=2010.4248333854216 | ll_test=-903.670671499538
+model=M0_observed_compact | eps_train=0.0 | eps_test=0.0 | lift_over_baseline=0.0 | bic_test=2836.301363859212 | ll_test=-1231.4448923808689
+model=M1_eeg_informational | eps_train=0.01 | eps_test=0.0 | lift_over_baseline=0.0 | bic_test=5337.2922827256625 | ll_test=-1663.0553099336687
+model=M2_rng_quantum_proxy | eps_train=0.0 | eps_test=0.0 | lift_over_baseline=0.0 | bic_test=2771.6315972066777 | ll_test=-1146.7013663742546
+model=M3_informational_joint | eps_train=0.01 | eps_test=0.0 | lift_over_baseline=0.0 | bic_test=2656.764460184524 | ll_test=-1089.2677978631777
+model=M4_latent_joint | eps_train=0.0 | eps_test=0.0 | lift_over_baseline=0.0 | bic_test=2141.4338411197637 | ll_test=-969.1751753667091
+model=M5_augmented_final | eps_train=0.01 | eps_test=0.0 | lift_over_baseline=0.0 | bic_test=7307.846234084376 | ll_test=-1351.2183792744315
+
+5. Diagnostic interpretation
+------------------------------------------------------------------------------
+This diagnostics module does not replace the registered runner. It is a post-run audit layer designed to identify whether the null_result is broad, model-specific, or subject-specific.
+If no positive joint lift appears in the subject-by-model matrix, the next scientifically clean step is to expand to 10 subjects without changing the core runner logic.
+If SC4011 remains the only subject with isolated EEG structure and no joint lift, it should be treated as a subject-level neural residual lead, not as EEG-RNG coupling.
+
+==============================================================================

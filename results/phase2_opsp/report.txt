@@ -1,0 +1,8 @@
+CDR Phase II — Gates
+────────────────────────────────
+F1_injection_recovery: PASS
+F2_controls_collapse: PASS
+F3_holdout_generalization: PASS
+F5_sensitivity: PASS
+────────────────────────────────
+FINAL: PASS

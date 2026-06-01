@@ -1,0 +1,49 @@
+========================================================================
+CDR Phase III.1 — Advanced EEG + RNG Informational Coupling
+========================================================================
+
+Model comparison
+------------------------------------------------------------------------
+M0_observed_compact | eps_train=0.0000 | eps_test=0.0000 | states=8 | BIC_test=9473.2147 | LL_test=-4510.3616
+M1_eeg_informational | eps_train=0.0000 | eps_test=0.0000 | states=18 | BIC_test=14283.0285 | LL_test=-5922.9629
+M2_rng_quantum_proxy | eps_train=0.0000 | eps_test=0.0000 | states=9 | BIC_test=9244.3293 | LL_test=-4332.4114
+M3_informational_joint | eps_train=0.0100 | eps_test=0.0000 | states=9 | BIC_test=8554.9555 | LL_test=-3987.7245
+M4_latent_joint | eps_train=0.0000 | eps_test=0.0000 | states=6 | BIC_test=8388.4239 | LL_test=-4071.1660
+M5_augmented_final | eps_train=0.0000 | eps_test=0.0000 | states=27 | BIC_test=17426.9787 | LL_test=-5923.1258
+
+Injection curve
+------------------------------------------------------------------------
+Injectability class: high
+Recovered fraction: 1.0000
+Principal eps true: 0.0500
+Principal eps hat: 0.0400
+Principal abs err: 0.0100
+Principal passed: True
+
+Gates
+------------------------------------------------------------------------
+F1_injection_recovery: PASS | metrics={'eps_hat': 0.04, 'eps_true': 0.05, 'abs_err': 0.010000000000000002, 'tol_abs': 0.05}
+  interpretation: Injected structure was recovered within tolerance.
+F2_controls_collapse: PASS | metrics={'n_controls': 12, 'median_eps_controls': 0.0, 'mean_eps_controls': 0.0, 'max_eps_controls': 0.0, 'fraction_below_tol': 1.0, 'tol': 0.05, 'required_fraction': 0.75, 'passed': True}
+  interpretation: Controls collapsed below tolerance at the required fraction.
+F3_holdout_generalization: PASS | metrics={'eps_train': 0.0, 'eps_test': 0.0, 'abs_delta': 0.0, 'max_delta': 0.1}
+  interpretation: Train/test epsilon estimates remain within holdout tolerance.
+F5_sensitivity: PASS | metrics={'eps_primary': 0.0, 'eps_sensitivity': 0.0, 'abs_delta': 0.0, 'max_delta': 0.12}
+  interpretation: Epsilon remains stable under sensitivity discretization.
+F6_incremental_joint_lift: FAIL | metrics={'eps_joint_test': 0.0, 'eps_eeg_test': 0.0, 'eps_rng_test': 0.0, 'baseline_max': 0.0, 'joint_lift': 0.0, 'joint_lift_min': 0.03, 'strong_joint_eps_min': 0.07, 'strong_joint_threshold_reached': False}
+  interpretation: Joint model does not exceed the strongest single-domain baseline by the required margin.
+F7_subject_generalization: FAIL | metrics={'n_subjects': 5, 'n_valid_subjects': 5, 'fraction_positive_lift': 0.0, 'median_joint_eps': 0.0, 'median_eeg_eps': 0.0, 'median_rng_eps': 0.0, 'median_lift_over_eeg': 0.0, 'median_lift_over_baseline': 0.0, 'passed_directional_consistency': False}
+  interpretation: The joint effect direction is not consistent across the required fraction of held-out subjects.
+F8_complexity_penalty: FAIL | metrics={'metric': 'bic', 'baseline_model': 'M0_observed_compact', 'advanced_model': 'M5_augmented_final', 'baseline_metric_value': 9473.214659790347, 'advanced_metric_value': 17426.97872896969, 'metric_delta_positive_is_good': -7953.764069179344, 'll_test_improvement': -1412.7641215634467, 'min_test_ll_improvement': 0.0, 'baseline_n_states': 8, 'advanced_n_states': 27, 'baseline_n_params': 57, 'advanced_n_params': 703}
+  interpretation: Advanced model does not improve the test-set complexity-penalized score.
+F9_proxy_ablation_stability: FAIL | metrics={'full_eps_joint': 0.0, 'ablation_delta_min': 0.02, 'n_ablations': 3, 'fraction_ablations_reduced': 0.0, 'median_delta_from_full': -0.07, 'all_required_ablations_reduce_signal': False, 'ablations': {'remove_I_t': {'eps_ablated': 0.16, 'delta_from_full': -0.16, 'passed': False}, 'remove_Z_t': {'eps_ablated': 0.0, 'delta_from_full': 0.0, 'passed': False}, 'remove_Q_t': {'eps_ablated': 0.07, 'delta_from_full': -0.07, 'passed': False}}, 'require_all': True}
+  interpretation: Proxy ablations do not reduce the final joint signal enough; the added layers may not be explaining the detected structure.
+
+Final status
+------------------------------------------------------------------------
+status: null_result
+interpretation: Phase III.1 did not reveal robust joint structure beyond the single-domain baselines under the current design.
+passed_all_gates: False
+failed_gates: ['F6_incremental_joint_lift', 'F7_subject_generalization', 'F8_complexity_penalty', 'F9_proxy_ablation_stability']
+
+========================================================================

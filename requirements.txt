@@ -1,0 +1,10 @@
+numpy>=1.24
+scipy>=1.10
+pandas>=2.0
+matplotlib>=3.7
+pytest>=7.4
+nibabel>=5.4
+nilearn>=0.13
+mdtraj>=1.11
+requests
+mne

@@ -1,0 +1,52 @@
+{
+    "ablation_eps": {
+        "remove_I_t": 0.16,
+        "remove_Z_t": 0.0,
+        "remove_Q_t": 0.07
+    },
+    "ablation_details": {
+        "remove_I_t": {
+            "eps_train": 0.0,
+            "eps_test": 0.16,
+            "metadata": {
+                "columns": [
+                    "eeg_info_score",
+                    "rng_info_score",
+                    "eeg_info_bin",
+                    "rng_info_bin"
+                ],
+                "replacement": 0,
+                "purpose": "ablate_informational_proxy_layer"
+            }
+        },
+        "remove_Z_t": {
+            "eps_train": 0.0,
+            "eps_test": 0.0,
+            "metadata": {
+                "columns": [
+                    "latent_state"
+                ],
+                "replacement": 0,
+                "purpose": "ablate_latent_state_layer"
+            }
+        },
+        "remove_Q_t": {
+            "eps_train": 0.0,
+            "eps_test": 0.07,
+            "metadata": {
+                "columns": [
+                    "q_entropy_rate_drift",
+                    "q_transition_asymmetry",
+                    "q_run_instability",
+                    "q_surprise_burst",
+                    "q_micro_cluster_deviation",
+                    "q_local_balance_deviation",
+                    "q_rng_score",
+                    "q_rng_bin"
+                ],
+                "replacement": 0,
+                "purpose": "ablate_quantum_aware_proxy_layer"
+            }
+        }
+    }
+}

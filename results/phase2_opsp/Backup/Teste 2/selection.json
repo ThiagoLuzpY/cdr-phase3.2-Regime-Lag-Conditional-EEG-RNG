@@ -1,0 +1,9 @@
+{
+  "columns": {
+    "load": "DE_LU_load_actual_entsoe_transparency",
+    "price": "DE_LU_price_day_ahead",
+    "solar": "DE_LU_solar_generation_actual",
+    "wind": "DE_LU_wind_generation_actual"
+  },
+  "country": "DE_LU"
+}

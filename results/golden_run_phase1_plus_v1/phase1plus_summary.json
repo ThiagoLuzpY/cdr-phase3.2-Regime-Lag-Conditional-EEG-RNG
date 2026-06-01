@@ -1,0 +1,239 @@
+{
+  "config": {
+    "J": 0.5,
+    "controls_seed": 99999,
+    "eps_grid": [
+      0.0,
+      0.02,
+      0.04,
+      0.06,
+      0.08,
+      0.1,
+      0.12,
+      0.14,
+      0.16,
+      0.18,
+      0.2,
+      0.22,
+      0.24,
+      0.26,
+      0.28,
+      0.3,
+      0.32,
+      0.34,
+      0.36,
+      0.38,
+      0.4,
+      0.42,
+      0.44,
+      0.46,
+      0.48,
+      0.5,
+      0.52,
+      0.54,
+      0.56,
+      0.58,
+      0.6,
+      0.62,
+      0.64,
+      0.66,
+      0.68,
+      0.7000000000000001,
+      0.72,
+      0.74,
+      0.76,
+      0.78,
+      0.8
+    ],
+    "eps_true_h1": 0.3,
+    "g_grid": [
+      0.0,
+      0.01,
+      0.02,
+      0.03,
+      0.04,
+      0.05,
+      0.06,
+      0.07,
+      0.08,
+      0.09,
+      0.1,
+      0.11,
+      0.12,
+      0.13,
+      0.14,
+      0.15,
+      0.16,
+      0.17,
+      0.18,
+      0.19,
+      0.2,
+      0.21,
+      0.22,
+      0.23,
+      0.24,
+      0.25
+    ],
+    "h": 0.1,
+    "h0_seed_start": 42,
+    "h1_seed_start": 100,
+    "n_reps": 20,
+    "n_steps": 1000,
+    "oos_train_frac": 0.6,
+    "stability_steps_alt": 800
+  },
+  "eps_controls": [
+    0.22,
+    0.0,
+    0.0
+  ],
+  "eps_h0": [
+    0.02,
+    0.0,
+    0.06,
+    0.02,
+    0.08,
+    0.0,
+    0.0,
+    0.0,
+    0.02,
+    0.06,
+    0.0,
+    0.02,
+    0.0,
+    0.04,
+    0.0,
+    0.06,
+    0.0,
+    0.02,
+    0.08,
+    0.0
+  ],
+  "eps_h1": [
+    0.18,
+    0.32,
+    0.28,
+    0.26,
+    0.32,
+    0.42,
+    0.38,
+    0.24,
+    0.26,
+    0.44,
+    0.3,
+    0.28,
+    0.26,
+    0.22,
+    0.3,
+    0.4,
+    0.34,
+    0.38,
+    0.24,
+    0.16
+  ],
+  "gates": {
+    "G1_H0_recovery": {
+      "metrics": {
+        "mean_eps_hat": 0.024,
+        "std_eps_hat": 0.028
+      },
+      "notes": "H0 trajectories should yield epsilon_hat near 0.",
+      "passed": true,
+      "thresholds": {
+        "mean_thr": 0.05,
+        "std_thr": 0.1
+      }
+    },
+    "G2_H1_recovery": {
+      "metrics": {
+        "mean_eps_hat": 0.29900000000000004
+      },
+      "notes": "H1 trajectories should recover epsilon_true (within band).",
+      "passed": true,
+      "thresholds": {
+        "hi": 0.35,
+        "lo": 0.25
+      }
+    },
+    "G3_controls_collapse": {
+      "metrics": {
+        "fraction_below_tol": 0.6666666666666666,
+        "max_eps_hat_controls": 0.22,
+        "mean_eps_hat_controls": 0.07333333333333333,
+        "median_eps_hat_controls": 0.0,
+        "n_controls": 3.0
+      },
+      "notes": "Controls must collapse robustly: median below tol and majority below tol.",
+      "passed": true,
+      "thresholds": {
+        "required_fraction": 0.6666666666666666,
+        "tol": 0.05
+      }
+    },
+    "G4_identifiability": {
+      "metrics": {
+        "condition_fisher_raw": 1587.1861433097415,
+        "condition_hessian": 1.8480476555098428,
+        "effective_rank_fisher_norm": 3.0,
+        "effective_rank_fisher_raw": 3.0,
+        "effective_rank_hessian": 2.0,
+        "kappa_theta_norm": 1.1912751725755808,
+        "r2_eps": 0.9911308472735422,
+        "schur_eps": 0.00886915272645783
+      },
+      "notes": "Identifiability via \u03b5-direction Schur complement (1-R^2) + \u03b8-block conditioning.",
+      "passed": true,
+      "thresholds": {
+        "kappa_thr_theta": 100.0,
+        "rank_thr": 3.0,
+        "schur_min": 0.005
+      }
+    },
+    "G5_stability": {
+      "metrics": {
+        "abs_drift": 0.0020000000000000018,
+        "mean_eps_alt": 0.29700000000000004,
+        "mean_eps_primary": 0.29900000000000004
+      },
+      "notes": "Stability across a mild pre-registered perturbation (n_steps).",
+      "passed": true,
+      "thresholds": {
+        "max_abs_drift": 0.08
+      }
+    },
+    "G6_adversarial": {
+      "metrics": {
+        "bic_M0adv": 2461.526235183429,
+        "bic_M1": 2456.45811686484,
+        "delta_bic_M1_minus_M0adv": -5.0681183185888585,
+        "eps_hat_rep": 0.18,
+        "g_hat_adv": 0.01,
+        "logL_M0adv": -1227.3092399522234,
+        "logL_M1": -1224.775180792929
+      },
+      "notes": "Adversarial baseline absorption check (bounded flexibility).",
+      "passed": true,
+      "thresholds": {
+        "eps_min": 0.1,
+        "requires_delta_bic_negative": 0.0
+      }
+    },
+    "G7_out_of_sample": {
+      "metrics": {
+        "bic_test_h0": 984.7304379343261,
+        "bic_test_h1": 981.9940884271582,
+        "eps_hat_train": 0.14,
+        "logL_test_h0": -492.36521896716306,
+        "logL_test_h1": -490.9970442135791,
+        "n_test": 401.0
+      },
+      "notes": "Train epsilon on train segment; require improvement on held-out test segment.",
+      "passed": true,
+      "thresholds": {
+        "eps_min": 0.1,
+        "requires_bic_h1_less": 1.0
+      }
+    }
+  },
+  "phase1plus_pass": true
+}

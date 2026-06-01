@@ -1,0 +1,1371 @@
+{
+    "project_name": "Phase3.1-Advanced-EEG-RNG",
+    "phase_name": "Phase III.1",
+    "split_label": "leave_one_subject_out:SC4021",
+    "dataset_metadata": {
+        "project_name": "Phase3.1-Advanced-EEG-RNG",
+        "phase_name": "Phase III.1",
+        "n_subjects_loaded": 5,
+        "subject_ids": [
+            "SC4001",
+            "SC4002",
+            "SC4011",
+            "SC4012",
+            "SC4021"
+        ],
+        "recording_ids": [
+            "SC4001E0",
+            "SC4002E0",
+            "SC4011E0",
+            "SC4012E0",
+            "SC4021E0"
+        ],
+        "total_rows": 13933,
+        "rng_source": "ANU",
+        "rng_n_uint8": 1024,
+        "rng_n_bits": 8192,
+        "rng_use_bits": true,
+        "rng_window_size": 64,
+        "rng_alignment_mode": "resample_rng_metrics_to_eeg_epochs",
+        "eeg_epoch_seconds": 30,
+        "channels_used": {
+            "SC4001E0": "EEG Fpz-Cz",
+            "SC4002E0": "EEG Fpz-Cz",
+            "SC4011E0": "EEG Fpz-Cz",
+            "SC4012E0": "EEG Fpz-Cz",
+            "SC4021E0": "EEG Fpz-Cz"
+        },
+        "errors": []
+    },
+    "feature_layer_artifacts": {
+        "has_eeg_info": true,
+        "has_rng_info": true,
+        "has_q_rng": true,
+        "has_latent": true
+    },
+    "primary_results": {
+        "final_model": "M5_augmented_final",
+        "baseline_model": "M0_observed_compact",
+        "eps_joint_train": 0.0,
+        "eps_joint_test": 0.0,
+        "eps_eeg_train": 0.0,
+        "eps_eeg_test": 0.0,
+        "eps_rng_train": 0.0,
+        "eps_rng_test": 0.0,
+        "joint_lift_over_eeg": 0.0,
+        "joint_lift_over_baseline": 0.0
+    },
+    "model_scores": {
+        "M0_observed_compact": {
+            "model": "M0_observed_compact",
+            "label": "Observed compact baseline: delta_power x rng_bit",
+            "n_states": 8,
+            "n_components": 2,
+            "n_train": 11128,
+            "n_test": 2803,
+            "eps_train": 0.0,
+            "eps_test": 0.0,
+            "ll_train": -19887.467697461438,
+            "ll_test": -4510.361631686977,
+            "n_params": 57,
+            "bic_train": 40306.016919738264,
+            "bic_test": 9473.214659790347,
+            "aic_train": 39888.935394922875,
+            "aic_test": 9134.723263373953,
+            "transitions_per_state": 1741.5,
+            "transitions_per_observed_state": 1741.5
+        },
+        "M1_eeg_informational": {
+            "model": "M1_eeg_informational",
+            "label": "EEG informational model: delta_power x eeg_info_bin x rng_bit",
+            "n_states": 18,
+            "n_components": 3,
+            "n_train": 11128,
+            "n_test": 2803,
+            "eps_train": 0.0,
+            "eps_test": 0.0,
+            "ll_train": -23005.834562393073,
+            "ll_test": -5922.962873433846,
+            "n_params": 307,
+            "bic_train": 48872.05558300235,
+            "bic_test": 14283.02853107528,
+            "aic_train": 46625.669124786145,
+            "aic_test": 12459.925746867691,
+            "transitions_per_state": 774.0,
+            "transitions_per_observed_state": 774.0
+        },
+        "M2_rng_quantum_proxy": {
+            "model": "M2_rng_quantum_proxy",
+            "label": "RNG quantum-aware proxy model: delta_power x q_rng_bin",
+            "n_states": 9,
+            "n_components": 2,
+            "n_train": 11128,
+            "n_test": 2803,
+            "eps_train": 0.0,
+            "eps_test": 0.0,
+            "ll_train": -19128.64805046803,
+            "ll_test": -4332.41139185814,
+            "n_params": 73,
+            "bic_train": 38937.453141489095,
+            "bic_test": 9244.32930895131,
+            "aic_train": 38403.29610093606,
+            "aic_test": 8810.82278371628,
+            "transitions_per_state": 1548.0,
+            "transitions_per_observed_state": 1548.0
+        },
+        "M3_informational_joint": {
+            "model": "M3_informational_joint",
+            "label": "Informational joint model: eeg_info_bin x rng_info_bin",
+            "n_states": 9,
+            "n_components": 2,
+            "n_train": 11128,
+            "n_test": 2803,
+            "eps_train": 0.01,
+            "eps_test": 0.0,
+            "ll_train": -13915.27371258744,
+            "ll_test": -3987.724508792489,
+            "n_params": 73,
+            "bic_train": 28510.70446572792,
+            "bic_test": 8554.955542820007,
+            "aic_train": 27976.54742517488,
+            "aic_test": 8121.449017584978,
+            "transitions_per_state": 1548.0,
+            "transitions_per_observed_state": 1548.0
+        },
+        "M4_latent_joint": {
+            "model": "M4_latent_joint",
+            "label": "Latent joint model: latent_state x rng_bit",
+            "n_states": 6,
+            "n_components": 2,
+            "n_train": 11128,
+            "n_test": 2803,
+            "eps_train": 0.0,
+            "eps_test": 0.0,
+            "ll_train": -14710.223734675095,
+            "ll_test": -4071.1660212273946,
+            "n_params": 31,
+            "bic_train": 29709.28128109189,
+            "bic_test": 8388.423854540897,
+            "aic_train": 29482.44746935019,
+            "aic_test": 8204.33204245479,
+            "transitions_per_state": 2322.0,
+            "transitions_per_observed_state": 2322.0
+        },
+        "M5_augmented_final": {
+            "model": "M5_augmented_final",
+            "label": "Augmented final model: latent_state x rng_info_bin x q_rng_bin",
+            "n_states": 27,
+            "n_components": 3,
+            "n_train": 11128,
+            "n_test": 2803,
+            "eps_train": 0.0,
+            "eps_test": 0.0,
+            "ll_train": -21695.0860554393,
+            "ll_test": -5923.125753250423,
+            "n_params": 703,
+            "bic_train": 49940.177583601704,
+            "bic_test": 17426.97872896969,
+            "aic_train": 44796.1721108786,
+            "aic_test": 13252.251506500847,
+            "transitions_per_state": 516.0,
+            "transitions_per_observed_state": 663.4285714285714
+        }
+    },
+    "baseline_scores": {
+        "eeg_only": {
+            "model": "B0_eeg_only",
+            "label": "EEG-only baseline: delta_power x eeg_info_bin",
+            "n_states": 9,
+            "n_components": 2,
+            "n_train": 11128,
+            "n_test": 2803,
+            "eps_train": 0.0,
+            "eps_test": 0.0,
+            "ll_train": -15384.366893145032,
+            "ll_test": -3936.506690826173,
+            "n_params": 73,
+            "bic_train": 31448.890826843104,
+            "bic_test": 8452.519906887375,
+            "aic_train": 30914.733786290064,
+            "aic_test": 8019.013381652346,
+            "transitions_per_state": 1548.0,
+            "transitions_per_observed_state": 1548.0
+        },
+        "rng_only": {
+            "model": "B1_rng_only",
+            "label": "RNG-only baseline: rng_bit x rng_info_bin",
+            "n_states": 6,
+            "n_components": 2,
+            "n_train": 11128,
+            "n_test": 2803,
+            "eps_train": 0.0,
+            "eps_test": 0.0,
+            "ll_train": -14610.350449042686,
+            "ll_test": -3703.8111681078794,
+            "n_params": 31,
+            "bic_train": 29509.534709827072,
+            "bic_test": 7653.714148301868,
+            "aic_train": 29282.70089808537,
+            "aic_test": 7469.622336215759,
+            "transitions_per_state": 2322.0,
+            "transitions_per_observed_state": 2322.0
+        }
+    },
+    "component_metadata": {
+        "M0_observed_compact": {
+            "model": "M0_observed_compact",
+            "label": "Observed compact baseline: delta_power x rng_bit",
+            "components": [
+                "delta_power",
+                "rng_bit"
+            ],
+            "bins": [
+                4,
+                2
+            ],
+            "n_states": 8,
+            "observed_states": 8,
+            "transitions_per_state": 1741.5,
+            "transitions_per_observed_state": 1741.5,
+            "sensitivity": false,
+            "component_specs": [
+                {
+                    "component": "delta_power",
+                    "n_bins": 4,
+                    "pre_binned": false,
+                    "edges": [
+                        8.897449222247342e-06,
+                        1.9369050706302415e-05,
+                        3.350605910621842e-05
+                    ],
+                    "sensitivity": false
+                },
+                {
+                    "component": "rng_bit",
+                    "n_bins": 2,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                }
+            ]
+        },
+        "M1_eeg_informational": {
+            "model": "M1_eeg_informational",
+            "label": "EEG informational model: delta_power x eeg_info_bin x rng_bit",
+            "components": [
+                "delta_power",
+                "eeg_info_bin",
+                "rng_bit"
+            ],
+            "bins": [
+                3,
+                3,
+                2
+            ],
+            "n_states": 18,
+            "observed_states": 18,
+            "transitions_per_state": 774.0,
+            "transitions_per_observed_state": 774.0,
+            "sensitivity": false,
+            "component_specs": [
+                {
+                    "component": "delta_power",
+                    "n_bins": 3,
+                    "pre_binned": false,
+                    "edges": [
+                        1.2315562132614435e-05,
+                        2.7412131812960193e-05
+                    ],
+                    "sensitivity": false
+                },
+                {
+                    "component": "eeg_info_bin",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                },
+                {
+                    "component": "rng_bit",
+                    "n_bins": 2,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                }
+            ]
+        },
+        "M2_rng_quantum_proxy": {
+            "model": "M2_rng_quantum_proxy",
+            "label": "RNG quantum-aware proxy model: delta_power x q_rng_bin",
+            "components": [
+                "delta_power",
+                "q_rng_bin"
+            ],
+            "bins": [
+                3,
+                3
+            ],
+            "n_states": 9,
+            "observed_states": 9,
+            "transitions_per_state": 1548.0,
+            "transitions_per_observed_state": 1548.0,
+            "sensitivity": false,
+            "component_specs": [
+                {
+                    "component": "delta_power",
+                    "n_bins": 3,
+                    "pre_binned": false,
+                    "edges": [
+                        1.2315562132614435e-05,
+                        2.7412131812960193e-05
+                    ],
+                    "sensitivity": false
+                },
+                {
+                    "component": "q_rng_bin",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                }
+            ]
+        },
+        "M3_informational_joint": {
+            "model": "M3_informational_joint",
+            "label": "Informational joint model: eeg_info_bin x rng_info_bin",
+            "components": [
+                "eeg_info_bin",
+                "rng_info_bin"
+            ],
+            "bins": [
+                3,
+                3
+            ],
+            "n_states": 9,
+            "observed_states": 9,
+            "transitions_per_state": 1548.0,
+            "transitions_per_observed_state": 1548.0,
+            "sensitivity": false,
+            "component_specs": [
+                {
+                    "component": "eeg_info_bin",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                },
+                {
+                    "component": "rng_info_bin",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                }
+            ]
+        },
+        "M4_latent_joint": {
+            "model": "M4_latent_joint",
+            "label": "Latent joint model: latent_state x rng_bit",
+            "components": [
+                "latent_state",
+                "rng_bit"
+            ],
+            "bins": [
+                3,
+                2
+            ],
+            "n_states": 6,
+            "observed_states": 6,
+            "transitions_per_state": 2322.0,
+            "transitions_per_observed_state": 2322.0,
+            "sensitivity": false,
+            "component_specs": [
+                {
+                    "component": "latent_state",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                },
+                {
+                    "component": "rng_bit",
+                    "n_bins": 2,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                }
+            ]
+        },
+        "M5_augmented_final": {
+            "model": "M5_augmented_final",
+            "label": "Augmented final model: latent_state x rng_info_bin x q_rng_bin",
+            "components": [
+                "latent_state",
+                "rng_info_bin",
+                "q_rng_bin"
+            ],
+            "bins": [
+                3,
+                3,
+                3
+            ],
+            "n_states": 27,
+            "observed_states": 21,
+            "transitions_per_state": 516.0,
+            "transitions_per_observed_state": 663.4285714285714,
+            "sensitivity": false,
+            "component_specs": [
+                {
+                    "component": "latent_state",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                },
+                {
+                    "component": "rng_info_bin",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                },
+                {
+                    "component": "q_rng_bin",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": false
+                }
+            ]
+        }
+    },
+    "skipped_models": {},
+    "injection_curve": {
+        "curve": {
+            "0.0100": 0.0,
+            "0.0300": 0.02,
+            "0.0500": 0.04
+        },
+        "errors": {
+            "0.0100": 0.01,
+            "0.0300": 0.009999999999999998,
+            "0.0500": 0.010000000000000002
+        },
+        "recovered_fraction": 1.0,
+        "injectability_class": "high",
+        "principal_eps_true": 0.05,
+        "principal_eps_hat": 0.04,
+        "principal_abs_err": 0.010000000000000002,
+        "principal_passed": true
+    },
+    "controls": {
+        "eps_controls": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "control_names": [
+            "rng_shuffle",
+            "rng_circular_shift",
+            "eeg_epoch_shuffle",
+            "eeg_stage_stratified_shuffle",
+            "joint_pairing_shuffle",
+            "subject_mismatch",
+            "latent_shuffle",
+            "joint_pairing_shuffle_rep0",
+            "rng_shuffle_rep1",
+            "joint_pairing_shuffle_rep2",
+            "rng_shuffle_rep3",
+            "joint_pairing_shuffle_rep4"
+        ],
+        "control_details": [
+            {
+                "name": "rng_shuffle",
+                "control_type": "rng",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 143,
+                    "columns": [
+                        "rng_bit",
+                        "bit_balance_local",
+                        "transition_rate",
+                        "pair_frequency_00",
+                        "pair_frequency_01",
+                        "pair_frequency_10",
+                        "pair_frequency_11",
+                        "rng_entropy_local",
+                        "entropy_rate_proxy",
+                        "run_length_mean",
+                        "run_length_max",
+                        "run_length_std",
+                        "compressibility_proxy",
+                        "surprise_index",
+                        "transition_asymmetry",
+                        "micro_cluster_deviation",
+                        "q_entropy_rate_drift",
+                        "q_transition_asymmetry",
+                        "q_run_instability",
+                        "q_surprise_burst",
+                        "q_micro_cluster_deviation",
+                        "q_local_balance_deviation",
+                        "rng_info_score",
+                        "rng_info_bin",
+                        "q_rng_score",
+                        "q_rng_bin",
+                        "rng_window_id",
+                        "rng_window_start",
+                        "rng_window_end"
+                    ],
+                    "grouping": "within_subject",
+                    "purpose": "destroy_rng_temporal_order_and_alignment"
+                }
+            },
+            {
+                "name": "rng_circular_shift",
+                "control_type": "rng",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 144,
+                    "columns": [
+                        "rng_bit",
+                        "bit_balance_local",
+                        "transition_rate",
+                        "pair_frequency_00",
+                        "pair_frequency_01",
+                        "pair_frequency_10",
+                        "pair_frequency_11",
+                        "rng_entropy_local",
+                        "entropy_rate_proxy",
+                        "run_length_mean",
+                        "run_length_max",
+                        "run_length_std",
+                        "compressibility_proxy",
+                        "surprise_index",
+                        "transition_asymmetry",
+                        "micro_cluster_deviation",
+                        "q_entropy_rate_drift",
+                        "q_transition_asymmetry",
+                        "q_run_instability",
+                        "q_surprise_burst",
+                        "q_micro_cluster_deviation",
+                        "q_local_balance_deviation",
+                        "rng_info_score",
+                        "rng_info_bin",
+                        "q_rng_score",
+                        "q_rng_bin",
+                        "rng_window_id",
+                        "rng_window_start",
+                        "rng_window_end"
+                    ],
+                    "grouping": "within_subject",
+                    "shifts": {
+                        "SC4001": 874,
+                        "SC4002": 2255,
+                        "SC4011": 924,
+                        "SC4012": 230,
+                        "SC4021": 2694
+                    },
+                    "purpose": "preserve_rng_local_structure_but_break_alignment"
+                }
+            },
+            {
+                "name": "eeg_epoch_shuffle",
+                "control_type": "eeg",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 243,
+                    "columns": [
+                        "delta_power",
+                        "theta_power",
+                        "alpha_power",
+                        "beta_power",
+                        "alpha_delta_ratio",
+                        "delta_alpha_balance",
+                        "spectral_entropy",
+                        "permutation_entropy",
+                        "hjorth_mobility",
+                        "hjorth_complexity",
+                        "line_length",
+                        "bandpower_volatility",
+                        "state_instability",
+                        "eeg_info_score",
+                        "eeg_info_bin"
+                    ],
+                    "grouping": "within_subject",
+                    "purpose": "destroy_eeg_temporal_order"
+                }
+            },
+            {
+                "name": "eeg_stage_stratified_shuffle",
+                "control_type": "eeg",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 244,
+                    "columns": [
+                        "delta_power",
+                        "theta_power",
+                        "alpha_power",
+                        "beta_power",
+                        "alpha_delta_ratio",
+                        "delta_alpha_balance",
+                        "spectral_entropy",
+                        "permutation_entropy",
+                        "hjorth_mobility",
+                        "hjorth_complexity",
+                        "line_length",
+                        "bandpower_volatility",
+                        "state_instability",
+                        "eeg_info_score",
+                        "eeg_info_bin"
+                    ],
+                    "grouping": [
+                        "subject_id",
+                        "sleep_stage"
+                    ],
+                    "purpose": "preserve_sleep_stage_distribution_but_break_fine_eeg_dynamics"
+                }
+            },
+            {
+                "name": "joint_pairing_shuffle",
+                "control_type": "joint",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 343,
+                    "columns": [
+                        "rng_bit",
+                        "bit_balance_local",
+                        "transition_rate",
+                        "pair_frequency_00",
+                        "pair_frequency_01",
+                        "pair_frequency_10",
+                        "pair_frequency_11",
+                        "rng_entropy_local",
+                        "entropy_rate_proxy",
+                        "run_length_mean",
+                        "run_length_max",
+                        "run_length_std",
+                        "compressibility_proxy",
+                        "surprise_index",
+                        "transition_asymmetry",
+                        "micro_cluster_deviation",
+                        "q_entropy_rate_drift",
+                        "q_transition_asymmetry",
+                        "q_run_instability",
+                        "q_surprise_burst",
+                        "q_micro_cluster_deviation",
+                        "q_local_balance_deviation",
+                        "rng_info_score",
+                        "rng_info_bin",
+                        "q_rng_score",
+                        "q_rng_bin",
+                        "rng_window_id",
+                        "rng_window_start",
+                        "rng_window_end"
+                    ],
+                    "grouping": "global",
+                    "purpose": "destroy_rowwise_eeg_rng_pairing"
+                }
+            },
+            {
+                "name": "subject_mismatch",
+                "control_type": "subject",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 443,
+                    "columns": [
+                        "delta_power",
+                        "theta_power",
+                        "alpha_power",
+                        "beta_power",
+                        "alpha_delta_ratio",
+                        "delta_alpha_balance",
+                        "spectral_entropy",
+                        "permutation_entropy",
+                        "hjorth_mobility",
+                        "hjorth_complexity",
+                        "line_length",
+                        "bandpower_volatility",
+                        "state_instability",
+                        "eeg_info_score",
+                        "eeg_info_bin"
+                    ],
+                    "source_map": {
+                        "SC4001": "SC4002",
+                        "SC4002": "SC4011",
+                        "SC4011": "SC4012",
+                        "SC4012": "SC4021",
+                        "SC4021": "SC4001"
+                    },
+                    "shift": 1,
+                    "purpose": "replace_eeg_features_with_mismatched_subject_structure"
+                }
+            },
+            {
+                "name": "latent_shuffle",
+                "control_type": "latent",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 543,
+                    "columns": [
+                        "latent_state"
+                    ],
+                    "grouping": "within_subject",
+                    "purpose": "destroy_latent_temporal_alignment"
+                }
+            },
+            {
+                "name": "joint_pairing_shuffle_rep0",
+                "control_type": "joint",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 1042,
+                    "columns": [
+                        "rng_bit",
+                        "bit_balance_local",
+                        "transition_rate",
+                        "pair_frequency_00",
+                        "pair_frequency_01",
+                        "pair_frequency_10",
+                        "pair_frequency_11",
+                        "rng_entropy_local",
+                        "entropy_rate_proxy",
+                        "run_length_mean",
+                        "run_length_max",
+                        "run_length_std",
+                        "compressibility_proxy",
+                        "surprise_index",
+                        "transition_asymmetry",
+                        "micro_cluster_deviation",
+                        "q_entropy_rate_drift",
+                        "q_transition_asymmetry",
+                        "q_run_instability",
+                        "q_surprise_burst",
+                        "q_micro_cluster_deviation",
+                        "q_local_balance_deviation",
+                        "rng_info_score",
+                        "rng_info_bin",
+                        "q_rng_score",
+                        "q_rng_bin",
+                        "rng_window_id",
+                        "rng_window_start",
+                        "rng_window_end"
+                    ],
+                    "grouping": "global",
+                    "purpose": "destroy_rowwise_eeg_rng_pairing",
+                    "replicate_id": 0
+                }
+            },
+            {
+                "name": "rng_shuffle_rep1",
+                "control_type": "rng",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 1043,
+                    "columns": [
+                        "rng_bit",
+                        "bit_balance_local",
+                        "transition_rate",
+                        "pair_frequency_00",
+                        "pair_frequency_01",
+                        "pair_frequency_10",
+                        "pair_frequency_11",
+                        "rng_entropy_local",
+                        "entropy_rate_proxy",
+                        "run_length_mean",
+                        "run_length_max",
+                        "run_length_std",
+                        "compressibility_proxy",
+                        "surprise_index",
+                        "transition_asymmetry",
+                        "micro_cluster_deviation",
+                        "q_entropy_rate_drift",
+                        "q_transition_asymmetry",
+                        "q_run_instability",
+                        "q_surprise_burst",
+                        "q_micro_cluster_deviation",
+                        "q_local_balance_deviation",
+                        "rng_info_score",
+                        "rng_info_bin",
+                        "q_rng_score",
+                        "q_rng_bin",
+                        "rng_window_id",
+                        "rng_window_start",
+                        "rng_window_end"
+                    ],
+                    "grouping": "within_subject",
+                    "purpose": "destroy_rng_temporal_order_and_alignment",
+                    "replicate_id": 1
+                }
+            },
+            {
+                "name": "joint_pairing_shuffle_rep2",
+                "control_type": "joint",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 1044,
+                    "columns": [
+                        "rng_bit",
+                        "bit_balance_local",
+                        "transition_rate",
+                        "pair_frequency_00",
+                        "pair_frequency_01",
+                        "pair_frequency_10",
+                        "pair_frequency_11",
+                        "rng_entropy_local",
+                        "entropy_rate_proxy",
+                        "run_length_mean",
+                        "run_length_max",
+                        "run_length_std",
+                        "compressibility_proxy",
+                        "surprise_index",
+                        "transition_asymmetry",
+                        "micro_cluster_deviation",
+                        "q_entropy_rate_drift",
+                        "q_transition_asymmetry",
+                        "q_run_instability",
+                        "q_surprise_burst",
+                        "q_micro_cluster_deviation",
+                        "q_local_balance_deviation",
+                        "rng_info_score",
+                        "rng_info_bin",
+                        "q_rng_score",
+                        "q_rng_bin",
+                        "rng_window_id",
+                        "rng_window_start",
+                        "rng_window_end"
+                    ],
+                    "grouping": "global",
+                    "purpose": "destroy_rowwise_eeg_rng_pairing",
+                    "replicate_id": 2
+                }
+            },
+            {
+                "name": "rng_shuffle_rep3",
+                "control_type": "rng",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 1045,
+                    "columns": [
+                        "rng_bit",
+                        "bit_balance_local",
+                        "transition_rate",
+                        "pair_frequency_00",
+                        "pair_frequency_01",
+                        "pair_frequency_10",
+                        "pair_frequency_11",
+                        "rng_entropy_local",
+                        "entropy_rate_proxy",
+                        "run_length_mean",
+                        "run_length_max",
+                        "run_length_std",
+                        "compressibility_proxy",
+                        "surprise_index",
+                        "transition_asymmetry",
+                        "micro_cluster_deviation",
+                        "q_entropy_rate_drift",
+                        "q_transition_asymmetry",
+                        "q_run_instability",
+                        "q_surprise_burst",
+                        "q_micro_cluster_deviation",
+                        "q_local_balance_deviation",
+                        "rng_info_score",
+                        "rng_info_bin",
+                        "q_rng_score",
+                        "q_rng_bin",
+                        "rng_window_id",
+                        "rng_window_start",
+                        "rng_window_end"
+                    ],
+                    "grouping": "within_subject",
+                    "purpose": "destroy_rng_temporal_order_and_alignment",
+                    "replicate_id": 3
+                }
+            },
+            {
+                "name": "joint_pairing_shuffle_rep4",
+                "control_type": "joint",
+                "eps_hat": 0.0,
+                "metadata": {
+                    "seed": 1046,
+                    "columns": [
+                        "rng_bit",
+                        "bit_balance_local",
+                        "transition_rate",
+                        "pair_frequency_00",
+                        "pair_frequency_01",
+                        "pair_frequency_10",
+                        "pair_frequency_11",
+                        "rng_entropy_local",
+                        "entropy_rate_proxy",
+                        "run_length_mean",
+                        "run_length_max",
+                        "run_length_std",
+                        "compressibility_proxy",
+                        "surprise_index",
+                        "transition_asymmetry",
+                        "micro_cluster_deviation",
+                        "q_entropy_rate_drift",
+                        "q_transition_asymmetry",
+                        "q_run_instability",
+                        "q_surprise_burst",
+                        "q_micro_cluster_deviation",
+                        "q_local_balance_deviation",
+                        "rng_info_score",
+                        "rng_info_bin",
+                        "q_rng_score",
+                        "q_rng_bin",
+                        "rng_window_id",
+                        "rng_window_start",
+                        "rng_window_end"
+                    ],
+                    "grouping": "global",
+                    "purpose": "destroy_rowwise_eeg_rng_pairing",
+                    "replicate_id": 4
+                }
+            }
+        ],
+        "summary": {
+            "n_controls": 12,
+            "median_eps_controls": 0.0,
+            "mean_eps_controls": 0.0,
+            "max_eps_controls": 0.0,
+            "fraction_below_tol": 1.0,
+            "tol": 0.05,
+            "required_fraction": 0.75,
+            "passed": true
+        }
+    },
+    "sensitivity": {
+        "eps_primary_test": 0.0,
+        "eps_sensitivity_test": 0.0,
+        "sensitivity_model_metadata": {
+            "model": "M5_augmented_final",
+            "label": "Augmented final model: latent_state x rng_info_bin x q_rng_bin",
+            "components": [
+                "latent_state",
+                "rng_info_bin",
+                "q_rng_bin"
+            ],
+            "bins": [
+                3,
+                3,
+                3
+            ],
+            "n_states": 27,
+            "observed_states": 21,
+            "transitions_per_state": 516.0,
+            "transitions_per_observed_state": 663.4285714285714,
+            "sensitivity": true,
+            "component_specs": [
+                {
+                    "component": "latent_state",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": true
+                },
+                {
+                    "component": "rng_info_bin",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": true
+                },
+                {
+                    "component": "q_rng_bin",
+                    "n_bins": 3,
+                    "pre_binned": true,
+                    "edges": [],
+                    "sensitivity": true
+                }
+            ]
+        }
+    },
+    "subject_results": [
+        {
+            "subject_id": "SC4001",
+            "valid": true,
+            "train_rows": 11283,
+            "test_rows": 2650,
+            "eps_joint_train": 0.0,
+            "eps_joint_test": 0.0,
+            "eps_eeg_train": 0.0,
+            "eps_eeg_test": 0.0,
+            "eps_rng_train": 0.0,
+            "eps_rng_test": 0.0,
+            "joint_lift_over_eeg": 0.0,
+            "joint_lift_over_baseline": 0.0
+        },
+        {
+            "subject_id": "SC4002",
+            "valid": true,
+            "train_rows": 11104,
+            "test_rows": 2829,
+            "eps_joint_train": 0.0,
+            "eps_joint_test": 0.0,
+            "eps_eeg_train": 0.0,
+            "eps_eeg_test": 0.0,
+            "eps_rng_train": 0.0,
+            "eps_rng_test": 0.0,
+            "joint_lift_over_eeg": 0.0,
+            "joint_lift_over_baseline": 0.0
+        },
+        {
+            "subject_id": "SC4011",
+            "valid": true,
+            "train_rows": 11131,
+            "test_rows": 2802,
+            "eps_joint_train": 0.0,
+            "eps_joint_test": 0.0,
+            "eps_eeg_train": 0.0,
+            "eps_eeg_test": 0.18,
+            "eps_rng_train": 0.0,
+            "eps_rng_test": 0.15,
+            "joint_lift_over_eeg": -0.18,
+            "joint_lift_over_baseline": -0.18
+        },
+        {
+            "subject_id": "SC4012",
+            "valid": true,
+            "train_rows": 11085,
+            "test_rows": 2848,
+            "eps_joint_train": 0.0,
+            "eps_joint_test": 0.0,
+            "eps_eeg_train": 0.0,
+            "eps_eeg_test": 0.0,
+            "eps_rng_train": 0.0,
+            "eps_rng_test": 0.0,
+            "joint_lift_over_eeg": 0.0,
+            "joint_lift_over_baseline": 0.0
+        },
+        {
+            "subject_id": "SC4021",
+            "valid": true,
+            "train_rows": 11129,
+            "test_rows": 2804,
+            "eps_joint_train": 0.0,
+            "eps_joint_test": 0.0,
+            "eps_eeg_train": 0.0,
+            "eps_eeg_test": 0.0,
+            "eps_rng_train": 0.0,
+            "eps_rng_test": 0.0,
+            "joint_lift_over_eeg": 0.0,
+            "joint_lift_over_baseline": 0.0
+        }
+    ],
+    "ablation": {
+        "ablation_eps": {
+            "remove_I_t": 0.16,
+            "remove_Z_t": 0.0,
+            "remove_Q_t": 0.07
+        },
+        "ablation_details": {
+            "remove_I_t": {
+                "eps_train": 0.0,
+                "eps_test": 0.16,
+                "metadata": {
+                    "columns": [
+                        "eeg_info_score",
+                        "rng_info_score",
+                        "eeg_info_bin",
+                        "rng_info_bin"
+                    ],
+                    "replacement": 0,
+                    "purpose": "ablate_informational_proxy_layer"
+                }
+            },
+            "remove_Z_t": {
+                "eps_train": 0.0,
+                "eps_test": 0.0,
+                "metadata": {
+                    "columns": [
+                        "latent_state"
+                    ],
+                    "replacement": 0,
+                    "purpose": "ablate_latent_state_layer"
+                }
+            },
+            "remove_Q_t": {
+                "eps_train": 0.0,
+                "eps_test": 0.07,
+                "metadata": {
+                    "columns": [
+                        "q_entropy_rate_drift",
+                        "q_transition_asymmetry",
+                        "q_run_instability",
+                        "q_surprise_burst",
+                        "q_micro_cluster_deviation",
+                        "q_local_balance_deviation",
+                        "q_rng_score",
+                        "q_rng_bin"
+                    ],
+                    "replacement": 0,
+                    "purpose": "ablate_quantum_aware_proxy_layer"
+                }
+            }
+        }
+    },
+    "gates": {
+        "passed_all": false,
+        "n_gates": 8,
+        "n_passed": 4,
+        "n_failed": 4,
+        "failed": [
+            "F6_incremental_joint_lift",
+            "F7_subject_generalization",
+            "F8_complexity_penalty",
+            "F9_proxy_ablation_stability"
+        ],
+        "gates": {
+            "F1_injection_recovery": {
+                "passed": true,
+                "metrics": {
+                    "eps_hat": 0.04,
+                    "eps_true": 0.05,
+                    "abs_err": 0.010000000000000002,
+                    "tol_abs": 0.05
+                }
+            },
+            "F2_controls_collapse": {
+                "passed": true,
+                "metrics": {
+                    "n_controls": 12,
+                    "median_eps_controls": 0.0,
+                    "mean_eps_controls": 0.0,
+                    "max_eps_controls": 0.0,
+                    "fraction_below_tol": 1.0,
+                    "tol": 0.05,
+                    "required_fraction": 0.75,
+                    "passed": true
+                }
+            },
+            "F3_holdout_generalization": {
+                "passed": true,
+                "metrics": {
+                    "eps_train": 0.0,
+                    "eps_test": 0.0,
+                    "abs_delta": 0.0,
+                    "max_delta": 0.1
+                }
+            },
+            "F5_sensitivity": {
+                "passed": true,
+                "metrics": {
+                    "eps_primary": 0.0,
+                    "eps_sensitivity": 0.0,
+                    "abs_delta": 0.0,
+                    "max_delta": 0.12
+                }
+            },
+            "F6_incremental_joint_lift": {
+                "passed": false,
+                "metrics": {
+                    "eps_joint_test": 0.0,
+                    "eps_eeg_test": 0.0,
+                    "eps_rng_test": 0.0,
+                    "baseline_max": 0.0,
+                    "joint_lift": 0.0,
+                    "joint_lift_min": 0.03,
+                    "strong_joint_eps_min": 0.07,
+                    "strong_joint_threshold_reached": false
+                }
+            },
+            "F7_subject_generalization": {
+                "passed": false,
+                "metrics": {
+                    "n_subjects": 5,
+                    "n_valid_subjects": 5,
+                    "fraction_positive_lift": 0.0,
+                    "median_joint_eps": 0.0,
+                    "median_eeg_eps": 0.0,
+                    "median_rng_eps": 0.0,
+                    "median_lift_over_eeg": 0.0,
+                    "median_lift_over_baseline": 0.0,
+                    "passed_directional_consistency": false
+                }
+            },
+            "F8_complexity_penalty": {
+                "passed": false,
+                "metrics": {
+                    "metric": "bic",
+                    "baseline_model": "M0_observed_compact",
+                    "advanced_model": "M5_augmented_final",
+                    "baseline_metric_value": 9473.214659790347,
+                    "advanced_metric_value": 17426.97872896969,
+                    "metric_delta_positive_is_good": -7953.764069179344,
+                    "ll_test_improvement": -1412.7641215634467,
+                    "min_test_ll_improvement": 0.0,
+                    "baseline_n_states": 8,
+                    "advanced_n_states": 27,
+                    "baseline_n_params": 57,
+                    "advanced_n_params": 703
+                }
+            },
+            "F9_proxy_ablation_stability": {
+                "passed": false,
+                "metrics": {
+                    "full_eps_joint": 0.0,
+                    "ablation_delta_min": 0.02,
+                    "n_ablations": 3,
+                    "fraction_ablations_reduced": 0.0,
+                    "median_delta_from_full": -0.07,
+                    "all_required_ablations_reduce_signal": false,
+                    "ablations": {
+                        "remove_I_t": {
+                            "eps_ablated": 0.16,
+                            "delta_from_full": -0.16,
+                            "passed": false
+                        },
+                        "remove_Z_t": {
+                            "eps_ablated": 0.0,
+                            "delta_from_full": 0.0,
+                            "passed": false
+                        },
+                        "remove_Q_t": {
+                            "eps_ablated": 0.07,
+                            "delta_from_full": -0.07,
+                            "passed": false
+                        }
+                    },
+                    "require_all": true
+                }
+            }
+        }
+    },
+    "final_status": {
+        "status": "null_result",
+        "interpretation": "Phase III.1 did not reveal robust joint structure beyond the single-domain baselines under the current design.",
+        "passed_all_gates": false,
+        "failed_gates": [
+            "F6_incremental_joint_lift",
+            "F7_subject_generalization",
+            "F8_complexity_penalty",
+            "F9_proxy_ablation_stability"
+        ],
+        "failed_critical_gates": [
+            "F6_incremental_joint_lift",
+            "F7_subject_generalization",
+            "F8_complexity_penalty"
+        ],
+        "eps_joint_test": 0.0,
+        "eps_eeg_test": 0.0,
+        "eps_rng_test": 0.0,
+        "baseline_max": 0.0,
+        "joint_lift": 0.0,
+        "strong_joint_eps_min": 0.07,
+        "joint_lift_min": 0.03
+    },
+    "config_summary": {
+        "max_subjects": 5,
+        "rng_use_bits": true,
+        "rng_window_size": 64,
+        "holdout_mode": "leave_one_subject_out",
+        "inj_eps_true": 0.05,
+        "injection_eps_grid": [
+            0.01,
+            0.03,
+            0.05
+        ],
+        "joint_lift_min": 0.03,
+        "strong_joint_eps_min": 0.07,
+        "state_models": [
+            {
+                "name": "M0_observed_compact",
+                "label": "Observed compact baseline: delta_power x rng_bit",
+                "components": [
+                    "delta_power",
+                    "rng_bit"
+                ],
+                "bins": [
+                    4,
+                    2
+                ],
+                "n_states": 8,
+                "active": true
+            },
+            {
+                "name": "M1_eeg_informational",
+                "label": "EEG informational model: delta_power x eeg_info_bin x rng_bit",
+                "components": [
+                    "delta_power",
+                    "eeg_info_bin",
+                    "rng_bit"
+                ],
+                "bins": [
+                    3,
+                    3,
+                    2
+                ],
+                "n_states": 18,
+                "active": true
+            },
+            {
+                "name": "M2_rng_quantum_proxy",
+                "label": "RNG quantum-aware proxy model: delta_power x q_rng_bin",
+                "components": [
+                    "delta_power",
+                    "q_rng_bin"
+                ],
+                "bins": [
+                    3,
+                    3
+                ],
+                "n_states": 9,
+                "active": true
+            },
+            {
+                "name": "M3_informational_joint",
+                "label": "Informational joint model: eeg_info_bin x rng_info_bin",
+                "components": [
+                    "eeg_info_bin",
+                    "rng_info_bin"
+                ],
+                "bins": [
+                    3,
+                    3
+                ],
+                "n_states": 9,
+                "active": true
+            },
+            {
+                "name": "M4_latent_joint",
+                "label": "Latent joint model: latent_state x rng_bit",
+                "components": [
+                    "latent_state",
+                    "rng_bit"
+                ],
+                "bins": [
+                    3,
+                    2
+                ],
+                "n_states": 6,
+                "active": true
+            },
+            {
+                "name": "M5_augmented_final",
+                "label": "Augmented final model: latent_state x rng_info_bin x q_rng_bin",
+                "components": [
+                    "latent_state",
+                    "rng_info_bin",
+                    "q_rng_bin"
+                ],
+                "bins": [
+                    3,
+                    3,
+                    3
+                ],
+                "n_states": 27,
+                "active": true
+            }
+        ]
+    }
+}

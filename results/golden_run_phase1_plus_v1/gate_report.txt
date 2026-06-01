@@ -1,0 +1,38 @@
+CDR Phase I+ — Gates G1–G7
+------------------------------------------------------------
+G1_H0_recovery: PASS
+  metrics: {'mean_eps_hat': 0.024, 'std_eps_hat': 0.028}
+  thresholds: {'mean_thr': 0.05, 'std_thr': 0.1}
+  notes: H0 trajectories should yield epsilon_hat near 0.
+
+G2_H1_recovery: PASS
+  metrics: {'mean_eps_hat': 0.29900000000000004}
+  thresholds: {'lo': 0.25, 'hi': 0.35}
+  notes: H1 trajectories should recover epsilon_true (within band).
+
+G3_controls_collapse: PASS
+  metrics: {'mean_eps_hat_controls': 0.07333333333333333, 'median_eps_hat_controls': 0.0, 'max_eps_hat_controls': 0.22, 'fraction_below_tol': 0.6666666666666666, 'n_controls': 3.0}
+  thresholds: {'tol': 0.05, 'required_fraction': 0.6666666666666666}
+  notes: Controls must collapse robustly: median below tol and majority below tol.
+
+G4_identifiability: PASS
+  metrics: {'effective_rank_fisher_raw': 3.0, 'condition_fisher_raw': 1587.1861433097415, 'effective_rank_fisher_norm': 3.0, 'kappa_theta_norm': 1.1912751725755808, 'schur_eps': 0.00886915272645783, 'r2_eps': 0.9911308472735422, 'effective_rank_hessian': 2.0, 'condition_hessian': 1.8480476555098428}
+  thresholds: {'rank_thr': 3.0, 'kappa_thr_theta': 100.0, 'schur_min': 0.005}
+  notes: Identifiability via ε-direction Schur complement (1-R^2) + θ-block conditioning.
+
+G5_stability: PASS
+  metrics: {'mean_eps_primary': 0.29900000000000004, 'mean_eps_alt': 0.29700000000000004, 'abs_drift': 0.0020000000000000018}
+  thresholds: {'max_abs_drift': 0.08}
+  notes: Stability across a mild pre-registered perturbation (n_steps).
+
+G6_adversarial: PASS
+  metrics: {'eps_hat_rep': 0.18, 'g_hat_adv': 0.01, 'logL_M1': -1224.775180792929, 'logL_M0adv': -1227.3092399522234, 'bic_M1': 2456.45811686484, 'bic_M0adv': 2461.526235183429, 'delta_bic_M1_minus_M0adv': -5.0681183185888585}
+  thresholds: {'requires_delta_bic_negative': 0.0, 'eps_min': 0.1}
+  notes: Adversarial baseline absorption check (bounded flexibility).
+
+G7_out_of_sample: PASS
+  metrics: {'eps_hat_train': 0.14, 'logL_test_h1': -490.9970442135791, 'logL_test_h0': -492.36521896716306, 'bic_test_h1': 981.9940884271582, 'bic_test_h0': 984.7304379343261, 'n_test': 401.0}
+  thresholds: {'eps_min': 0.1, 'requires_bic_h1_less': 1.0}
+  notes: Train epsilon on train segment; require improvement on held-out test segment.
+
+FINAL: PASS

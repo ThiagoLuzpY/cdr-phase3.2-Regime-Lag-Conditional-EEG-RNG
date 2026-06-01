@@ -1,0 +1,18 @@
+{
+    "curve": {
+        "0.0100": 0.0,
+        "0.0300": 0.03,
+        "0.0500": 0.04
+    },
+    "errors": {
+        "0.0100": 0.01,
+        "0.0300": 0.0,
+        "0.0500": 0.010000000000000002
+    },
+    "recovered_fraction": 1.0,
+    "injectability_class": "high",
+    "principal_eps_true": 0.05,
+    "principal_eps_hat": 0.04,
+    "principal_abs_err": 0.010000000000000002,
+    "principal_passed": true
+}

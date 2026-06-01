@@ -1,0 +1,8 @@
+CDR Phase II (OPSD) — Gates
+────────────────────────────────────────────
+F1_injection_recovery: PASS | metrics={'eps_hat': 0.3, 'eps_true': 0.3, 'abs_err': 0.0} | thr={'tol_abs': 0.05}
+F2_controls_collapse: FAIL | metrics={'median_eps_controls': 0.4, 'fraction_below_tol': 0.0, 'max_eps_controls': 0.48, 'n': 2.0} | thr={'tol': 0.05, 'required_fraction': 0.6666666666666666}
+F3_holdout_generalization: PASS | metrics={'eps_train': 0.0, 'eps_test': 0.0, 'abs_delta': 0.0} | thr={'max_delta': 0.1}
+F5_sensitivity: PASS | metrics={'eps_binsA': 0.0, 'eps_binsB': 0.0, 'abs_delta': 0.0} | thr={'max_delta': 0.12}
+────────────────────────────────────────────
+FINAL: FAIL ❌

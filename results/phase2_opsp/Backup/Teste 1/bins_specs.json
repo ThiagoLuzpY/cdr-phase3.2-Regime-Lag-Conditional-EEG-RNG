@@ -1,0 +1,38 @@
+{
+  "load": {
+    "edges": [
+      -Infinity,
+      50024.1,
+      62427.28,
+      Infinity
+    ],
+    "n_bins": 3
+  },
+  "price": {
+    "edges": [
+      -Infinity,
+      34.1882,
+      43.37,
+      Infinity
+    ],
+    "n_bins": 3
+  },
+  "solar": {
+    "edges": [
+      -Infinity,
+      0.0,
+      5968.64,
+      Infinity
+    ],
+    "n_bins": 3
+  },
+  "wind": {
+    "edges": [
+      -Infinity,
+      7315.940000000002,
+      14686.0,
+      Infinity
+    ],
+    "n_bins": 3
+  }
+}

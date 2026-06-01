@@ -1,0 +1,64 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+*.egg-info/
+build/
+dist/
+
+# ---- Virtual envs ----
+.venv/
+venv/
+env/
+ENV/
+
+# ---- PyCharm / IDEs ----
+.idea/
+*.iml
+.vscode/
+
+# ---- Pytest / coverage ----
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Secrets ----
+.env
+*.env
+*.key
+*.pem
+
+# ---- Data (exclude large files) ----
+data/raw/
+data/interim/
+data/processed/
+*.sqlite
+
+# Keep small CSVs if needed for examples
+# data/**/*.csv
+
+# ---- Results (SELECTIVE) ----
+# Exclude large files (plots, zips, large CSVs)
+results/**/plots/
+results/**/run_bundle.zip
+results/**/*.png
+results/**/*.jpg
+results/**/*.pdf
+
+# Exclude likelihood curves (can be large)
+results/**/ll_*.png
+
+# INCLUDE results JSONs (small, important)
+!results/**/*.json
+!results/**/*.txt
+
+# Keep .gitkeep
+!results/.gitkeep

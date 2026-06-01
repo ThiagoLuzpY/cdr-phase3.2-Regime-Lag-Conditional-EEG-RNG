@@ -1,0 +1,1343 @@
+{
+    "diagnostics_version": "phase3_1_diagnostics_v2_all_subject_internal_audit",
+    "source_files": {
+        "results": "results\\phase3_1\\phase3_1_results.json",
+        "model_comparison": "results\\phase3_1\\phase3_1_model_comparison.json",
+        "subject_results": "results\\phase3_1\\phase3_1_subject_results.json",
+        "ablation": "results\\phase3_1\\phase3_1_ablation.json",
+        "controls": "results\\phase3_1\\phase3_1_controls.json",
+        "injection": "results\\phase3_1\\phase3_1_injection_curve.json",
+        "combined_features": "data\\interim\\phase3_1\\phase3_1_combined_features.csv"
+    },
+    "registered_run_status": {
+        "status": "null_result",
+        "interpretation": "Phase III.1 did not reveal robust joint structure beyond the single-domain baselines under the current design.",
+        "passed_all_gates": false,
+        "failed_gates": [
+            "F6_incremental_joint_lift",
+            "F7_subject_generalization",
+            "F8_complexity_penalty",
+            "F9_proxy_ablation_stability"
+        ],
+        "failed_critical_gates": [
+            "F6_incremental_joint_lift",
+            "F7_subject_generalization",
+            "F8_complexity_penalty"
+        ],
+        "eps_joint_test": 0.0,
+        "eps_eeg_test": 0.1,
+        "eps_rng_test": 0.0,
+        "baseline_max": 0.1,
+        "joint_lift": -0.1,
+        "strong_joint_eps_min": 0.07,
+        "joint_lift_min": 0.03
+    },
+    "primary_results": {
+        "final_model": "M5_augmented_final",
+        "baseline_model": "M0_observed_compact",
+        "eps_joint_train": 0.0,
+        "eps_joint_test": 0.0,
+        "eps_eeg_train": 0.0,
+        "eps_eeg_test": 0.1,
+        "eps_rng_train": 0.0,
+        "eps_rng_test": 0.0,
+        "joint_lift_over_eeg": -0.1,
+        "joint_lift_over_baseline": -0.1
+    },
+    "gates": {
+        "passed_all": false,
+        "n_gates": 8,
+        "n_passed": 4,
+        "n_failed": 4,
+        "failed": [
+            "F6_incremental_joint_lift",
+            "F7_subject_generalization",
+            "F8_complexity_penalty",
+            "F9_proxy_ablation_stability"
+        ],
+        "gates": {
+            "F1_injection_recovery": {
+                "passed": true,
+                "metrics": {
+                    "eps_hat": 0.03,
+                    "eps_true": 0.05,
+                    "abs_err": 0.020000000000000004,
+                    "tol_abs": 0.05
+                }
+            },
+            "F2_controls_collapse": {
+                "passed": true,
+                "metrics": {
+                    "n_controls": 12,
+                    "median_eps_controls": 0.0,
+                    "mean_eps_controls": 0.0,
+                    "max_eps_controls": 0.0,
+                    "fraction_below_tol": 1.0,
+                    "tol": 0.05,
+                    "required_fraction": 0.75,
+                    "passed": true
+                }
+            },
+            "F3_holdout_generalization": {
+                "passed": true,
+                "metrics": {
+                    "eps_train": 0.0,
+                    "eps_test": 0.0,
+                    "abs_delta": 0.0,
+                    "max_delta": 0.1
+                }
+            },
+            "F5_sensitivity": {
+                "passed": true,
+                "metrics": {
+                    "eps_primary": 0.0,
+                    "eps_sensitivity": 0.0,
+                    "abs_delta": 0.0,
+                    "max_delta": 0.12
+                }
+            },
+            "F6_incremental_joint_lift": {
+                "passed": false,
+                "metrics": {
+                    "eps_joint_test": 0.0,
+                    "eps_eeg_test": 0.1,
+                    "eps_rng_test": 0.0,
+                    "baseline_max": 0.1,
+                    "joint_lift": -0.1,
+                    "joint_lift_min": 0.03,
+                    "strong_joint_eps_min": 0.07,
+                    "strong_joint_threshold_reached": false
+                }
+            },
+            "F7_subject_generalization": {
+                "passed": false,
+                "metrics": {
+                    "n_subjects": 10,
+                    "n_valid_subjects": 10,
+                    "fraction_positive_lift": 0.0,
+                    "median_joint_eps": 0.0,
+                    "median_eeg_eps": 0.0,
+                    "median_rng_eps": 0.0,
+                    "median_lift_over_eeg": 0.0,
+                    "median_lift_over_baseline": 0.0,
+                    "passed_directional_consistency": false
+                }
+            },
+            "F8_complexity_penalty": {
+                "passed": false,
+                "metrics": {
+                    "metric": "bic",
+                    "baseline_model": "M0_observed_compact",
+                    "advanced_model": "M5_augmented_final",
+                    "baseline_metric_value": 9178.454866494734,
+                    "advanced_metric_value": 16540.55883075072,
+                    "metric_delta_positive_is_good": -7362.103964255986,
+                    "ll_test_improvement": -1118.7830902513242,
+                    "min_test_ll_improvement": 0.0,
+                    "baseline_n_states": 8,
+                    "advanced_n_states": 27,
+                    "baseline_n_params": 57,
+                    "advanced_n_params": 703
+                }
+            },
+            "F9_proxy_ablation_stability": {
+                "passed": false,
+                "metrics": {
+                    "full_eps_joint": 0.0,
+                    "ablation_delta_min": 0.02,
+                    "n_ablations": 3,
+                    "fraction_ablations_reduced": 0.0,
+                    "median_delta_from_full": 0.0,
+                    "all_required_ablations_reduce_signal": false,
+                    "ablations": {
+                        "remove_I_t": {
+                            "eps_ablated": 0.0,
+                            "delta_from_full": 0.0,
+                            "passed": false
+                        },
+                        "remove_Z_t": {
+                            "eps_ablated": 0.0,
+                            "delta_from_full": 0.0,
+                            "passed": false
+                        },
+                        "remove_Q_t": {
+                            "eps_ablated": 0.0,
+                            "delta_from_full": 0.0,
+                            "passed": false
+                        }
+                    },
+                    "require_all": true
+                }
+            }
+        }
+    },
+    "dataset_metadata": {
+        "project_name": "Phase3.1-Advanced-EEG-RNG",
+        "phase_name": "Phase III.1",
+        "n_subjects_loaded": 10,
+        "subject_ids": [
+            "SC4001",
+            "SC4002",
+            "SC4011",
+            "SC4012",
+            "SC4021",
+            "SC4022",
+            "SC4031",
+            "SC4032",
+            "SC4041",
+            "SC4042"
+        ],
+        "recording_ids": [
+            "SC4001E0",
+            "SC4002E0",
+            "SC4011E0",
+            "SC4012E0",
+            "SC4021E0",
+            "SC4022E0",
+            "SC4031E0",
+            "SC4032E0",
+            "SC4041E0",
+            "SC4042E0"
+        ],
+        "total_rows": 27597,
+        "rng_source": "ANU",
+        "rng_n_uint8": 1024,
+        "rng_n_bits": 8192,
+        "rng_use_bits": true,
+        "rng_window_size": 64,
+        "rng_alignment_mode": "resample_rng_metrics_to_eeg_epochs",
+        "eeg_epoch_seconds": 30,
+        "channels_used": {
+            "SC4001E0": "EEG Fpz-Cz",
+            "SC4002E0": "EEG Fpz-Cz",
+            "SC4011E0": "EEG Fpz-Cz",
+            "SC4012E0": "EEG Fpz-Cz",
+            "SC4021E0": "EEG Fpz-Cz",
+            "SC4022E0": "EEG Fpz-Cz",
+            "SC4031E0": "EEG Fpz-Cz",
+            "SC4032E0": "EEG Fpz-Cz",
+            "SC4041E0": "EEG Fpz-Cz",
+            "SC4042E0": "EEG Fpz-Cz"
+        },
+        "errors": []
+    },
+    "ranking_summary": {
+        "available": true,
+        "best_by_bic_test": {
+            "model": "B0_eeg_only",
+            "label": "EEG-only baseline: delta_power x eeg_info_bin",
+            "bic_test": 6987.064981197803,
+            "eps_test": 0.1,
+            "ll_test": -3203.9881730958105,
+            "n_states": 9
+        },
+        "best_by_ll_test": {
+            "model": "B0_eeg_only",
+            "label": "EEG-only baseline: delta_power x eeg_info_bin",
+            "ll_test": -3203.9881730958105,
+            "eps_test": 0.1,
+            "bic_test": 6987.064981197803,
+            "n_states": 9
+        },
+        "best_by_eps_test": {
+            "model": "B0_eeg_only",
+            "label": "EEG-only baseline: delta_power x eeg_info_bin",
+            "eps_test": 0.1,
+            "bic_test": 6987.064981197803,
+            "ll_test": -3203.9881730958105,
+            "n_states": 9
+        }
+    },
+    "subject_model_summary_loso": {
+        "available": true,
+        "n_rows": 80,
+        "n_valid_rows": 80,
+        "subjects": [
+            "SC4001",
+            "SC4002",
+            "SC4011",
+            "SC4012",
+            "SC4021",
+            "SC4022",
+            "SC4031",
+            "SC4032",
+            "SC4041",
+            "SC4042"
+        ],
+        "models": [
+            "B0_eeg_only",
+            "B1_rng_only",
+            "M0_observed_compact",
+            "M1_eeg_informational",
+            "M2_rng_quantum_proxy",
+            "M3_informational_joint",
+            "M4_latent_joint",
+            "M5_augmented_final"
+        ],
+        "positive_eps_rows": [
+            {
+                "subject_id": "SC4002",
+                "model": "M3_informational_joint",
+                "eps_test": 0.08,
+                "eps_eeg_baseline": 0.0,
+                "eps_rng_baseline": 0.0,
+                "lift_over_baseline": 0.08,
+                "bic_test": 6406.533708641829,
+                "ll_test": -2913.189490834814
+            },
+            {
+                "subject_id": "SC4011",
+                "model": "B0_eeg_only",
+                "eps_test": 0.01,
+                "eps_eeg_baseline": 0.01,
+                "eps_rng_baseline": 0.07,
+                "lift_over_baseline": -0.060000000000000005,
+                "bic_test": 6963.257268855605,
+                "ll_test": -3191.9014246308084
+            },
+            {
+                "subject_id": "SC4011",
+                "model": "B1_rng_only",
+                "eps_test": 0.07,
+                "eps_eeg_baseline": 0.01,
+                "eps_rng_baseline": 0.07,
+                "lift_over_baseline": 0.0,
+                "bic_test": 7591.299823784713,
+                "ll_test": -3672.615069375825
+            },
+            {
+                "subject_id": "SC4011",
+                "model": "M5_augmented_final",
+                "eps_test": 0.01,
+                "eps_eeg_baseline": 0.01,
+                "eps_rng_baseline": 0.07,
+                "lift_over_baseline": -0.060000000000000005,
+                "bic_test": 16585.208849548704,
+                "ll_test": -5502.491705770424
+            },
+            {
+                "subject_id": "SC4022",
+                "model": "B1_rng_only",
+                "eps_test": 0.8,
+                "eps_eeg_baseline": 0.0,
+                "eps_rng_baseline": 0.8,
+                "lift_over_baseline": 0.0,
+                "bic_test": 7510.7035971979185,
+                "ll_test": -3632.579248569986
+            },
+            {
+                "subject_id": "SC4031",
+                "model": "B0_eeg_only",
+                "eps_test": 0.08,
+                "eps_eeg_baseline": 0.08,
+                "eps_rng_baseline": 0.0,
+                "lift_over_baseline": 0.0,
+                "bic_test": 7426.172331301599,
+                "ll_test": -3423.1251472251347
+            },
+            {
+                "subject_id": "SC4032",
+                "model": "M2_rng_quantum_proxy",
+                "eps_test": 0.08,
+                "eps_eeg_baseline": 0.0,
+                "eps_rng_baseline": 0.0,
+                "lift_over_baseline": 0.08,
+                "bic_test": 10397.493343963963,
+                "ll_test": -4909.9432280481915
+            },
+            {
+                "subject_id": "SC4042",
+                "model": "B0_eeg_only",
+                "eps_test": 0.1,
+                "eps_eeg_baseline": 0.1,
+                "eps_rng_baseline": 0.0,
+                "lift_over_baseline": 0.0,
+                "bic_test": 6987.064981197803,
+                "ll_test": -3203.9881730958105
+            },
+            {
+                "subject_id": "SC4042",
+                "model": "M1_eeg_informational",
+                "eps_test": 0.07,
+                "eps_eeg_baseline": 0.1,
+                "eps_rng_baseline": 0.0,
+                "lift_over_baseline": -0.03,
+                "bic_test": 12720.271348154372,
+                "ll_test": -5142.462996358707
+            }
+        ],
+        "positive_lift_rows": [
+            {
+                "subject_id": "SC4002",
+                "model": "M3_informational_joint",
+                "eps_test": 0.08,
+                "eps_eeg_baseline": 0.0,
+                "eps_rng_baseline": 0.0,
+                "lift_over_baseline": 0.08,
+                "bic_test": 6406.533708641829,
+                "ll_test": -2913.189490834814
+            },
+            {
+                "subject_id": "SC4032",
+                "model": "M2_rng_quantum_proxy",
+                "eps_test": 0.08,
+                "eps_eeg_baseline": 0.0,
+                "eps_rng_baseline": 0.0,
+                "lift_over_baseline": 0.08,
+                "bic_test": 10397.493343963963,
+                "ll_test": -4909.9432280481915
+            }
+        ],
+        "by_model": {
+            "B0_eeg_only": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.1,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 7430.525375378593,
+                "median_ll_test": -3425.727401829447
+            },
+            "B1_rng_only": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.8,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 7554.35359832912,
+                "median_ll_test": -3654.1807899433093
+            },
+            "M0_observed_compact": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.0,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 10046.31300580026,
+                "median_ll_test": -4797.726215880547
+            },
+            "M1_eeg_informational": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.07,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 13202.870271765389,
+                "median_ll_test": -5381.251464991097
+            },
+            "M2_rng_quantum_proxy": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.08,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.08,
+                "fraction_positive_lift": 0.1,
+                "median_bic_test": 9858.278320581976,
+                "median_ll_test": -4639.101644139407
+            },
+            "M3_informational_joint": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.08,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.08,
+                "fraction_positive_lift": 0.1,
+                "median_bic_test": 6935.3749917678515,
+                "median_ll_test": -3177.5461018282695
+            },
+            "M4_latent_joint": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.0,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 7742.039233635602,
+                "median_ll_test": -3748.0236075965504
+            },
+            "M5_augmented_final": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.01,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 16569.57944930936,
+                "median_ll_test": -5492.20983999294
+            }
+        },
+        "by_subject": {
+            "SC4001": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0
+                },
+                "best_by_bic": {
+                    "model": "M4_latent_joint",
+                    "bic_test": 7002.424172475493,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "M3_informational_joint",
+                    "ll_test": -3311.508247040801,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4002": {
+                "best_by_eps": {
+                    "model": "M3_informational_joint",
+                    "eps_test": 0.08,
+                    "lift_over_baseline": 0.08
+                },
+                "best_by_bic": {
+                    "model": "M3_informational_joint",
+                    "bic_test": 6406.533708641829,
+                    "eps_test": 0.08
+                },
+                "best_by_ll": {
+                    "model": "M3_informational_joint",
+                    "ll_test": -2913.189490834814,
+                    "eps_test": 0.08
+                },
+                "best_by_lift": {
+                    "model": "M3_informational_joint",
+                    "lift_over_baseline": 0.08,
+                    "eps_test": 0.08
+                }
+            },
+            "SC4011": {
+                "best_by_eps": {
+                    "model": "B1_rng_only",
+                    "eps_test": 0.07,
+                    "lift_over_baseline": 0.0
+                },
+                "best_by_bic": {
+                    "model": "M3_informational_joint",
+                    "bic_test": 6682.191536761718,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "M3_informational_joint",
+                    "ll_test": -3051.3685585838653,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B1_rng_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.07
+                }
+            },
+            "SC4012": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0
+                },
+                "best_by_bic": {
+                    "model": "M3_informational_joint",
+                    "bic_test": 6873.498925895079,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "M3_informational_joint",
+                    "ll_test": -3146.4276932618914,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4021": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0
+                },
+                "best_by_bic": {
+                    "model": "B1_rng_only",
+                    "bic_test": 7651.227043606727,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "B1_rng_only",
+                    "ll_test": -3702.5676157603093,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4022": {
+                "best_by_eps": {
+                    "model": "B1_rng_only",
+                    "eps_test": 0.8,
+                    "lift_over_baseline": 0.0
+                },
+                "best_by_bic": {
+                    "model": "M3_informational_joint",
+                    "bic_test": 6372.260814050494,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "M3_informational_joint",
+                    "ll_test": -2897.0208537312133,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B1_rng_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.8
+                }
+            },
+            "SC4031": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.08,
+                    "lift_over_baseline": 0.0
+                },
+                "best_by_bic": {
+                    "model": "M4_latent_joint",
+                    "bic_test": 6138.972028148903,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "M4_latent_joint",
+                    "ll_test": -2946.3518829621826,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.08
+                }
+            },
+            "SC4032": {
+                "best_by_eps": {
+                    "model": "M2_rng_quantum_proxy",
+                    "eps_test": 0.08,
+                    "lift_over_baseline": 0.08
+                },
+                "best_by_bic": {
+                    "model": "M3_informational_joint",
+                    "bic_test": 7034.648726757127,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "M3_informational_joint",
+                    "ll_test": -3228.5209194447734,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "M2_rng_quantum_proxy",
+                    "lift_over_baseline": 0.08,
+                    "eps_test": 0.08
+                }
+            },
+            "SC4041": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0
+                },
+                "best_by_bic": {
+                    "model": "B0_eeg_only",
+                    "bic_test": 6631.257059607322,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "B0_eeg_only",
+                    "ll_test": -3029.071312538101,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4042": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.1,
+                    "lift_over_baseline": 0.0
+                },
+                "best_by_bic": {
+                    "model": "B0_eeg_only",
+                    "bic_test": 6987.064981197803,
+                    "eps_test": 0.1
+                },
+                "best_by_ll": {
+                    "model": "B0_eeg_only",
+                    "ll_test": -3203.9881730958105,
+                    "eps_test": 0.1
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.1
+                }
+            }
+        }
+    },
+    "internal_subject_summary": {
+        "available": true,
+        "n_rows": 80,
+        "n_valid_rows": 80,
+        "subjects": [
+            "SC4001",
+            "SC4002",
+            "SC4011",
+            "SC4012",
+            "SC4021",
+            "SC4022",
+            "SC4031",
+            "SC4032",
+            "SC4041",
+            "SC4042"
+        ],
+        "models": [
+            "B0_eeg_only",
+            "B1_rng_only",
+            "M0_observed_compact",
+            "M1_eeg_informational",
+            "M2_rng_quantum_proxy",
+            "M3_informational_joint",
+            "M4_latent_joint",
+            "M5_augmented_final"
+        ],
+        "positive_eps_rows": [
+            {
+                "subject_id": "SC4002",
+                "model": "B1_rng_only",
+                "eps_train": 0.01,
+                "eps_test": 0.15,
+                "eps_eeg_baseline": 0.0,
+                "eps_rng_baseline": 0.15,
+                "lift_over_baseline": 0.0,
+                "bic_test": 2017.1270920940678,
+                "ll_test": -906.867570725637,
+                "n_states": 6
+            }
+        ],
+        "positive_lift_rows": [],
+        "by_subject": {
+            "SC4001": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0,
+                    "bic_test": 3003.1927701419872
+                },
+                "best_by_bic": {
+                    "model": "B1_rng_only",
+                    "bic_test": 1937.3092224599889,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "B1_rng_only",
+                    "ll_test": -867.9779951129708,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4002": {
+                "best_by_eps": {
+                    "model": "B1_rng_only",
+                    "eps_test": 0.15,
+                    "lift_over_baseline": 0.0,
+                    "bic_test": 2017.1270920940678
+                },
+                "best_by_bic": {
+                    "model": "B1_rng_only",
+                    "bic_test": 2017.1270920940678,
+                    "eps_test": 0.15
+                },
+                "best_by_ll": {
+                    "model": "B1_rng_only",
+                    "ll_test": -906.867570725637,
+                    "eps_test": 0.15
+                },
+                "best_by_lift": {
+                    "model": "B1_rng_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.15
+                }
+            },
+            "SC4011": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0,
+                    "bic_test": 2668.6556819618418
+                },
+                "best_by_bic": {
+                    "model": "B1_rng_only",
+                    "bic_test": 2010.4248333854216,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "B1_rng_only",
+                    "ll_test": -903.670671499538,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4012": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0,
+                    "bic_test": 2986.7001794525822
+                },
+                "best_by_bic": {
+                    "model": "B1_rng_only",
+                    "bic_test": 2029.0970177761203,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "B1_rng_only",
+                    "ll_test": -912.7650862261099,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4021": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0,
+                    "bic_test": 2834.648935851503
+                },
+                "best_by_bic": {
+                    "model": "B1_rng_only",
+                    "bic_test": 2029.894745799118,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "B1_rng_only",
+                    "ll_test": -913.4056277063862,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4022": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0,
+                    "bic_test": 2768.732228891892
+                },
+                "best_by_bic": {
+                    "model": "M4_latent_joint",
+                    "bic_test": 1956.5237834685836,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "M4_latent_joint",
+                    "ll_test": -876.988164746325,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4031": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0,
+                    "bic_test": 3049.4174228878755
+                },
+                "best_by_bic": {
+                    "model": "B1_rng_only",
+                    "bic_test": 2062.7743470917267,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "B1_rng_only",
+                    "ll_test": -929.7571090254136,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4032": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0,
+                    "bic_test": 2939.6177551930205
+                },
+                "best_by_bic": {
+                    "model": "B1_rng_only",
+                    "bic_test": 2017.3780284248505,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "B1_rng_only",
+                    "ll_test": -907.5510545158517,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4041": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0,
+                    "bic_test": 2161.039923356913
+                },
+                "best_by_bic": {
+                    "model": "B1_rng_only",
+                    "bic_test": 1918.7214860886927,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "B0_eeg_only",
+                    "ll_test": -844.5624885937729,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            },
+            "SC4042": {
+                "best_by_eps": {
+                    "model": "B0_eeg_only",
+                    "eps_test": 0.0,
+                    "lift_over_baseline": 0.0,
+                    "bic_test": 2397.1465159608265
+                },
+                "best_by_bic": {
+                    "model": "B1_rng_only",
+                    "bic_test": 2011.3563651317213,
+                    "eps_test": 0.0
+                },
+                "best_by_ll": {
+                    "model": "B1_rng_only",
+                    "ll_test": -904.2252628306771,
+                    "eps_test": 0.0
+                },
+                "best_by_lift": {
+                    "model": "B0_eeg_only",
+                    "lift_over_baseline": 0.0,
+                    "eps_test": 0.0
+                }
+            }
+        },
+        "by_model": {
+            "B0_eeg_only": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.0,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 2866.33522106019,
+                "median_ll_test": -1193.8715847629405
+            },
+            "B1_rng_only": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.15,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 2014.2417286128946,
+                "median_ll_test": -905.5464167781571
+            },
+            "M0_observed_compact": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.0,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 2946.1282567085345,
+                "median_ll_test": -1287.1536994077962
+            },
+            "M1_eeg_informational": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.0,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 5490.660137781919,
+                "median_ll_test": -1738.9755495688162
+            },
+            "M2_rng_quantum_proxy": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.0,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 2895.843140178114,
+                "median_ll_test": -1209.8257575786645
+            },
+            "M3_informational_joint": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.0,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 2576.4616040579986,
+                "median_ll_test": -1049.4878057734718
+            },
+            "M4_latent_joint": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.0,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 2119.6394795389906,
+                "median_ll_test": -958.710559114397
+            },
+            "M5_augmented_final": {
+                "n_subjects": 10,
+                "median_eps_test": 0.0,
+                "max_eps_test": 0.0,
+                "median_lift_over_baseline": 0.0,
+                "max_lift_over_baseline": 0.0,
+                "fraction_positive_lift": 0.0,
+                "median_bic_test": 7339.2555980864545,
+                "median_ll_test": -1368.826870587653
+            }
+        }
+    },
+    "rng_alignment_audit_summary": {
+        "available": true,
+        "n_subjects": 10,
+        "max_reuse_subject": {
+            "subject_id": "SC4001",
+            "rng_window_reuse_ratio": 1.0,
+            "rng_window_unique": 2650,
+            "n_rows": 2650
+        },
+        "min_reuse_subject": {
+            "subject_id": "SC4001",
+            "rng_window_reuse_ratio": 1.0,
+            "rng_window_unique": 2650,
+            "n_rows": 2650
+        },
+        "rng_bit_transition_rate_subject": {
+            "min": 0.48412415269354264,
+            "median": 0.49218031796902556,
+            "max": 0.5054737636844092
+        },
+        "rng_bit_mean": {
+            "min": 0.4824438202247191,
+            "median": 0.5005046043203446,
+            "max": 0.5109929078014185
+        }
+    },
+    "sleep_stage_counts": [
+        {
+            "subject_id": "SC4001",
+            "sleep_stage": "N1",
+            "n_epochs": 58
+        },
+        {
+            "subject_id": "SC4001",
+            "sleep_stage": "N2",
+            "n_epochs": 250
+        },
+        {
+            "subject_id": "SC4001",
+            "sleep_stage": "N3",
+            "n_epochs": 220
+        },
+        {
+            "subject_id": "SC4001",
+            "sleep_stage": "REM",
+            "n_epochs": 125
+        },
+        {
+            "subject_id": "SC4001",
+            "sleep_stage": "W",
+            "n_epochs": 1997
+        },
+        {
+            "subject_id": "SC4002",
+            "sleep_stage": "N1",
+            "n_epochs": 59
+        },
+        {
+            "subject_id": "SC4002",
+            "sleep_stage": "N2",
+            "n_epochs": 373
+        },
+        {
+            "subject_id": "SC4002",
+            "sleep_stage": "N3",
+            "n_epochs": 297
+        },
+        {
+            "subject_id": "SC4002",
+            "sleep_stage": "REM",
+            "n_epochs": 215
+        },
+        {
+            "subject_id": "SC4002",
+            "sleep_stage": "W",
+            "n_epochs": 1885
+        },
+        {
+            "subject_id": "SC4011",
+            "sleep_stage": "N1",
+            "n_epochs": 109
+        },
+        {
+            "subject_id": "SC4011",
+            "sleep_stage": "N2",
+            "n_epochs": 562
+        },
+        {
+            "subject_id": "SC4011",
+            "sleep_stage": "N3",
+            "n_epochs": 105
+        },
+        {
+            "subject_id": "SC4011",
+            "sleep_stage": "REM",
+            "n_epochs": 170
+        },
+        {
+            "subject_id": "SC4011",
+            "sleep_stage": "W",
+            "n_epochs": 1856
+        },
+        {
+            "subject_id": "SC4012",
+            "sleep_stage": "N1",
+            "n_epochs": 92
+        },
+        {
+            "subject_id": "SC4012",
+            "sleep_stage": "N2",
+            "n_epochs": 660
+        },
+        {
+            "subject_id": "SC4012",
+            "sleep_stage": "N3",
+            "n_epochs": 96
+        },
+        {
+            "subject_id": "SC4012",
+            "sleep_stage": "REM",
+            "n_epochs": 176
+        },
+        {
+            "subject_id": "SC4012",
+            "sleep_stage": "W",
+            "n_epochs": 1824
+        },
+        {
+            "subject_id": "SC4021",
+            "sleep_stage": "N1",
+            "n_epochs": 94
+        },
+        {
+            "subject_id": "SC4021",
+            "sleep_stage": "N2",
+            "n_epochs": 545
+        },
+        {
+            "subject_id": "SC4021",
+            "sleep_stage": "N3",
+            "n_epochs": 95
+        },
+        {
+            "subject_id": "SC4021",
+            "sleep_stage": "REM",
+            "n_epochs": 163
+        },
+        {
+            "subject_id": "SC4021",
+            "sleep_stage": "W",
+            "n_epochs": 1907
+        },
+        {
+            "subject_id": "SC4022",
+            "sleep_stage": "N1",
+            "n_epochs": 184
+        },
+        {
+            "subject_id": "SC4022",
+            "sleep_stage": "N2",
+            "n_epochs": 402
+        },
+        {
+            "subject_id": "SC4022",
+            "sleep_stage": "N3",
+            "n_epochs": 119
+        },
+        {
+            "subject_id": "SC4022",
+            "sleep_stage": "REM",
+            "n_epochs": 179
+        },
+        {
+            "subject_id": "SC4022",
+            "sleep_stage": "W",
+            "n_epochs": 1871
+        },
+        {
+            "subject_id": "SC4031",
+            "sleep_stage": "N1",
+            "n_epochs": 61
+        },
+        {
+            "subject_id": "SC4031",
+            "sleep_stage": "N2",
+            "n_epochs": 485
+        },
+        {
+            "subject_id": "SC4031",
+            "sleep_stage": "N3",
+            "n_epochs": 57
+        },
+        {
+            "subject_id": "SC4031",
+            "sleep_stage": "REM",
+            "n_epochs": 209
+        },
+        {
+            "subject_id": "SC4031",
+            "sleep_stage": "W",
+            "n_epochs": 2008
+        },
+        {
+            "subject_id": "SC4032",
+            "sleep_stage": "N1",
+            "n_epochs": 45
+        },
+        {
+            "subject_id": "SC4032",
+            "sleep_stage": "N2",
+            "n_epochs": 400
+        },
+        {
+            "subject_id": "SC4032",
+            "sleep_stage": "N3",
+            "n_epochs": 131
+        },
+        {
+            "subject_id": "SC4032",
+            "sleep_stage": "REM",
+            "n_epochs": 199
+        },
+        {
+            "subject_id": "SC4032",
+            "sleep_stage": "W",
+            "n_epochs": 1957
+        },
+        {
+            "subject_id": "SC4041",
+            "sleep_stage": "N1",
+            "n_epochs": 166
+        },
+        {
+            "subject_id": "SC4041",
+            "sleep_stage": "N2",
+            "n_epochs": 620
+        },
+        {
+            "subject_id": "SC4041",
+            "sleep_stage": "N3",
+            "n_epochs": 53
+        },
+        {
+            "subject_id": "SC4041",
+            "sleep_stage": "REM",
+            "n_epochs": 196
+        },
+        {
+            "subject_id": "SC4041",
+            "sleep_stage": "W",
+            "n_epochs": 1534
+        },
+        {
+            "subject_id": "SC4042",
+            "sleep_stage": "N1",
+            "n_epochs": 137
+        },
+        {
+            "subject_id": "SC4042",
+            "sleep_stage": "N2",
+            "n_epochs": 514
+        },
+        {
+            "subject_id": "SC4042",
+            "sleep_stage": "N3",
+            "n_epochs": 94
+        },
+        {
+            "subject_id": "SC4042",
+            "sleep_stage": "REM",
+            "n_epochs": 270
+        },
+        {
+            "subject_id": "SC4042",
+            "sleep_stage": "W",
+            "n_epochs": 1773
+        }
+    ],
+    "notes": {
+        "diagnostic_status": "post_run_audit",
+        "does_not_replace_registered_runner": true,
+        "main_patch": "Adds internal chronological diagnostics for all subjects and RNG alignment audit before Phase III.2.",
+        "critical_subjects_from_previous_run": [
+            "SC4002_M3_positive_lift",
+            "SC4022_rng_only_anomaly",
+            "SC4032_M2_positive_lift"
+        ],
+        "recommended_next_step_if_internal_leads_disappear": "Close Phase III.1 as null_result and proceed to Phase III.2.",
+        "recommended_next_step_if_internal_leads_survive": "Inspect surviving subject/model lead before Phase III.2.",
+        "recommended_next_step_if_rng_alignment_anomaly_detected": "Patch RNG alignment strategy or flag affected subject before Phase III.2."
+    }
+}

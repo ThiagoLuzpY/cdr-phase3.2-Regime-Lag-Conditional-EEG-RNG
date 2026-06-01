@@ -1,0 +1,79 @@
+{
+    "dataset_path": "C:\\Users\\thiago\\Documents\\CDR\\Phase2.3-Ecology\\data\\raw\\ecology\\lynxhare.csv",
+    "state_variables": [
+        "hare_log_return",
+        "lynx_log_return"
+    ],
+    "n_rows_clean": 161,
+    "n_states_main": 9,
+    "n_states_alt": 9,
+    "eps_hat_train": 0.07500000000000001,
+    "eps_hat_test": 0.5,
+    "eps_hat_injection": 0.275,
+    "eps_controls": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+    ],
+    "eps_hat_bins_alt": 0.07500000000000001,
+    "gates": {
+        "passed_all": false,
+        "results": [
+            {
+                "name": "F1_injection_recovery",
+                "passed": true,
+                "metrics": {
+                    "eps_hat": 0.275,
+                    "eps_true": 0.25,
+                    "abs_err": 0.025000000000000022
+                },
+                "thresholds": {
+                    "tol_abs": 0.05
+                },
+                "notes": "Injected reweighting must be recovered within tolerance."
+            },
+            {
+                "name": "F2_controls_collapse",
+                "passed": true,
+                "metrics": {
+                    "median_eps_controls": 0.0,
+                    "fraction_below_tol": 1.0,
+                    "max_eps_controls": 0.0,
+                    "n": 4.0
+                },
+                "thresholds": {
+                    "tol": 0.05,
+                    "required_fraction": 0.6666666666666666
+                },
+                "notes": "Controls must collapse robustly (median & majority)."
+            },
+            {
+                "name": "F3_holdout_generalization",
+                "passed": false,
+                "metrics": {
+                    "eps_train": 0.07500000000000001,
+                    "eps_test": 0.5,
+                    "abs_delta": 0.425
+                },
+                "thresholds": {
+                    "max_delta": 0.12
+                },
+                "notes": "Epsilon estimate should generalize to held-out time window."
+            },
+            {
+                "name": "F5_sensitivity",
+                "passed": true,
+                "metrics": {
+                    "eps_binsA": 0.07500000000000001,
+                    "eps_binsB": 0.07500000000000001,
+                    "abs_delta": 0.0
+                },
+                "thresholds": {
+                    "max_delta": 0.15
+                },
+                "notes": "Estimate should be stable under discretization changes."
+            }
+        ]
+    }
+}

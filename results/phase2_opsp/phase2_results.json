@@ -1,0 +1,71 @@
+{
+  "eps_controls": {
+    "columns_shuffle": 0.32,
+    "rows_shuffle": 0.48,
+    "seasonal_strata": 0.0,
+    "weekly_blocks": 0.0
+  },
+  "eps_hat_bins4": 0.0,
+  "eps_hat_injection": 0.3,
+  "eps_hat_test": 0.0,
+  "eps_hat_train": 0.0,
+  "gates": {
+    "passed_all": true,
+    "results": [
+      {
+        "metrics": {
+          "abs_err": 0.0,
+          "eps_hat": 0.3,
+          "eps_true": 0.3
+        },
+        "name": "F1_injection_recovery",
+        "notes": "Injected reweighting must be recovered within tolerance.",
+        "passed": true,
+        "thresholds": {
+          "tol_abs": 0.05
+        }
+      },
+      {
+        "metrics": {
+          "fraction_below_tol": 1.0,
+          "max_eps_controls": 0.0,
+          "median_eps_controls": 0.0,
+          "n": 2.0
+        },
+        "name": "F2_controls_collapse",
+        "notes": "Controls must collapse robustly (median & majority).",
+        "passed": true,
+        "thresholds": {
+          "required_fraction": 0.6666666666666666,
+          "tol": 0.05
+        }
+      },
+      {
+        "metrics": {
+          "abs_delta": 0.0,
+          "eps_test": 0.0,
+          "eps_train": 0.0
+        },
+        "name": "F3_holdout_generalization",
+        "notes": "Epsilon estimate should generalize to held-out time window.",
+        "passed": true,
+        "thresholds": {
+          "max_delta": 0.1
+        }
+      },
+      {
+        "metrics": {
+          "abs_delta": 0.0,
+          "eps_binsA": 0.0,
+          "eps_binsB": 0.0
+        },
+        "name": "F5_sensitivity",
+        "notes": "Estimate should be stable under discretization changes.",
+        "passed": true,
+        "thresholds": {
+          "max_delta": 0.12
+        }
+      }
+    ]
+  }
+}

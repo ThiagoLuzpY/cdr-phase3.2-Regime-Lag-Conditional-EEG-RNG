@@ -1,0 +1,72 @@
+[
+    {
+        "subject_id": "SC4001",
+        "valid": true,
+        "train_rows": 11283,
+        "test_rows": 2650,
+        "eps_joint_train": 0.0,
+        "eps_joint_test": 0.0,
+        "eps_eeg_train": 0.0,
+        "eps_eeg_test": 0.0,
+        "eps_rng_train": 0.0,
+        "eps_rng_test": 0.0,
+        "joint_lift_over_eeg": 0.0,
+        "joint_lift_over_baseline": 0.0
+    },
+    {
+        "subject_id": "SC4002",
+        "valid": true,
+        "train_rows": 11104,
+        "test_rows": 2829,
+        "eps_joint_train": 0.0,
+        "eps_joint_test": 0.0,
+        "eps_eeg_train": 0.0,
+        "eps_eeg_test": 0.0,
+        "eps_rng_train": 0.0,
+        "eps_rng_test": 0.0,
+        "joint_lift_over_eeg": 0.0,
+        "joint_lift_over_baseline": 0.0
+    },
+    {
+        "subject_id": "SC4011",
+        "valid": true,
+        "train_rows": 11131,
+        "test_rows": 2802,
+        "eps_joint_train": 0.0,
+        "eps_joint_test": 0.0,
+        "eps_eeg_train": 0.0,
+        "eps_eeg_test": 0.18,
+        "eps_rng_train": 0.0,
+        "eps_rng_test": 0.15,
+        "joint_lift_over_eeg": -0.18,
+        "joint_lift_over_baseline": -0.18
+    },
+    {
+        "subject_id": "SC4012",
+        "valid": true,
+        "train_rows": 11085,
+        "test_rows": 2848,
+        "eps_joint_train": 0.0,
+        "eps_joint_test": 0.0,
+        "eps_eeg_train": 0.0,
+        "eps_eeg_test": 0.0,
+        "eps_rng_train": 0.0,
+        "eps_rng_test": 0.0,
+        "joint_lift_over_eeg": 0.0,
+        "joint_lift_over_baseline": 0.0
+    },
+    {
+        "subject_id": "SC4021",
+        "valid": true,
+        "train_rows": 11129,
+        "test_rows": 2804,
+        "eps_joint_train": 0.0,
+        "eps_joint_test": 0.0,
+        "eps_eeg_train": 0.0,
+        "eps_eeg_test": 0.0,
+        "eps_rng_train": 0.0,
+        "eps_rng_test": 0.0,
+        "joint_lift_over_eeg": 0.0,
+        "joint_lift_over_baseline": 0.0
+    }
+]

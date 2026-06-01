@@ -1,0 +1,114 @@
+{
+    "eps_hat_train": 0.17,
+    "eps_hat_test": 0.0,
+    "eps_hat_injection": 0.37,
+    "eps_controls": [
+        0.0,
+        0.0,
+        0.17,
+        0.0,
+        0.0,
+        0.0,
+        0.17,
+        0.0,
+        0.0,
+        0.01,
+        0.17,
+        0.0
+    ],
+    "eps_hat_bins_alt": 0.21,
+    "gates": {
+        "passed_all": false,
+        "results": [
+            {
+                "name": "F1_injection_recovery",
+                "passed": false,
+                "metrics": {
+                    "eps_hat": 0.37,
+                    "eps_true": 0.25,
+                    "abs_err": 0.12
+                },
+                "thresholds": {
+                    "tol_abs": 0.08
+                },
+                "notes": "Injected reweighting must be recovered within tolerance."
+            },
+            {
+                "name": "F2_controls_collapse",
+                "passed": true,
+                "metrics": {
+                    "median_eps_controls": 0.0,
+                    "fraction_below_tol": 0.75,
+                    "max_eps_controls": 0.17,
+                    "n": 12.0
+                },
+                "thresholds": {
+                    "tol": 0.05,
+                    "required_fraction": 0.75
+                },
+                "notes": "Controls must collapse robustly (median & majority)."
+            },
+            {
+                "name": "F3_holdout_generalization",
+                "passed": false,
+                "metrics": {
+                    "eps_train": 0.17,
+                    "eps_test": 0.0,
+                    "abs_delta": 0.17
+                },
+                "thresholds": {
+                    "max_delta": 0.1
+                },
+                "notes": "Epsilon estimate should generalize to held-out time window."
+            },
+            {
+                "name": "F5_sensitivity",
+                "passed": true,
+                "metrics": {
+                    "eps_binsA": 0.17,
+                    "eps_binsB": 0.21,
+                    "abs_delta": 0.03999999999999998
+                },
+                "thresholds": {
+                    "max_delta": 0.12
+                },
+                "notes": "Estimate should be stable under discretization changes."
+            }
+        ]
+    },
+    "metadata": {
+        "state_columns": [
+            "delta_power",
+            "theta_power",
+            "alpha_power",
+            "beta_power"
+        ],
+        "n_bins": 3,
+        "train_ratio": 0.75,
+        "channel_name": "EEG Fpz-Cz",
+        "epoch_seconds": 30,
+        "psg_file": "SC4001E0-PSG.edf",
+        "hypnogram_file": "SC4001EC-Hypnogram.edf",
+        "f3_holdout_mode": "block_interleaved",
+        "f3_block_size": 20,
+        "log_bandpower": true,
+        "delta_band": [
+            0.5,
+            4.0
+        ],
+        "theta_band": [
+            4.0,
+            8.0
+        ],
+        "alpha_band": [
+            8.0,
+            12.0
+        ],
+        "beta_band": [
+            12.0,
+            30.0
+        ],
+        "f3_eps_hat_train": 0.17,
+        "f3_eps_hat_test": 0.0
+    }
+}

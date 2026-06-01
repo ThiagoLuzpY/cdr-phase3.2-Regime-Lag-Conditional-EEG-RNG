@@ -1,0 +1,87 @@
+{
+    "eps_hat_train": 0.08,
+    "eps_hat_test": 0.0,
+    "eps_hat_injection": 0.0,
+    "eps_controls": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+    ],
+    "eps_hat_bins3": 0.8,
+    "gates": {
+        "passed_all": false,
+        "results": [
+            {
+                "name": "F1_injection_recovery",
+                "passed": true,
+                "metrics": {
+                    "eps_hat": 0.0,
+                    "eps_true": 0.05,
+                    "abs_err": 0.05
+                },
+                "thresholds": {
+                    "tol_abs": 0.05
+                },
+                "notes": "Injected reweighting must be recovered within tolerance."
+            },
+            {
+                "name": "F2_controls_collapse",
+                "passed": true,
+                "metrics": {
+                    "median_eps_controls": 0.0,
+                    "fraction_below_tol": 1.0,
+                    "max_eps_controls": 0.0,
+                    "n": 20.0
+                },
+                "thresholds": {
+                    "tol": 0.05,
+                    "required_fraction": 0.6666666666666666
+                },
+                "notes": "Controls must collapse robustly (median & majority)."
+            },
+            {
+                "name": "F3_holdout_generalization",
+                "passed": true,
+                "metrics": {
+                    "eps_train": 0.08,
+                    "eps_test": 0.0,
+                    "abs_delta": 0.08
+                },
+                "thresholds": {
+                    "max_delta": 0.1
+                },
+                "notes": "Epsilon estimate should generalize to held-out time window."
+            },
+            {
+                "name": "F5_sensitivity",
+                "passed": false,
+                "metrics": {
+                    "eps_binsA": 0.08,
+                    "eps_binsB": 0.8,
+                    "abs_delta": 0.7200000000000001
+                },
+                "thresholds": {
+                    "max_delta": 0.12
+                },
+                "notes": "Estimate should be stable under discretization changes."
+            }
+        ]
+    }
+}
