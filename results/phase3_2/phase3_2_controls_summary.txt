@@ -1,0 +1,137 @@
+==============================================================================
+Phase III.2 — Negative Controls Summary
+Leakage-safe conditional estimator version
+==============================================================================
+
+Overall passed: True
+Control types: 6
+Failed control types: []
+Interpretation: Controls pass when conditional lift, BIC improvement, subject-level positive lift fraction and strong-candidate persistence collapse. High epsilon alone is tracked as saturation diagnostic, not as direct failure.
+
+Control: circular_rng_shift
+------------------------------------------------------------------------------
+Runs: 36/36
+Median max baseline eps: 0.8
+Median max augmented eps: 0.8
+Mean max augmented eps: 0.6444444444444445
+Max augmented eps: 0.8
+Median max lift: 0.0
+Mean max lift: 0.022222222222222223
+Max lift: 0.8
+Median max BIC improvement: -135.4945996611466
+Max BIC improvement: -123.2788144588867
+Median max LL improvement: -3.142497105020084
+Max LL improvement: 3.9177268295807153
+Median eps saturation fraction: 0.5
+Max eps saturation fraction: 1.0
+Fraction below control tol: 0.9722222222222222
+Fraction collapsed overall: 0.9722222222222222
+Passed: True
+Reason: ok
+
+Control: conditional_target_shuffle
+------------------------------------------------------------------------------
+Runs: 36/36
+Median max baseline eps: 0.8
+Median max augmented eps: 0.8
+Mean max augmented eps: 0.48888888888888893
+Max augmented eps: 0.8
+Median max lift: 0.0
+Mean max lift: 0.02222222222222223
+Max lift: 0.8
+Median max BIC improvement: -135.5534983749901
+Max BIC improvement: -122.94562829179904
+Median max LL improvement: -4.262405997011683
+Max LL improvement: -0.25141777211592853
+Median eps saturation fraction: 0.5
+Max eps saturation fraction: 1.0
+Fraction below control tol: 0.9166666666666666
+Fraction collapsed overall: 0.9166666666666666
+Passed: True
+Reason: ok
+
+Control: stage_preserving_rng_shuffle
+------------------------------------------------------------------------------
+Runs: 36/36
+Median max baseline eps: 0.8
+Median max augmented eps: 0.8
+Mean max augmented eps: 0.6222222222222223
+Max augmented eps: 0.8
+Median max lift: 0.0
+Mean max lift: 0.06666666666666668
+Max lift: 0.8
+Median max BIC improvement: -136.0799733668498
+Max BIC improvement: -121.85718803067539
+Median max LL improvement: -3.3645955847775895
+Max LL improvement: 3.5236993283588163
+Median eps saturation fraction: 0.5
+Max eps saturation fraction: 1.0
+Fraction below control tol: 0.8611111111111112
+Fraction collapsed overall: 0.8611111111111112
+Passed: True
+Reason: ok
+
+Control: subject_mismatch
+------------------------------------------------------------------------------
+Runs: 36/36
+Median max baseline eps: 0.8
+Median max augmented eps: 0.8
+Mean max augmented eps: 0.6222222222222223
+Max augmented eps: 0.8
+Median max lift: 0.0
+Mean max lift: 0.044444444444444446
+Max lift: 0.8
+Median max BIC improvement: -137.07681147615904
+Max BIC improvement: -121.29247109729386
+Median max LL improvement: -3.789778694560596
+Max LL improvement: 5.889016422016539
+Median eps saturation fraction: 0.5
+Max eps saturation fraction: 1.0
+Fraction below control tol: 0.8888888888888888
+Fraction collapsed overall: 0.8888888888888888
+Passed: True
+Reason: ok
+
+Control: within_subject_eeg_shuffle
+------------------------------------------------------------------------------
+Runs: 36/36
+Median max baseline eps: 0.8
+Median max augmented eps: 0.8
+Mean max augmented eps: 0.6000000000000001
+Max augmented eps: 0.8
+Median max lift: 0.0
+Mean max lift: 0.044444444444444446
+Max lift: 0.8
+Median max BIC improvement: -139.81965551429607
+Max BIC improvement: -122.05260107122922
+Median max LL improvement: -4.386236696225296
+Max LL improvement: 1.7228026876910008
+Median eps saturation fraction: 0.5
+Max eps saturation fraction: 1.0
+Fraction below control tol: 0.9444444444444444
+Fraction collapsed overall: 0.9444444444444444
+Passed: True
+Reason: ok
+
+Control: within_subject_rng_shuffle
+------------------------------------------------------------------------------
+Runs: 36/36
+Median max baseline eps: 0.8
+Median max augmented eps: 0.8
+Mean max augmented eps: 0.6222222222222223
+Max augmented eps: 0.8
+Median max lift: 0.0
+Mean max lift: 0.044444444444444446
+Max lift: 0.8
+Median max BIC improvement: -135.38280066543075
+Max BIC improvement: -119.6032999148274
+Median max LL improvement: -3.013169657414437
+Max LL improvement: 2.644526397718437
+Median eps saturation fraction: 0.5
+Max eps saturation fraction: 1.0
+Fraction below control tol: 0.9444444444444444
+Fraction collapsed overall: 0.9444444444444444
+Passed: True
+Reason: ok
+
+==============================================================================

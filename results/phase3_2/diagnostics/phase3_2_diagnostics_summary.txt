@@ -1,0 +1,69 @@
+==============================================================================
+CDR Phase III.2 — Diagnostics Summary
+Leakage-safe conditional estimator aware version
+==============================================================================
+
+Final interpretation
+------------------------------------------------------------------------------
+headline: Phase III.2 produced exploratory leads with ε saturation warning.
+status: exploratory_lead_with_saturation_warning
+
+- Positive conditional lift rows were detected: 6. Primary positive rows: 1.
+- No strong candidate rows satisfied lift, epsilon, subject-consistency and BIC criteria simultaneously.
+- Negative controls collapsed under the leakage-safe criteria.
+- F7 failed: subject-level consistency was insufficient for a strong claim.
+- F8 failed: the augmented conditional model was not favored by BIC.
+- F12 warning: ε saturation remains present and must be treated as a diagnostic limitation.
+- Not evaluated in this standalone diagnostic run: ['F1', 'F5'].
+
+recommendation: Treat Phase III.2 as an exploratory lead only. Controls passed, but F7/F8 failed and F12 raised an ε saturation warning. Do not claim EEG-RNG coupling. The appropriate next step is to document the lead, preserve the null/guardrail interpretation, and only activate III.2D/III.2E as exploratory extensions or future protocol work.
+
+Conditional diagnostics
+------------------------------------------------------------------------------
+n_rows: 84
+n_valid_rows: 84
+n_primary_rows: 4
+n_positive_lift_rows: 6
+n_primary_positive_lift_rows: 1
+n_exploratory_lift_rows: 6
+n_strong_candidate_rows: 0
+n_primary_strong_candidate_rows: 0
+n_high_epsilon_zero_lift_rows: 21
+max_conditional_lift: 0.8
+max_augmented_eps_test: 0.8
+max_fraction_positive_lift: 0.5
+best_bic_improvement: -61.02327766873805
+best_ll_improvement: 6.258120388774159
+interpretation: Positive conditional lift rows exist, but they remain exploratory because they do not satisfy all registered criteria simultaneously.
+
+Epsilon saturation
+------------------------------------------------------------------------------
+pair_saturation: {'available': True, 'eps_saturation_value': 0.8, 'warning_fraction': 0.5, 'n_valid_pair_rows': 84, 'max_baseline_eps_test': 0.8, 'max_augmented_eps_test': 0.8, 'n_either_saturated': 45, 'n_both_saturated': 21, 'either_saturation_fraction': 0.5357142857142857, 'both_saturation_fraction': 0.25, 'warning': True, 'reason': 'pair_level_epsilon_saturation_warning'}
+model_saturation: {'available': True, 'eps_saturation_value': 0.8, 'n_model_rows': 168, 'columns': {'eps_candidate': {'max': 0.8, 'mean': 0.7999999999999998, 'n_saturated': 168, 'saturation_fraction': 1.0}, 'eps_calib': {'max': 0.8, 'mean': 0.7999999999999998, 'n_saturated': 168, 'saturation_fraction': 1.0}, 'eps_test': {'max': 0.8, 'mean': 0.3142857142857143, 'n_saturated': 66, 'saturation_fraction': 0.39285714285714285}}, 'explicit_eps_saturated': {'n_saturated': 168, 'saturation_fraction': 1.0}, 'max_saturation_fraction': 1.0, 'warning_fraction': 0.5, 'warning': True, 'reason': 'epsilon_saturation_warning'}
+
+Control diagnostics
+------------------------------------------------------------------------------
+available: True
+n_control_types: 6
+n_failed_control_types: 0
+failed_control_types: []
+interpretation: All control types collapsed under the leakage-safe control criteria.
+
+Gates
+------------------------------------------------------------------------------
+passed_gates: ['F2', 'F3', 'F6', 'F9', 'F10', 'F11']
+failed_gates: ['F7', 'F8']
+not_evaluated_gates: ['F1', 'F5']
+warning_gates: ['F12']
+
+Multiple-comparison guard
+------------------------------------------------------------------------------
+enabled: True
+n_valid_tests: 84
+n_positive_lift_tests: 6
+n_primary_positive_lift_tests: 1
+n_exploratory_lift_tests: 6
+n_strong_candidate_tests: 0
+n_primary_strong_candidate_tests: 0
+
+==============================================================================

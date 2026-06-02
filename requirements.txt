@@ -8,3 +8,5 @@ nilearn>=0.13
 mdtraj>=1.11
 requests
 mne
+scikit-learn
+scipy

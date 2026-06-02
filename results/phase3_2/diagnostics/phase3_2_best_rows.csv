@@ -1,0 +1,8 @@
+selected_by,regime,lag_epochs,lag_label,family,baseline_model,augmented_model,primary,valid,baseline_eps_test,augmented_eps_test,conditional_lift,fraction_positive_lift,ll_improvement,bic_improvement,aic_improvement,n_subjects_evaluated,n_subjects_positive_lift,reason
+conditional_lift,stable_sleep,1,lag_p1,RNG_next,C2_RNG_next_given_RNG,C3_RNG_next_given_RNG_EEG,False,True,0.0,0.8,0.8,0.5,-2.51574933659208,-125.17209340333238,-37.03149867318416,10,5,ok
+augmented_eps_test,full,-1,lag_m1,RNG_next,C2_RNG_next_given_RNG,C3_RNG_next_given_RNG_EEG,False,True,0.8,0.8,0.0,0.1,3.6025171827159284,-137.1366723915071,-24.794965634568143,10,1,ok
+baseline_eps_test,deep_sleep,-5,lag_m5,EEG_next,C0_EEG_next_given_EEG,C1_EEG_next_given_EEG_RNG,False,True,0.8,0.0,-0.8,0.0,-27.07855083738616,-302.4105607244744,-138.15710167477232,8,0,ok
+ll_improvement,rem_only,-3,lag_m3,EEG_next,C0_EEG_next_given_EEG,C1_EEG_next_given_EEG_RNG,False,True,0.0,0.0,0.0,0.0,6.258120388774159,-215.73669415665088,-59.48375922245168,10,0,ok
+bic_improvement,deep_sleep,3,lag_p3,RNG_next,C2_RNG_next_given_RNG,C3_RNG_next_given_RNG_EEG,False,True,0.0,0.0,0.0,0.0,-0.890359847296395,-61.02327766873805,-21.78071969459279,8,0,ok
+aic_improvement,deep_sleep,3,lag_p3,RNG_next,C2_RNG_next_given_RNG,C3_RNG_next_given_RNG_EEG,False,True,0.0,0.0,0.0,0.0,-0.890359847296395,-61.02327766873805,-21.78071969459279,8,0,ok
+fraction_positive_lift,stable_sleep,1,lag_p1,RNG_next,C2_RNG_next_given_RNG,C3_RNG_next_given_RNG_EEG,False,True,0.0,0.8,0.8,0.5,-2.51574933659208,-125.17209340333238,-37.03149867318416,10,5,ok

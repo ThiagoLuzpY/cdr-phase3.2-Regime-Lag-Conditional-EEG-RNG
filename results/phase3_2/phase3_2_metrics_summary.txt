@@ -1,0 +1,59 @@
+==============================================================================
+Phase III.2 — Metrics and Gates Summary
+Leakage-safe conditional estimator aware version
+==============================================================================
+
+Final status
+------------------------------------------------------------------------------
+status: exploratory_lead_with_saturation_warning
+interpretation: Exploratory conditional lift appeared, but epsilon saturation diagnostics raised a warning. The result cannot be interpreted as evidence without additional diagnostics.
+passed_gates: ['F2', 'F3', 'F6', 'F9', 'F10', 'F11']
+failed_gates: ['F7', 'F8']
+warning_gates: ['F12']
+not_evaluated_gates: ['F1', 'F5']
+
+Gates
+------------------------------------------------------------------------------
+F1 — Injection recovery: NOT_EVALUATED | value=0.0 | threshold=0.05 | reason=not_evaluated_in_standalone_metrics; reserved for runner-level injection test
+F2 — Controls collapse: PASS | value=0.8611111111111112 | threshold=0.75 | reason=ok
+F3 — Holdout generalization: PASS | value=1.0 | threshold=1.0 | reason=valid ref/calib/test conditional evaluations exist
+F5 — Sensitivity stability: NOT_EVALUATED | value=0.0 | threshold=0.12 | reason=not_evaluated_in_standalone_metrics; reserved for runner-level sensitivity test
+F6 — Conditional lift: PASS | value=0.8 | threshold=0.03 | reason=ok
+F7 — Subject consistency: FAIL | value=0.4 | threshold=0.6 | reason=max_primary_fraction_positive_lift=0.400000
+F8 — Complexity penalty / BIC: FAIL | value=-132.28907458985896 | threshold=0.0 | reason=best_primary_bic_improvement=-132.289075
+F9 — Lag / ablation stability: PASS | value=0.0 | threshold=0.0 | reason=ok
+F10 — Regime specificity: PASS | value=0.8 | threshold=0.03 | reason=ok
+F11 — Multiple-comparison guard: PASS | value=0.0 | threshold=0.0 | reason=no_strong_candidates_detected
+F12 — Epsilon saturation diagnostic: WARN | value=1.0 | threshold=0.5 | reason=epsilon_saturation_warning
+
+Multiple-comparison guard
+------------------------------------------------------------------------------
+enabled: True
+n_valid_tests: 84
+n_positive_lift_tests: 6
+n_primary_positive_lift_tests: 1
+n_exploratory_lift_tests: 6
+n_strong_candidate_tests: 0
+n_primary_strong_candidate_tests: 0
+
+Epsilon saturation
+------------------------------------------------------------------------------
+model_saturation: {'available': True, 'epsilon_column_used': 'eps_candidate', 'eps_saturation_value': 0.8, 'eps_saturation_warning_fraction': 0.5, 'n_model_rows': 168, 'n_saturated_rows': 168, 'saturation_fraction': 1.0, 'max_epsilon': 0.8, 'warning': True, 'reason': 'eps_saturation_warning', 'explicit_eps_saturated_rows': 168, 'explicit_eps_saturated_fraction': 1.0}
+pair_saturation: {'available': True, 'eps_saturation_value': 0.8, 'eps_saturation_warning_fraction': 0.5, 'n_valid_pair_rows': 84, 'n_either_saturated_rows': 45, 'n_both_saturated_rows': 21, 'either_saturation_fraction': 0.5357142857142857, 'both_saturation_fraction': 0.25, 'max_baseline_eps_test': 0.8, 'max_augmented_eps_test': 0.8, 'warning': True, 'reason': 'pair_level_eps_saturation_warning'}
+
+Controls
+------------------------------------------------------------------------------
+controls_available: True
+controls_stale: False
+controls_passed: True
+failed_control_types: []
+controls_reason: ok
+
+Best conditional rows
+------------------------------------------------------------------------------
+best_by_conditional_lift: {'regime': 'stable_sleep', 'lag_epochs': 1, 'lag_label': 'lag_p1', 'family': 'RNG_next', 'baseline_model': 'C2_RNG_next_given_RNG', 'augmented_model': 'C3_RNG_next_given_RNG_EEG', 'valid': True, 'primary': False, 'baseline_eps_test': 0.0, 'augmented_eps_test': 0.8, 'conditional_lift': 0.8, 'baseline_ll_test': -1264.933078488485, 'augmented_ll_test': -1267.4488278250772, 'll_improvement': -2.51574933659208, 'baseline_bic_test': 2544.883731318239, 'augmented_bic_test': 2670.0558247215718, 'bic_improvement': -125.17209340333238, 'baseline_aic_test': 2533.86615697697, 'augmented_aic_test': 2570.8976556501543, 'aic_improvement': -37.03149867318416, 'n_subjects_evaluated': 10, 'n_subjects_positive_lift': 5, 'fraction_positive_lift': 0.5, 'reason': 'ok'}
+best_by_bic_improvement: {'regime': 'deep_sleep', 'lag_epochs': 3, 'lag_label': 'lag_p3', 'family': 'RNG_next', 'baseline_model': 'C2_RNG_next_given_RNG', 'augmented_model': 'C3_RNG_next_given_RNG_EEG', 'valid': True, 'primary': False, 'baseline_eps_test': 0.0, 'augmented_eps_test': 0.0, 'conditional_lift': 0.0, 'baseline_ll_test': -259.84705085893165, 'augmented_ll_test': -260.73741070622805, 'll_improvement': -0.890359847296395, 'baseline_bic_test': 531.5426133126924, 'augmented_bic_test': 592.5658909814305, 'bic_improvement': -61.02327766873805, 'baseline_aic_test': 523.6941017178633, 'augmented_aic_test': 545.4748214124561, 'aic_improvement': -21.78071969459279, 'n_subjects_evaluated': 8, 'n_subjects_positive_lift': 0, 'fraction_positive_lift': 0.0, 'reason': 'ok'}
+best_by_ll_improvement: {'regime': 'rem_only', 'lag_epochs': -3, 'lag_label': 'lag_m3', 'family': 'EEG_next', 'baseline_model': 'C0_EEG_next_given_EEG', 'augmented_model': 'C1_EEG_next_given_EEG_RNG', 'valid': True, 'primary': False, 'baseline_eps_test': 0.0, 'augmented_eps_test': 0.0, 'conditional_lift': 0.0, 'baseline_ll_test': -640.6206346187153, 'augmented_ll_test': -634.3625142299411, 'll_improvement': 6.258120388774159, 'baseline_bic_test': 1547.536359993996, 'augmented_bic_test': 1763.2730541506469, 'bic_improvement': -215.73669415665088, 'baseline_aic_test': 1365.2412692374303, 'augmented_aic_test': 1424.7250284598822, 'aic_improvement': -59.48375922245168, 'n_subjects_evaluated': 10, 'n_subjects_positive_lift': 0, 'fraction_positive_lift': 0.0, 'reason': 'ok'}
+best_by_fraction_positive_lift: {'regime': 'stable_sleep', 'lag_epochs': 1, 'lag_label': 'lag_p1', 'family': 'RNG_next', 'baseline_model': 'C2_RNG_next_given_RNG', 'augmented_model': 'C3_RNG_next_given_RNG_EEG', 'valid': True, 'primary': False, 'baseline_eps_test': 0.0, 'augmented_eps_test': 0.8, 'conditional_lift': 0.8, 'baseline_ll_test': -1264.933078488485, 'augmented_ll_test': -1267.4488278250772, 'll_improvement': -2.51574933659208, 'baseline_bic_test': 2544.883731318239, 'augmented_bic_test': 2670.0558247215718, 'bic_improvement': -125.17209340333238, 'baseline_aic_test': 2533.86615697697, 'augmented_aic_test': 2570.8976556501543, 'aic_improvement': -37.03149867318416, 'n_subjects_evaluated': 10, 'n_subjects_positive_lift': 5, 'fraction_positive_lift': 0.5, 'reason': 'ok'}
+
+==============================================================================
