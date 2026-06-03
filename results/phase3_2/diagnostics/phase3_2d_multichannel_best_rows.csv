@@ -1,0 +1,8 @@
+selected_by,regime,lag_epochs,lag_label,family,baseline_model,augmented_model,primary,valid,baseline_eps_test,augmented_eps_test,conditional_lift,fraction_positive_lift,ll_improvement,bic_improvement,aic_improvement,n_subjects_evaluated,n_subjects_positive_lift,reason
+conditional_lift,deep_sleep,3,lag_p3,RNG_next,C2_RNG_next_given_RNG,D2_RNG_next_given_RNG_MCEEG,False,True,0.0,0.8,0.8,0.0,-0.4558836042162397,-66.07858097999224,-22.91176720843248,8,0,ok
+augmented_eps_test,deep_sleep,-5,lag_m5,RNG_next,C2_RNG_next_given_RNG,D2_RNG_next_given_RNG_MCEEG,False,True,0.8,0.8,0.0,0.125,-27.08223170401135,-125.094023136509,-78.1644634080227,8,1,ok
+baseline_eps_test,deep_sleep,-5,lag_m5,RNG_next,C2_RNG_next_given_RNG,D2_RNG_next_given_RNG_MCEEG,False,True,0.8,0.8,0.0,0.125,-27.08223170401135,-125.094023136509,-78.1644634080227,8,1,ok
+ll_improvement,deep_sleep,5,lag_p5,MCEEG_next,D0_MCEEG_next_given_MCEEG,D1_MCEEG_next_given_MCEEG_RNG,False,True,0.0,0.0,0.0,0.5,45.37899991349434,-237.5794414958825,-21.24200017301132,8,4,ok
+bic_improvement,deep_sleep,3,lag_p3,RNG_next,C2_RNG_next_given_RNG,D2_RNG_next_given_RNG_MCEEG,False,True,0.0,0.8,0.8,0.0,-0.4558836042162397,-66.07858097999224,-22.91176720843248,8,0,ok
+aic_improvement,deep_sleep,5,lag_p5,MCEEG_next,D0_MCEEG_next_given_MCEEG,D1_MCEEG_next_given_MCEEG_RNG,False,True,0.0,0.0,0.0,0.5,45.37899991349434,-237.5794414958825,-21.24200017301132,8,4,ok
+fraction_positive_lift,deep_sleep,5,lag_p5,MCEEG_next,D0_MCEEG_next_given_MCEEG,D1_MCEEG_next_given_MCEEG_RNG,False,True,0.0,0.0,0.0,0.5,45.37899991349434,-237.5794414958825,-21.24200017301132,8,4,ok

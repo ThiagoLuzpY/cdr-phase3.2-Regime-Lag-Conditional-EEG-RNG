@@ -12,6 +12,7 @@ import pandas as pd
 
 from config.phase3_2_config import (
     Phase32Config,
+    active_conditional_pairs,
     describe_config,
     load_phase3_2_config,
 )
@@ -68,14 +69,20 @@ from src.phase3_2_diagnostics import (
 # This runner orchestrates the complete Phase III.2 pipeline:
 #
 #   1. Loader
-#   2. Features
+#   2. Features + Phase III.2D multichannel layer
 #   3. Regimes                 — III.2A
 #   4. Lagging                 — III.2B
-#   5. Conditional CDR         — III.2C
-#   6. Negative controls
+#   5. Conditional CDR         — III.2C + III.2D
+#   6. Negative controls       — III.2D multichannel-aware
 #   7. Metrics / gates
-#   8. Diagnostics
+#   8. Diagnostics             — III.2D multichannel-aware
 #   9. Final report
+#
+# Current phase logic:
+#
+#   III.2A/B/C — regime, lagged and conditional leakage-safe validation
+#   III.2D     — active exploratory multichannel EEG enrichment
+#   III.2E     — protocol-only; requires synchronized EEG + QRNG acquisition
 #
 # Recommended commands:
 #
@@ -97,6 +104,7 @@ from src.phase3_2_diagnostics import (
 
 
 EXPECTED_CONTROL_MODULE = "Phase_III_2_negative_controls_leakage_safe"
+EXPECTED_CONTROL_MODULE_DETAIL = "phase3_2d_multichannel_aware"
 
 
 # =========================================================
@@ -140,6 +148,15 @@ def _load_json(path: Path) -> Dict[str, Any]:
         return json.load(f)
 
 
+def _load_csv_if_exists(path: Path) -> pd.DataFrame:
+    path = Path(path)
+
+    if not path.exists():
+        return pd.DataFrame()
+
+    return pd.read_csv(path)
+
+
 def _step_header(title: str) -> None:
     print("\n" + "=" * 78)
     print(title)
@@ -159,6 +176,62 @@ def _safe_dict(value: Any) -> Dict[str, Any]:
         return value
 
     return {}
+
+
+def _safe_int(value: Any, default: int = 0) -> int:
+    try:
+        if pd.isna(value):
+            return default
+
+        return int(value)
+
+    except Exception:
+        return default
+
+
+def _safe_float(value: Any, default: float = 0.0) -> float:
+    try:
+        if pd.isna(value):
+            return default
+
+        x = float(value)
+
+        if not np.isfinite(x):
+            return default
+
+        return x
+
+    except Exception:
+        return default
+
+
+def _as_bool_series(series: pd.Series) -> pd.Series:
+    if series.empty:
+        return pd.Series([], dtype=bool)
+
+    if series.dtype == bool:
+        return series
+
+    return series.astype(str).str.lower().isin(["true", "1", "yes"])
+
+
+def _is_multichannel_pair_rows(df: pd.DataFrame) -> pd.Series:
+    if df.empty:
+        return pd.Series([], dtype=bool)
+
+    mask = pd.Series(np.zeros(len(df), dtype=bool), index=df.index)
+
+    for col in ["baseline_model", "augmented_model", "family"]:
+        if col not in df.columns:
+            continue
+
+        text = df[col].astype(str)
+
+        mask |= text.str.startswith("D")
+        mask |= text.str.contains("MCEEG", case=False, na=False)
+        mask |= text.str.contains("multichannel", case=False, na=False)
+
+    return mask
 
 
 # =========================================================
@@ -181,7 +254,13 @@ def controls_outputs_current(cfg: Phase32Config) -> bool:
 
     payload = _load_json(Path(cfg.controls_json))
 
-    return str(payload.get("module", "")) == EXPECTED_CONTROL_MODULE
+    module_ok = str(payload.get("module", "")) == EXPECTED_CONTROL_MODULE
+
+    if cfg.run_multichannel_analysis and cfg.use_multichannel_eeg:
+        detail_ok = str(payload.get("module_detail", "")) == EXPECTED_CONTROL_MODULE_DETAIL
+        return bool(module_ok and detail_ok)
+
+    return bool(module_ok)
 
 
 def summarize_existing_controls(cfg: Phase32Config) -> Dict[str, Any]:
@@ -198,8 +277,10 @@ def summarize_existing_controls(cfg: Phase32Config) -> Dict[str, Any]:
     return {
         "available": True,
         "module": payload.get("module"),
+        "module_detail": payload.get("module_detail"),
         "expected_module": EXPECTED_CONTROL_MODULE,
-        "is_current": str(payload.get("module", "")) == EXPECTED_CONTROL_MODULE,
+        "expected_module_detail": EXPECTED_CONTROL_MODULE_DETAIL,
+        "is_current": controls_outputs_current(cfg),
         "passed": summary.get("passed"),
         "failed_control_types": summary.get("failed_control_types", []),
         "n_control_types": summary.get("n_control_types"),
@@ -215,7 +296,152 @@ def conditional_outputs_exist(cfg: Phase32Config) -> bool:
         Path(cfg.conditional_summary_json),
     ]
 
+    if cfg.run_multichannel_analysis and cfg.use_multichannel_eeg:
+        required.append(Path(cfg.multichannel_results_csv))
+
     return all(path.exists() for path in required)
+
+
+# =========================================================
+# Phase III.2D summary helpers
+# =========================================================
+
+def summarize_phase3_2d_artifacts(cfg: Phase32Config) -> Dict[str, Any]:
+    inventory = _load_json(Path(cfg.multichannel_inventory_json))
+    summary = _load_json(Path(cfg.multichannel_summary_json))
+    mc_results = _load_csv_if_exists(Path(cfg.multichannel_results_csv))
+    pair_scores = _load_csv_if_exists(Path(cfg.conditional_results_csv))
+    control_runs = _load_csv_if_exists(Path(cfg.results_dir) / "phase3_2_control_runs.csv")
+    control_pairs = _load_csv_if_exists(Path(cfg.results_dir) / "phase3_2_control_pair_scores.csv")
+
+    mc_pair_rows = pd.DataFrame()
+    mc_positive_rows = pd.DataFrame()
+    mc_strong_rows = pd.DataFrame()
+
+    if not pair_scores.empty:
+        if "valid" in pair_scores.columns:
+            valid = pair_scores[_as_bool_series(pair_scores["valid"])].copy()
+        else:
+            valid = pair_scores.copy()
+
+        if not valid.empty:
+            mc_pair_rows = valid[_is_multichannel_pair_rows(valid)].copy()
+
+            if not mc_pair_rows.empty and "conditional_lift" in mc_pair_rows.columns:
+                lift = pd.to_numeric(mc_pair_rows["conditional_lift"], errors="coerce").fillna(0.0)
+                mc_positive_rows = mc_pair_rows[lift > 0.0].copy()
+
+                eps = pd.to_numeric(mc_pair_rows.get("augmented_eps_test", 0.0), errors="coerce").fillna(0.0)
+                frac = pd.to_numeric(mc_pair_rows.get("fraction_positive_lift", 0.0), errors="coerce").fillna(0.0)
+                bic = pd.to_numeric(mc_pair_rows.get("bic_improvement", 0.0), errors="coerce").fillna(0.0)
+
+                mc_strong_rows = mc_pair_rows[
+                    (lift >= float(cfg.conditional_lift_min))
+                    & (eps >= float(cfg.strong_eps_min))
+                    & (frac >= float(cfg.subject_effect_fraction))
+                    & (bic >= 0.0)
+                ].copy()
+
+    mc_control_pair_rows = pd.DataFrame()
+
+    if not control_pairs.empty:
+        mc_control_pair_rows = control_pairs[_is_multichannel_pair_rows(control_pairs)].copy()
+
+    source_columns = inventory.get("source_columns", {}) if inventory else {}
+    artifact_summary = summary.get("summary", {}) if summary else {}
+
+    return {
+        "enabled": bool(cfg.run_multichannel_analysis and cfg.use_multichannel_eeg),
+        "protocol_status": "active_exploratory",
+        "multichannel_available": bool(source_columns.get("multichannel_available", False)),
+        "delta_secondary_source_column": source_columns.get("delta_secondary_source_column"),
+        "alpha_secondary_source_column": source_columns.get("alpha_secondary_source_column"),
+        "state_n_unique": inventory.get("state_n_unique") if inventory else None,
+        "next_state_n_unique": inventory.get("next_state_n_unique") if inventory else None,
+        "info_bin_n_unique": inventory.get("info_bin_n_unique") if inventory else None,
+        "valid_multichannel_next_state_rows": inventory.get("valid_multichannel_next_state_rows") if inventory else None,
+        "valid_multichannel_conditional_rows": inventory.get("valid_multichannel_conditional_rows") if inventory else None,
+        "warnings": inventory.get("warnings", []) if inventory else [],
+        "artifact_summary_available": bool(summary),
+        "artifact_summary_rows": artifact_summary.get("n_rows"),
+        "artifact_summary_subjects": artifact_summary.get("subjects"),
+        "conditional": {
+            "n_multichannel_result_rows": int(len(mc_results)),
+            "n_multichannel_pair_rows": int(len(mc_pair_rows)),
+            "n_multichannel_positive_lift_rows": int(len(mc_positive_rows)),
+            "n_multichannel_strong_candidate_rows": int(len(mc_strong_rows)),
+            "max_multichannel_lift": (
+                float(pd.to_numeric(mc_pair_rows["conditional_lift"], errors="coerce").fillna(0.0).max())
+                if not mc_pair_rows.empty and "conditional_lift" in mc_pair_rows.columns
+                else 0.0
+            ),
+            "max_multichannel_augmented_eps": (
+                float(pd.to_numeric(mc_pair_rows["augmented_eps_test"], errors="coerce").fillna(0.0).max())
+                if not mc_pair_rows.empty and "augmented_eps_test" in mc_pair_rows.columns
+                else 0.0
+            ),
+            "best_multichannel_bic_improvement": (
+                float(pd.to_numeric(mc_pair_rows["bic_improvement"], errors="coerce").fillna(0.0).max())
+                if not mc_pair_rows.empty and "bic_improvement" in mc_pair_rows.columns
+                else 0.0
+            ),
+            "best_multichannel_ll_improvement": (
+                float(pd.to_numeric(mc_pair_rows["ll_improvement"], errors="coerce").fillna(0.0).max())
+                if not mc_pair_rows.empty and "ll_improvement" in mc_pair_rows.columns
+                else 0.0
+            ),
+        },
+        "controls": {
+            "n_control_run_rows": int(len(control_runs)),
+            "n_control_pair_rows": int(len(control_pairs)),
+            "n_multichannel_control_pair_rows": int(len(mc_control_pair_rows)),
+        },
+        "files": {
+            "multichannel_features_file": str(cfg.multichannel_features_file),
+            "multichannel_inventory_json": str(cfg.multichannel_inventory_json),
+            "multichannel_summary_json": str(cfg.multichannel_summary_json),
+            "multichannel_results_csv": str(cfg.multichannel_results_csv),
+        },
+    }
+
+
+def phase3_2e_protocol_status(cfg: Phase32Config) -> Dict[str, Any]:
+    return {
+        "status": "protocol_only",
+        "enabled_for_empirical_run": bool(cfg.run_synchronized_protocol_analysis),
+        "protocol_only": bool(cfg.phase3_2e_protocol_only),
+        "requires_real_time_sync": bool(cfg.phase3_2e_requires_real_time_sync),
+        "required_timestamp_columns": list(cfg.phase3_2e_required_timestamp_columns),
+        "min_sync_quality": float(cfg.phase3_2e_min_sync_quality),
+        "max_clock_drift_ms": float(cfg.phase3_2e_max_clock_drift_ms),
+        "protocol_doc": str(cfg.phase3_2e_protocol_doc),
+        "interpretation": (
+            "Phase III.2E is intentionally not executed on Sleep-EDF + ANU QRNG. "
+            "It requires synchronously acquired EEG + QRNG timestamps."
+        ),
+    }
+
+
+def build_subphase_status(cfg: Phase32Config) -> Dict[str, Any]:
+    return {
+        "III.2A": {
+            "name": "regime-aware sleep-stage validation",
+            "status": "active",
+        },
+        "III.2B": {
+            "name": "lagged EEG-RNG alignment",
+            "status": "active",
+        },
+        "III.2C": {
+            "name": "leakage-safe conditional CDR",
+            "status": "active",
+        },
+        "III.2D": {
+            "name": "multichannel EEG enrichment",
+            "status": "active_exploratory" if cfg.run_multichannel_analysis and cfg.use_multichannel_eeg else "disabled",
+        },
+        "III.2E": phase3_2e_protocol_status(cfg),
+    }
 
 
 # =========================================================
@@ -228,6 +454,7 @@ def build_runner_summary_text(report: Dict[str, Any]) -> str:
     lines.append("=" * 78)
     lines.append("CDR Phase III.2 — Runner Summary")
     lines.append("Leakage-safe conditional estimator aware version")
+    lines.append("Phase III.2D multichannel-aware")
     lines.append("=" * 78)
     lines.append("")
 
@@ -237,6 +464,15 @@ def build_runner_summary_text(report: Dict[str, Any]) -> str:
     lines.append(f"phase: {report.get('phase')}")
     lines.append(f"phase_title: {report.get('phase_title')}")
     lines.append(f"version: {report.get('version')}")
+    lines.append(f"runner_version: {report.get('runner_version')}")
+    lines.append("")
+
+    lines.append("Subphases")
+    lines.append("-" * 78)
+
+    for key, value in report.get("subphases", {}).items():
+        lines.append(f"{key}: {value}")
+
     lines.append("")
 
     lines.append("Execution")
@@ -278,6 +514,23 @@ def build_runner_summary_text(report: Dict[str, Any]) -> str:
 
         lines.append("")
 
+    phase3_2d = report.get("phase3_2d_summary", {})
+
+    if phase3_2d:
+        lines.append("Phase III.2D multichannel summary")
+        lines.append("-" * 78)
+        lines.append(f"enabled: {phase3_2d.get('enabled')}")
+        lines.append(f"multichannel_available: {phase3_2d.get('multichannel_available')}")
+        lines.append(f"delta_secondary_source_column: {phase3_2d.get('delta_secondary_source_column')}")
+        lines.append(f"alpha_secondary_source_column: {phase3_2d.get('alpha_secondary_source_column')}")
+        lines.append(f"state_n_unique: {phase3_2d.get('state_n_unique')}")
+        lines.append(f"next_state_n_unique: {phase3_2d.get('next_state_n_unique')}")
+        lines.append(f"valid_multichannel_conditional_rows: {phase3_2d.get('valid_multichannel_conditional_rows')}")
+        lines.append(f"warnings: {phase3_2d.get('warnings')}")
+        lines.append(f"conditional: {phase3_2d.get('conditional')}")
+        lines.append(f"controls: {phase3_2d.get('controls')}")
+        lines.append("")
+
     final_status = report.get("final_status", {})
 
     lines.append("Final status")
@@ -298,6 +551,18 @@ def build_runner_summary_text(report: Dict[str, Any]) -> str:
         lines.append(f"headline: {diagnostics.get('headline')}")
         lines.append(f"status: {diagnostics.get('status')}")
         lines.append(f"recommendation: {diagnostics.get('recommendation')}")
+        lines.append("")
+
+    phase3_2e = report.get("phase3_2e_protocol_status", {})
+
+    if phase3_2e:
+        lines.append("Phase III.2E protocol status")
+        lines.append("-" * 78)
+        lines.append(f"status: {phase3_2e.get('status')}")
+        lines.append(f"enabled_for_empirical_run: {phase3_2e.get('enabled_for_empirical_run')}")
+        lines.append(f"requires_real_time_sync: {phase3_2e.get('requires_real_time_sync')}")
+        lines.append(f"protocol_doc: {phase3_2e.get('protocol_doc')}")
+        lines.append(f"interpretation: {phase3_2e.get('interpretation')}")
         lines.append("")
 
     lines.append("=" * 78)
@@ -338,10 +603,12 @@ def run_phase3_2_pipeline(
         "phase": cfg.phase_name,
         "phase_title": cfg.phase_title,
         "version": cfg.version,
-        "runner_version": "phase3_2_runner_v2_leakage_safe_diagnostics_aware",
+        "runner_version": "phase3_2_runner_v3_phase3_2d_multichannel_aware",
         "started_at": started_at,
         "finished_at": None,
         "elapsed_seconds": None,
+        "subphases": build_subphase_status(cfg),
+        "phase3_2e_protocol_status": phase3_2e_protocol_status(cfg),
         "options": {
             "force_rebuild": bool(force_rebuild),
             "skip_controls": bool(skip_controls),
@@ -350,10 +617,12 @@ def run_phase3_2_pipeline(
             "n_controls_effective": int(cfg.n_controls),
         },
         "config": describe_config(cfg),
+        "active_conditional_pairs": list(active_conditional_pairs(cfg)),
         "steps": {},
         "outputs": {},
         "final_status": {},
         "diagnostics_final_interpretation": {},
+        "phase3_2d_summary": {},
     }
 
     # -----------------------------------------------------
@@ -375,6 +644,9 @@ def run_phase3_2_pipeline(
                 "rows": int(len(base_df)),
                 "subjects": loader_metadata.get("subjects_loaded"),
                 "rng_bit_count": loader_metadata.get("rng_bit_count"),
+                "multichannel_loader_available": loader_metadata.get("multichannel_loader_available"),
+                "has_secondary_channel_rows": loader_metadata.get("has_secondary_channel_rows"),
+                "secondary_channel_subjects": loader_metadata.get("secondary_channel_subjects"),
             },
         }
 
@@ -390,10 +662,10 @@ def run_phase3_2_pipeline(
         raise
 
     # -----------------------------------------------------
-    # Step 2 — Features
+    # Step 2 — Features + III.2D
     # -----------------------------------------------------
     step_start = time.time()
-    _step_header("Step 2/8 — Feature preparation")
+    _step_header("Step 2/8 — Feature preparation + Phase III.2D multichannel layer")
 
     try:
         feature_frame = prepare_phase3_2_features_for_modeling(
@@ -414,6 +686,11 @@ def run_phase3_2_pipeline(
 
         report["outputs"]["modeling_features_file"] = str(Path(cfg.interim_dir) / "phase3_2_modeling_features.csv")
         report["outputs"]["feature_specs_file"] = str(Path(cfg.interim_dir) / "phase3_2_feature_specs.json")
+
+        if cfg.run_multichannel_analysis and cfg.use_multichannel_eeg:
+            report["outputs"]["phase3_2d_multichannel_features"] = str(cfg.multichannel_features_file)
+            report["outputs"]["phase3_2d_multichannel_inventory"] = str(cfg.multichannel_inventory_json)
+            report["outputs"]["phase3_2d_multichannel_summary"] = str(cfg.multichannel_summary_json)
 
     except Exception as exc:
         report["steps"]["features"] = {
@@ -516,10 +793,10 @@ def run_phase3_2_pipeline(
         raise
 
     # -----------------------------------------------------
-    # Step 5 — Conditional CDR
+    # Step 5 — Conditional CDR + III.2D
     # -----------------------------------------------------
     step_start = time.time()
-    _step_header("Step 5/8 — Conditional CDR")
+    _step_header("Step 5/8 — Conditional CDR + Phase III.2D multichannel pairs")
 
     try:
         model_scores_df, pair_scores_df = evaluate_all_conditional_from_lagged_csvs(cfg)
@@ -530,7 +807,7 @@ def run_phase3_2_pipeline(
             cfg=cfg,
         )
 
-        conditional_summary = summarize_conditional_pairs(pair_scores_df)
+        conditional_summary = summarize_conditional_pairs(pair_scores_df, cfg)
 
         report["steps"]["conditional"] = {
             "status": "ok",
@@ -541,6 +818,7 @@ def run_phase3_2_pipeline(
         report["outputs"]["conditional_model_scores"] = str(Path(cfg.results_dir) / "phase3_2c_conditional_model_scores.csv")
         report["outputs"]["conditional_pair_scores"] = str(cfg.conditional_results_csv)
         report["outputs"]["conditional_summary"] = str(cfg.conditional_summary_json)
+        report["outputs"]["phase3_2d_multichannel_results"] = str(cfg.multichannel_results_csv)
 
     except Exception as exc:
         report["steps"]["conditional"] = {
@@ -554,7 +832,7 @@ def run_phase3_2_pipeline(
     # Step 6 — Controls
     # -----------------------------------------------------
     step_start = time.time()
-    _step_header("Step 6/8 — Negative controls")
+    _step_header("Step 6/8 — Negative controls + Phase III.2D multichannel-aware controls")
 
     if skip_controls:
         existing_controls = summarize_existing_controls(cfg)
@@ -566,7 +844,7 @@ def run_phase3_2_pipeline(
                 "summary": existing_controls,
             }
 
-            print("[Phase3.2 Runner] Controls skipped; current leakage-safe outputs will be reused.")
+            print("[Phase3.2 Runner] Controls skipped; current III.2D-aware leakage-safe outputs will be reused.")
 
         elif controls_outputs_exist(cfg):
             report["steps"]["controls"] = {
@@ -574,12 +852,13 @@ def run_phase3_2_pipeline(
                 "elapsed_seconds": _elapsed(step_start),
                 "summary": existing_controls,
                 "warning": (
-                    "Existing controls were found, but their module does not match "
-                    f"{EXPECTED_CONTROL_MODULE}. Metrics may mark F2 as pending/stale."
+                    "Existing controls were found, but their module/module_detail does not match "
+                    f"{EXPECTED_CONTROL_MODULE}/{EXPECTED_CONTROL_MODULE_DETAIL}. "
+                    "Metrics may mark F2 as pending/stale or may not fully reflect III.2D."
                 ),
             }
 
-            print("[Phase3.2 Runner] WARNING: controls skipped but existing controls may be stale.")
+            print("[Phase3.2 Runner] WARNING: controls skipped but existing controls may be stale or not III.2D-aware.")
 
         else:
             report["steps"]["controls"] = {
@@ -654,6 +933,7 @@ def run_phase3_2_pipeline(
     # -----------------------------------------------------
     # Save provisional runner report BEFORE diagnostics
     # -----------------------------------------------------
+    report["phase3_2d_summary"] = summarize_phase3_2d_artifacts(cfg)
     report["finished_at"] = _now_str()
     report["elapsed_seconds"] = _elapsed(pipeline_start)
     report["outputs"]["runner_report_json"] = str(runner_report_json)
@@ -665,7 +945,7 @@ def run_phase3_2_pipeline(
     # Step 8 — Diagnostics
     # -----------------------------------------------------
     step_start = time.time()
-    _step_header("Step 8/8 — Diagnostics")
+    _step_header("Step 8/8 — Diagnostics + Phase III.2D multichannel-aware report")
 
     if skip_diagnostics:
         report["steps"]["diagnostics"] = {
@@ -683,13 +963,20 @@ def run_phase3_2_pipeline(
                 diagnostics_report.get("final_interpretation", {})
             )
 
+            phase3_2d_diagnostics = _safe_dict(
+                diagnostics_report.get("phase3_2d_multichannel_diagnostics", {})
+            )
+
             report["steps"]["diagnostics"] = {
                 "status": "ok",
                 "elapsed_seconds": _elapsed(step_start),
                 "summary": final_interpretation,
+                "phase3_2d_summary": phase3_2d_diagnostics,
             }
 
             report["diagnostics_final_interpretation"] = final_interpretation
+            report["phase3_2d_diagnostics"] = phase3_2d_diagnostics
+            report["phase3_2d_summary"] = summarize_phase3_2d_artifacts(cfg)
 
             diagnostics_dir = Path(cfg.diagnostics_dir)
 
@@ -700,6 +987,15 @@ def run_phase3_2_pipeline(
             report["outputs"]["diagnostics_exploratory_lift_rows"] = str(diagnostics_dir / "phase3_2_exploratory_lift_rows.csv")
             report["outputs"]["diagnostics_strong_candidate_rows"] = str(diagnostics_dir / "phase3_2_strong_candidate_rows.csv")
             report["outputs"]["diagnostics_control_breakdown"] = str(diagnostics_dir / "phase3_2_control_breakdown.csv")
+
+            report["outputs"]["diagnostics_phase3_2c_single_channel_rows"] = str(diagnostics_dir / "phase3_2c_single_channel_rows.csv")
+            report["outputs"]["diagnostics_phase3_2c_single_channel_positive_lift_rows"] = str(diagnostics_dir / "phase3_2c_single_channel_positive_lift_rows.csv")
+
+            report["outputs"]["diagnostics_phase3_2d_multichannel_rows"] = str(diagnostics_dir / "phase3_2d_multichannel_rows.csv")
+            report["outputs"]["diagnostics_phase3_2d_multichannel_positive_lift_rows"] = str(diagnostics_dir / "phase3_2d_multichannel_positive_lift_rows.csv")
+            report["outputs"]["diagnostics_phase3_2d_multichannel_strong_candidate_rows"] = str(diagnostics_dir / "phase3_2d_multichannel_strong_candidate_rows.csv")
+            report["outputs"]["diagnostics_phase3_2d_multichannel_best_rows"] = str(diagnostics_dir / "phase3_2d_multichannel_best_rows.csv")
+            report["outputs"]["diagnostics_phase3_2d_control_pair_scores"] = str(diagnostics_dir / "phase3_2d_control_pair_scores.csv")
 
         except Exception as exc:
             report["steps"]["diagnostics"] = {
@@ -712,6 +1008,7 @@ def run_phase3_2_pipeline(
     # -----------------------------------------------------
     # Final report
     # -----------------------------------------------------
+    report["phase3_2d_summary"] = summarize_phase3_2d_artifacts(cfg)
     report["finished_at"] = _now_str()
     report["elapsed_seconds"] = _elapsed(pipeline_start)
 
@@ -720,12 +1017,12 @@ def run_phase3_2_pipeline(
     with open(runner_summary_txt, "w", encoding="utf-8") as f:
         f.write(build_runner_summary_text(report))
 
-    # Save once more with final paths and summary confirmed.
     save_json(runner_report_json, report)
 
     print("\n" + "=" * 78)
     print("Phase III.2 runner completed")
     print("Leakage-safe conditional estimator aware version")
+    print("Phase III.2D multichannel-aware")
     print("=" * 78)
     print(f"status: {report.get('final_status', {}).get('status')}")
     print(f"interpretation: {report.get('final_status', {}).get('interpretation')}")
@@ -736,6 +1033,21 @@ def run_phase3_2_pipeline(
         print(f"diagnostic_headline: {diagnostics_final.get('headline')}")
         print(f"diagnostic_recommendation: {diagnostics_final.get('recommendation')}")
 
+    phase3_2d = report.get("phase3_2d_summary", {})
+    phase3_2d_conditional = phase3_2d.get("conditional", {}) if phase3_2d else {}
+
+    if phase3_2d:
+        print("")
+        print("Phase III.2D summary:")
+        print(f"multichannel_available: {phase3_2d.get('multichannel_available')}")
+        print(f"state_n_unique: {phase3_2d.get('state_n_unique')}")
+        print(f"valid_multichannel_conditional_rows: {phase3_2d.get('valid_multichannel_conditional_rows')}")
+        print(f"multichannel positive lift rows: {phase3_2d_conditional.get('n_multichannel_positive_lift_rows')}")
+        print(f"multichannel strong candidate rows: {phase3_2d_conditional.get('n_multichannel_strong_candidate_rows')}")
+        print(f"max multichannel lift: {phase3_2d_conditional.get('max_multichannel_lift')}")
+        print(f"best multichannel BIC improvement: {phase3_2d_conditional.get('best_multichannel_bic_improvement')}")
+
+    print("")
     print(f"runner report: {runner_report_json}")
     print(f"runner summary: {runner_summary_txt}")
     print("=" * 78 + "\n")
@@ -761,7 +1073,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--skip-controls",
         action="store_true",
-        help="Skip controls and reuse existing control outputs if available.",
+        help="Skip controls and reuse existing III.2D-aware control outputs if available.",
     )
 
     parser.add_argument(

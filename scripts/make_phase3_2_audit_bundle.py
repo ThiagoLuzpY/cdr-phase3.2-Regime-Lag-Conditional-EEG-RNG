@@ -16,19 +16,30 @@ from config.phase3_2_config import Phase32Config, describe_config, load_phase3_2
 
 # =========================================================
 # Phase III.2 — Audit Bundle Builder
+# A/B/C/D consolidated version
 # =========================================================
 #
 # Purpose:
 #
-#   Build a reproducibility/audit bundle for CDR Phase III.2.
+#   Build a reproducibility/audit bundle for CDR Phase III.2 including:
+#
+#       III.2A — regime-aware sleep-stage validation
+#       III.2B — lagged EEG-RNG alignment
+#       III.2C — leakage-safe conditional CDR
+#       III.2D — multichannel EEG enrichment
+#
+#   III.2E remains protocol-only/future work because it requires truly
+#   synchronized EEG + QRNG acquisition.
 #
 # The bundle includes:
 #
 #   - core Phase III.2 source code
+#   - Phase III.2D multichannel source code
 #   - config
 #   - README / requirements if available
 #   - runner report and summary
 #   - conditional model outputs
+#   - Phase III.2D multichannel outputs
 #   - control outputs
 #   - metrics/gates outputs
 #   - diagnostics outputs
@@ -38,6 +49,9 @@ from config.phase3_2_config import Phase32Config, describe_config, load_phase3_2
 #
 # It does NOT copy raw EDF files into the zip by default.
 # Instead, it records raw file names, sizes, mtimes and optional hashes.
+#
+# This script creates a new timestamped A/B/C/D bundle and does not overwrite
+# earlier A/B/C bundles.
 #
 # Run:
 #
@@ -49,7 +63,9 @@ from config.phase3_2_config import Phase32Config, describe_config, load_phase3_2
 # Constants
 # =========================================================
 
-BUNDLE_VERSION = "phase3_2_audit_bundle_v1"
+BUNDLE_VERSION = "phase3_2_abcd_audit_bundle_v2"
+BUNDLE_SCOPE = "Phase III.2A/B/C/D"
+BUNDLE_SCOPE_LABEL = "abcd"
 EXPECTED_FINAL_STATUS = "exploratory_lead_with_saturation_warning"
 
 
@@ -377,6 +393,7 @@ def core_source_files(root: Path) -> List[Tuple[str, Path]]:
 
         ("source", root / "src" / "phase3_2_loader.py"),
         ("source", root / "src" / "phase3_2_features.py"),
+        ("source", root / "src" / "phase3_2_multichannel.py"),
         ("source", root / "src" / "phase3_2_regimes.py"),
         ("source", root / "src" / "phase3_2_lagging.py"),
         ("source", root / "src" / "phase3_2_conditional.py"),
@@ -386,6 +403,9 @@ def core_source_files(root: Path) -> List[Tuple[str, Path]]:
         ("source", root / "src" / "phase3_2_runner.py"),
 
         ("script", root / "scripts" / "make_phase3_2_audit_bundle.py"),
+
+        # Phase III.2E protocol-only document, if already created.
+        ("protocol_doc", root / "docs" / "phase3_2e_synchronized_eeg_qrng_protocol.md"),
     ]
 
     return candidates
@@ -401,11 +421,20 @@ def result_files(root: Path, cfg: Phase32Config) -> List[Tuple[str, Path]]:
         ("runner_output", results_dir / "phase3_2_runner_report.json"),
         ("runner_output", results_dir / "phase3_2_runner_summary.txt"),
 
-        # Conditional
+        # Conditional III.2C + III.2D
         ("conditional_output", results_dir / "phase3_2c_conditional_model_scores.csv"),
         ("conditional_output", resolve_project_path(root, cfg.conditional_results_csv)),
         ("conditional_output", resolve_project_path(root, cfg.conditional_summary_json)),
         ("conditional_output", results_dir / "phase3_2c_conditional_summary.txt"),
+
+        # Phase III.2D multichannel outputs
+        ("phase3_2d_output", resolve_project_path(root, cfg.multichannel_features_file)),
+        ("phase3_2d_output", resolve_project_path(root, cfg.multichannel_inventory_json)),
+        ("phase3_2d_output", resolve_project_path(root, cfg.multichannel_summary_json)),
+        ("phase3_2d_output", resolve_project_path(root, cfg.multichannel_results_csv)),
+
+        # Phase III.2E protocol validation placeholder/output, if created.
+        ("phase3_2e_protocol_output", resolve_project_path(root, cfg.synchronized_protocol_validation_json)),
 
         # Controls
         ("control_output", results_dir / "phase3_2_control_runs.csv"),
@@ -430,7 +459,7 @@ def result_files(root: Path, cfg: Phase32Config) -> List[Tuple[str, Path]]:
         ("interim_output", interim_dir / "phase3_2_lag_summary.json"),
     ]
 
-    # Add all diagnostics outputs.
+    # Add all diagnostics outputs, including phase3_2d_* diagnostics.
     if diagnostics_dir.exists():
         for path in sorted(diagnostics_dir.rglob("*")):
             if path.is_file():
@@ -443,6 +472,72 @@ def result_files(root: Path, cfg: Phase32Config) -> List[Tuple[str, Path]]:
 # Status extraction
 # =========================================================
 
+def extract_phase3_2d_summary(
+    root: Path,
+    cfg: Phase32Config,
+) -> Dict[str, Any]:
+    results_dir = resolve_project_path(root, cfg.results_dir)
+    diagnostics_dir = resolve_project_path(root, cfg.diagnostics_dir)
+
+    runner_report = safe_read_json(results_dir / "phase3_2_runner_report.json")
+    diagnostics_json = safe_read_json(diagnostics_dir / "phase3_2_diagnostics_report.json")
+    multichannel_inventory = safe_read_json(resolve_project_path(root, cfg.multichannel_inventory_json))
+    multichannel_summary = safe_read_json(resolve_project_path(root, cfg.multichannel_summary_json))
+    conditional_summary = safe_read_json(resolve_project_path(root, cfg.conditional_summary_json))
+
+    runner_phase3_2d = runner_report.get("phase3_2d_summary", {})
+    diagnostics_phase3_2d = diagnostics_json.get("phase3_2d_multichannel_diagnostics", {})
+    conditional_phase_summary = conditional_summary.get("summary", {})
+
+    return {
+        "runner_phase3_2d_summary": runner_phase3_2d,
+        "diagnostics_phase3_2d_summary": diagnostics_phase3_2d,
+        "multichannel_inventory": {
+            "available": bool(multichannel_inventory),
+            "multichannel_available": multichannel_inventory.get("source_columns", {}).get("multichannel_available"),
+            "delta_secondary_source_column": multichannel_inventory.get("source_columns", {}).get("delta_secondary_source_column"),
+            "alpha_secondary_source_column": multichannel_inventory.get("source_columns", {}).get("alpha_secondary_source_column"),
+            "state_n_unique": multichannel_inventory.get("state_n_unique"),
+            "next_state_n_unique": multichannel_inventory.get("next_state_n_unique"),
+            "info_bin_n_unique": multichannel_inventory.get("info_bin_n_unique"),
+            "valid_multichannel_next_state_rows": multichannel_inventory.get("valid_multichannel_next_state_rows"),
+            "valid_multichannel_conditional_rows": multichannel_inventory.get("valid_multichannel_conditional_rows"),
+            "warnings": multichannel_inventory.get("warnings", []),
+        },
+        "multichannel_summary": multichannel_summary.get("summary", {}),
+        "conditional_summary_phase3_2d_fields": {
+            "n_multichannel_rows": conditional_phase_summary.get("n_multichannel_rows"),
+            "n_multichannel_positive_lift_rows": conditional_phase_summary.get("n_multichannel_positive_lift_rows"),
+            "n_multichannel_strong_candidate_rows": conditional_phase_summary.get("n_multichannel_strong_candidate_rows"),
+            "best_multichannel_by_conditional_lift": conditional_phase_summary.get("best_multichannel_by_conditional_lift"),
+            "best_multichannel_by_bic_improvement": conditional_phase_summary.get("best_multichannel_by_bic_improvement"),
+        },
+    }
+
+
+def extract_phase3_2e_status(
+    root: Path,
+    cfg: Phase32Config,
+) -> Dict[str, Any]:
+    runner_report = safe_read_json(resolve_project_path(root, cfg.results_dir) / "phase3_2_runner_report.json")
+
+    return {
+        "status": "protocol_only",
+        "runner_phase3_2e_protocol_status": runner_report.get("phase3_2e_protocol_status", {}),
+        "config_phase3_2e_protocol_only": bool(cfg.phase3_2e_protocol_only),
+        "config_run_synchronized_protocol_analysis": bool(cfg.run_synchronized_protocol_analysis),
+        "requires_real_time_sync": bool(cfg.phase3_2e_requires_real_time_sync),
+        "required_timestamp_columns": list(cfg.phase3_2e_required_timestamp_columns),
+        "min_sync_quality": float(cfg.phase3_2e_min_sync_quality),
+        "max_clock_drift_ms": float(cfg.phase3_2e_max_clock_drift_ms),
+        "protocol_doc": str(cfg.phase3_2e_protocol_doc),
+        "interpretation": (
+            "III.2E is not part of this empirical A/B/C/D bundle. "
+            "It remains a future synchronized EEG + QRNG protocol."
+        ),
+    }
+
+
 def extract_status_summary(root: Path, cfg: Phase32Config) -> Dict[str, Any]:
     results_dir = resolve_project_path(root, cfg.results_dir)
     diagnostics_dir = resolve_project_path(root, cfg.diagnostics_dir)
@@ -454,11 +549,15 @@ def extract_status_summary(root: Path, cfg: Phase32Config) -> Dict[str, Any]:
     conditional_summary = safe_read_json(resolve_project_path(root, cfg.conditional_summary_json))
 
     return {
+        "bundle_scope": BUNDLE_SCOPE,
+        "bundle_scope_label": BUNDLE_SCOPE_LABEL,
         "runner_final_status": runner_report.get("final_status", {}),
         "diagnostics_final_interpretation": diagnostics_json.get("final_interpretation", {}),
         "gates_final_status": gates_json.get("final_status", {}),
         "controls_summary": controls_json.get("summary", {}),
         "conditional_summary": conditional_summary.get("summary", {}),
+        "phase3_2d_summary": extract_phase3_2d_summary(root, cfg),
+        "phase3_2e_status": extract_phase3_2e_status(root, cfg),
         "expected_final_status": EXPECTED_FINAL_STATUS,
     }
 
@@ -476,17 +575,33 @@ def build_audit_summary_md(
     diagnostics_final = status_summary.get("diagnostics_final_interpretation", {})
     controls_summary = status_summary.get("controls_summary", {})
     conditional_summary = status_summary.get("conditional_summary", {})
+    phase3_2d = status_summary.get("phase3_2d_summary", {})
+    phase3_2e = status_summary.get("phase3_2e_status", {})
+
+    d_conditional = phase3_2d.get("conditional_summary_phase3_2d_fields", {})
+    d_inventory = phase3_2d.get("multichannel_inventory", {})
+    d_runner = phase3_2d.get("runner_phase3_2d_summary", {})
 
     lines: List[str] = []
 
-    lines.append("# CDR Phase III.2 — Audit Bundle")
+    lines.append("# CDR Phase III.2A/B/C/D — Audit Bundle")
     lines.append("")
     lines.append(f"- **Bundle version:** `{BUNDLE_VERSION}`")
+    lines.append(f"- **Bundle scope:** `{BUNDLE_SCOPE}`")
     lines.append(f"- **Created at:** `{manifest.get('created_at')}`")
     lines.append(f"- **Project:** `{cfg.project_name}`")
     lines.append(f"- **Phase:** `{cfg.phase_name}`")
     lines.append(f"- **Phase title:** `{cfg.phase_title}`")
     lines.append(f"- **Code/config version:** `{cfg.version}`")
+    lines.append("")
+
+    lines.append("## Included subphases")
+    lines.append("")
+    lines.append("- **III.2A:** regime-aware sleep-stage validation.")
+    lines.append("- **III.2B:** lagged EEG-RNG alignment.")
+    lines.append("- **III.2C:** leakage-safe conditional CDR.")
+    lines.append("- **III.2D:** multichannel EEG enrichment using Fpz-Cz + Pz-Oz.")
+    lines.append("- **III.2E:** protocol-only/future synchronized EEG + QRNG acquisition; not empirically executed in this bundle.")
     lines.append("")
 
     lines.append("## Final status")
@@ -525,6 +640,38 @@ def build_audit_summary_md(
     lines.append(f"- **Positive lift rows:** `{conditional_summary.get('n_positive_lift_rows')}`")
     lines.append(f"- **Strong candidate rows:** `{conditional_summary.get('n_strong_candidate_rows')}`")
     lines.append(f"- **Best by lift:** `{conditional_summary.get('best_by_conditional_lift')}`")
+    lines.append("")
+
+    lines.append("## Phase III.2D — Multichannel EEG enrichment")
+    lines.append("")
+    lines.append(f"- **Enabled:** `{d_runner.get('enabled')}`")
+    lines.append(f"- **Multichannel available:** `{d_inventory.get('multichannel_available')}`")
+    lines.append(f"- **Delta secondary source:** `{d_inventory.get('delta_secondary_source_column')}`")
+    lines.append(f"- **Alpha secondary source:** `{d_inventory.get('alpha_secondary_source_column')}`")
+    lines.append(f"- **MC state unique:** `{d_inventory.get('state_n_unique')}`")
+    lines.append(f"- **MC next-state unique:** `{d_inventory.get('next_state_n_unique')}`")
+    lines.append(f"- **Valid MC conditional rows:** `{d_inventory.get('valid_multichannel_conditional_rows')}`")
+    lines.append(f"- **Warnings:** `{d_inventory.get('warnings')}`")
+    lines.append(f"- **MC conditional rows:** `{d_conditional.get('n_multichannel_rows')}`")
+    lines.append(f"- **MC positive lift rows:** `{d_conditional.get('n_multichannel_positive_lift_rows')}`")
+    lines.append(f"- **MC strong candidate rows:** `{d_conditional.get('n_multichannel_strong_candidate_rows')}`")
+    lines.append(f"- **Best MC by lift:** `{d_conditional.get('best_multichannel_by_conditional_lift')}`")
+    lines.append(f"- **Best MC by BIC:** `{d_conditional.get('best_multichannel_by_bic_improvement')}`")
+    lines.append("")
+    lines.append("**III.2D interpretation:**")
+    lines.append("")
+    lines.append("> Phase III.2D is included as an exploratory multichannel enrichment. It increased positive-lift rows but did not satisfy subject-consistency, BIC and ε-saturation requirements for a strong EEG-RNG coupling claim.")
+    lines.append("")
+
+    lines.append("## Phase III.2E protocol status")
+    lines.append("")
+    lines.append(f"- **Status:** `{phase3_2e.get('status')}`")
+    lines.append(f"- **Run synchronized protocol analysis:** `{phase3_2e.get('config_run_synchronized_protocol_analysis')}`")
+    lines.append(f"- **Requires real-time sync:** `{phase3_2e.get('requires_real_time_sync')}`")
+    lines.append(f"- **Required timestamp columns:** `{phase3_2e.get('required_timestamp_columns')}`")
+    lines.append(f"- **Protocol doc:** `{phase3_2e.get('protocol_doc')}`")
+    lines.append("")
+    lines.append(f"> {phase3_2e.get('interpretation')}")
     lines.append("")
 
     lines.append("## Bundle contents")
@@ -581,7 +728,7 @@ def build_phase3_2_audit_bundle(
 
     stamp = _now_stamp()
 
-    bundle_name = f"cdr_phase3_2_audit_bundle_{stamp}"
+    bundle_name = f"cdr_phase3_2_{BUNDLE_SCOPE_LABEL}_audit_bundle_{stamp}"
     staging_dir = output_dir / f"{bundle_name}_staging"
     zip_path = output_dir / f"{bundle_name}.zip"
 
@@ -594,9 +741,10 @@ def build_phase3_2_audit_bundle(
     missing_files: List[Dict[str, Any]] = []
 
     print("\n" + "=" * 78)
-    print("Building CDR Phase III.2 audit bundle")
+    print("Building CDR Phase III.2 A/B/C/D audit bundle")
     print("=" * 78)
     print(f"Project root: {root}")
+    print(f"Bundle scope: {BUNDLE_SCOPE}")
     print(f"Staging dir: {staging_dir}")
     print(f"Zip path: {zip_path}")
 
@@ -641,6 +789,8 @@ def build_phase3_2_audit_bundle(
 
     manifest: Dict[str, Any] = {
         "bundle_version": BUNDLE_VERSION,
+        "bundle_scope": BUNDLE_SCOPE,
+        "bundle_scope_label": BUNDLE_SCOPE_LABEL,
         "created_at": _now_human(),
         "created_at_stamp": stamp,
         "project_root": str(root),
@@ -652,6 +802,13 @@ def build_phase3_2_audit_bundle(
             "phase_title": cfg.phase_title,
             "version": cfg.version,
         },
+        "subphases": {
+            "III.2A": "regime-aware sleep-stage validation",
+            "III.2B": "lagged EEG-RNG alignment",
+            "III.2C": "leakage-safe conditional CDR",
+            "III.2D": "active exploratory multichannel EEG enrichment",
+            "III.2E": "protocol-only future synchronized EEG + QRNG acquisition",
+        },
         "config": describe_config(cfg),
         "status_summary": status_summary,
         "included_files": manifest_files,
@@ -660,9 +817,13 @@ def build_phase3_2_audit_bundle(
         "n_missing_files": int(len(missing_files)),
         "raw_data_inventory": raw_inventory,
         "notes": [
+            "This is the consolidated Phase III.2A/B/C/D audit bundle.",
+            "This bundle name includes 'abcd' and a timestamp, so it does not overwrite earlier A/B/C bundles.",
             "Raw EDF/RNG files are inventoried but not copied into the audit zip.",
-            "Controls are expected to be leakage-safe Phase III.2 controls.",
-            "Final status is exploratory only unless F7/F8/F12 constraints are resolved in future runs.",
+            "Controls are expected to be leakage-safe and Phase III.2D multichannel-aware.",
+            "Phase III.2D is exploratory: it increased positive-lift rows but did not satisfy F7/F8/F12 requirements for a strong claim.",
+            "Phase III.2E is protocol-only in this bundle and requires synchronized EEG + QRNG timestamps.",
+            "Final status remains exploratory unless subject consistency, BIC and epsilon-saturation constraints are resolved in future synchronized runs.",
         ],
     }
 
@@ -713,6 +874,8 @@ def build_phase3_2_audit_bundle(
 
     final_report = {
         "bundle_version": BUNDLE_VERSION,
+        "bundle_scope": BUNDLE_SCOPE,
+        "bundle_scope_label": BUNDLE_SCOPE_LABEL,
         "created_at": _now_human(),
         "zip_path": str(zip_path),
         "zip_size_bytes": int(zip_path.stat().st_size),
@@ -731,7 +894,7 @@ def build_phase3_2_audit_bundle(
         shutil.rmtree(staging_dir)
 
     print("\n" + "=" * 78)
-    print("Phase III.2 audit bundle completed")
+    print("Phase III.2 A/B/C/D audit bundle completed")
     print("=" * 78)
     print(f"Zip: {zip_path}")
     print(f"SHA256: {zip_sha256}")
@@ -749,7 +912,7 @@ def build_phase3_2_audit_bundle(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Build an audit bundle for CDR Phase III.2."
+        description="Build an A/B/C/D audit bundle for CDR Phase III.2."
     )
 
     parser.add_argument(

@@ -1,0 +1,376 @@
+{
+  "phase": "Phase III.2",
+  "module": "Phase_III_2D_multichannel_EEG_enrichment",
+  "summary": {
+    "n_rows": 27597,
+    "n_columns": 142,
+    "state_column": "eeg_multichannel_state",
+    "next_state_column": "eeg_multichannel_next_state",
+    "info_bin_column": "eeg_multichannel_info_bin",
+    "n_subjects": 10,
+    "subjects": [
+      "SC4001",
+      "SC4002",
+      "SC4011",
+      "SC4012",
+      "SC4021",
+      "SC4022",
+      "SC4031",
+      "SC4032",
+      "SC4041",
+      "SC4042"
+    ],
+    "delta_power_secondary": {
+      "min": 3.159474945829624e-13,
+      "max": 4.5045180603207365e-09,
+      "mean": 7.082272240014487e-11,
+      "n_unique": 27597,
+      "non_null": 27597
+    },
+    "alpha_power_secondary": {
+      "min": 3.7797002864696126e-15,
+      "max": 3.895866508596557e-10,
+      "mean": 1.3661596476591905e-11,
+      "n_unique": 27597,
+      "non_null": 27597
+    },
+    "interchannel_delta_ratio": {
+      "min": 0.00031580671107093994,
+      "max": 2.2726183770412516,
+      "mean": 0.0506590807882037,
+      "n_unique": 27597,
+      "non_null": 27597
+    },
+    "interchannel_alpha_ratio": {
+      "min": 3.7796822271395703e-06,
+      "max": 0.3883748187432284,
+      "mean": 0.013515759430975485,
+      "n_unique": 27597,
+      "non_null": 27597
+    },
+    "fronto_parietal_delta_shift": {
+      "min": -8.190025485545991,
+      "max": 37.502483438911966,
+      "mean": 8.239072197819766e-18,
+      "n_unique": 27597,
+      "non_null": 27597
+    },
+    "fronto_parietal_alpha_shift": {
+      "min": -27.054046130026048,
+      "max": 20.415696100533214,
+      "mean": -6.591257758255813e-17,
+      "n_unique": 27597,
+      "non_null": 27597
+    },
+    "multichannel_activation_score": {
+      "min": -0.8490167627303661,
+      "max": 9.965827953033244,
+      "mean": -9.886886637383718e-17,
+      "n_unique": 27597,
+      "non_null": 27597
+    },
+    "multichannel_cross_channel_score": {
+      "min": -5.42133742899594,
+      "max": 14.950769713035399,
+      "mean": 0.0,
+      "n_unique": 27597,
+      "non_null": 27597
+    },
+    "multichannel_info_score": {
+      "min": -0.5301631869558667,
+      "max": 12.458298833034322,
+      "mean": -4.943443318691859e-17,
+      "n_unique": 27597,
+      "non_null": 27597
+    },
+    "eeg_multichannel_state": {
+      "min": 0.0,
+      "max": 8.0,
+      "mean": 4.0,
+      "n_unique": 9,
+      "non_null": 27597
+    },
+    "eeg_multichannel_next_state": {
+      "min": 0.0,
+      "max": 8.0,
+      "mean": 3.999673759379418,
+      "n_unique": 9,
+      "non_null": 27587
+    },
+    "eeg_multichannel_info_bin": {
+      "min": 0.0,
+      "max": 2.0,
+      "mean": 1.0,
+      "n_unique": 3,
+      "non_null": 27597
+    },
+    "valid_multichannel_next_state": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.9996376417726565,
+      "n_unique": 2,
+      "non_null": 27597
+    },
+    "valid_multichannel_conditional_row": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.9996376417726565,
+      "n_unique": 2,
+      "non_null": 27597
+    },
+    "sleep_stage_counts": [
+      {
+        "subject_id": "SC4001",
+        "sleep_stage": "N1",
+        "n_epochs": 58
+      },
+      {
+        "subject_id": "SC4001",
+        "sleep_stage": "N2",
+        "n_epochs": 250
+      },
+      {
+        "subject_id": "SC4001",
+        "sleep_stage": "N3",
+        "n_epochs": 220
+      },
+      {
+        "subject_id": "SC4001",
+        "sleep_stage": "REM",
+        "n_epochs": 125
+      },
+      {
+        "subject_id": "SC4001",
+        "sleep_stage": "W",
+        "n_epochs": 1997
+      },
+      {
+        "subject_id": "SC4002",
+        "sleep_stage": "N1",
+        "n_epochs": 59
+      },
+      {
+        "subject_id": "SC4002",
+        "sleep_stage": "N2",
+        "n_epochs": 373
+      },
+      {
+        "subject_id": "SC4002",
+        "sleep_stage": "N3",
+        "n_epochs": 297
+      },
+      {
+        "subject_id": "SC4002",
+        "sleep_stage": "REM",
+        "n_epochs": 215
+      },
+      {
+        "subject_id": "SC4002",
+        "sleep_stage": "W",
+        "n_epochs": 1885
+      },
+      {
+        "subject_id": "SC4011",
+        "sleep_stage": "N1",
+        "n_epochs": 109
+      },
+      {
+        "subject_id": "SC4011",
+        "sleep_stage": "N2",
+        "n_epochs": 562
+      },
+      {
+        "subject_id": "SC4011",
+        "sleep_stage": "N3",
+        "n_epochs": 105
+      },
+      {
+        "subject_id": "SC4011",
+        "sleep_stage": "REM",
+        "n_epochs": 170
+      },
+      {
+        "subject_id": "SC4011",
+        "sleep_stage": "W",
+        "n_epochs": 1856
+      },
+      {
+        "subject_id": "SC4012",
+        "sleep_stage": "N1",
+        "n_epochs": 92
+      },
+      {
+        "subject_id": "SC4012",
+        "sleep_stage": "N2",
+        "n_epochs": 660
+      },
+      {
+        "subject_id": "SC4012",
+        "sleep_stage": "N3",
+        "n_epochs": 96
+      },
+      {
+        "subject_id": "SC4012",
+        "sleep_stage": "REM",
+        "n_epochs": 176
+      },
+      {
+        "subject_id": "SC4012",
+        "sleep_stage": "W",
+        "n_epochs": 1824
+      },
+      {
+        "subject_id": "SC4021",
+        "sleep_stage": "N1",
+        "n_epochs": 94
+      },
+      {
+        "subject_id": "SC4021",
+        "sleep_stage": "N2",
+        "n_epochs": 545
+      },
+      {
+        "subject_id": "SC4021",
+        "sleep_stage": "N3",
+        "n_epochs": 95
+      },
+      {
+        "subject_id": "SC4021",
+        "sleep_stage": "REM",
+        "n_epochs": 163
+      },
+      {
+        "subject_id": "SC4021",
+        "sleep_stage": "W",
+        "n_epochs": 1907
+      },
+      {
+        "subject_id": "SC4022",
+        "sleep_stage": "N1",
+        "n_epochs": 184
+      },
+      {
+        "subject_id": "SC4022",
+        "sleep_stage": "N2",
+        "n_epochs": 402
+      },
+      {
+        "subject_id": "SC4022",
+        "sleep_stage": "N3",
+        "n_epochs": 119
+      },
+      {
+        "subject_id": "SC4022",
+        "sleep_stage": "REM",
+        "n_epochs": 179
+      },
+      {
+        "subject_id": "SC4022",
+        "sleep_stage": "W",
+        "n_epochs": 1871
+      },
+      {
+        "subject_id": "SC4031",
+        "sleep_stage": "N1",
+        "n_epochs": 61
+      },
+      {
+        "subject_id": "SC4031",
+        "sleep_stage": "N2",
+        "n_epochs": 485
+      },
+      {
+        "subject_id": "SC4031",
+        "sleep_stage": "N3",
+        "n_epochs": 57
+      },
+      {
+        "subject_id": "SC4031",
+        "sleep_stage": "REM",
+        "n_epochs": 209
+      },
+      {
+        "subject_id": "SC4031",
+        "sleep_stage": "W",
+        "n_epochs": 2008
+      },
+      {
+        "subject_id": "SC4032",
+        "sleep_stage": "N1",
+        "n_epochs": 45
+      },
+      {
+        "subject_id": "SC4032",
+        "sleep_stage": "N2",
+        "n_epochs": 400
+      },
+      {
+        "subject_id": "SC4032",
+        "sleep_stage": "N3",
+        "n_epochs": 131
+      },
+      {
+        "subject_id": "SC4032",
+        "sleep_stage": "REM",
+        "n_epochs": 199
+      },
+      {
+        "subject_id": "SC4032",
+        "sleep_stage": "W",
+        "n_epochs": 1957
+      },
+      {
+        "subject_id": "SC4041",
+        "sleep_stage": "N1",
+        "n_epochs": 166
+      },
+      {
+        "subject_id": "SC4041",
+        "sleep_stage": "N2",
+        "n_epochs": 620
+      },
+      {
+        "subject_id": "SC4041",
+        "sleep_stage": "N3",
+        "n_epochs": 53
+      },
+      {
+        "subject_id": "SC4041",
+        "sleep_stage": "REM",
+        "n_epochs": 196
+      },
+      {
+        "subject_id": "SC4041",
+        "sleep_stage": "W",
+        "n_epochs": 1534
+      },
+      {
+        "subject_id": "SC4042",
+        "sleep_stage": "N1",
+        "n_epochs": 137
+      },
+      {
+        "subject_id": "SC4042",
+        "sleep_stage": "N2",
+        "n_epochs": 514
+      },
+      {
+        "subject_id": "SC4042",
+        "sleep_stage": "N3",
+        "n_epochs": 94
+      },
+      {
+        "subject_id": "SC4042",
+        "sleep_stage": "REM",
+        "n_epochs": 270
+      },
+      {
+        "subject_id": "SC4042",
+        "sleep_stage": "W",
+        "n_epochs": 1773
+      }
+    ]
+  },
+  "inventory_file": "data\\interim\\phase3_2\\phase3_2d_multichannel_inventory.json",
+  "features_file": "data\\interim\\phase3_2\\phase3_2d_multichannel_features.csv"
+}

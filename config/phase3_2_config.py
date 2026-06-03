@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Sequence, Tuple
+from typing import Dict, List, Optional, Tuple
 
 
 # =========================================================
@@ -10,7 +10,8 @@ from typing import Dict, List, Optional, Sequence, Tuple
 # =========================================================
 #
 # Project:
-#   Phase III.2 — Regime-Aware, Lagged and Conditional EEG-RNG Validation
+#   Phase III.2 — Regime-Aware, Lagged, Conditional and Multichannel
+#   EEG-RNG Validation
 #
 # Purpose:
 #   Test whether the clean null_result from Phase III.1 was caused by
@@ -24,6 +25,12 @@ from typing import Dict, List, Optional, Sequence, Tuple
 #
 # This config intentionally keeps all submodules under a single Phase III.2
 # namespace to avoid duplicated phase-specific files.
+#
+# Current activation:
+#   III.2A/B/C — implemented and audit-bundled
+#   III.2D     — active from v1.1
+#   III.2E     — protocol-only, not executed on Sleep-EDF + ANU QRNG
+#
 
 
 # =========================================================
@@ -67,7 +74,7 @@ class RegimeSpec:
 @dataclass(frozen=True)
 class ConditionalModelSpec:
     """
-    Conditional CDR model specification used by Phase III.2C.
+    Conditional CDR model specification used by Phase III.2C/D.
 
     The model compares whether an augmented current-state representation improves
     the prediction of a next-state target beyond a baseline representation.
@@ -81,6 +88,10 @@ class ConditionalModelSpec:
     C1:
         current_state = EEG_t × RNG_t
         target_next = EEG_{t+1}
+
+    D0:
+        current_state = multichannel EEG_t
+        target_next = multichannel EEG_{t+1}
     """
 
     name: str
@@ -104,8 +115,8 @@ class Phase32Config:
     # -----------------------------------------------------
     project_name: str = "Phase3.2-Regime-Lag-Conditional-EEG-RNG"
     phase_name: str = "Phase III.2"
-    phase_title: str = "Regime-Aware, Lagged and Conditional EEG-RNG Validation"
-    version: str = "v1.0"
+    phase_title: str = "Regime-Aware, Lagged, Conditional and Multichannel EEG-RNG Validation"
+    version: str = "v1.1-phase3_2d"
 
     # -----------------------------------------------------
     # Paths
@@ -146,11 +157,51 @@ class Phase32Config:
     # -----------------------------------------------------
     primary_eeg_channel: str = "EEG Fpz-Cz"
     secondary_eeg_channel: str = "EEG Pz-Oz"
-    use_multichannel_eeg: bool = False
+
+    # Phase III.2D activation:
+    #   use both Sleep-EDF EEG channels when available.
+    #   This does not claim synchronization improvement by itself; it only
+    #   enriches the neural state representation before EEG-RNG conditional tests.
+    use_multichannel_eeg: bool = True
 
     eeg_channels: Tuple[str, ...] = (
         "EEG Fpz-Cz",
         "EEG Pz-Oz",
+    )
+
+    multichannel_eeg_channels: Tuple[str, ...] = (
+        "EEG Fpz-Cz",
+        "EEG Pz-Oz",
+    )
+
+    multichannel_primary_channel: str = "EEG Fpz-Cz"
+    multichannel_secondary_channel: str = "EEG Pz-Oz"
+
+    multichannel_state_column: str = "eeg_multichannel_state"
+    multichannel_next_state_column: str = "eeg_multichannel_next_state"
+    multichannel_info_bin_column: str = "eeg_multichannel_info_bin"
+
+    multichannel_n_states: int = 9
+    multichannel_n_bins: int = 3
+
+    multichannel_feature_columns: Tuple[str, ...] = (
+        "delta_power",
+        "alpha_power",
+        "delta_power_secondary",
+        "alpha_power_secondary",
+        "interchannel_delta_ratio",
+        "interchannel_alpha_ratio",
+        "fronto_parietal_delta_shift",
+        "fronto_parietal_alpha_shift",
+    )
+
+    multichannel_bin_columns: Tuple[str, ...] = (
+        "delta_power_bin",
+        "alpha_power_bin",
+        "delta_power_secondary_bin",
+        "alpha_power_secondary_bin",
+        "interchannel_delta_ratio_bin",
+        "interchannel_alpha_ratio_bin",
     )
 
     # -----------------------------------------------------
@@ -159,8 +210,16 @@ class Phase32Config:
     run_regime_analysis: bool = True
     run_lagged_analysis: bool = True
     run_conditional_analysis: bool = True
-    run_multichannel_analysis: bool = False
-    run_diagnostics_after_runner: bool = False
+
+    # Phase III.2D — active from v1.1.
+    run_multichannel_analysis: bool = True
+
+    # Phase III.2E — protocol-ready, not empirical execution yet.
+    # It requires truly synchronized EEG + QRNG acquisition.
+    run_synchronized_protocol_analysis: bool = False
+    phase3_2e_protocol_only: bool = True
+
+    run_diagnostics_after_runner: bool = True
 
     # -----------------------------------------------------
     # Phase III.2A — Regime-aware analysis
@@ -236,10 +295,13 @@ class Phase32Config:
     prevent_lag_cross_recording: bool = True
 
     # -----------------------------------------------------
-    # Phase III.2C — Conditional CDR
+    # Phase III.2C / III.2D — Conditional CDR
     # -----------------------------------------------------
     conditional_models: Tuple[ConditionalModelSpec, ...] = field(
         default_factory=lambda: (
+            # -------------------------------------------------
+            # Phase III.2C — single-channel conditional models
+            # -------------------------------------------------
             ConditionalModelSpec(
                 name="C0_EEG_next_given_EEG",
                 label="EEG self-transition baseline",
@@ -280,12 +342,74 @@ class Phase32Config:
                 primary=True,
                 description="Augmented model: P(RNG_{t+1} | RNG_t, EEG_t).",
             ),
+
+            # -------------------------------------------------
+            # Phase III.2D — multichannel EEG enrichment models
+            # -------------------------------------------------
+            ConditionalModelSpec(
+                name="D0_MCEEG_next_given_MCEEG",
+                label="Multichannel EEG self-transition baseline",
+                family="MCEEG_next",
+                current_components=("eeg_multichannel_state",),
+                target_component="eeg_multichannel_next_state",
+                baseline_model=None,
+                primary=False,
+                description=(
+                    "Phase III.2D baseline: "
+                    "P(MC-EEG_{t+1} | MC-EEG_t)."
+                ),
+            ),
+            ConditionalModelSpec(
+                name="D1_MCEEG_next_given_MCEEG_RNG",
+                label="Multichannel EEG transition conditioned by RNG",
+                family="MCEEG_next",
+                current_components=("eeg_multichannel_state", "rng_state"),
+                target_component="eeg_multichannel_next_state",
+                baseline_model="D0_MCEEG_next_given_MCEEG",
+                primary=False,
+                description=(
+                    "Phase III.2D augmented model: "
+                    "P(MC-EEG_{t+1} | MC-EEG_t, RNG_t)."
+                ),
+            ),
+            ConditionalModelSpec(
+                name="D2_RNG_next_given_RNG_MCEEG",
+                label="RNG transition conditioned by multichannel EEG",
+                family="RNG_next",
+                current_components=("rng_state", "eeg_multichannel_state"),
+                target_component="rng_next_state",
+                baseline_model="C2_RNG_next_given_RNG",
+                primary=False,
+                description=(
+                    "Phase III.2D augmented model: "
+                    "P(RNG_{t+1} | RNG_t, MC-EEG_t)."
+                ),
+            ),
         )
     )
 
     primary_conditional_pairs: Tuple[Tuple[str, str], ...] = (
         ("C0_EEG_next_given_EEG", "C1_EEG_next_given_EEG_RNG"),
         ("C2_RNG_next_given_RNG", "C3_RNG_next_given_RNG_EEG"),
+    )
+
+    # -----------------------------------------------------
+    # Phase III.2D — multichannel conditional pairs
+    # -----------------------------------------------------
+    # These are intentionally not part of the primary A/B/C claim set.
+    # They are active exploratory extensions designed to test whether a richer
+    # EEG representation improves conditional EEG-RNG detection.
+    multichannel_conditional_pairs: Tuple[Tuple[str, str], ...] = (
+        ("D0_MCEEG_next_given_MCEEG", "D1_MCEEG_next_given_MCEEG_RNG"),
+        ("C2_RNG_next_given_RNG", "D2_RNG_next_given_RNG_MCEEG"),
+    )
+
+    # Phase III.2E is not executed on Sleep-EDF + ANU public QRNG.
+    # It remains a protocol-ready future experiment requiring synchronized
+    # EEG and QRNG acquisition.
+    synchronized_protocol_required_pairs: Tuple[Tuple[str, str], ...] = (
+        ("D0_MCEEG_next_given_MCEEG", "D1_MCEEG_next_given_MCEEG_RNG"),
+        ("C2_RNG_next_given_RNG", "D2_RNG_next_given_RNG_MCEEG"),
     )
 
     # -----------------------------------------------------
@@ -316,6 +440,35 @@ class Phase32Config:
     )
 
     # -----------------------------------------------------
+    # Phase III.2D — compact multichannel EEG state
+    # -----------------------------------------------------
+    # The multichannel state must stay compact to avoid repeating the
+    # high-dimensional state-space dilution observed in earlier joint tests.
+    multichannel_state_input_columns: Tuple[str, ...] = (
+        "delta_power",
+        "alpha_power",
+        "delta_power_secondary",
+        "alpha_power_secondary",
+        "interchannel_delta_ratio",
+        "interchannel_alpha_ratio",
+    )
+
+    multichannel_state_required_columns: Tuple[str, ...] = (
+        "delta_power",
+        "alpha_power",
+        "delta_power_secondary",
+        "alpha_power_secondary",
+    )
+
+    multichannel_state_max_unique_values: int = 9
+    multichannel_min_valid_subjects: int = 8
+    multichannel_min_total_epochs: int = 1000
+    multichannel_min_epochs_per_subject: int = 80
+
+    multichannel_density_min_transitions_per_state: float = 30.0
+    multichannel_density_recommended_transitions_per_state: float = 50.0
+
+    # -----------------------------------------------------
     # Split / validation settings
     # -----------------------------------------------------
     train_ratio: float = 0.70
@@ -324,7 +477,7 @@ class Phase32Config:
     # -----------------------------------------------------
     # Conditional CDR leakage-safe split settings
     # -----------------------------------------------------
-    # Phase III.2C now uses three chronological partitions:
+    # Phase III.2C/D uses three chronological partitions:
     #
     #   reference_train -> fits P0
     #   calibration     -> estimates Δχ and selects ε
@@ -408,6 +561,27 @@ class Phase32Config:
     )
 
     # -----------------------------------------------------
+    # Phase III.2E — synchronized EEG + QRNG protocol gate
+    # -----------------------------------------------------
+    # This is intentionally disabled for the current public-data experiment.
+    # It exists so that the codebase can validate a future synchronized dataset
+    # without pretending that ANU QRNG and Sleep-EDF were temporally co-acquired.
+    phase3_2e_requires_real_time_sync: bool = True
+    phase3_2e_min_sync_quality: float = 0.95
+    phase3_2e_max_clock_drift_ms: float = 50.0
+    phase3_2e_required_timestamp_columns: Tuple[str, ...] = (
+        "subject_id",
+        "recording_id",
+        "eeg_timestamp_utc",
+        "rng_timestamp_utc",
+        "sync_quality",
+    )
+
+    phase3_2e_protocol_doc: Path = Path(
+        "docs/phase3_2e_synchronized_eeg_qrng_protocol.md"
+    )
+
+    # -----------------------------------------------------
     # Output files
     # -----------------------------------------------------
     combined_features_file: Path = Path("data/interim/phase3_2/phase3_2_combined_features.csv")
@@ -424,6 +598,23 @@ class Phase32Config:
 
     conditional_results_csv: Path = Path("results/phase3_2/phase3_2c_conditional_results.csv")
     conditional_summary_json: Path = Path("results/phase3_2/phase3_2c_conditional_summary.json")
+
+    multichannel_features_file: Path = Path(
+        "data/interim/phase3_2/phase3_2d_multichannel_features.csv"
+    )
+    multichannel_inventory_json: Path = Path(
+        "data/interim/phase3_2/phase3_2d_multichannel_inventory.json"
+    )
+    multichannel_summary_json: Path = Path(
+        "results/phase3_2/phase3_2d_multichannel_summary.json"
+    )
+    multichannel_results_csv: Path = Path(
+        "results/phase3_2/phase3_2d_multichannel_results.csv"
+    )
+
+    synchronized_protocol_validation_json: Path = Path(
+        "results/phase3_2/phase3_2e_synchronized_protocol_validation.json"
+    )
 
     controls_json: Path = Path("results/phase3_2/phase3_2_controls.json")
     gates_json: Path = Path("results/phase3_2/phase3_2_gates.json")
@@ -467,6 +658,7 @@ def load_phase3_2_config() -> Phase32Config:
         cfg.processed_dir,
         cfg.results_dir,
         cfg.diagnostics_dir,
+        cfg.phase3_2e_protocol_doc.parent,
     ]
 
     for path in required_dirs:
@@ -510,13 +702,35 @@ def conditional_model_map(
     return {spec.name: spec for spec in cfg.conditional_models}
 
 
+def active_conditional_pairs(
+    cfg: Optional[Phase32Config] = None,
+) -> Tuple[Tuple[str, str], ...]:
+    """
+    Returns the conditional model pairs active for the current Phase III.2 run.
+
+    Phase III.2A/B/C pairs remain the primary registered set.
+    Phase III.2D pairs are appended only when multichannel analysis is enabled.
+    Phase III.2E remains protocol-only unless explicitly activated in a future
+    synchronized EEG + QRNG experiment.
+    """
+    if cfg is None:
+        cfg = load_phase3_2_config()
+
+    pairs: List[Tuple[str, str]] = list(cfg.primary_conditional_pairs)
+
+    if cfg.run_multichannel_analysis and cfg.use_multichannel_eeg:
+        pairs.extend(list(cfg.multichannel_conditional_pairs))
+
+    return tuple(pairs)
+
+
 def primary_test_definitions(cfg: Optional[Phase32Config] = None) -> List[Dict[str, object]]:
     """
     Defines the primary Phase III.2 tests.
 
     These are the tests that can support stronger interpretation if all gates pass.
-    Secondary regimes/lags can generate leads, but not strong claims without
-    replication.
+    Secondary regimes/lags and Phase III.2D multichannel tests can generate leads,
+    but not strong claims without replication.
     """
     if cfg is None:
         cfg = load_phase3_2_config()
@@ -551,21 +765,39 @@ def describe_config(cfg: Optional[Phase32Config] = None) -> Dict[str, object]:
         "phase_name": cfg.phase_name,
         "phase_title": cfg.phase_title,
         "version": cfg.version,
+
         "max_subjects": cfg.max_subjects,
         "eeg_epoch_seconds": cfg.eeg_epoch_seconds,
+
         "primary_eeg_channel": cfg.primary_eeg_channel,
         "secondary_eeg_channel": cfg.secondary_eeg_channel,
         "use_multichannel_eeg": cfg.use_multichannel_eeg,
+        "run_multichannel_analysis": cfg.run_multichannel_analysis,
+        "multichannel_state_column": cfg.multichannel_state_column,
+        "multichannel_next_state_column": cfg.multichannel_next_state_column,
+        "multichannel_n_states": cfg.multichannel_n_states,
+        "multichannel_feature_columns": list(cfg.multichannel_feature_columns),
+
+        "run_synchronized_protocol_analysis": cfg.run_synchronized_protocol_analysis,
+        "phase3_2e_protocol_only": cfg.phase3_2e_protocol_only,
+        "phase3_2e_requires_real_time_sync": cfg.phase3_2e_requires_real_time_sync,
+
         "rng_source_name": cfg.rng_source_name,
         "rng_n_uint8_expected": cfg.rng_n_uint8_expected,
         "rng_n_bits_expected": cfg.rng_n_bits_expected,
         "rng_window_size": cfg.rng_window_size,
+
         "regimes": [spec.name for spec in cfg.regime_specs],
         "include_transition_regime": cfg.include_transition_regime,
         "lags_epochs": list(cfg.lags_epochs),
         "primary_regimes": list(cfg.primary_regimes),
         "primary_lags_epochs": list(cfg.primary_lags_epochs),
+
         "conditional_models": [spec.name for spec in cfg.conditional_models],
+        "primary_conditional_pairs": list(cfg.primary_conditional_pairs),
+        "multichannel_conditional_pairs": list(cfg.multichannel_conditional_pairs),
+        "active_conditional_pairs": list(active_conditional_pairs(cfg)),
+
         "inj_eps_true": cfg.inj_eps_true,
         "conditional_lift_min": cfg.conditional_lift_min,
         "strong_eps_min": cfg.strong_eps_min,

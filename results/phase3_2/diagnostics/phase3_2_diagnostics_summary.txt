@@ -1,6 +1,7 @@
 ==============================================================================
 CDR Phase III.2 — Diagnostics Summary
 Leakage-safe conditional estimator aware version
+Phase III.2D multichannel-aware
 ==============================================================================
 
 Final interpretation
@@ -8,38 +9,67 @@ Final interpretation
 headline: Phase III.2 produced exploratory leads with ε saturation warning.
 status: exploratory_lead_with_saturation_warning
 
-- Positive conditional lift rows were detected: 6. Primary positive rows: 1.
+- Positive conditional lift rows were detected: 13. Primary positive rows: 1.
+- Phase III.2D multichannel EEG produced exploratory positive lift rows: 7.
 - No strong candidate rows satisfied lift, epsilon, subject-consistency and BIC criteria simultaneously.
-- Negative controls collapsed under the leakage-safe criteria.
+- No Phase III.2D multichannel row satisfied all strong-candidate criteria.
+- Negative controls collapsed under the leakage-safe criteria, including multichannel-aware controls.
 - F7 failed: subject-level consistency was insufficient for a strong claim.
 - F8 failed: the augmented conditional model was not favored by BIC.
 - F12 warning: ε saturation remains present and must be treated as a diagnostic limitation.
 - Not evaluated in this standalone diagnostic run: ['F1', 'F5'].
+- Phase III.2E remains protocol-only because Sleep-EDF and ANU QRNG were not synchronously co-acquired.
 
-recommendation: Treat Phase III.2 as an exploratory lead only. Controls passed, but F7/F8 failed and F12 raised an ε saturation warning. Do not claim EEG-RNG coupling. The appropriate next step is to document the lead, preserve the null/guardrail interpretation, and only activate III.2D/III.2E as exploratory extensions or future protocol work.
+recommendation: Treat Phase III.2A/B/C/D as an exploratory lead only. Controls passed, including multichannel-aware controls, but F7/F8 failed and F12 raised an ε saturation warning. Do not claim EEG-RNG coupling. Document III.2D as an exploratory multichannel enrichment that increased positive-lift rows but did not satisfy subject-consistency, BIC and saturation requirements. Keep III.2E as a future synchronized EEG + QRNG protocol.
 
 Conditional diagnostics
 ------------------------------------------------------------------------------
-n_rows: 84
-n_valid_rows: 84
+n_rows: 168
+n_valid_rows: 168
 n_primary_rows: 4
-n_positive_lift_rows: 6
+n_positive_lift_rows: 13
 n_primary_positive_lift_rows: 1
-n_exploratory_lift_rows: 6
+n_exploratory_lift_rows: 13
 n_strong_candidate_rows: 0
 n_primary_strong_candidate_rows: 0
-n_high_epsilon_zero_lift_rows: 21
+n_high_epsilon_zero_lift_rows: 46
+n_single_channel_rows: 84
+n_single_channel_positive_lift_rows: 6
+n_multichannel_rows: 84
+n_multichannel_positive_lift_rows: 7
+n_multichannel_strong_candidate_rows: 0
 max_conditional_lift: 0.8
 max_augmented_eps_test: 0.8
 max_fraction_positive_lift: 0.5
 best_bic_improvement: -61.02327766873805
-best_ll_improvement: 6.258120388774159
-interpretation: Positive conditional lift rows exist, but they remain exploratory because they do not satisfy all registered criteria simultaneously.
+best_ll_improvement: 45.37899991349434
+max_multichannel_conditional_lift: 0.8
+max_multichannel_augmented_eps_test: 0.8
+max_multichannel_fraction_positive_lift: 0.5
+best_multichannel_bic_improvement: -66.07858097999224
+best_multichannel_ll_improvement: 45.37899991349434
+interpretation: Positive conditional lift rows exist, including Phase III.2D multichannel rows. They remain exploratory because they do not satisfy all registered criteria simultaneously.
+
+Phase III.2D multichannel diagnostics
+------------------------------------------------------------------------------
+enabled_in_config: True
+n_multichannel_rows: 84
+n_multichannel_positive_lift_rows: 7
+n_multichannel_strong_candidate_rows: 0
+max_multichannel_conditional_lift: 0.8
+max_multichannel_augmented_eps_test: 0.8
+max_multichannel_fraction_positive_lift: 0.5
+best_multichannel_bic_improvement: -66.07858097999224
+best_multichannel_ll_improvement: 45.37899991349434
+artifact_summary: {'summary_available': True, 'inventory_available': True, 'features_available': True, 'multichannel_available': True, 'delta_secondary_source_column': 'delta_power_secondary', 'alpha_secondary_source_column': 'alpha_power_secondary', 'true_delta_secondary_available': True, 'true_alpha_secondary_available': True, 'n_rows_features': 27597, 'n_subjects_features': 10, 'state_n_unique': 9, 'next_state_n_unique': 9, 'info_bin_n_unique': 3, 'valid_multichannel_next_state_rows': 27587, 'valid_multichannel_conditional_rows': 27587, 'density': {'n_valid_rows': 27587, 'n_states': 9, 'transitions_per_state': 3065.222222222222, 'minimum_required': 30.0, 'recommended': 50.0}, 'warnings': []}
+control_summary: {'available': True, 'n_control_run_rows': 216, 'n_control_pair_rows': 864, 'n_multichannel_control_pair_rows': 432, 'n_multichannel_control_positive_lift_rows': 6, 'n_multichannel_control_strong_candidate_rows': 0, 'total_n_multichannel_pair_rows': 432, 'total_n_multichannel_positive_lift_rows': 6, 'total_n_multichannel_strong_candidate_rows': 0, 'fraction_controls_collapsed_overall': 0.8842592592592593}
+interpretation: Phase III.2D produced exploratory positive lift rows, but no multichannel row satisfied lift, epsilon, subject-consistency and BIC criteria simultaneously.
 
 Epsilon saturation
 ------------------------------------------------------------------------------
-pair_saturation: {'available': True, 'eps_saturation_value': 0.8, 'warning_fraction': 0.5, 'n_valid_pair_rows': 84, 'max_baseline_eps_test': 0.8, 'max_augmented_eps_test': 0.8, 'n_either_saturated': 45, 'n_both_saturated': 21, 'either_saturation_fraction': 0.5357142857142857, 'both_saturation_fraction': 0.25, 'warning': True, 'reason': 'pair_level_epsilon_saturation_warning'}
-model_saturation: {'available': True, 'eps_saturation_value': 0.8, 'n_model_rows': 168, 'columns': {'eps_candidate': {'max': 0.8, 'mean': 0.7999999999999998, 'n_saturated': 168, 'saturation_fraction': 1.0}, 'eps_calib': {'max': 0.8, 'mean': 0.7999999999999998, 'n_saturated': 168, 'saturation_fraction': 1.0}, 'eps_test': {'max': 0.8, 'mean': 0.3142857142857143, 'n_saturated': 66, 'saturation_fraction': 0.39285714285714285}}, 'explicit_eps_saturated': {'n_saturated': 168, 'saturation_fraction': 1.0}, 'max_saturation_fraction': 1.0, 'warning_fraction': 0.5, 'warning': True, 'reason': 'epsilon_saturation_warning'}
+pair_saturation: {'available': True, 'eps_saturation_value': 0.8, 'warning_fraction': 0.5, 'n_valid_pair_rows': 168, 'max_baseline_eps_test': 0.8, 'max_augmented_eps_test': 0.8, 'n_either_saturated': 89, 'n_both_saturated': 46, 'either_saturation_fraction': 0.5297619047619048, 'both_saturation_fraction': 0.27380952380952384, 'warning': True, 'reason': 'pair_level_epsilon_saturation_warning'}
+multichannel_pair_saturation: {'available': True, 'eps_saturation_value': 0.8, 'warning_fraction': 0.5, 'n_valid_pair_rows': 84, 'max_baseline_eps_test': 0.8, 'max_augmented_eps_test': 0.8, 'n_either_saturated': 44, 'n_both_saturated': 25, 'either_saturation_fraction': 0.5238095238095238, 'both_saturation_fraction': 0.2976190476190476, 'warning': True, 'reason': 'pair_level_epsilon_saturation_warning'}
+model_saturation: {'available': True, 'eps_saturation_value': 0.8, 'n_model_rows': 294, 'columns': {'eps_candidate': {'max': 0.8, 'mean': 0.7999999999999998, 'n_saturated': 294, 'saturation_fraction': 1.0}, 'eps_calib': {'max': 0.8, 'mean': 0.7999999999999998, 'n_saturated': 294, 'saturation_fraction': 1.0}, 'eps_test': {'max': 0.8, 'mean': 0.3238095238095238, 'n_saturated': 119, 'saturation_fraction': 0.40476190476190477}}, 'explicit_eps_saturated': {'n_saturated': 294, 'saturation_fraction': 1.0}, 'max_saturation_fraction': 1.0, 'warning_fraction': 0.5, 'warning': True, 'reason': 'epsilon_saturation_warning'}
 
 Control diagnostics
 ------------------------------------------------------------------------------
@@ -47,7 +77,10 @@ available: True
 n_control_types: 6
 n_failed_control_types: 0
 failed_control_types: []
-interpretation: All control types collapsed under the leakage-safe control criteria.
+total_multichannel_pair_rows: 432
+total_multichannel_positive_lift_rows: 6
+total_multichannel_strong_candidate_rows: 0
+interpretation: All control types collapsed under the leakage-safe control criteria, including Phase III.2D multichannel-aware controls.
 
 Gates
 ------------------------------------------------------------------------------
@@ -59,10 +92,10 @@ warning_gates: ['F12']
 Multiple-comparison guard
 ------------------------------------------------------------------------------
 enabled: True
-n_valid_tests: 84
-n_positive_lift_tests: 6
+n_valid_tests: 168
+n_positive_lift_tests: 13
 n_primary_positive_lift_tests: 1
-n_exploratory_lift_tests: 6
+n_exploratory_lift_tests: 13
 n_strong_candidate_tests: 0
 n_primary_strong_candidate_tests: 0
 

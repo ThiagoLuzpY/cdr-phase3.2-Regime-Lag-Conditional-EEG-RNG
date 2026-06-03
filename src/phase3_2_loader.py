@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import math
 import re
-from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
@@ -24,14 +23,30 @@ from config.phase3_2_config import Phase32Config, describe_config, load_phase3_2
 #   III.2A — regime-aware analysis
 #   III.2B — lagged alignment
 #   III.2C — conditional CDR
-#   III.2D — optional multi-channel enrichment
+#   III.2D — multichannel EEG enrichment
+#   III.2E — future synchronized EEG + QRNG protocol
 #
-# It intentionally creates a shared, auditable feature table:
+# Main Phase III.2D patch:
+#
+#   - Extracts primary channel:   EEG Fpz-Cz
+#   - Extracts secondary channel: EEG Pz-Oz
+#   - Saves secondary features with two compatible naming conventions:
+#
+#       pz_oz_delta_power
+#       pz_oz_alpha_power
+#
+#     and canonical III.2D columns:
+#
+#       delta_power_secondary
+#       alpha_power_secondary
+#
+#   - Detects stale cached loader output and rebuilds automatically when
+#     multichannel features are required but missing.
+#
+# Output:
 #
 #   data/interim/phase3_2/phase3_2_combined_features.csv
-#
-# The feature-layer construction, regime filtering, lagging and conditional
-# state building are handled in later modules.
+#   data/interim/phase3_2/phase3_2_loader_metadata.json
 
 
 # =========================================================
@@ -78,6 +93,24 @@ def _safe_float(value: Any, default: float = 0.0) -> float:
         return default
 
 
+def _safe_corr(x: np.ndarray, y: np.ndarray) -> float:
+    x = np.asarray(x, dtype=float)
+    y = np.asarray(y, dtype=float)
+
+    if len(x) != len(y) or len(x) < 3:
+        return 0.0
+
+    if float(np.std(x)) <= 1e-12 or float(np.std(y)) <= 1e-12:
+        return 0.0
+
+    corr = np.corrcoef(x, y)[0, 1]
+
+    if not np.isfinite(corr):
+        return 0.0
+
+    return float(corr)
+
+
 def _subject_key_from_filename(path: Path) -> Optional[str]:
     """
     Extracts Sleep-EDF subject/session key from names such as:
@@ -111,32 +144,46 @@ def _recording_id_from_filename(path: Path) -> str:
     return name.split("-")[0]
 
 
+def _normalized_channel_name(name: str) -> str:
+    return (
+        str(name)
+        .lower()
+        .replace(" ", "")
+        .replace("_", "")
+        .replace("-", "")
+        .replace(".", "")
+    )
+
+
 def _select_channel(raw: mne.io.BaseRaw, requested: str) -> str:
     """
     Selects an EEG channel robustly.
 
-    First tries exact match, then normalized lowercase match.
+    First tries exact match, then normalized lowercase match, then canonical
+    fragments such as FpzCz and PzOz.
     """
     if requested in raw.ch_names:
         return requested
 
-    normalized_requested = requested.lower().replace(" ", "").replace("_", "").replace("-", "")
+    normalized_requested = _normalized_channel_name(requested)
 
     for ch in raw.ch_names:
-        normalized_ch = ch.lower().replace(" ", "").replace("_", "").replace("-", "")
+        normalized_ch = _normalized_channel_name(ch)
+
         if normalized_ch == normalized_requested:
             return ch
 
-    # fallback: contains FpzCz or PzOz style fragments
     if "fpzcz" in normalized_requested:
         for ch in raw.ch_names:
-            normalized_ch = ch.lower().replace(" ", "").replace("_", "").replace("-", "")
+            normalized_ch = _normalized_channel_name(ch)
+
             if "fpzcz" in normalized_ch:
                 return ch
 
     if "pzoz" in normalized_requested:
         for ch in raw.ch_names:
-            normalized_ch = ch.lower().replace(" ", "").replace("_", "").replace("-", "")
+            normalized_ch = _normalized_channel_name(ch)
+
             if "pzoz" in normalized_ch:
                 return ch
 
@@ -144,6 +191,56 @@ def _select_channel(raw: mne.io.BaseRaw, requested: str) -> str:
         f"Requested channel not found: {requested}. "
         f"Available channels: {raw.ch_names}"
     )
+
+
+def _has_required_multichannel_columns(df: pd.DataFrame) -> bool:
+    required = [
+        "delta_power_secondary",
+        "alpha_power_secondary",
+        "secondary_channel",
+        "has_secondary_channel",
+    ]
+
+    return all(col in df.columns for col in required)
+
+
+def _cached_dataset_is_compatible(
+    df: pd.DataFrame,
+    metadata: Dict[str, Any],
+    cfg: Phase32Config,
+) -> Tuple[bool, str]:
+    """
+    Prevents reuse of old cached loader output after III.2D activation.
+
+    Before III.2D, the cached file may not contain true secondary-channel
+    features. If multichannel EEG is enabled and those columns are absent,
+    the loader should rebuild automatically.
+    """
+    if df.empty:
+        return False, "cached_dataframe_empty"
+
+    if cfg.use_multichannel_eeg or cfg.run_multichannel_analysis:
+        if not _has_required_multichannel_columns(df):
+            return False, "multichannel_required_columns_missing"
+
+        if "has_secondary_channel" in df.columns:
+            has_secondary = pd.to_numeric(
+                df["has_secondary_channel"],
+                errors="coerce",
+            ).fillna(0).astype(int)
+
+            if int(has_secondary.sum()) == 0:
+                return False, "cached_dataframe_has_no_secondary_channel_rows"
+
+    metadata_version = str(metadata.get("config", {}).get("version", metadata.get("version", "")))
+
+    if metadata_version and metadata_version != str(cfg.version):
+        # Version mismatch alone does not force rebuild unless critical columns
+        # are missing. We keep this as compatible to avoid unnecessary rebuilds
+        # after purely metadata-level changes.
+        return True, f"compatible_with_version_note_cached={metadata_version}_current={cfg.version}"
+
+    return True, "compatible"
 
 
 # =========================================================
@@ -154,7 +251,9 @@ def discover_eeg_pairs(cfg: Phase32Config) -> List[Dict[str, Any]]:
     """
     Discovers PSG + Hypnogram pairs in data/raw/eeg/.
 
-    Pairing is based on the Sleep-EDF subject key SC####.
+    Pairing is based on the Sleep-EDF subject key SC####. This preserves the
+    earlier Phase III.1/III.2 behavior while staying compatible with files such
+    as SC4001E0-PSG.edf and SC4001EC-Hypnogram.edf.
     """
     eeg_dir = Path(cfg.raw_eeg_dir)
 
@@ -170,13 +269,13 @@ def discover_eeg_pairs(cfg: Phase32Config) -> List[Dict[str, Any]]:
     if not hypnogram_files:
         raise FileNotFoundError(f"No Hypnogram files found in {eeg_dir}")
 
-    hyp_by_key: Dict[str, Path] = {}
+    hyp_by_key: Dict[str, List[Path]] = {}
 
     for hyp in hypnogram_files:
         key = _subject_key_from_filename(hyp)
 
         if key is not None:
-            hyp_by_key[key] = hyp
+            hyp_by_key.setdefault(key, []).append(hyp)
 
     pairs: List[Dict[str, Any]] = []
 
@@ -186,10 +285,15 @@ def discover_eeg_pairs(cfg: Phase32Config) -> List[Dict[str, Any]]:
         if key is None:
             continue
 
-        hyp = hyp_by_key.get(key)
+        candidate_hyps = hyp_by_key.get(key, [])
 
-        if hyp is None:
+        if not candidate_hyps:
             continue
+
+        # Sleep-EDF often uses SC4001E0-PSG with SC4001EC-Hypnogram.
+        # We keep the old SC#### pairing rule but choose the first sorted
+        # candidate deterministically.
+        hyp = sorted(candidate_hyps)[0]
 
         pairs.append(
             {
@@ -441,12 +545,113 @@ def extract_epoch_features(
     }
 
 
+def add_secondary_features_to_row(
+    row: Dict[str, Any],
+    secondary_epoch: np.ndarray,
+    primary_epoch: np.ndarray,
+    sfreq: float,
+    secondary_channel: str,
+) -> Dict[str, Any]:
+    """
+    Adds secondary-channel features using both legacy pz_oz_* names and
+    canonical *_secondary names required by Phase III.2D.
+    """
+    row["secondary_channel"] = str(secondary_channel)
+    row["has_secondary_channel"] = 1
+
+    secondary_features = extract_epoch_features(
+        secondary_epoch,
+        sfreq,
+        prefix="",
+    )
+
+    for name, value in secondary_features.items():
+        # Canonical III.2D columns:
+        #   delta_power_secondary
+        #   alpha_power_secondary
+        row[f"{name}_secondary"] = value
+
+        # Backward-compatible columns:
+        #   pz_oz_delta_power
+        #   pz_oz_alpha_power
+        row[f"pz_oz_{name}"] = value
+
+    if "delta_power" in row and "delta_power_secondary" in row:
+        row["delta_channel_diff"] = float(
+            _safe_float(row["delta_power"]) - _safe_float(row["delta_power_secondary"])
+        )
+
+    if "alpha_power" in row and "alpha_power_secondary" in row:
+        row["alpha_channel_diff"] = float(
+            _safe_float(row["alpha_power"]) - _safe_float(row["alpha_power_secondary"])
+        )
+
+    row["cross_channel_corr"] = _safe_corr(primary_epoch, secondary_epoch)
+
+    return row
+
+
+def add_missing_secondary_placeholders(
+    row: Dict[str, Any],
+) -> Dict[str, Any]:
+    """
+    Adds explicit placeholders when the secondary channel is unavailable.
+
+    This makes the absence auditable and prevents silent fallback ambiguity.
+    """
+    row["secondary_channel"] = ""
+    row["has_secondary_channel"] = 0
+
+    secondary_columns = [
+        "delta_power_secondary",
+        "theta_power_secondary",
+        "alpha_power_secondary",
+        "beta_power_secondary",
+        "total_power_secondary",
+        "alpha_delta_ratio_secondary",
+        "theta_alpha_ratio_secondary",
+        "beta_alpha_ratio_secondary",
+        "spectral_entropy_secondary",
+        "hjorth_mobility_secondary",
+        "hjorth_complexity_secondary",
+        "line_length_secondary",
+        "signal_std_secondary",
+        "signal_mean_abs_secondary",
+        "pz_oz_delta_power",
+        "pz_oz_theta_power",
+        "pz_oz_alpha_power",
+        "pz_oz_beta_power",
+        "pz_oz_total_power",
+        "pz_oz_alpha_delta_ratio",
+        "pz_oz_theta_alpha_ratio",
+        "pz_oz_beta_alpha_ratio",
+        "pz_oz_spectral_entropy",
+        "pz_oz_hjorth_mobility",
+        "pz_oz_hjorth_complexity",
+        "pz_oz_line_length",
+        "pz_oz_signal_std",
+        "pz_oz_signal_mean_abs",
+        "delta_channel_diff",
+        "alpha_channel_diff",
+        "cross_channel_corr",
+    ]
+
+    for col in secondary_columns:
+        row[col] = np.nan
+
+    return row
+
+
 def load_one_eeg_recording(
     pair: Dict[str, Any],
     cfg: Phase32Config,
 ) -> pd.DataFrame:
     """
     Loads one Sleep-EDF PSG/Hypnogram pair and returns epoch-level EEG features.
+
+    Phase III.2D update:
+        If use_multichannel_eeg=True, this extracts both Fpz-Cz and Pz-Oz
+        features when Pz-Oz is present.
     """
     subject_id = str(pair["subject_id"])
     recording_id = str(pair["recording_id"])
@@ -470,14 +675,37 @@ def load_one_eeg_recording(
 
     secondary_data: Optional[np.ndarray] = None
     secondary_channel: Optional[str] = None
+    secondary_error: Optional[str] = None
 
-    if cfg.use_multichannel_eeg:
+    if cfg.use_multichannel_eeg or cfg.run_multichannel_analysis:
         try:
             secondary_channel = _select_channel(raw, cfg.secondary_eeg_channel)
             secondary_data = raw.get_data(picks=[secondary_channel])[0]
-        except Exception:
+
+            if len(secondary_data) != len(primary_data):
+                secondary_error = (
+                    f"Secondary channel length mismatch: primary={len(primary_data)}, "
+                    f"secondary={len(secondary_data)}"
+                )
+                secondary_channel = None
+                secondary_data = None
+
+        except Exception as exc:
+            secondary_error = str(exc)
             secondary_channel = None
             secondary_data = None
+
+    if secondary_channel:
+        print(
+            f"[Phase3.2 Loader] Channels subject={subject_id}: "
+            f"primary={primary_channel}, secondary={secondary_channel}"
+        )
+    else:
+        print(
+            f"[Phase3.2 Loader] WARNING subject={subject_id}: "
+            f"secondary channel unavailable. requested={cfg.secondary_eeg_channel}; "
+            f"error={secondary_error}"
+        )
 
     samples_per_epoch = int(round(sfreq * cfg.eeg_epoch_seconds))
     n_epochs = int(len(primary_data) // samples_per_epoch)
@@ -512,31 +740,25 @@ def load_one_eeg_recording(
             "epoch_end_sec": float((epoch_idx + 1) * cfg.eeg_epoch_seconds),
             "sleep_stage": stage,
             "primary_channel": primary_channel,
+            "secondary_channel_requested": cfg.secondary_eeg_channel,
+            "secondary_channel_error": secondary_error or "",
             "sfreq": sfreq,
         }
 
         row.update(extract_epoch_features(primary_epoch, sfreq, prefix=""))
 
-        if secondary_data is not None:
+        if secondary_data is not None and secondary_channel is not None:
             secondary_epoch = secondary_data[start:end]
-            row["secondary_channel"] = secondary_channel
 
-            sec_features = extract_epoch_features(
-                secondary_epoch,
-                sfreq,
-                prefix="pz_oz_",
+            row = add_secondary_features_to_row(
+                row=row,
+                secondary_epoch=secondary_epoch,
+                primary_epoch=primary_epoch,
+                sfreq=sfreq,
+                secondary_channel=secondary_channel,
             )
-            row.update(sec_features)
-
-            if "delta_power" in row and "pz_oz_delta_power" in row:
-                row["delta_channel_diff"] = float(row["delta_power"] - row["pz_oz_delta_power"])
-
-            if "alpha_power" in row and "pz_oz_alpha_power" in row:
-                row["alpha_channel_diff"] = float(row["alpha_power"] - row["pz_oz_alpha_power"])
-
-            if len(primary_epoch) == len(secondary_epoch) and len(primary_epoch) > 2:
-                corr = np.corrcoef(primary_epoch, secondary_epoch)[0, 1]
-                row["cross_channel_corr"] = float(corr) if np.isfinite(corr) else 0.0
+        else:
+            row = add_missing_secondary_placeholders(row)
 
         rows.append(row)
 
@@ -661,14 +883,11 @@ def compute_rng_window_metrics(bits: np.ndarray) -> Dict[str, float]:
     run_max = float(np.max(runs)) if runs else 0.0
     run_std = float(np.std(runs)) if runs else 0.0
 
-    # Simple interpretable proxies.
     compressibility_proxy = float(abs(run_mean - 2.0))
     surprise_index = float(abs(p1 - 0.5))
     transition_asymmetry = float(abs(transition_rate - 0.5))
     micro_cluster_deviation = float(abs(run_max - math.log2(max(bits.size, 2))))
 
-    # The q_rng_score is not a quantum measurement.
-    # It is a proxy summarizing local deviations from idealized balanced randomness.
     q_rng_score = float(
         surprise_index
         + transition_asymmetry
@@ -703,7 +922,8 @@ def align_rng_to_subject_epochs(
     The same RNG sample is used for each subject, but window positions are
     resampled deterministically across the subject-specific epoch axis.
 
-    This mirrors the Phase III.1 logic while keeping Phase III.2 fully auditable.
+    This keeps Phase III.2 auditable while preserving the public-data limitation:
+    Sleep-EDF and ANU QRNG are not truly co-acquired.
     """
     bits = np.asarray(bits, dtype=int)
 
@@ -776,9 +996,15 @@ def build_phase3_2_dataset(cfg: Optional[Phase32Config] = None) -> Tuple[pd.Data
             eeg_df = load_one_eeg_recording(pair, cfg)
             eeg_frames.append(eeg_df)
 
+            has_secondary_rows = (
+                int(pd.to_numeric(eeg_df.get("has_secondary_channel", 0), errors="coerce").fillna(0).sum())
+                if "has_secondary_channel" in eeg_df.columns
+                else 0
+            )
+
             print(
                 f"[Phase3.2 Loader] Loaded {pair['subject_id']} | "
-                f"rows={len(eeg_df)}"
+                f"rows={len(eeg_df)} | secondary_rows={has_secondary_rows}"
             )
 
         except Exception as exc:
@@ -816,9 +1042,28 @@ def build_phase3_2_dataset(cfg: Optional[Phase32Config] = None) -> Tuple[pd.Data
         cfg=cfg,
     )
 
+    has_secondary_total = (
+        int(pd.to_numeric(combined.get("has_secondary_channel", 0), errors="coerce").fillna(0).sum())
+        if "has_secondary_channel" in combined.columns
+        else 0
+    )
+
+    secondary_subjects: List[str] = []
+
+    if "has_secondary_channel" in combined.columns and "subject_id" in combined.columns:
+        sec_mask = pd.to_numeric(
+            combined["has_secondary_channel"],
+            errors="coerce",
+        ).fillna(0).astype(int) == 1
+
+        secondary_subjects = sorted(
+            combined.loc[sec_mask, "subject_id"].astype(str).unique().tolist()
+        )
+
     metadata: Dict[str, Any] = {
         "phase": cfg.phase_name,
         "project_name": cfg.project_name,
+        "version": cfg.version,
         "config": describe_config(cfg),
         "n_pairs_discovered": len(pairs),
         "n_subjects_loaded": int(combined["subject_id"].nunique()),
@@ -829,6 +1074,13 @@ def build_phase3_2_dataset(cfg: Optional[Phase32Config] = None) -> Tuple[pd.Data
         "rng_bit_count": int(len(rng_bits)),
         "rng_window_size": int(cfg.rng_window_size),
         "rng_alignment_mode": cfg.rng_alignment_mode,
+        "primary_eeg_channel_requested": cfg.primary_eeg_channel,
+        "secondary_eeg_channel_requested": cfg.secondary_eeg_channel,
+        "use_multichannel_eeg": bool(cfg.use_multichannel_eeg),
+        "run_multichannel_analysis": bool(cfg.run_multichannel_analysis),
+        "has_secondary_channel_rows": has_secondary_total,
+        "secondary_channel_subjects": secondary_subjects,
+        "multichannel_loader_available": bool(has_secondary_total > 0),
         "errors": errors,
     }
 
@@ -840,6 +1092,16 @@ def build_phase3_2_dataset(cfg: Optional[Phase32Config] = None) -> Tuple[pd.Data
             .to_dict(orient="records")
         )
         metadata["sleep_stage_counts"] = stage_counts
+
+    if "secondary_channel" in combined.columns:
+        secondary_channel_counts = (
+            combined["secondary_channel"]
+            .fillna("")
+            .astype(str)
+            .value_counts()
+            .to_dict()
+        )
+        metadata["secondary_channel_counts"] = secondary_channel_counts
 
     return combined, metadata
 
@@ -873,7 +1135,16 @@ def load_or_build_phase3_2_dataset(
         with open(cfg.loader_metadata_file, "r", encoding="utf-8") as f:
             metadata = json.load(f)
 
-        return df, metadata
+        compatible, reason = _cached_dataset_is_compatible(df, metadata, cfg)
+
+        if compatible:
+            print(f"[Phase3.2 Loader] Cached dataset compatible: {reason}")
+            return df, metadata
+
+        print(
+            "[Phase3.2 Loader] Cached dataset is not compatible with current config. "
+            f"Reason: {reason}. Rebuilding..."
+        )
 
     df, metadata = build_phase3_2_dataset(cfg)
     save_phase3_2_dataset(df, metadata, cfg)
@@ -899,6 +1170,9 @@ def main() -> None:
     print(f"Rows: {len(df)}")
     print(f"Subjects: {metadata.get('subjects_loaded')}")
     print(f"RNG bits: {metadata.get('rng_bit_count')}")
+    print(f"Multichannel loader available: {metadata.get('multichannel_loader_available')}")
+    print(f"Secondary-channel rows: {metadata.get('has_secondary_channel_rows')}")
+    print(f"Secondary-channel subjects: {metadata.get('secondary_channel_subjects')}")
     print(f"Output CSV: {cfg.combined_features_file}")
     print("============================================================\n")
 

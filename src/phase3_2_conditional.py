@@ -12,6 +12,7 @@ import pandas as pd
 from config.phase3_2_config import (
     ConditionalModelSpec,
     Phase32Config,
+    active_conditional_pairs,
     conditional_model_map,
     load_phase3_2_config,
 )
@@ -21,49 +22,41 @@ from src.phase3_2_regimes import save_json
 
 
 # =========================================================
-# Phase III.2C — Conditional CDR
-# Leakage-safe patch
+# Phase III.2C/D — Conditional CDR
+# Leakage-safe ref/calib/test estimator
 # =========================================================
 #
 # This module tests whether one domain improves conditional transition
 # modeling of the other domain:
 #
-#   C0: P(EEG_{t+1} | EEG_t)
-#   C1: P(EEG_{t+1} | EEG_t, RNG_t)
+#   III.2C — single-channel EEG/RNG:
 #
-#   C2: P(RNG_{t+1} | RNG_t)
-#   C3: P(RNG_{t+1} | RNG_t, EEG_t)
+#       C0: P(EEG_{t+1} | EEG_t)
+#       C1: P(EEG_{t+1} | EEG_t, RNG_t)
 #
-# Patch rationale:
+#       C2: P(RNG_{t+1} | RNG_t)
+#       C3: P(RNG_{t+1} | RNG_t, EEG_t)
 #
-#   The previous implementation estimated Δχ from the same test fold used to
-#   select ε. That can saturate ε at the top of the grid because the reweighting
-#   direction is partially fitted to the evaluation sample.
+#   III.2D — multichannel EEG enrichment:
 #
-#   This patched version uses three disjoint chronological partitions:
+#       D0: P(MC-EEG_{t+1} | MC-EEG_t)
+#       D1: P(MC-EEG_{t+1} | MC-EEG_t, RNG_t)
+#       D2: P(RNG_{t+1} | RNG_t, MC-EEG_t)
 #
-#       reference_train → fits P0
-#       calibration     → estimates Δχ and selects ε
-#       test_holdout    → evaluates the selected ε
+# Estimator:
 #
-#   The final reported eps_test is confirmed only if the selected ε improves
-#   held-out test likelihood over ε = 0. Otherwise eps_test is set to 0.0.
+#   reference_train → fits P0
+#   calibration     → estimates Δχ and selects ε
+#   test_holdout    → evaluates selected ε
+#
+# The final reported eps_test is confirmed only if the selected ε improves
+# held-out test likelihood over ε = 0. Otherwise eps_test is set to 0.0.
 #
 # Interpretation:
 #
-#   eps_calib:
-#       candidate ε selected on calibration.
-#
-#   eps_test:
-#       confirmed held-out ε. This is the value used by pair-level lift.
-#
-#   ll_test_gain_from_eps:
-#       held-out gain of the selected reweighted kernel over the ε = 0 kernel.
-#
-# Important:
-#   This file does not make a scientific claim by itself.
-#   It produces conditional model scores that later gates/controls/diagnostics
-#   will interpret.
+#   III.2D is exploratory. It enriches EEG representation but does not convert
+#   multichannel rows into primary claims. Primary status remains controlled by
+#   model.primary, cfg.primary_regimes and cfg.primary_lags_epochs.
 
 
 # =========================================================
@@ -180,6 +173,16 @@ def _safe_int(value: Any, default: int = 0) -> int:
         return default
 
 
+def _as_bool_series(series: pd.Series) -> pd.Series:
+    if series.empty:
+        return pd.Series([], dtype=bool)
+
+    if series.dtype == bool:
+        return series
+
+    return series.astype(str).str.lower().isin(["true", "1", "yes"])
+
+
 def _sort_frame(df: pd.DataFrame) -> pd.DataFrame:
     sort_cols = [c for c in ["subject_id", "recording_id", "epoch_idx"] if c in df.columns]
 
@@ -237,6 +240,17 @@ def _get_cfg_int(cfg: Phase32Config, name: str, default: int) -> int:
     return int(getattr(cfg, name, default))
 
 
+def model_uses_multichannel(model: ConditionalModelSpec) -> bool:
+    components = list(model.current_components) + [model.target_component]
+
+    return any(
+        str(component).startswith("eeg_multichannel")
+        or str(component).startswith("mc_eeg")
+        or str(component).startswith("mceeg")
+        for component in components
+    ) or model.family == "MCEEG_next"
+
+
 # =========================================================
 # Column resolution
 # =========================================================
@@ -245,19 +259,71 @@ def resolve_component_column(component: str, df: pd.DataFrame) -> str:
     direct = str(component)
 
     aliases: Dict[str, List[str]] = {
-        "eeg_state": ["eeg_state"],
-        "rng_state": ["rng_state_model", "rng_state_aligned", "rng_state"],
-        "eeg_next_state": ["eeg_next_state"],
-        "rng_next_state": ["rng_next_state_model", "rng_next_state", "rng_next_bit_raw"],
-        "eeg_info_bin": ["eeg_info_bin"],
-        "rng_info_bin": ["rng_info_bin_model", "rng_info_bin_aligned", "rng_info_bin"],
-        "q_rng_bin": ["q_rng_bin_model", "q_rng_bin_aligned", "q_rng_bin"],
-        "observed_joint_state": ["observed_joint_state_lagged", "observed_joint_state"],
+        "eeg_state": [
+            "eeg_state",
+        ],
+        "rng_state": [
+            "rng_state_model",
+            "rng_state_aligned",
+            "rng_state",
+        ],
+        "eeg_next_state": [
+            "eeg_next_state",
+        ],
+        "rng_next_state": [
+            "rng_next_state_model",
+            "rng_next_state",
+            "rng_next_bit_raw",
+        ],
+        "eeg_info_bin": [
+            "eeg_info_bin",
+        ],
+        "rng_info_bin": [
+            "rng_info_bin_model",
+            "rng_info_bin_aligned",
+            "rng_info_bin",
+        ],
+        "q_rng_bin": [
+            "q_rng_bin_model",
+            "q_rng_bin_aligned",
+            "q_rng_bin",
+        ],
+        "observed_joint_state": [
+            "observed_joint_state_lagged",
+            "observed_joint_state",
+        ],
         "informational_joint_state": [
             "informational_joint_state_lagged",
             "informational_joint_state",
         ],
-        "latent_q_state": ["latent_q_state_lagged", "latent_q_state"],
+        "latent_q_state": [
+            "latent_q_state_lagged",
+            "latent_q_state",
+        ],
+
+        # -------------------------------------------------
+        # Phase III.2D — multichannel EEG aliases
+        # -------------------------------------------------
+        "eeg_multichannel_state": [
+            "eeg_multichannel_state_model",
+            "eeg_multichannel_state_lagged",
+            "eeg_multichannel_state_aligned",
+            "eeg_multichannel_state",
+        ],
+        "eeg_multichannel_next_state": [
+            "eeg_multichannel_next_state_model",
+            "eeg_multichannel_next_state",
+            "eeg_multichannel_state_next",
+        ],
+        "eeg_multichannel_info_bin": [
+            "eeg_multichannel_info_bin_model",
+            "eeg_multichannel_info_bin_lagged",
+            "eeg_multichannel_info_bin_aligned",
+            "eeg_multichannel_info_bin",
+        ],
+        "eeg_multichannel_info_bin_next": [
+            "eeg_multichannel_info_bin_next",
+        ],
     }
 
     candidates = aliases.get(direct, [direct])
@@ -268,16 +334,49 @@ def resolve_component_column(component: str, df: pd.DataFrame) -> str:
 
     raise KeyError(
         f"Could not resolve component column '{component}'. "
-        f"Tried: {candidates}. Available columns include: {list(df.columns)[:40]}..."
+        f"Tried: {candidates}. Available columns include: {list(df.columns)[:60]}..."
     )
 
 
 def model_validity_column(model: ConditionalModelSpec, df: pd.DataFrame) -> str:
+    """
+    Resolves the validity mask for the model.
+
+    Multichannel models must use valid_multichannel_conditional_row when
+    available, because D0/D1/D2 require the multichannel next-state layer.
+    """
+    if model_uses_multichannel(model):
+        for col in [
+            "valid_multichannel_conditional_row",
+            "valid_multichannel_next_state",
+        ]:
+            if col in df.columns:
+                return col
+
     if model.family == "EEG_next":
         if "valid_eeg_conditional_row" in df.columns:
             return "valid_eeg_conditional_row"
 
+    if model.family == "MCEEG_next":
+        for col in [
+            "valid_multichannel_conditional_row",
+            "valid_multichannel_next_state",
+        ]:
+            if col in df.columns:
+                return col
+
     if model.family == "RNG_next":
+        # For D2, RNG_next uses multichannel EEG as an additional current
+        # component, so the multichannel validity column is preferred when the
+        # model uses multichannel state.
+        if model_uses_multichannel(model):
+            for col in [
+                "valid_multichannel_conditional_row",
+                "valid_multichannel_next_state",
+            ]:
+                if col in df.columns:
+                    return col
+
         if "valid_rng_conditional_row" in df.columns:
             return "valid_rng_conditional_row"
 
@@ -304,7 +403,7 @@ def make_subject_chronological_split(
     Backward-compatible two-way split.
 
     Kept because other modules may still call it. The main conditional estimator
-    now uses make_subject_chronological_three_way_split().
+    uses make_subject_chronological_three_way_split().
     """
     if df.empty:
         raise RuntimeError("Cannot split empty dataframe.")
@@ -358,9 +457,6 @@ def make_subject_chronological_three_way_split(
         reference_train: fits P0
         calibration: estimates Δχ and selects ε
         test_holdout: evaluates selected ε
-
-    Defaults are compatible with the current config. Later we can expose these
-    ratios explicitly in phase3_2_config.py.
     """
     if df.empty:
         raise RuntimeError("Cannot split empty dataframe.")
@@ -1192,7 +1288,7 @@ def evaluate_conditional_models_for_frame(
     scores_by_name: Dict[str, ConditionalScore] = {}
     pair_scores: List[ConditionalPairScore] = []
 
-    for baseline_name, augmented_name in cfg.primary_conditional_pairs:
+    for baseline_name, augmented_name in active_conditional_pairs(cfg):
         baseline_model = model_map[baseline_name]
         augmented_model = model_map[augmented_name]
 
@@ -1278,14 +1374,27 @@ def evaluate_all_conditional_from_lagged_csvs(
 # Summaries and output
 # =========================================================
 
-def summarize_conditional_pairs(pair_scores_df: pd.DataFrame) -> Dict[str, Any]:
+def summarize_conditional_pairs(
+    pair_scores_df: pd.DataFrame,
+    cfg: Optional[Phase32Config] = None,
+) -> Dict[str, Any]:
+    if cfg is None:
+        cfg = load_phase3_2_config()
+
     if pair_scores_df.empty:
         return {
             "available": False,
             "reason": "empty_pair_scores",
         }
 
-    valid = pair_scores_df[pair_scores_df["valid"] == True].copy()
+    if "valid" not in pair_scores_df.columns:
+        return {
+            "available": False,
+            "reason": "missing_valid_column",
+            "n_rows": int(len(pair_scores_df)),
+        }
+
+    valid = pair_scores_df[_as_bool_series(pair_scores_df["valid"])].copy()
 
     if valid.empty:
         return {
@@ -1294,20 +1403,49 @@ def summarize_conditional_pairs(pair_scores_df: pd.DataFrame) -> Dict[str, Any]:
             "n_rows": int(len(pair_scores_df)),
         }
 
-    primary = valid[valid["primary"] == True].copy()
+    primary = valid[_as_bool_series(valid["primary"])].copy() if "primary" in valid.columns else pd.DataFrame()
 
-    positive_lift = valid[valid["conditional_lift"].astype(float) > 0.0].copy()
+    positive_lift = valid[
+        pd.to_numeric(valid["conditional_lift"], errors="coerce").fillna(0.0) > 0.0
+    ].copy()
+
+    primary_positive_lift = (
+        primary[pd.to_numeric(primary["conditional_lift"], errors="coerce").fillna(0.0) > 0.0].copy()
+        if not primary.empty
+        else pd.DataFrame()
+    )
+
+    multichannel = valid[
+        valid["augmented_model"].astype(str).str.startswith("D")
+        | valid["baseline_model"].astype(str).str.startswith("D")
+        | valid["family"].astype(str).str.contains("MCEEG", case=False, na=False)
+    ].copy()
+
+    multichannel_positive_lift = (
+        multichannel[
+            pd.to_numeric(multichannel["conditional_lift"], errors="coerce").fillna(0.0) > 0.0
+        ].copy()
+        if not multichannel.empty
+        else pd.DataFrame()
+    )
 
     strong_candidates = valid[
-        (valid["conditional_lift"].astype(float) >= 0.03)
-        & (valid["augmented_eps_test"].astype(float) >= 0.07)
-        & (valid["fraction_positive_lift"].astype(float) >= 0.60)
-        & (valid["bic_improvement"].astype(float) >= 0.0)
+        (pd.to_numeric(valid["conditional_lift"], errors="coerce").fillna(0.0) >= float(cfg.conditional_lift_min))
+        & (pd.to_numeric(valid["augmented_eps_test"], errors="coerce").fillna(0.0) >= float(cfg.strong_eps_min))
+        & (pd.to_numeric(valid["fraction_positive_lift"], errors="coerce").fillna(0.0) >= float(cfg.subject_effect_fraction))
+        & (pd.to_numeric(valid["bic_improvement"], errors="coerce").fillna(0.0) >= 0.0)
     ].copy()
 
     best_lift = valid.sort_values("conditional_lift", ascending=False).iloc[0]
     best_bic = valid.sort_values("bic_improvement", ascending=False).iloc[0]
     best_ll = valid.sort_values("ll_improvement", ascending=False).iloc[0]
+
+    if not multichannel.empty:
+        best_multichannel_lift = multichannel.sort_values("conditional_lift", ascending=False).iloc[0]
+        best_multichannel_bic = multichannel.sort_values("bic_improvement", ascending=False).iloc[0]
+    else:
+        best_multichannel_lift = None
+        best_multichannel_bic = None
 
     def _row_payload(row: Optional[pd.Series]) -> Dict[str, Any]:
         if row is None:
@@ -1320,30 +1458,46 @@ def summarize_conditional_pairs(pair_scores_df: pd.DataFrame) -> Dict[str, Any]:
             "baseline_model": str(row.get("baseline_model")),
             "augmented_model": str(row.get("augmented_model")),
             "conditional_lift": _safe_float(row.get("conditional_lift")),
+            "baseline_eps_test": _safe_float(row.get("baseline_eps_test")),
             "augmented_eps_test": _safe_float(row.get("augmented_eps_test")),
             "fraction_positive_lift": _safe_float(row.get("fraction_positive_lift")),
             "ll_improvement": _safe_float(row.get("ll_improvement")),
             "bic_improvement": _safe_float(row.get("bic_improvement")),
+            "aic_improvement": _safe_float(row.get("aic_improvement")),
             "primary": bool(row.get("primary")),
         }
 
     summary: Dict[str, Any] = {
         "available": True,
+        "module": "III.2C_D_conditional_CDR_leakage_safe",
         "n_rows": int(len(pair_scores_df)),
         "n_valid_rows": int(len(valid)),
         "n_primary_rows": int(len(primary)),
         "n_positive_lift_rows": int(len(positive_lift)),
+        "n_primary_positive_lift_rows": int(len(primary_positive_lift)),
         "n_strong_candidate_rows": int(len(strong_candidates)),
+        "n_multichannel_rows": int(len(multichannel)),
+        "n_multichannel_positive_lift_rows": int(len(multichannel_positive_lift)),
         "best_by_conditional_lift": _row_payload(best_lift),
         "best_by_bic_improvement": _row_payload(best_bic),
         "best_by_ll_improvement": _row_payload(best_ll),
+        "best_multichannel_by_conditional_lift": _row_payload(best_multichannel_lift),
+        "best_multichannel_by_bic_improvement": _row_payload(best_multichannel_bic),
         "positive_lift_rows": positive_lift.to_dict(orient="records"),
+        "multichannel_positive_lift_rows": multichannel_positive_lift.to_dict(orient="records"),
         "strong_candidate_rows": strong_candidates.to_dict(orient="records"),
+        "active_conditional_pairs": list(active_conditional_pairs(cfg)),
+        "primary_conditional_pairs": list(cfg.primary_conditional_pairs),
+        "multichannel_conditional_pairs": list(cfg.multichannel_conditional_pairs),
     }
 
     if "baseline_eps_test" in valid.columns and "augmented_eps_test" in valid.columns:
-        summary["max_baseline_eps_test"] = float(valid["baseline_eps_test"].astype(float).max())
-        summary["max_augmented_eps_test"] = float(valid["augmented_eps_test"].astype(float).max())
+        summary["max_baseline_eps_test"] = float(
+            pd.to_numeric(valid["baseline_eps_test"], errors="coerce").fillna(0.0).max()
+        )
+        summary["max_augmented_eps_test"] = float(
+            pd.to_numeric(valid["augmented_eps_test"], errors="coerce").fillna(0.0).max()
+        )
 
     return summary
 
@@ -1355,7 +1509,7 @@ def build_conditional_summary_text(
     lines: List[str] = []
 
     lines.append("=" * 78)
-    lines.append("Phase III.2C — Conditional CDR summary")
+    lines.append("Phase III.2C/D — Conditional CDR summary")
     lines.append("Leakage-safe ref/calib/test estimator")
     lines.append("=" * 78)
     lines.append("")
@@ -1368,7 +1522,10 @@ def build_conditional_summary_text(
     lines.append(f"Valid rows: {summary.get('n_valid_rows')}/{summary.get('n_rows')}")
     lines.append(f"Primary rows: {summary.get('n_primary_rows')}")
     lines.append(f"Positive lift rows: {summary.get('n_positive_lift_rows')}")
+    lines.append(f"Primary positive lift rows: {summary.get('n_primary_positive_lift_rows')}")
     lines.append(f"Strong candidate rows: {summary.get('n_strong_candidate_rows')}")
+    lines.append(f"Multichannel rows: {summary.get('n_multichannel_rows')}")
+    lines.append(f"Multichannel positive lift rows: {summary.get('n_multichannel_positive_lift_rows')}")
     lines.append(f"Max baseline eps_test: {summary.get('max_baseline_eps_test')}")
     lines.append(f"Max augmented eps_test: {summary.get('max_augmented_eps_test')}")
     lines.append("")
@@ -1385,8 +1542,21 @@ def build_conditional_summary_text(
     lines.append(str(summary.get("best_by_ll_improvement")))
     lines.append("")
 
+    lines.append("Best multichannel by conditional lift:")
+    lines.append(str(summary.get("best_multichannel_by_conditional_lift")))
+    lines.append("")
+
+    lines.append("Best multichannel by BIC improvement:")
+    lines.append(str(summary.get("best_multichannel_by_bic_improvement")))
+    lines.append("")
+
     lines.append("Positive lift rows:")
     for row in summary.get("positive_lift_rows", []):
+        lines.append(f"  {row}")
+
+    lines.append("")
+    lines.append("Multichannel positive lift rows:")
+    for row in summary.get("multichannel_positive_lift_rows", []):
         lines.append(f"  {row}")
 
     lines.append("")
@@ -1410,20 +1580,37 @@ def save_conditional_outputs(
     summary_json_path = Path(cfg.conditional_summary_json)
     summary_txt_path = Path(cfg.results_dir) / "phase3_2c_conditional_summary.txt"
 
+    multichannel_results_path = Path(cfg.multichannel_results_csv)
+
     model_scores_df.to_csv(model_scores_path, index=False)
     pair_scores_df.to_csv(pair_scores_path, index=False)
 
-    summary = summarize_conditional_pairs(pair_scores_df)
+    if not pair_scores_df.empty:
+        multichannel_mask = (
+            pair_scores_df["augmented_model"].astype(str).str.startswith("D")
+            | pair_scores_df["baseline_model"].astype(str).str.startswith("D")
+            | pair_scores_df["family"].astype(str).str.contains("MCEEG", case=False, na=False)
+        )
+
+        multichannel_df = pair_scores_df[multichannel_mask].copy()
+    else:
+        multichannel_df = pd.DataFrame()
+
+    multichannel_results_path.parent.mkdir(parents=True, exist_ok=True)
+    multichannel_df.to_csv(multichannel_results_path, index=False)
+
+    summary = summarize_conditional_pairs(pair_scores_df, cfg)
 
     save_json(
         summary_json_path,
         {
             "phase": cfg.phase_name,
             "project_name": cfg.project_name,
-            "module": "III.2C_conditional_CDR_leakage_safe",
+            "module": "III.2C_D_conditional_CDR_leakage_safe",
             "summary": summary,
             "model_scores_file": str(model_scores_path),
             "pair_scores_file": str(pair_scores_path),
+            "multichannel_results_file": str(multichannel_results_path),
         },
     )
 
@@ -1432,6 +1619,7 @@ def save_conditional_outputs(
 
     print(f"[Phase3.2 Conditional] Saved model scores: {model_scores_path}")
     print(f"[Phase3.2 Conditional] Saved pair scores: {pair_scores_path}")
+    print(f"[Phase3.2 Conditional] Saved multichannel results: {multichannel_results_path}")
     print(f"[Phase3.2 Conditional] Saved summary JSON: {summary_json_path}")
     print(f"[Phase3.2 Conditional] Saved summary TXT: {summary_txt_path}")
 
@@ -1451,10 +1639,10 @@ def main() -> None:
         cfg=cfg,
     )
 
-    summary = summarize_conditional_pairs(pair_scores_df)
+    summary = summarize_conditional_pairs(pair_scores_df, cfg)
 
     print("\n============================================================")
-    print("Phase III.2C conditional CDR completed")
+    print("Phase III.2C/D conditional CDR completed")
     print("Leakage-safe ref/calib/test estimator")
     print("============================================================")
 
@@ -1463,11 +1651,16 @@ def main() -> None:
     else:
         print(f"Valid pair rows: {summary.get('n_valid_rows')}")
         print(f"Positive lift rows: {summary.get('n_positive_lift_rows')}")
+        print(f"Primary positive lift rows: {summary.get('n_primary_positive_lift_rows')}")
         print(f"Strong candidate rows: {summary.get('n_strong_candidate_rows')}")
+        print(f"Multichannel rows: {summary.get('n_multichannel_rows')}")
+        print(f"Multichannel positive lift rows: {summary.get('n_multichannel_positive_lift_rows')}")
         print(f"Max baseline eps_test: {summary.get('max_baseline_eps_test')}")
         print(f"Max augmented eps_test: {summary.get('max_augmented_eps_test')}")
         print(f"Best by lift: {summary.get('best_by_conditional_lift')}")
         print(f"Best by BIC: {summary.get('best_by_bic_improvement')}")
+        print(f"Best multichannel by lift: {summary.get('best_multichannel_by_conditional_lift')}")
+        print(f"Best multichannel by BIC: {summary.get('best_multichannel_by_bic_improvement')}")
 
     print("============================================================\n")
 

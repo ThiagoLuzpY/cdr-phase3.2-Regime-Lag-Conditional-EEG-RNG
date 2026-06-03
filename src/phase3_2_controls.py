@@ -18,20 +18,21 @@ from src.phase3_2_regimes import save_json
 # =========================================================
 # Phase III.2 — Negative Controls
 # Leakage-safe conditional estimator version
+# Phase III.2D multichannel-aware patch
 # =========================================================
 #
 # Purpose:
 #
 #   Verify that conditional EEG-RNG effects collapse when temporal, subject,
-#   RNG, EEG or target structure is broken.
+#   RNG, EEG, multichannel EEG or target structure is broken.
 #
-# Important patch:
+# Important:
 #
 #   The leakage-safe conditional estimator can still produce high eps values
 #   in baseline or augmented models. Therefore controls must not fail merely
 #   because eps is high.
 #
-#   Controls now focus on:
+#   Controls focus on:
 #
 #       - conditional_lift
 #       - subject-level positive lift fraction
@@ -40,7 +41,27 @@ from src.phase3_2_regimes import save_json
 #       - strong candidate persistence
 #       - epsilon saturation as diagnostic, not direct failure criterion
 #
-# A valid positive Phase III.2 result should not survive these controls.
+# Phase III.2D patch:
+#
+#   Controls now explicitly include:
+#
+#       - eeg_multichannel_state
+#       - eeg_multichannel_next_state
+#       - eeg_multichannel_info_bin
+#       - multichannel_activation_bin
+#       - multichannel_cross_channel_bin
+#       - multichannel_activation_score
+#       - multichannel_cross_channel_score
+#       - multichannel_info_score
+#       - delta_power_secondary
+#       - alpha_power_secondary
+#       - interchannel_delta_ratio
+#       - interchannel_alpha_ratio
+#       - fronto_parietal_delta_shift
+#       - fronto_parietal_alpha_shift
+#
+#   This prevents the III.2D exploratory layer from escaping the same negative
+#   controls applied to the III.2C single-channel layer.
 
 
 # =========================================================
@@ -68,6 +89,9 @@ class ControlRunResult:
 
     n_positive_lift_rows: int
     n_strong_candidate_rows: int
+    n_multichannel_pair_rows: int
+    n_multichannel_positive_lift_rows: int
+    n_multichannel_strong_candidate_rows: int
 
     eps_saturation_value: float
     n_eps_saturated_rows: int
@@ -105,6 +129,10 @@ class ControlSummary:
 
     median_eps_saturation_fraction: float
     max_eps_saturation_fraction: float
+
+    total_multichannel_pair_rows: int
+    total_multichannel_positive_lift_rows: int
+    total_multichannel_strong_candidate_rows: int
 
     fraction_runs_below_control_tol: float
     fraction_runs_collapsed_overall: float
@@ -189,6 +217,29 @@ def _cfg_float(cfg: Phase32Config, name: str, default: float) -> float:
     return float(getattr(cfg, name, default))
 
 
+def _existing_columns(df: pd.DataFrame, candidates: Sequence[str]) -> List[str]:
+    return [c for c in candidates if c in df.columns]
+
+
+def _is_multichannel_pair_rows(df: pd.DataFrame) -> pd.Series:
+    if df.empty:
+        return pd.Series([], dtype=bool)
+
+    mask = pd.Series(np.zeros(len(df), dtype=bool), index=df.index)
+
+    for col in ["baseline_model", "augmented_model", "family"]:
+        if col not in df.columns:
+            continue
+
+        text = df[col].astype(str)
+
+        mask |= text.str.startswith("D")
+        mask |= text.str.contains("MCEEG", case=False, na=False)
+        mask |= text.str.contains("multichannel", case=False, na=False)
+
+    return mask
+
+
 # =========================================================
 # Column groups
 # =========================================================
@@ -223,16 +274,35 @@ def rng_current_columns(df: pd.DataFrame) -> List[str]:
         "latent_q_state_lagged",
     ]
 
-    return [c for c in candidates if c in df.columns]
+    return _existing_columns(df, candidates)
 
 
 def eeg_current_columns(df: pd.DataFrame) -> List[str]:
     candidates = [
+        # Single-channel EEG layer
         "eeg_state",
+        "delta_power",
+        "alpha_power",
+        "theta_power",
+        "beta_power",
+        "total_power",
+        "alpha_delta_ratio",
+        "theta_alpha_ratio",
+        "beta_alpha_ratio",
+        "spectral_entropy",
+        "hjorth_mobility",
+        "hjorth_complexity",
+        "line_length",
+        "signal_std",
+        "signal_mean_abs",
         "delta_power_bin",
         "alpha_power_bin",
+        "eeg_info_score",
         "eeg_info_bin",
+        "latent_proxy_score",
         "latent_state",
+
+        # Sleep-state flags
         "sleep_stage_code",
         "is_wake",
         "is_sleep",
@@ -242,9 +312,104 @@ def eeg_current_columns(df: pd.DataFrame) -> List[str]:
         "is_rem",
         "is_stable_sleep",
         "is_deep_sleep",
+        "is_transition_epoch",
+        "stage_changed_from_prev",
+        "stage_changed_to_next",
+
+        # Phase III.2D — secondary-channel raw/proxy features
+        "delta_power_secondary",
+        "theta_power_secondary",
+        "alpha_power_secondary",
+        "beta_power_secondary",
+        "total_power_secondary",
+        "alpha_delta_ratio_secondary",
+        "theta_alpha_ratio_secondary",
+        "beta_alpha_ratio_secondary",
+        "spectral_entropy_secondary",
+        "hjorth_mobility_secondary",
+        "hjorth_complexity_secondary",
+        "line_length_secondary",
+        "signal_std_secondary",
+        "signal_mean_abs_secondary",
+
+        # Phase III.2D — backward-compatible Pz-Oz features
+        "pz_oz_delta_power",
+        "pz_oz_theta_power",
+        "pz_oz_alpha_power",
+        "pz_oz_beta_power",
+        "pz_oz_total_power",
+        "pz_oz_alpha_delta_ratio",
+        "pz_oz_theta_alpha_ratio",
+        "pz_oz_beta_alpha_ratio",
+        "pz_oz_spectral_entropy",
+        "pz_oz_hjorth_mobility",
+        "pz_oz_hjorth_complexity",
+        "pz_oz_line_length",
+        "pz_oz_signal_std",
+        "pz_oz_signal_mean_abs",
+
+        # Phase III.2D — cross-channel features
+        "delta_channel_diff",
+        "alpha_channel_diff",
+        "cross_channel_corr",
+        "interchannel_delta_ratio",
+        "interchannel_alpha_ratio",
+        "fronto_parietal_delta_shift",
+        "fronto_parietal_alpha_shift",
+
+        # Phase III.2D — bins and compact state
+        "delta_power_secondary_bin",
+        "alpha_power_secondary_bin",
+        "interchannel_delta_ratio_bin",
+        "interchannel_alpha_ratio_bin",
+        "fronto_parietal_delta_shift_bin",
+        "fronto_parietal_alpha_shift_bin",
+        "multichannel_activation_score",
+        "multichannel_cross_channel_score",
+        "multichannel_info_score",
+        "multichannel_activation_bin",
+        "multichannel_cross_channel_bin",
+        "eeg_multichannel_info_bin",
+        "eeg_multichannel_state",
+
+        # Possible lagged/model aliases
+        "eeg_multichannel_state_model",
+        "eeg_multichannel_state_lagged",
+        "eeg_multichannel_state_aligned",
+        "eeg_multichannel_info_bin_model",
+        "eeg_multichannel_info_bin_lagged",
+        "eeg_multichannel_info_bin_aligned",
     ]
 
-    return [c for c in candidates if c in df.columns]
+    return _existing_columns(df, candidates)
+
+
+def eeg_target_columns(df: pd.DataFrame) -> List[str]:
+    candidates = [
+        "eeg_next_state",
+        "eeg_info_bin_next",
+        "sleep_stage_code_next",
+        "observed_joint_state_next",
+        "informational_joint_state_next",
+        "latent_q_state_next",
+
+        # Phase III.2D targets
+        "eeg_multichannel_next_state",
+        "eeg_multichannel_state_next",
+        "eeg_multichannel_info_bin_next",
+    ]
+
+    return _existing_columns(df, candidates)
+
+
+def rng_target_columns(df: pd.DataFrame) -> List[str]:
+    candidates = [
+        "rng_next_state_model",
+        "rng_next_state",
+        "rng_next_bit_raw",
+    ]
+
+    return _existing_columns(df, candidates)
 
 
 # =========================================================
@@ -407,6 +572,24 @@ def rebuild_control_joint_states(
             + out.loc[valid, "q_rng_bin_model"].astype(int)
         )
 
+    if "eeg_multichannel_state" in out.columns:
+        out["eeg_multichannel_state"] = pd.to_numeric(
+            out["eeg_multichannel_state"],
+            errors="coerce",
+        ).round().astype("Int64")
+
+    if "eeg_multichannel_next_state" in out.columns:
+        out["eeg_multichannel_next_state"] = pd.to_numeric(
+            out["eeg_multichannel_next_state"],
+            errors="coerce",
+        ).round().astype("Int64")
+
+    if "eeg_multichannel_info_bin" in out.columns:
+        out["eeg_multichannel_info_bin"] = pd.to_numeric(
+            out["eeg_multichannel_info_bin"],
+            errors="coerce",
+        ).round().astype("Int64")
+
     return out
 
 
@@ -482,10 +665,7 @@ def apply_control(
             )
 
     elif control_type == "conditional_target_shuffle":
-        cols = [
-            c for c in ["eeg_next_state", "rng_next_state_model"]
-            if c in out.columns
-        ]
+        cols = eeg_target_columns(out) + rng_target_columns(out)
 
         out = _shuffle_columns_within_groups(
             df=out,
@@ -593,6 +773,9 @@ def _control_run_from_pair_scores(
             max_ll_improvement=0.0,
             n_positive_lift_rows=0,
             n_strong_candidate_rows=0,
+            n_multichannel_pair_rows=0,
+            n_multichannel_positive_lift_rows=0,
+            n_multichannel_strong_candidate_rows=0,
             eps_saturation_value=eps_saturation_value,
             n_eps_saturated_rows=0,
             eps_saturation_fraction=0.0,
@@ -624,6 +807,9 @@ def _control_run_from_pair_scores(
             max_ll_improvement=0.0,
             n_positive_lift_rows=0,
             n_strong_candidate_rows=0,
+            n_multichannel_pair_rows=0,
+            n_multichannel_positive_lift_rows=0,
+            n_multichannel_strong_candidate_rows=0,
             eps_saturation_value=eps_saturation_value,
             n_eps_saturated_rows=0,
             eps_saturation_fraction=0.0,
@@ -644,6 +830,17 @@ def _control_run_from_pair_scores(
 
     positive_lift = valid_df[lift > 0.0]
     strong_candidates = _strong_control_candidates(valid_df, cfg)
+
+    multichannel_mask = _is_multichannel_pair_rows(valid_df)
+    multichannel_df = valid_df[multichannel_mask].copy()
+
+    if not multichannel_df.empty:
+        mc_lift = pd.to_numeric(multichannel_df.get("conditional_lift", 0.0), errors="coerce").fillna(0.0)
+        mc_positive = multichannel_df[mc_lift > 0.0]
+        mc_strong = _strong_control_candidates(multichannel_df, cfg)
+    else:
+        mc_positive = pd.DataFrame()
+        mc_strong = pd.DataFrame()
 
     n_sat, sat_frac = _count_eps_saturation(valid_df, cfg)
 
@@ -683,6 +880,9 @@ def _control_run_from_pair_scores(
         max_ll_improvement=max_ll,
         n_positive_lift_rows=int(len(positive_lift)),
         n_strong_candidate_rows=int(len(strong_candidates)),
+        n_multichannel_pair_rows=int(len(multichannel_df)),
+        n_multichannel_positive_lift_rows=int(len(mc_positive)),
+        n_multichannel_strong_candidate_rows=int(len(mc_strong)),
         eps_saturation_value=eps_saturation_value,
         n_eps_saturated_rows=int(n_sat),
         eps_saturation_fraction=float(sat_frac),
@@ -859,6 +1059,9 @@ def evaluate_all_controls(
                                 max_ll_improvement=0.0,
                                 n_positive_lift_rows=0,
                                 n_strong_candidate_rows=0,
+                                n_multichannel_pair_rows=0,
+                                n_multichannel_positive_lift_rows=0,
+                                n_multichannel_strong_candidate_rows=0,
                                 eps_saturation_value=eps_saturation_value,
                                 n_eps_saturated_rows=0,
                                 eps_saturation_fraction=0.0,
@@ -882,7 +1085,7 @@ def evaluate_all_controls(
 
     if not pairs_df.empty:
         pairs_df = pairs_df.sort_values(
-            ["control_type", "replicate", "regime", "lag_epochs", "family"]
+            ["control_type", "replicate", "regime", "lag_epochs", "family", "augmented_model"]
         ).reset_index(drop=True)
 
     return runs_df, pairs_df
@@ -931,6 +1134,9 @@ def summarize_control_runs(
                     max_ll_improvement=0.0,
                     median_eps_saturation_fraction=0.0,
                     max_eps_saturation_fraction=0.0,
+                    total_multichannel_pair_rows=0,
+                    total_multichannel_positive_lift_rows=0,
+                    total_multichannel_strong_candidate_rows=0,
                     fraction_runs_below_control_tol=0.0,
                     fraction_runs_collapsed_overall=0.0,
                     control_tol=float(cfg.control_tol),
@@ -982,6 +1188,24 @@ def summarize_control_runs(
                 max_ll_improvement=float(max_ll.max()),
                 median_eps_saturation_fraction=float(sat_frac.median()),
                 max_eps_saturation_fraction=float(sat_frac.max()),
+                total_multichannel_pair_rows=int(
+                    pd.to_numeric(
+                        valid_group.get("n_multichannel_pair_rows", 0),
+                        errors="coerce",
+                    ).fillna(0).sum()
+                ),
+                total_multichannel_positive_lift_rows=int(
+                    pd.to_numeric(
+                        valid_group.get("n_multichannel_positive_lift_rows", 0),
+                        errors="coerce",
+                    ).fillna(0).sum()
+                ),
+                total_multichannel_strong_candidate_rows=int(
+                    pd.to_numeric(
+                        valid_group.get("n_multichannel_strong_candidate_rows", 0),
+                        errors="coerce",
+                    ).fillna(0).sum()
+                ),
                 fraction_runs_below_control_tol=fraction_below,
                 fraction_runs_collapsed_overall=fraction_collapsed,
                 control_tol=float(cfg.control_tol),
@@ -1003,7 +1227,8 @@ def summarize_control_runs(
         "interpretation": (
             "Controls pass when conditional lift, BIC improvement, subject-level "
             "positive lift fraction and strong-candidate persistence collapse. "
-            "High epsilon alone is tracked as saturation diagnostic, not as direct failure."
+            "High epsilon alone is tracked as saturation diagnostic, not as direct failure. "
+            "Phase III.2D multichannel EEG pairs are included in all applicable controls."
         ),
     }
 
@@ -1014,6 +1239,7 @@ def build_controls_summary_text(summary: Mapping[str, Any]) -> str:
     lines.append("=" * 78)
     lines.append("Phase III.2 — Negative Controls Summary")
     lines.append("Leakage-safe conditional estimator version")
+    lines.append("Phase III.2D multichannel-aware")
     lines.append("=" * 78)
     lines.append("")
 
@@ -1045,6 +1271,9 @@ def build_controls_summary_text(summary: Mapping[str, Any]) -> str:
         lines.append(f"Max LL improvement: {item.get('max_ll_improvement')}")
         lines.append(f"Median eps saturation fraction: {item.get('median_eps_saturation_fraction')}")
         lines.append(f"Max eps saturation fraction: {item.get('max_eps_saturation_fraction')}")
+        lines.append(f"Total multichannel pair rows: {item.get('total_multichannel_pair_rows')}")
+        lines.append(f"Total multichannel positive lift rows: {item.get('total_multichannel_positive_lift_rows')}")
+        lines.append(f"Total multichannel strong candidate rows: {item.get('total_multichannel_strong_candidate_rows')}")
         lines.append(f"Fraction below control tol: {item.get('fraction_runs_below_control_tol')}")
         lines.append(f"Fraction collapsed overall: {item.get('fraction_runs_collapsed_overall')}")
         lines.append(f"Passed: {item.get('passed')}")
@@ -1086,6 +1315,7 @@ def save_control_outputs(
             "phase": cfg.phase_name,
             "project_name": cfg.project_name,
             "module": "Phase_III_2_negative_controls_leakage_safe",
+            "module_detail": "phase3_2d_multichannel_aware",
             "summary": summary,
             "runs_file": str(runs_csv),
             "pair_scores_file": str(pairs_csv),
@@ -1121,6 +1351,7 @@ def main() -> None:
     print("\n============================================================")
     print("Phase III.2 controls completed")
     print("Leakage-safe conditional estimator version")
+    print("Phase III.2D multichannel-aware")
     print("============================================================")
     print(f"Overall passed: {summary.get('passed')}")
     print(f"Failed control types: {summary.get('failed_control_types')}")

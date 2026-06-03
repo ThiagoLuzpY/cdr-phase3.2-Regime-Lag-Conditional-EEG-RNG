@@ -1,16 +1,20 @@
 from __future__ import annotations
 
 import json
-import math
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Sequence
 
 import numpy as np
 import pandas as pd
 
 from config.phase3_2_config import Phase32Config, load_phase3_2_config
 from src.phase3_2_loader import load_or_build_phase3_2_dataset
+from src.phase3_2_multichannel import (
+    add_phase3_2d_multichannel_features,
+    save_multichannel_outputs,
+    summarize_multichannel_features,
+)
 
 
 # =========================================================
@@ -22,23 +26,24 @@ from src.phase3_2_loader import load_or_build_phase3_2_dataset
 #   III.2A — regime-aware / sleep-stage analysis
 #   III.2B — lagged EEG-RNG alignment
 #   III.2C — conditional CDR
-#   III.2D — optional multi-channel EEG enrichment
+#   III.2D — multichannel EEG enrichment
 #
-# Important design principles:
+# Main Phase III.2D patch:
 #
-#   1. Keep state spaces compact.
-#   2. Fit discretization only on training rows when train_index is provided.
-#   3. Prevent artificial next-state transitions across subjects/recordings.
-#   4. Preserve the difference between:
-#        - EEG-only structure
-#        - RNG-only structure
-#        - conditional EEG-RNG structure
-#   5. Do not interpret proxy features as direct physical measurements.
+#   - Keeps the original single-channel EEG/RNG state layer.
+#   - Calls src.phase3_2_multichannel automatically when enabled.
+#   - Saves eeg_multichannel_state, eeg_multichannel_next_state and
+#     eeg_multichannel_info_bin into phase3_2_modeling_features.csv.
+#   - Preserves III.2A/B/C behavior while adding III.2D as an exploratory
+#     extension.
 #
 # Output:
 #
 #   data/interim/phase3_2/phase3_2_modeling_features.csv
 #   data/interim/phase3_2/phase3_2_feature_specs.json
+#   data/interim/phase3_2/phase3_2d_multichannel_features.csv
+#   data/interim/phase3_2/phase3_2d_multichannel_inventory.json
+#   results/phase3_2/phase3_2d_multichannel_summary.json
 
 
 # =========================================================
@@ -124,7 +129,6 @@ def _safe_train_index(df: pd.DataFrame, train_index: Optional[Sequence[int]]) ->
         return np.arange(len(df), dtype=int)
 
     arr = np.asarray(train_index, dtype=int)
-
     arr = arr[(arr >= 0) & (arr < len(df))]
 
     if arr.size == 0:
@@ -275,7 +279,6 @@ def apply_bin_spec(
 
     edges = np.asarray(spec.edges, dtype=float)
     labels = np.digitize(values.to_numpy(dtype=float), edges, right=False)
-
     labels = np.asarray(labels, dtype=int)
 
     max_label = max(spec.effective_bins - 1, 0)
@@ -646,6 +649,39 @@ def add_next_state_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # =========================================================
+# Phase III.2D integration
+# =========================================================
+
+def maybe_add_phase3_2d_multichannel_layer(
+    df: pd.DataFrame,
+    cfg: Phase32Config,
+    train_index: Optional[Sequence[int]],
+) -> tuple[pd.DataFrame, Dict[str, Any]]:
+    """
+    Adds Phase III.2D multichannel EEG states when enabled.
+
+    This function intentionally keeps Phase III.2D exploratory:
+    it enriches the modeling dataframe but does not alter the primary III.2A/B/C
+    conditional pairs.
+    """
+    if not (cfg.run_multichannel_analysis and cfg.use_multichannel_eeg):
+        return df, {
+            "enabled": False,
+            "reason": "multichannel disabled in config",
+        }
+
+    result = add_phase3_2d_multichannel_features(
+        df=df,
+        cfg=cfg,
+        train_index=train_index,
+    )
+
+    save_multichannel_outputs(result, cfg)
+
+    return result.df, result.inventory
+
+
+# =========================================================
 # Full feature preparation
 # =========================================================
 
@@ -756,11 +792,15 @@ def prepare_phase3_2_features_for_modeling(
         specs=specs,
     )
 
-    # Optional multichannel bins, if features exist.
+    # Legacy optional multichannel diagnostic bins.
+    # These remain for backward compatibility, but the real III.2D state layer
+    # is built below by maybe_add_phase3_2d_multichannel_layer().
     if cfg.use_multichannel_eeg:
         optional_multichannel_sources = [
             ("pz_oz_delta_power", "pz_oz_delta_power_bin"),
             ("pz_oz_alpha_power", "pz_oz_alpha_power_bin"),
+            ("delta_power_secondary", "delta_power_secondary_bin_legacy"),
+            ("alpha_power_secondary", "alpha_power_secondary_bin_legacy"),
             ("delta_channel_diff", "delta_channel_diff_bin"),
             ("alpha_channel_diff", "alpha_channel_diff_bin"),
             ("cross_channel_corr", "cross_channel_corr_bin"),
@@ -777,13 +817,27 @@ def prepare_phase3_2_features_for_modeling(
                     specs=specs,
                 )
 
-    # State and next-state construction.
+    # State and next-state construction for III.2A/B/C.
     out = add_state_columns(out, cfg)
     out = add_next_state_columns(out)
+
+    # Phase III.2D multichannel EEG layer.
+    out, multichannel_inventory = maybe_add_phase3_2d_multichannel_layer(
+        df=out,
+        cfg=cfg,
+        train_index=train_index,
+    )
+
+    multichannel_summary = (
+        summarize_multichannel_features(out, cfg)
+        if cfg.run_multichannel_analysis and cfg.use_multichannel_eeg
+        else {}
+    )
 
     metadata: Dict[str, Any] = {
         "phase": cfg.phase_name,
         "project_name": cfg.project_name,
+        "version": cfg.version,
         "n_rows": int(len(out)),
         "n_subjects": int(out["subject_id"].nunique()),
         "subjects": sorted(out["subject_id"].astype(str).unique().tolist()),
@@ -796,8 +850,18 @@ def prepare_phase3_2_features_for_modeling(
             "observed_joint_state": "eeg_state × rng_state",
             "informational_joint_state": "eeg_info_bin × rng_info_bin",
             "latent_q_state": "latent_state × q_rng_bin",
+            "eeg_multichannel_state": (
+                "multichannel_activation_bin × multichannel_cross_channel_bin"
+                if str(cfg.multichannel_state_column) in out.columns
+                else None
+            ),
         },
-        "valid_next_state_rows": int(out["valid_next_state"].sum()),
+        "valid_next_state_rows": int(out["valid_next_state"].sum()) if "valid_next_state" in out.columns else 0,
+        "multichannel": {
+            "enabled": bool(cfg.run_multichannel_analysis and cfg.use_multichannel_eeg),
+            "inventory": multichannel_inventory,
+            "summary": multichannel_summary,
+        },
     }
 
     return FeatureFrame(
@@ -866,12 +930,39 @@ def summarize_feature_frame(df: pd.DataFrame) -> Dict[str, Any]:
         "observed_joint_state",
         "informational_joint_state",
         "latent_q_state",
+        "eeg_multichannel_state",
+        "eeg_multichannel_next_state",
+        "eeg_multichannel_info_bin",
     ]:
         if col in df.columns:
             summary[f"{col}_n_unique"] = int(df[col].nunique(dropna=True))
 
     if "valid_next_state" in df.columns:
         summary["valid_next_state_rows"] = int(df["valid_next_state"].sum())
+
+    if "valid_multichannel_next_state" in df.columns:
+        summary["valid_multichannel_next_state_rows"] = int(
+            pd.to_numeric(df["valid_multichannel_next_state"], errors="coerce").fillna(0).sum()
+        )
+
+    if "valid_multichannel_conditional_row" in df.columns:
+        summary["valid_multichannel_conditional_rows"] = int(
+            pd.to_numeric(df["valid_multichannel_conditional_row"], errors="coerce").fillna(0).sum()
+        )
+
+    if "has_secondary_channel" in df.columns:
+        summary["secondary_channel_rows"] = int(
+            pd.to_numeric(df["has_secondary_channel"], errors="coerce").fillna(0).sum()
+        )
+
+    if "secondary_channel" in df.columns:
+        summary["secondary_channel_counts"] = (
+            df["secondary_channel"]
+            .fillna("")
+            .astype(str)
+            .value_counts()
+            .to_dict()
+        )
 
     return summary
 
@@ -909,6 +1000,22 @@ def main() -> None:
     print(f"Observed joint states: {summary.get('observed_joint_state_n_unique')}")
     print(f"Informational joint states: {summary.get('informational_joint_state_n_unique')}")
     print(f"Latent-Q states: {summary.get('latent_q_state_n_unique')}")
+
+    if cfg.run_multichannel_analysis and cfg.use_multichannel_eeg:
+        print("------------------------------------------------------------")
+        print("Phase III.2D multichannel layer")
+        print("------------------------------------------------------------")
+        print(f"Secondary-channel rows: {summary.get('secondary_channel_rows')}")
+        print(f"Secondary-channel counts: {summary.get('secondary_channel_counts')}")
+        print(f"MC EEG states: {summary.get('eeg_multichannel_state_n_unique')}")
+        print(f"MC EEG next states: {summary.get('eeg_multichannel_next_state_n_unique')}")
+        print(f"MC EEG info bins: {summary.get('eeg_multichannel_info_bin_n_unique')}")
+        print(f"Valid MC next-state rows: {summary.get('valid_multichannel_next_state_rows')}")
+        print(f"Valid MC conditional rows: {summary.get('valid_multichannel_conditional_rows')}")
+        print(f"MC features file: {cfg.multichannel_features_file}")
+        print(f"MC inventory file: {cfg.multichannel_inventory_json}")
+        print(f"MC summary file: {cfg.multichannel_summary_json}")
+
     print("============================================================\n")
 
 
