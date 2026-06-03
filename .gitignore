@@ -46,19 +46,22 @@ data/processed/
 # data/**/*.csv
 
 # ---- Results (SELECTIVE) ----
-# Exclude large files (plots, zips, large CSVs)
+# Exclude large/generated result artifacts
 results/**/plots/
-results/**/run_bundle.zip
+results/**/audit_bundle/
+results/**/*.zip
+results/**/*.csv
 results/**/*.png
 results/**/*.jpg
 results/**/*.pdf
 
-# Exclude likelihood curves (can be large)
+# Exclude likelihood curves
 results/**/ll_*.png
 
-# INCLUDE results JSONs (small, important)
+# Include lightweight summaries/reports
 !results/**/*.json
 !results/**/*.txt
+!results/**/README.md
 
 # Keep .gitkeep
 !results/.gitkeep
