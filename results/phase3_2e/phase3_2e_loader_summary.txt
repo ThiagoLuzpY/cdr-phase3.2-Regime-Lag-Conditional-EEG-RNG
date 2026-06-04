@@ -1,0 +1,37 @@
+==============================================================================
+Phase III.2E — Loader Summary
+==============================================================================
+
+status: pending_synchronized_data
+interpretation: No synchronized EEG–QRNG input CSV was found. Loader completed in protocol-only mode and saved empty canonical outputs. Empirical windowing, feature construction and CDR remain blocked until real synchronized data are provided.
+
+input_file: data\raw\phase3_2e\synchronized\phase3_2e_synchronized_input.csv
+output_csv: data\interim\phase3_2e\phase3_2e_loaded_synchronized_windows.csv
+metadata_json: data\interim\phase3_2e\phase3_2e_loader_metadata.json
+
+schema_status: pending_synchronized_data
+sync_status: pending_synchronized_data
+
+can_proceed_to_windowing: False
+can_proceed_to_feature_construction: False
+can_proceed_to_empirical_cdr: False
+
+n_rows: 0
+n_subjects: 0
+n_sessions: 0
+n_windows: 0
+
+window_seconds_counts: {}
+sync_mode_counts: {}
+sync_row_valid_counts: {}
+
+sync_quality: {'min': None, 'mean': None, 'median': None, 'max': None}
+clock_drift_abs_ms: {'min': None, 'mean': None, 'median': None, 'max': None}
+eeg_qrng_gap_ms: {'min': None, 'mean': None, 'median': None, 'max': None}
+
+qrng_state_counts: {}
+eeg_channel_counts: {}
+primary_channel_counts: {}
+secondary_channel_counts: {}
+
+==============================================================================

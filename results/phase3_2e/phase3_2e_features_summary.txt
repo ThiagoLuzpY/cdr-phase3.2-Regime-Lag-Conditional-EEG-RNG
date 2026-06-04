@@ -1,0 +1,36 @@
+==============================================================================
+Phase III.2E — Feature Summary
+==============================================================================
+
+status: pending_synchronized_data
+protocol_only: True
+input_rows: 0
+output_rows: 0
+n_subjects: 0
+n_sessions: 0
+n_window_sizes: 0
+
+n_valid_feature_rows: 0
+n_valid_next_state_rows: 0
+n_valid_mc_next_state_rows: 0
+
+eeg_state_n_unique: 0
+qrng_state_n_unique: 0
+mc_eeg_state_n_unique: 0
+
+can_proceed_to_alignment: False
+can_proceed_to_conditional_cdr: False
+can_proceed_to_empirical_cdr: False
+
+window_seconds_counts: None
+feature_status_counts: None
+window_scope_counts: None
+
+sync_quality: None
+eeg_qrng_gap_ms: None
+clock_drift_abs_ms: None
+
+interpretation:
+No synchronized EEG–QRNG dataset is available. Feature construction completed in protocol-only mode with empty canonical outputs.
+
+==============================================================================

@@ -1,0 +1,13 @@
+==============================================================================
+Phase III.2E — Conditional CDR summary
+Leakage-safe synchronized ref/calib/test estimator
+==============================================================================
+
+status: pending_synchronized_data
+protocol_only: True
+
+Summary unavailable: empty_pair_scores
+
+interpretation:
+No synchronized EEG–QRNG dataset is available. Conditional CDR completed in protocol-only mode with empty canonical outputs.
+==============================================================================

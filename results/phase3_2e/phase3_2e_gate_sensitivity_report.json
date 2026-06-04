@@ -1,0 +1,315 @@
+{
+  "phase": "Phase III.2E",
+  "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
+  "module": "phase3_2e_gate_sensitivity",
+  "gate_sensitivity_version": "phase3_2e_gate_sensitivity_v1_f7_f8_f12_diagnostics",
+  "created_at": "2026-06-04 11:56:11",
+  "status": "pending_synchronized_data",
+  "result": {
+    "status": "pending_synchronized_data",
+    "protocol_only": true,
+    "official_f7_threshold": 0.6,
+    "official_f8_threshold": 0.0,
+    "official_f12_eps_saturation_value": 0.8,
+    "official_f12_warning_fraction": 0.5,
+    "f7_available": false,
+    "f8_available": false,
+    "f12_available": false,
+    "f7_official_passed": false,
+    "f8_official_passed": false,
+    "f12_official_warning": false,
+    "f7_best_value": 0.0,
+    "f8_best_bic_value": 0.0,
+    "f12_max_saturation_fraction": 0.0,
+    "f7_distance_to_threshold": -0.6,
+    "f8_distance_to_threshold": 0.0,
+    "f12_distance_to_warning": -0.5,
+    "can_proceed_to_diagnostics": true,
+    "can_claim_empirical_cdr": false,
+    "interpretation": "No synchronized EEG–QRNG dataset is available. Gate sensitivity was generated in protocol-only mode. F7/F8/F12 cannot be empirically diagnosed until synchronized data exist."
+  },
+  "official_gate_statuses": {
+    "F7": "NOT_EVALUATED",
+    "F8": "NOT_EVALUATED",
+    "F12": "NOT_EVALUATED"
+  },
+  "f7_subject_consistency": {
+    "available": false,
+    "reason": "no_primary_pair_rows",
+    "official_threshold": 0.6,
+    "max_primary_fraction_positive_lift": 0.0,
+    "distance_to_official_threshold": -0.6,
+    "official_passed_by_data": false,
+    "closest_threshold_passed": null,
+    "strictest_threshold_passed": null,
+    "interpretation": "F7 cannot be diagnosed because there are no primary pair rows."
+  },
+  "f8_complexity_penalty": {
+    "available": false,
+    "reason": "no_primary_pair_rows",
+    "official_threshold": 0.0,
+    "max_primary_bic_improvement": 0.0,
+    "max_primary_aic_improvement": 0.0,
+    "max_primary_ll_improvement": 0.0,
+    "distance_to_official_threshold": 0.0,
+    "official_passed_by_data": false,
+    "bic_failed_but_aic_positive": false,
+    "bic_failed_but_ll_positive": false,
+    "interpretation": "F8 cannot be diagnosed because there are no primary pair rows."
+  },
+  "f12_epsilon_saturation": {
+    "available": false,
+    "reason": "no_epsilon_values_available",
+    "official_eps_saturation_value": 0.8,
+    "official_warning_fraction": 0.5,
+    "max_saturation_fraction": 0.0,
+    "official_warning_by_data": false,
+    "distance_to_warning_fraction": -0.5,
+    "interpretation": "F12 cannot be diagnosed because no epsilon values are available."
+  },
+  "input_shapes": {
+    "pair_rows": 0,
+    "model_rows": 0
+  },
+  "files": {
+    "f7_sensitivity_csv": "results\\phase3_2e\\phase3_2e_f7_subject_sensitivity.csv",
+    "f8_sensitivity_csv": "results\\phase3_2e\\phase3_2e_f8_complexity_sensitivity.csv",
+    "f12_sensitivity_csv": "results\\phase3_2e\\phase3_2e_f12_epsilon_saturation_sensitivity.csv",
+    "gate_sensitivity_report_json": "results\\phase3_2e\\phase3_2e_gate_sensitivity_report.json",
+    "gate_sensitivity_summary_txt": "results\\phase3_2e\\phase3_2e_gate_sensitivity_summary.txt"
+  },
+  "config": {
+    "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
+    "phase_name": "Phase III.2E",
+    "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
+    "version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
+    "protocol_status": "protocol_ready",
+    "empirical_execution_status": "pending_synchronized_eeg_qrng_data",
+    "synchronized_input_csv": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
+    "allow_protocol_only_without_data": true,
+    "allow_synthetic_demo_data": false,
+    "require_real_synchronized_data_for_claim": true,
+    "required_schema_columns": [
+      "subject_id",
+      "session_id",
+      "window_id",
+      "window_start_utc",
+      "window_end_utc",
+      "eeg_timestamp_utc",
+      "qrng_timestamp_utc",
+      "sync_quality",
+      "clock_drift_ms",
+      "eeg_channel",
+      "eeg_delta_power",
+      "eeg_theta_power",
+      "eeg_alpha_power",
+      "eeg_beta_power",
+      "eeg_entropy",
+      "qrng_state",
+      "qrng_bit_balance",
+      "qrng_transition_rate",
+      "qrng_entropy",
+      "eeg_primary_channel",
+      "eeg_secondary_channel",
+      "eeg_primary_delta_power",
+      "eeg_primary_alpha_power",
+      "eeg_secondary_delta_power",
+      "eeg_secondary_alpha_power",
+      "interchannel_delta_ratio",
+      "interchannel_alpha_ratio",
+      "fronto_parietal_delta_shift",
+      "fronto_parietal_alpha_shift",
+      "cross_channel_corr"
+    ],
+    "optional_schema_columns": [
+      "eeg_gamma_power",
+      "eeg_hjorth_mobility",
+      "eeg_hjorth_complexity",
+      "eeg_line_length",
+      "eeg_signal_std",
+      "eeg_artifact_score",
+      "eeg_quality_score",
+      "qrng_run_length_mean",
+      "qrng_run_length_std",
+      "qrng_run_length_max",
+      "qrng_compressibility_proxy",
+      "qrng_surprise_index",
+      "qrng_transition_asymmetry",
+      "qrng_quality_score",
+      "sync_mode"
+    ],
+    "min_sync_quality": 0.95,
+    "max_clock_drift_ms": 50.0,
+    "max_timestamp_gap_ms": 250.0,
+    "accepted_sync_modes": [
+      "hardware_shared_clock",
+      "software_timestamp_aligned",
+      "posthoc_clock_drift_corrected",
+      "external_sync_marker"
+    ],
+    "rejected_sync_modes": [
+      "unknown_clock_relation",
+      "manual_alignment_without_log",
+      "random_pairing",
+      "posthoc_alignment_to_maximize_signal"
+    ],
+    "primary_eeg_channel": "EEG Fpz-Cz",
+    "secondary_eeg_channel": "EEG Pz-Oz",
+    "use_multichannel_eeg": true,
+    "primary_window_seconds": [
+      5,
+      10
+    ],
+    "secondary_window_seconds": [
+      1,
+      2,
+      30
+    ],
+    "all_window_seconds": [
+      1,
+      2,
+      5,
+      10,
+      30
+    ],
+    "primary_lags_windows": [
+      0,
+      1,
+      2
+    ],
+    "secondary_lags_windows": [
+      -5,
+      -3,
+      -1,
+      3,
+      5
+    ],
+    "all_lags_windows": [
+      -5,
+      -3,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      5
+    ],
+    "conditional_models": [
+      "E0_EEG_next_given_EEG",
+      "E1_EEG_next_given_EEG_QRNG",
+      "E2_QRNG_next_given_QRNG",
+      "E3_QRNG_next_given_QRNG_EEG",
+      "E4_MCEEG_next_given_MCEEG",
+      "E5_MCEEG_next_given_MCEEG_QRNG",
+      "E6_QRNG_next_given_QRNG_MCEEG"
+    ],
+    "primary_conditional_pairs": [
+      [
+        "E0_EEG_next_given_EEG",
+        "E1_EEG_next_given_EEG_QRNG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E3_QRNG_next_given_QRNG_EEG"
+      ]
+    ],
+    "multichannel_conditional_pairs": [
+      [
+        "E4_MCEEG_next_given_MCEEG",
+        "E5_MCEEG_next_given_MCEEG_QRNG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E6_QRNG_next_given_QRNG_MCEEG"
+      ]
+    ],
+    "active_conditional_pairs": [
+      [
+        "E0_EEG_next_given_EEG",
+        "E1_EEG_next_given_EEG_QRNG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E3_QRNG_next_given_QRNG_EEG"
+      ],
+      [
+        "E4_MCEEG_next_given_MCEEG",
+        "E5_MCEEG_next_given_MCEEG_QRNG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E6_QRNG_next_given_QRNG_MCEEG"
+      ]
+    ],
+    "official_gates": [
+      "F2",
+      "F3",
+      "F6",
+      "F7",
+      "F8",
+      "F9",
+      "F10",
+      "F11",
+      "F12"
+    ],
+    "gate_sensitivity_specs": [
+      "F7_official",
+      "F7_bootstrap",
+      "F7_weighted",
+      "F7_cluster",
+      "F7_LOSO",
+      "F8_BIC_official",
+      "F8_AIC_secondary",
+      "F8_heldout_LL",
+      "F8_cross_validated_LL",
+      "F8_state_density_corrected_BIC",
+      "F8_effective_complexity",
+      "F12_epsilon_grid_short",
+      "F12_epsilon_grid_medium",
+      "F12_epsilon_grid_full",
+      "F12_saturation_fraction"
+    ],
+    "control_types": [
+      "within_subject_qrng_shuffle",
+      "within_subject_eeg_shuffle",
+      "circular_qrng_shift",
+      "subject_mismatch",
+      "timestamp_jitter_control",
+      "phase_randomized_eeg_control",
+      "window_permutation_control",
+      "conditional_target_shuffle",
+      "sync_break_control"
+    ],
+    "required_control_types": [
+      "within_subject_qrng_shuffle",
+      "within_subject_eeg_shuffle",
+      "circular_qrng_shift",
+      "subject_mismatch",
+      "conditional_target_shuffle",
+      "sync_break_control"
+    ],
+    "n_controls": 12,
+    "eps_grid_short": [
+      0.0,
+      0.2
+    ],
+    "eps_grid_medium": [
+      0.0,
+      0.5
+    ],
+    "eps_grid_full": [
+      0.0,
+      0.8
+    ],
+    "eps_saturation_value": 0.8,
+    "eps_moderate_upper_bound": 0.3,
+    "conditional_lift_min": 0.03,
+    "strong_eps_min": 0.07,
+    "subject_effect_fraction": 0.6,
+    "multiple_comparison_guard": true
+  },
+  "official_gate_rule_preservation": {
+    "official_gates_changed": false,
+    "note": "This module evaluates sensitivity scenarios only. It does not alter official F7/F8/F12 thresholds or final empirical claim rules."
+  }
+}

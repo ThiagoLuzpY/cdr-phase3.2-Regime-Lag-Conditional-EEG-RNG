@@ -1,0 +1,35 @@
+==============================================================================
+Phase III.2E — Window Summary
+==============================================================================
+
+status: pending_synchronized_data
+protocol_only: True
+input_rows: 0
+output_rows: 0
+n_subjects: 0
+n_sessions: 0
+
+n_valid_windows: 0
+n_primary_valid_windows: 0
+n_exploratory_valid_windows: 0
+n_registered_window_sizes: 0
+n_unregistered_window_rows: 0
+
+can_proceed_to_feature_construction: False
+can_proceed_to_empirical_cdr: False
+
+window_seconds_counts: {}
+window_status_counts: {}
+window_scope_counts: {}
+
+sync_quality: {'min': None, 'mean': None, 'median': None, 'max': None}
+eeg_qrng_gap_ms: {'min': None, 'mean': None, 'median': None, 'max': None}
+clock_drift_abs_ms: {'min': None, 'mean': None, 'median': None, 'max': None}
+
+ready_window_specs: []
+primary_ready_window_specs: []
+
+interpretation:
+No synchronized EEG–QRNG dataset is available. Window building completed in protocol-only mode with empty canonical outputs.
+
+==============================================================================

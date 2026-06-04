@@ -1,0 +1,63 @@
+{
+  "enabled": true,
+  "allow_strong_claim_from_secondary_tests": false,
+  "n_valid_tests": 0,
+  "n_positive_lift_tests": 0,
+  "n_primary_positive_lift_tests": 0,
+  "n_exploratory_lift_tests": 0,
+  "n_strong_candidate_tests": 0,
+  "n_primary_strong_candidate_tests": 0,
+  "n_multichannel_tests": 0,
+  "active_conditional_pairs": [
+    [
+      "E0_EEG_next_given_EEG",
+      "E1_EEG_next_given_EEG_QRNG"
+    ],
+    [
+      "E2_QRNG_next_given_QRNG",
+      "E3_QRNG_next_given_QRNG_EEG"
+    ],
+    [
+      "E4_MCEEG_next_given_MCEEG",
+      "E5_MCEEG_next_given_MCEEG_QRNG"
+    ],
+    [
+      "E2_QRNG_next_given_QRNG",
+      "E6_QRNG_next_given_QRNG_MCEEG"
+    ]
+  ],
+  "primary_conditional_pairs": [
+    [
+      "E0_EEG_next_given_EEG",
+      "E1_EEG_next_given_EEG_QRNG"
+    ],
+    [
+      "E2_QRNG_next_given_QRNG",
+      "E3_QRNG_next_given_QRNG_EEG"
+    ]
+  ],
+  "multichannel_conditional_pairs": [
+    [
+      "E4_MCEEG_next_given_MCEEG",
+      "E5_MCEEG_next_given_MCEEG_QRNG"
+    ],
+    [
+      "E2_QRNG_next_given_QRNG",
+      "E6_QRNG_next_given_QRNG_MCEEG"
+    ]
+  ],
+  "primary_test_window_seconds": [
+    5,
+    10
+  ],
+  "primary_test_lags_windows": [
+    0,
+    1,
+    2
+  ],
+  "positive_lift_rows": [],
+  "exploratory_lift_rows": [],
+  "strong_candidates": [],
+  "primary_strong_candidates": [],
+  "interpretation": "Strong claims are allowed only from registered primary tests. Exploratory windows, exploratory lags or secondary model families can generate leads but not claims without replication."
+}

@@ -1,0 +1,31 @@
+==============================================================================
+Phase III.2E — Lagged Alignment Summary
+==============================================================================
+
+status: pending_synchronized_data
+protocol_only: True
+n_frames: 40
+n_window_sizes: 5
+n_lags: 8
+
+n_total_aligned_rows: 0
+n_valid_alignment_rows: 0
+n_valid_primary_alignment_rows: 0
+n_valid_exploratory_alignment_rows: 0
+n_valid_conditional_rows: 0
+n_valid_mc_conditional_rows: 0
+
+can_proceed_to_conditional_cdr: False
+can_proceed_to_empirical_cdr: False
+
+scope_counts: {'exploratory': 34, 'primary': 6}
+lag_direction_counts: {'future_target': 20, 'past_target': 15, 'concurrent': 5}
+status_counts: {'pending_synchronized_data': 40}
+
+ready_frames: []
+primary_ready_frames: []
+
+interpretation:
+No synchronized EEG–QRNG dataset is available. Lagged alignment completed in protocol-only mode with empty canonical inventory.
+
+==============================================================================

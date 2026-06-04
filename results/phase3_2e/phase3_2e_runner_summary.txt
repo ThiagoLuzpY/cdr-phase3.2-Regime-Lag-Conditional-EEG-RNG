@@ -1,0 +1,205 @@
+==============================================================================
+CDR Phase III.2E — Runner Summary
+Synchronized EEG–QRNG protocol and gate-sensitivity version
+==============================================================================
+
+Project
+------------------------------------------------------------------------------
+project_name: Phase3.2-Regime-Lag-Conditional-EEG-RNG
+phase: Phase III.2E
+phase_title: Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation
+version: v1.0-phase3_2e_protocol_sync_gate_sensitivity
+runner_version: phase3_2e_runner_v1_full_protocol_sync_gate_sensitivity
+
+Execution
+------------------------------------------------------------------------------
+started_at: 2026-06-04 11:56:10
+finished_at: 2026-06-04 11:56:11
+elapsed_seconds: 1.7047576904296875
+force_rebuild: False
+skip_controls: False
+skip_diagnostics: False
+
+Scientific guardrail
+------------------------------------------------------------------------------
+Phase III.2E requires real synchronized EEG + QRNG acquisition timestamps for empirical interpretation. Protocol-only outputs do not support an EEG–QRNG coupling claim.
+
+Steps
+------------------------------------------------------------------------------
+config:
+  title: Config check
+  module: config.phase3_2e_config
+  status: ok
+  elapsed_seconds: 0.05038332939147949
+  module_args: []
+  payload_status: ok
+  protocol_only: True
+  interpretation: Phase III.2E config loaded successfully.
+
+schema:
+  title: Schema validation
+  module: src.phase3_2e_schema
+  status: ok
+  elapsed_seconds: 0.03426241874694824
+  module_args: []
+  payload_status: pending_synchronized_data
+  protocol_only: True
+  interpretation: No synchronized EEG–QRNG input CSV was found. This is valid for protocol-only development. Empirical CDR cannot run until a real synchronized dataset is provided.
+
+sync_validator:
+  title: Synchronization validation
+  module: src.phase3_2e_sync_validator
+  status: ok
+  elapsed_seconds: 0.07125997543334961
+  module_args: []
+  payload_status: missing_payload
+  protocol_only: False
+  interpretation: Expected payload not found after step sync_validator.
+
+loader:
+  title: Synchronized loader
+  module: src.phase3_2e_loader
+  status: ok
+  elapsed_seconds: 0.08754754066467285
+  module_args: []
+  payload_status: pending_synchronized_data
+  protocol_only: True
+  interpretation: No synchronized EEG–QRNG input CSV was found. Loader completed in protocol-only mode and saved empty canonical outputs. Empirical windowing, feature construction and CDR remain blocked until real synchronized data are provided.
+
+windows:
+  title: Window builder
+  module: src.phase3_2e_windows
+  status: ok
+  elapsed_seconds: 0.05028963088989258
+  module_args: []
+  payload_status: pending_synchronized_data
+  protocol_only: True
+  interpretation: No synchronized EEG–QRNG dataset is available. Window building completed in protocol-only mode with empty canonical outputs.
+
+features:
+  title: Feature builder
+  module: src.phase3_2e_features
+  status: ok
+  elapsed_seconds: 0.03526425361633301
+  module_args: []
+  payload_status: pending_synchronized_data
+  protocol_only: True
+  interpretation: No synchronized EEG–QRNG dataset is available. Feature construction completed in protocol-only mode with empty canonical outputs.
+
+alignment:
+  title: Lagged alignment
+  module: src.phase3_2e_alignment
+  status: ok
+  elapsed_seconds: 0.042109012603759766
+  module_args: []
+  payload_status: pending_synchronized_data
+  protocol_only: True
+  interpretation: No synchronized EEG–QRNG dataset is available. Lagged alignment completed in protocol-only mode with empty canonical inventory.
+
+conditional:
+  title: Conditional CDR
+  module: src.phase3_2e_conditional
+  status: ok
+  elapsed_seconds: 0.07112789154052734
+  module_args: []
+  payload_status: pending_synchronized_data
+  protocol_only: True
+  interpretation: No synchronized EEG–QRNG dataset is available. Conditional CDR completed in protocol-only mode with empty canonical outputs.
+
+controls:
+  title: Negative controls
+  module: src.phase3_2e_controls
+  status: ok
+  elapsed_seconds: 0.0599973201751709
+  module_args: []
+  payload_status: pending_synchronized_data
+  protocol_only: True
+  interpretation: No synchronized EEG–QRNG dataset is available. Controls completed in protocol-only mode with empty canonical outputs.
+
+metrics:
+  title: Metrics and official gates
+  module: src.phase3_2e_metrics
+  status: ok
+  elapsed_seconds: 0.06354236602783203
+  module_args: []
+  payload_status: pending_synchronized_data
+  protocol_only: True
+  interpretation: No synchronized EEG–QRNG dataset is available. Phase III.2E metrics were generated in protocol-only mode. Empirical CDR remains blocked until real synchronized data are provided.
+
+gate_sensitivity:
+  title: F7/F8/F12 gate sensitivity
+  module: src.phase3_2e_gate_sensitivity
+  status: ok
+  elapsed_seconds: 0.06999611854553223
+  module_args: []
+  payload_status: pending_synchronized_data
+  protocol_only: True
+  interpretation: No synchronized EEG–QRNG dataset is available. Gate sensitivity was generated in protocol-only mode. F7/F8/F12 cannot be empirically diagnosed until synchronized data exist.
+
+diagnostics:
+  title: Final diagnostics
+  module: src.phase3_2e_diagnostics
+  status: ok
+  elapsed_seconds: 0.19695687294006348
+  module_args: []
+  payload_status: unknown
+  protocol_only: False
+
+Table summary
+------------------------------------------------------------------------------
+loaded_rows: 0
+window_rows: 0
+feature_rows: 0
+alignment_inventory_rows: 40
+conditional_model_rows: 0
+conditional_pair_rows: 0
+control_run_rows: 0
+control_pair_rows: 0
+metrics_table_rows: 11
+f7_sensitivity_rows: 0
+f8_sensitivity_rows: 0
+f12_sensitivity_rows: 0
+alignment_total_n_valid_alignment_rows: 0
+alignment_total_n_valid_primary_alignment_rows: 0
+alignment_total_n_valid_conditional_rows: 0
+alignment_total_n_valid_mc_conditional_rows: 0
+alignment_scope_counts: {'exploratory': 34, 'primary': 6}
+lag_direction_counts: {'future_target': 20, 'past_target': 15, 'concurrent': 5}
+
+Output files
+------------------------------------------------------------------------------
+runner_report_json: results\phase3_2e\phase3_2e_runner_report.json
+runner_summary_txt: results\phase3_2e\phase3_2e_runner_summary.txt
+synchronized_input_csv: data\raw\phase3_2e\synchronized\phase3_2e_synchronized_input.csv
+schema_report: results\phase3_2e\phase3_2e_schema_report.json
+sync_validation_report: results\phase3_2e\phase3_2e_sync_validation_report.json
+loader_report: results\phase3_2e\phase3_2e_loader_report.json
+windows_report: results\phase3_2e\phase3_2e_windows_report.json
+features_report: results\phase3_2e\phase3_2e_features_report.json
+alignment_report: results\phase3_2e\phase3_2e_alignment_report.json
+conditional_report: results\phase3_2e\phase3_2e_conditional_report.json
+controls_json: results\phase3_2e\phase3_2e_controls.json
+metrics_report: results\phase3_2e\phase3_2e_metrics_report.json
+gate_sensitivity_report: results\phase3_2e\phase3_2e_gate_sensitivity_report.json
+diagnostics_report: results\phase3_2e\diagnostics\phase3_2e_diagnostics_report.json
+alignment_inventory: data\interim\phase3_2e\phase3_2e_alignment_inventory.csv
+conditional_pair_scores: results\phase3_2e\phase3_2e_conditional_pair_scores.csv
+conditional_model_scores: results\phase3_2e\phase3_2e_conditional_model_scores.csv
+control_runs: results\phase3_2e\phase3_2e_control_runs.csv
+control_pair_scores: results\phase3_2e\phase3_2e_control_pair_scores.csv
+metrics_table: results\phase3_2e\phase3_2e_metrics_table.csv
+f7_sensitivity: results\phase3_2e\phase3_2e_f7_subject_sensitivity.csv
+f8_sensitivity: results\phase3_2e\phase3_2e_f8_complexity_sensitivity.csv
+f12_sensitivity: results\phase3_2e\phase3_2e_f12_epsilon_saturation_sensitivity.csv
+
+Final status
+------------------------------------------------------------------------------
+status: pending_synchronized_data
+headline: Phase III.2E is protocol-ready but empirically pending synchronized EEG–QRNG data.
+protocol_only: True
+can_claim_empirical_cdr: False
+source: diagnostics
+interpretation: Phase III.2E is protocol-ready but empirically pending synchronized EEG–QRNG data.
+recommendation: Treat Phase III.2E as a completed protocol implementation, not an empirical result. The next scientific requirement is a real synchronized EEG + QRNG dataset with valid timestamp alignment. Do not claim EEG–QRNG coupling from protocol-only outputs.
+
+==============================================================================

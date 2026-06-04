@@ -1,0 +1,37 @@
+==============================================================================
+Phase III.2E — Synchronization Validation Summary
+==============================================================================
+
+status: pending_synchronized_data
+sync_valid: False
+protocol_only: True
+input_file: data\raw\phase3_2e\synchronized\phase3_2e_synchronized_input.csv
+input_exists: False
+
+schema_status: pending_synchronized_data
+schema_valid: False
+
+n_rows: 0
+n_subjects: 0
+n_sessions: 0
+n_windows: 0
+
+min_sync_quality: None
+mean_sync_quality: None
+max_clock_drift_ms_abs: None
+max_eeg_qrng_gap_ms: None
+median_eeg_qrng_gap_ms: None
+
+n_failures: 0
+n_errors: 0
+n_warnings: 0
+
+can_proceed_to_empirical_cdr: False
+
+interpretation:
+No synchronized EEG–QRNG dataset is available. Synchronization validation is in protocol-only mode. Empirical CDR cannot proceed until a real synchronized dataset is provided.
+
+error_count: 0
+warning_count: 0
+
+==============================================================================

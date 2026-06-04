@@ -1,0 +1,22 @@
+==============================================================================
+Phase III.2E — Negative Controls Summary
+Synchronized EEG–QRNG protocol version
+==============================================================================
+
+status: pending_synchronized_data
+protocol_only: True
+overall_passed: False
+n_control_runs: 0
+n_valid_control_runs: 0
+n_control_pair_rows: 0
+n_control_types: 0
+failed_control_types: ['within_subject_qrng_shuffle', 'within_subject_eeg_shuffle', 'circular_qrng_shift', 'subject_mismatch', 'conditional_target_shuffle', 'sync_break_control']
+
+can_proceed_to_metrics: True
+can_proceed_to_empirical_cdr: False
+
+interpretation:
+No synchronized EEG–QRNG dataset is available. Controls completed in protocol-only mode with empty canonical outputs.
+
+Unavailable: empty_control_runs
+==============================================================================

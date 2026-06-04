@@ -1,0 +1,55 @@
+==============================================================================
+Phase III.2E — Gate Sensitivity Summary
+F7 / F8 / F12 diagnostics without changing official gates
+==============================================================================
+
+status: pending_synchronized_data
+protocol_only: True
+can_proceed_to_diagnostics: True
+can_claim_empirical_cdr: False
+
+Official gate statuses
+------------------------------------------------------------------------------
+F7 official status: NOT_EVALUATED
+F8 official status: NOT_EVALUATED
+F12 official status: NOT_EVALUATED
+
+F7 — Subject consistency
+------------------------------------------------------------------------------
+available: False
+official_threshold: 0.6
+max_primary_fraction_positive_lift: 0.0
+distance_to_official_threshold: -0.6
+official_passed_by_data: False
+strictest_threshold_passed: None
+interpretation: F7 cannot be diagnosed because there are no primary pair rows.
+
+F8 — Complexity penalty / BIC
+------------------------------------------------------------------------------
+available: False
+official_threshold: 0.0
+max_primary_bic_improvement: 0.0
+max_primary_aic_improvement: 0.0
+max_primary_ll_improvement: 0.0
+distance_to_official_threshold: 0.0
+official_passed_by_data: False
+bic_failed_but_aic_positive: False
+bic_failed_but_ll_positive: False
+interpretation: F8 cannot be diagnosed because there are no primary pair rows.
+
+F12 — Epsilon saturation
+------------------------------------------------------------------------------
+available: False
+official_eps_saturation_value: 0.8
+official_warning_fraction: 0.5
+official_saturation_fraction: None
+distance_to_warning_fraction: -0.5
+official_warning_by_data: False
+max_epsilon: None
+interpretation: F12 cannot be diagnosed because no epsilon values are available.
+
+Overall interpretation
+------------------------------------------------------------------------------
+No synchronized EEG–QRNG dataset is available. Gate sensitivity was generated in protocol-only mode. F7/F8/F12 cannot be empirically diagnosed until synchronized data exist.
+
+==============================================================================

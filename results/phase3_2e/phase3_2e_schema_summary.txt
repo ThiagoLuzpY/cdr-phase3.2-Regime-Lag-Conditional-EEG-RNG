@@ -1,0 +1,59 @@
+==============================================================================
+Phase III.2E — Schema Validation Summary
+==============================================================================
+
+status: pending_synchronized_data
+schema_valid: False
+protocol_only: True
+input_file: data\raw\phase3_2e\synchronized\phase3_2e_synchronized_input.csv
+input_exists: False
+n_rows: 0
+n_columns: 0
+n_required_columns: 30
+n_missing_required_columns: 30
+n_optional_columns_present: 0
+n_failures: 0
+n_errors: 0
+n_warnings: 0
+can_proceed_to_sync_validation: False
+can_proceed_to_empirical_cdr: False
+
+interpretation:
+No synchronized EEG–QRNG input CSV was found. This is valid for protocol-only development. Empirical CDR cannot run until a real synchronized dataset is provided.
+
+Missing required columns:
+- subject_id
+- session_id
+- window_id
+- window_start_utc
+- window_end_utc
+- eeg_timestamp_utc
+- qrng_timestamp_utc
+- sync_quality
+- clock_drift_ms
+- eeg_channel
+- eeg_delta_power
+- eeg_theta_power
+- eeg_alpha_power
+- eeg_beta_power
+- eeg_entropy
+- qrng_state
+- qrng_bit_balance
+- qrng_transition_rate
+- qrng_entropy
+- eeg_primary_channel
+- eeg_secondary_channel
+- eeg_primary_delta_power
+- eeg_primary_alpha_power
+- eeg_secondary_delta_power
+- eeg_secondary_alpha_power
+- interchannel_delta_ratio
+- interchannel_alpha_ratio
+- fronto_parietal_delta_shift
+- fronto_parietal_alpha_shift
+- cross_channel_corr
+
+error_count: 0
+warning_count: 0
+
+==============================================================================

@@ -1,0 +1,61 @@
+==============================================================================
+Phase III.2E — Metrics and Gates Summary
+Synchronized EEG–QRNG protocol version
+==============================================================================
+
+Final status
+------------------------------------------------------------------------------
+status: pending_synchronized_data
+protocol_only: True
+can_claim_empirical_cdr: False
+can_proceed_to_gate_sensitivity: True
+can_proceed_to_diagnostics: True
+interpretation: No synchronized EEG–QRNG dataset is available. Phase III.2E metrics were generated in protocol-only mode. Empirical CDR remains blocked until real synchronized data are provided.
+passed_gates: ['F11']
+failed_gates: []
+warning_gates: []
+not_evaluated_gates: ['F1', 'F2', 'F3', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F12']
+
+Gates
+------------------------------------------------------------------------------
+F1 — Injection recovery: NOT_EVALUATED | value=0.0 | threshold=0.05 | reason=not_evaluated_in_metrics; reserved for runner-level or synthetic injection test
+F2 — Controls collapse: NOT_EVALUATED | value=0.0 | threshold=0.75 | reason=pending_synchronized_data; controls cannot run without real synchronized frames
+F3 — Holdout generalization: NOT_EVALUATED | value=0.0 | threshold=1.0 | reason=no_valid_conditional_pair_rows
+F5 — Sensitivity stability: NOT_EVALUATED | value=0.0 | threshold=0.12 | reason=not_evaluated_in_metrics; evaluated by phase3_2e_gate_sensitivity.py
+F6 — Conditional lift: NOT_EVALUATED | value=0.0 | threshold=0.03 | reason=no_primary_pair_rows
+F7 — Subject consistency: NOT_EVALUATED | value=0.0 | threshold=0.6 | reason=no_primary_pair_rows
+F8 — Complexity penalty / BIC: NOT_EVALUATED | value=0.0 | threshold=0.0 | reason=no_primary_pair_rows
+F9 — Lag stability: NOT_EVALUATED | value=0.0 | threshold=0.0 | reason=no_valid_pair_rows
+F10 — Window specificity: NOT_EVALUATED | value=0.0 | threshold=0.03 | reason=no_valid_pair_rows
+F11 — Multiple-comparison guard: PASS | value=0.0 | threshold=0.0 | reason=no_strong_candidates_detected
+F12 — Epsilon saturation diagnostic: NOT_EVALUATED | value=0.0 | threshold=0.5 | reason=no_epsilon_rows_available
+
+Multiple-comparison guard
+------------------------------------------------------------------------------
+enabled: True
+n_valid_tests: 0
+n_positive_lift_tests: 0
+n_primary_positive_lift_tests: 0
+n_exploratory_lift_tests: 0
+n_strong_candidate_tests: 0
+n_primary_strong_candidate_tests: 0
+n_multichannel_tests: 0
+
+Epsilon saturation
+------------------------------------------------------------------------------
+model_saturation: {'available': False, 'reason': 'model_scores_missing_or_empty', 'saturation_fraction': 0.0, 'warning': False}
+pair_saturation: {'available': False, 'reason': 'no_valid_pair_rows', 'warning': False, 'either_saturation_fraction': 0.0, 'both_saturation_fraction': 0.0}
+
+Controls
+------------------------------------------------------------------------------
+controls_available: False
+controls_protocol_only: True
+controls_passed: False
+failed_control_types: ['within_subject_qrng_shuffle', 'within_subject_eeg_shuffle', 'circular_qrng_shift', 'subject_mismatch', 'conditional_target_shuffle', 'sync_break_control']
+required_control_types: ('within_subject_qrng_shuffle', 'within_subject_eeg_shuffle', 'circular_qrng_shift', 'subject_mismatch', 'conditional_target_shuffle', 'sync_break_control')
+controls_reason: pending_synchronized_data
+
+Best conditional rows
+------------------------------------------------------------------------------
+
+==============================================================================

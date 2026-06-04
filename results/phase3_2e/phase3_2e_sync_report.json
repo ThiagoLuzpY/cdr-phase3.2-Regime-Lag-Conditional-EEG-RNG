@@ -1,0 +1,33 @@
+{
+  "phase": "Phase III.2E",
+  "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
+  "module": "phase3_2e_sync_validator",
+  "status": "pending_synchronized_data",
+  "result": {
+    "status": "pending_synchronized_data",
+    "sync_valid": false,
+    "protocol_only": true,
+    "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
+    "input_exists": false,
+    "schema_status": "pending_synchronized_data",
+    "schema_valid": false,
+    "n_rows": 0,
+    "n_subjects": 0,
+    "n_sessions": 0,
+    "n_windows": 0,
+    "min_sync_quality": null,
+    "mean_sync_quality": null,
+    "max_clock_drift_ms_abs": null,
+    "max_eeg_qrng_gap_ms": null,
+    "median_eeg_qrng_gap_ms": null,
+    "n_failures": 0,
+    "n_errors": 0,
+    "n_warnings": 0,
+    "can_proceed_to_empirical_cdr": false,
+    "interpretation": "No synchronized EEG–QRNG dataset is available. Synchronization validation is in protocol-only mode. Empirical CDR cannot proceed until a real synchronized dataset is provided."
+  },
+  "schema_report_status": "pending_synchronized_data",
+  "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
+  "sync_quality_summary": {},
+  "failures": []
+}
