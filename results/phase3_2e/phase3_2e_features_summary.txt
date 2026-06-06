@@ -2,35 +2,35 @@
 Phase III.2E — Feature Summary
 ==============================================================================
 
-status: pending_synchronized_data
-protocol_only: True
-input_rows: 0
-output_rows: 0
-n_subjects: 0
-n_sessions: 0
-n_window_sizes: 0
+status: features_ready
+protocol_only: False
+input_rows: 27597
+output_rows: 27597
+n_subjects: 10
+n_sessions: 10
+n_window_sizes: 1
 
-n_valid_feature_rows: 0
-n_valid_next_state_rows: 0
-n_valid_mc_next_state_rows: 0
+n_valid_feature_rows: 27597
+n_valid_next_state_rows: 27587
+n_valid_mc_next_state_rows: 27587
 
-eeg_state_n_unique: 0
-qrng_state_n_unique: 0
-mc_eeg_state_n_unique: 0
+eeg_state_n_unique: 9
+qrng_state_n_unique: 2
+mc_eeg_state_n_unique: 9
 
-can_proceed_to_alignment: False
-can_proceed_to_conditional_cdr: False
-can_proceed_to_empirical_cdr: False
+can_proceed_to_alignment: True
+can_proceed_to_conditional_cdr: True
+can_proceed_to_empirical_cdr: True
 
-window_seconds_counts: None
-feature_status_counts: None
-window_scope_counts: None
+window_seconds_counts: {'30': 27597}
+feature_status_counts: {'valid_feature_row': 27597}
+window_scope_counts: {'exploratory': 27597}
 
-sync_quality: None
-eeg_qrng_gap_ms: None
-clock_drift_abs_ms: None
+sync_quality: {'min': 0.9849868015959592, 'mean': 0.9930010368948892, 'median': 0.9933133221340424, 'max': 0.9949999011330124}
+eeg_qrng_gap_ms: {'min': 0.0, 'mean': 2.026452150596079, 'median': 2.0, 'max': 10.0}
+clock_drift_abs_ms: {'min': 9.886698759679616e-05, 'mean': 1.9989631051106351, 'median': 1.686677865957682, 'max': 10.013198404040686}
 
 interpretation:
-No synchronized EEG–QRNG dataset is available. Feature construction completed in protocol-only mode with empty canonical outputs.
+Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR.
 
 ==============================================================================

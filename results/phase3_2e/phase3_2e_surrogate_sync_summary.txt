@@ -1,0 +1,59 @@
+==============================================================================
+Phase III.2E — Surrogate synchronized input summary
+==============================================================================
+
+created_at: 2026-06-05 00:00:34
+script_version: phase3_2e_surrogate_sync_builder_v2_schema_safe
+source_mode: surrogate_from_phase3_2d
+sync_mode: software_timestamp_aligned
+empirical_claim_allowed: False
+
+source_file: C:\Users\Thiag\OneDrive\Área de Trabalho\CDR - Core distinguibility Relativity\CDR\Phase3.2-Regime-Lag-Conditional-EEG-RNG\data\interim\phase3_2\phase3_2d_multichannel_features.csv
+output_csv: C:\Users\Thiag\OneDrive\Área de Trabalho\CDR - Core distinguibility Relativity\CDR\Phase3.2-Regime-Lag-Conditional-EEG-RNG\data\raw\phase3_2e\synchronized\phase3_2e_synchronized_input.csv
+
+n_rows: 27597
+n_subjects: 10
+n_sessions: 10
+window_seconds: 30
+start_utc: 2026-01-01T00:00:00Z
+
+inject_signal: False
+inject_strength: 0.0
+seed: 2026032
+
+Guardrail:
+This CSV is a surrogate synchronized input for testing the Phase III.2E pipeline only. It must not be interpreted as empirical synchronized EEG-QRNG evidence.
+
+Missing required values:
+subject_id: 0
+session_id: 0
+window_id: 0
+window_start_utc: 0
+window_end_utc: 0
+eeg_timestamp_utc: 0
+qrng_timestamp_utc: 0
+sync_quality: 0
+clock_drift_ms: 0
+eeg_channel: 0
+eeg_delta_power: 0
+eeg_theta_power: 0
+eeg_alpha_power: 0
+eeg_beta_power: 0
+eeg_entropy: 0
+qrng_state: 0
+qrng_bit_balance: 0
+qrng_transition_rate: 0
+qrng_entropy: 0
+eeg_primary_channel: 0
+eeg_secondary_channel: 0
+eeg_primary_delta_power: 0
+eeg_primary_alpha_power: 0
+eeg_secondary_delta_power: 0
+eeg_secondary_alpha_power: 0
+interchannel_delta_ratio: 0
+interchannel_alpha_ratio: 0
+fronto_parietal_delta_shift: 0
+fronto_parietal_alpha_shift: 0
+cross_channel_corr: 0
+
+==============================================================================

@@ -3,41 +3,89 @@
   "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
   "module": "phase3_2e_features",
   "feature_version": "phase3_2e_features_v1_sync_window_state_layer",
-  "status": "pending_synchronized_data",
-  "created_at": "2026-06-03 22:10:25",
+  "status": "features_ready",
+  "created_at": "2026-06-05 00:42:34",
   "result": {
-    "status": "pending_synchronized_data",
-    "protocol_only": true,
-    "input_rows": 0,
-    "output_rows": 0,
-    "n_subjects": 0,
-    "n_sessions": 0,
-    "n_window_sizes": 0,
-    "n_valid_feature_rows": 0,
-    "n_valid_next_state_rows": 0,
-    "n_valid_mc_next_state_rows": 0,
-    "eeg_state_n_unique": 0,
-    "qrng_state_n_unique": 0,
-    "mc_eeg_state_n_unique": 0,
-    "can_proceed_to_alignment": false,
-    "can_proceed_to_conditional_cdr": false,
-    "can_proceed_to_empirical_cdr": false,
-    "interpretation": "No synchronized EEG–QRNG dataset is available. Feature construction completed in protocol-only mode with empty canonical outputs."
+    "status": "features_ready",
+    "protocol_only": false,
+    "input_rows": 27597,
+    "output_rows": 27597,
+    "n_subjects": 10,
+    "n_sessions": 10,
+    "n_window_sizes": 1,
+    "n_valid_feature_rows": 27597,
+    "n_valid_next_state_rows": 27587,
+    "n_valid_mc_next_state_rows": 27587,
+    "eeg_state_n_unique": 9,
+    "qrng_state_n_unique": 2,
+    "mc_eeg_state_n_unique": 9,
+    "can_proceed_to_alignment": true,
+    "can_proceed_to_conditional_cdr": true,
+    "can_proceed_to_empirical_cdr": true,
+    "interpretation": "Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR."
   },
   "summary": {
-    "n_rows": 0,
-    "n_columns": 31,
-    "n_subjects": 0,
-    "n_sessions": 0,
-    "n_window_sizes": 0,
-    "n_valid_feature_rows": 0,
-    "n_valid_next_state_rows": 0,
-    "n_valid_mc_next_state_rows": 0,
-    "n_valid_conditional_rows": 0,
-    "n_valid_mc_conditional_rows": 0,
-    "eeg_state_n_unique": 0,
-    "qrng_state_n_unique": 0,
-    "mc_eeg_state_n_unique": 0
+    "n_rows": 27597,
+    "n_columns": 100,
+    "n_subjects": 10,
+    "subjects": [
+      "SC4001",
+      "SC4002",
+      "SC4011",
+      "SC4012",
+      "SC4021",
+      "SC4022",
+      "SC4031",
+      "SC4032",
+      "SC4041",
+      "SC4042"
+    ],
+    "n_sessions": 10,
+    "n_window_sizes": 1,
+    "window_seconds_counts": {
+      "30": 27597
+    },
+    "valid_feature_row_rows": 27597,
+    "valid_next_state_rows": 27587,
+    "valid_mc_next_state_rows": 27587,
+    "valid_conditional_row_rows": 27587,
+    "valid_mc_conditional_row_rows": 27587,
+    "valid_for_primary_analysis_rows": 0,
+    "valid_for_exploratory_analysis_rows": 27597,
+    "eeg_state_n_unique": 9,
+    "qrng_state_n_unique": 2,
+    "mc_eeg_state_n_unique": 9,
+    "observed_joint_state_n_unique": 18,
+    "mc_observed_joint_state_n_unique": 18,
+    "informational_joint_state_n_unique": 9,
+    "mc_informational_joint_state_n_unique": 9,
+    "eeg_info_bin_n_unique": 3,
+    "qrng_info_bin_n_unique": 3,
+    "mc_eeg_info_bin_n_unique": 3,
+    "sync_quality": {
+      "min": 0.9849868015959592,
+      "mean": 0.9930010368948892,
+      "median": 0.9933133221340424,
+      "max": 0.9949999011330124
+    },
+    "eeg_qrng_gap_ms": {
+      "min": 0.0,
+      "mean": 2.026452150596079,
+      "median": 2.0,
+      "max": 10.0
+    },
+    "clock_drift_abs_ms": {
+      "min": 9.886698759679616e-05,
+      "mean": 1.9989631051106351,
+      "median": 1.686677865957682,
+      "max": 10.013198404040686
+    },
+    "feature_status_counts": {
+      "valid_feature_row": 27597
+    },
+    "window_scope_counts": {
+      "exploratory": 27597
+    }
   },
   "features_csv": "data\\interim\\phase3_2e\\phase3_2e_features.csv",
   "feature_specs_json": "data\\interim\\phase3_2e\\phase3_2e_feature_specs.json",
@@ -46,42 +94,198 @@
   "metadata": {
     "phase": "Phase III.2E",
     "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
+    "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
+    "config_version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
+    "feature_module": "phase3_2e_features",
     "feature_version": "phase3_2e_features_v1_sync_window_state_layer",
-    "status": "pending_synchronized_data",
-    "protocol_only": true,
-    "n_rows": 0,
-    "bin_specs": {},
-    "summary": {
-      "n_rows": 0,
-      "n_columns": 31,
-      "n_subjects": 0,
-      "n_sessions": 0,
-      "n_window_sizes": 0,
-      "n_valid_feature_rows": 0,
-      "n_valid_next_state_rows": 0,
-      "n_valid_mc_next_state_rows": 0,
-      "n_valid_conditional_rows": 0,
-      "n_valid_mc_conditional_rows": 0,
-      "eeg_state_n_unique": 0,
-      "qrng_state_n_unique": 0,
-      "mc_eeg_state_n_unique": 0
+    "created_at": "2026-06-05 00:42:34",
+    "train_index_used": false,
+    "n_train_rows_for_bins": 27597,
+    "bin_specs": {
+      "eeg_delta_bin": {
+        "name": "eeg_delta_bin",
+        "source_column": "eeg_delta_power",
+        "n_requested_bins": 3,
+        "edges": [
+          1.6004085083476191e-10,
+          4.4661222421266696e-10
+        ],
+        "effective_bins": 3,
+        "constant": false,
+        "fill_value": 3.9164947225062517e-10,
+        "train_min": 4.308483708472268e-13,
+        "train_max": 3.2928468131562233e-09,
+        "train_mean": 3.9164947225062517e-10,
+        "train_std": 3.661582076639249e-10
+      },
+      "eeg_alpha_bin": {
+        "name": "eeg_alpha_bin",
+        "source_column": "eeg_alpha_power",
+        "n_requested_bins": 3,
+        "edges": [
+          4.19056857338711e-12,
+          9.774565475855347e-12
+        ],
+        "effective_bins": 3,
+        "constant": false,
+        "fill_value": 9.310260394372487e-12,
+        "train_min": 4.623532264200944e-15,
+        "train_max": 2.7734559425324564e-10,
+        "train_mean": 9.310260394372487e-12,
+        "train_std": 9.419609804790895e-12
+      },
+      "eeg_info_bin": {
+        "name": "eeg_info_bin",
+        "source_column": "eeg_info_score",
+        "n_requested_bins": 3,
+        "edges": [
+          -0.38135579794491137,
+          0.09969658532494144
+        ],
+        "effective_bins": 3,
+        "constant": false,
+        "fill_value": 3.2956288791279063e-17,
+        "train_min": -1.2941911518659701,
+        "train_max": 11.33500044376881,
+        "train_mean": 3.2956288791279063e-17,
+        "train_std": 0.7169439127685495
+      },
+      "qrng_info_bin": {
+        "name": "qrng_info_bin",
+        "source_column": "qrng_info_score",
+        "n_requested_bins": 3,
+        "edges": [
+          -0.15128631507970514,
+          0.2845252961291493
+        ],
+        "effective_bins": 3,
+        "constant": false,
+        "fill_value": -5.09663856737007e-16,
+        "train_min": -3.5798787319340435,
+        "train_max": 1.5001648614578516,
+        "train_mean": -5.09663856737007e-16,
+        "train_std": 0.5804540902471743
+      },
+      "mc_activation_bin": {
+        "name": "mc_activation_bin",
+        "source_column": "mc_activation_score",
+        "n_requested_bins": 3,
+        "edges": [
+          6.145554628169549e-11,
+          1.3560511729577257e-10
+        ],
+        "effective_bins": 3,
+        "constant": false,
+        "fill_value": 1.2136101288043362e-10,
+        "train_min": 1.9250106621109467e-13,
+        "train_max": 1.3751551793098903e-09,
+        "train_mean": 1.2136101288043362e-10,
+        "train_std": 1.0173679097916295e-10
+      },
+      "mc_cross_channel_bin": {
+        "name": "mc_cross_channel_bin",
+        "source_column": "mc_cross_channel_score",
+        "n_requested_bins": 3,
+        "edges": [
+          -0.24374168323127415,
+          0.018171228392150372
+        ],
+        "effective_bins": 3,
+        "constant": false,
+        "fill_value": -8.239072197819766e-18,
+        "train_min": -4.3295235416083155,
+        "train_max": 11.841579493038461,
+        "train_mean": -8.239072197819766e-18,
+        "train_std": 0.5559724578440398
+      },
+      "mc_eeg_info_bin": {
+        "name": "mc_eeg_info_bin",
+        "source_column": "mc_eeg_info_score",
+        "n_requested_bins": 3,
+        "edges": [
+          -0.22205110398920647,
+          0.010747171798877294
+        ],
+        "effective_bins": 3,
+        "constant": false,
+        "fill_value": 0.0,
+        "train_min": -0.6550709903834351,
+        "train_max": 11.007912141925031,
+        "train_mean": 0.0,
+        "train_std": 0.4646961511808058
+      }
     },
-    "windows_status": "pending_synchronized_data",
-    "windows_result": {
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
-      "input_rows": 0,
-      "output_rows": 0,
-      "n_subjects": 0,
-      "n_sessions": 0,
-      "n_valid_windows": 0,
-      "n_primary_valid_windows": 0,
-      "n_exploratory_valid_windows": 0,
-      "n_registered_window_sizes": 0,
-      "n_unregistered_window_rows": 0,
-      "can_proceed_to_feature_construction": false,
-      "can_proceed_to_empirical_cdr": false,
-      "interpretation": "No synchronized EEG–QRNG dataset is available. Window building completed in protocol-only mode with empty canonical outputs."
+    "state_columns": {
+      "E0_EEG_next_given_EEG": "eeg_state -> eeg_next_state",
+      "E1_EEG_next_given_EEG_QRNG": "(eeg_state, qrng_state) -> eeg_next_state",
+      "E2_QRNG_next_given_QRNG": "qrng_state -> qrng_next_state",
+      "E3_QRNG_next_given_QRNG_EEG": "(qrng_state, eeg_state) -> qrng_next_state",
+      "E4_MCEEG_next_given_MCEEG": "mc_eeg_state -> mc_eeg_next_state",
+      "E5_MCEEG_next_given_MCEEG_QRNG": "(mc_eeg_state, qrng_state) -> mc_eeg_next_state",
+      "E6_QRNG_next_given_QRNG_MCEEG": "(qrng_state, mc_eeg_state) -> qrng_next_state"
+    },
+    "summary": {
+      "n_rows": 27597,
+      "n_columns": 100,
+      "n_subjects": 10,
+      "subjects": [
+        "SC4001",
+        "SC4002",
+        "SC4011",
+        "SC4012",
+        "SC4021",
+        "SC4022",
+        "SC4031",
+        "SC4032",
+        "SC4041",
+        "SC4042"
+      ],
+      "n_sessions": 10,
+      "n_window_sizes": 1,
+      "window_seconds_counts": {
+        "30": 27597
+      },
+      "valid_feature_row_rows": 27597,
+      "valid_next_state_rows": 27587,
+      "valid_mc_next_state_rows": 27587,
+      "valid_conditional_row_rows": 27587,
+      "valid_mc_conditional_row_rows": 27587,
+      "valid_for_primary_analysis_rows": 0,
+      "valid_for_exploratory_analysis_rows": 27597,
+      "eeg_state_n_unique": 9,
+      "qrng_state_n_unique": 2,
+      "mc_eeg_state_n_unique": 9,
+      "observed_joint_state_n_unique": 18,
+      "mc_observed_joint_state_n_unique": 18,
+      "informational_joint_state_n_unique": 9,
+      "mc_informational_joint_state_n_unique": 9,
+      "eeg_info_bin_n_unique": 3,
+      "qrng_info_bin_n_unique": 3,
+      "mc_eeg_info_bin_n_unique": 3,
+      "sync_quality": {
+        "min": 0.9849868015959592,
+        "mean": 0.9930010368948892,
+        "median": 0.9933133221340424,
+        "max": 0.9949999011330124
+      },
+      "eeg_qrng_gap_ms": {
+        "min": 0.0,
+        "mean": 2.026452150596079,
+        "median": 2.0,
+        "max": 10.0
+      },
+      "clock_drift_abs_ms": {
+        "min": 9.886698759679616e-05,
+        "mean": 1.9989631051106351,
+        "median": 1.686677865957682,
+        "max": 10.013198404040686
+      },
+      "feature_status_counts": {
+        "valid_feature_row": 27597
+      },
+      "window_scope_counts": {
+        "exploratory": 27597
+      }
     }
   },
   "config": {

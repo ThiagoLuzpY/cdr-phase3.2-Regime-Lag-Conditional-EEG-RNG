@@ -2,30 +2,30 @@
 Phase III.2E — Lagged Alignment Summary
 ==============================================================================
 
-status: pending_synchronized_data
-protocol_only: True
+status: alignment_ready_exploratory_only
+protocol_only: False
 n_frames: 40
 n_window_sizes: 5
 n_lags: 8
 
-n_total_aligned_rows: 0
-n_valid_alignment_rows: 0
+n_total_aligned_rows: 220776
+n_valid_alignment_rows: 220576
 n_valid_primary_alignment_rows: 0
-n_valid_exploratory_alignment_rows: 0
-n_valid_conditional_rows: 0
-n_valid_mc_conditional_rows: 0
+n_valid_exploratory_alignment_rows: 220576
+n_valid_conditional_rows: 220576
+n_valid_mc_conditional_rows: 220576
 
-can_proceed_to_conditional_cdr: False
+can_proceed_to_conditional_cdr: True
 can_proceed_to_empirical_cdr: False
 
 scope_counts: {'exploratory': 34, 'primary': 6}
 lag_direction_counts: {'future_target': 20, 'past_target': 15, 'concurrent': 5}
-status_counts: {'pending_synchronized_data': 40}
+status_counts: {'empty_frame': 32, 'alignment_ready': 8}
 
-ready_frames: []
+ready_frames: ['data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m5.csv', 'data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m3.csv', 'data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m1.csv', 'data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_0.csv', 'data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p1.csv', 'data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p2.csv', 'data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p3.csv', 'data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p5.csv']
 primary_ready_frames: []
 
 interpretation:
-No synchronized EEG–QRNG dataset is available. Lagged alignment completed in protocol-only mode with empty canonical inventory.
+Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference.
 
 ==============================================================================

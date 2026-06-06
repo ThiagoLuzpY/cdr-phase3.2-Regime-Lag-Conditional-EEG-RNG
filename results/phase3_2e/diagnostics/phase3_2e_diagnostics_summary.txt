@@ -5,119 +5,121 @@ Synchronized EEG–QRNG protocol and gate-sensitivity version
 
 Final interpretation
 ------------------------------------------------------------------------------
-headline: Phase III.2E is protocol-ready but empirically pending synchronized EEG–QRNG data.
-status: pending_synchronized_data
-protocol_only: True
+headline: Phase III.2E produced exploratory synchronized conditional leads only.
+status: exploratory_lead_with_saturation_warning
+protocol_only: False
 can_claim_empirical_cdr: False
 
-- The current III.2E execution is protocol-only because no real synchronized EEG–QRNG input CSV is available.
+- The current III.2E execution used empirical synchronized rows.
 - Protocol empirical readiness: False.
-- Positive conditional lift rows: 0; primary positive rows: 0.
+- Positive conditional lift rows: 2; primary positive rows: 0.
 - Strong candidate rows: 0; primary strong candidates: 0.
-- Multichannel synchronized positive lift rows: 0.
-- Not evaluated gates: ['F1', 'F2', 'F3', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F12'].
+- Multichannel synchronized positive lift rows: 2.
+- Failed official gates: ['F9', 'F10'].
+- Warning gates: ['F12'].
+- Not evaluated gates: ['F1', 'F5', 'F6', 'F7', 'F8'].
 - F7/F8/F12 sensitivity diagnostics were generated without changing official gate thresholds.
 - A positive claim remains prohibited unless synchronized data exist and all required controls/gates support the result.
 
-recommendation: Treat Phase III.2E as a completed protocol implementation, not an empirical result. The next scientific requirement is a real synchronized EEG + QRNG dataset with valid timestamp alignment. Do not claim EEG–QRNG coupling from protocol-only outputs.
+recommendation: Document exploratory leads but do not claim empirical CDR unless controls, F7, F8, F12 and primary-gate criteria are satisfied.
 
 Protocol readiness
 ------------------------------------------------------------------------------
-status: pending_synchronized_data
-synchronized_input: {'path': 'data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv', 'exists': False, 'size_bytes': 0}
-any_protocol_only_stage: True
+status: sync_pipeline_not_empirically_ready
+synchronized_input: {'path': 'data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv', 'exists': True, 'size_bytes': 23514699}
+any_protocol_only_stage: False
 can_proceed_to_empirical_cdr: False
-interpretation: No synchronized EEG–QRNG input CSV exists. Phase III.2E is valid as a protocol-only implementation, but empirical CDR is blocked.
+interpretation: A synchronized input path may exist, but one or more upstream stages do not report empirical readiness.
 
 Pipeline table diagnostics
 ------------------------------------------------------------------------------
-loaded_windows_rows: 0
-windows_rows: 0
-features_rows: 0
+loaded_windows_rows: 27597
+windows_rows: 27597
+features_rows: 27597
 alignment_inventory_rows: 40
-loaded_subjects: 0
-loaded_sessions: 0
-windows_subjects: 0
-windows_sessions: 0
-features_subjects: 0
-features_sessions: 0
+loaded_subjects: 10
+loaded_sessions: 10
+windows_subjects: 10
+windows_sessions: 10
+features_subjects: 10
+features_sessions: 10
 alignment_inventory_subjects: 0
 alignment_inventory_sessions: 0
-alignment_total_n_valid_alignment_rows: 0
+alignment_total_n_valid_alignment_rows: 220576
 alignment_total_n_valid_primary_alignment_rows: 0
-alignment_total_n_valid_conditional_rows: 0
-alignment_total_n_valid_mc_conditional_rows: 0
+alignment_total_n_valid_conditional_rows: 220576
+alignment_total_n_valid_mc_conditional_rows: 220576
 alignment_scope_counts: {'exploratory': 34, 'primary': 6}
 lag_direction_counts: {'future_target': 20, 'past_target': 15, 'concurrent': 5}
 
 Conditional diagnostics
 ------------------------------------------------------------------------------
-status: pending_synchronized_data
-protocol_only: True
-n_model_rows: 0
-n_pair_rows: 0
-n_valid_rows: 0
+status: conditional_exploratory_leads
+protocol_only: False
+n_model_rows: 56
+n_pair_rows: 32
+n_valid_rows: 32
 n_primary_rows: 0
-n_positive_lift_rows: 0
+n_positive_lift_rows: 2
 n_primary_positive_lift_rows: 0
-n_exploratory_lift_rows: 0
+n_exploratory_lift_rows: 2
 n_strong_candidate_rows: 0
 n_primary_strong_candidate_rows: 0
-n_high_epsilon_zero_lift_rows: 0
-n_single_channel_rows: 0
-n_multichannel_rows: 0
-n_multichannel_positive_lift_rows: 0
-interpretation: Conditional CDR is in protocol-only mode. No synchronized EEG–QRNG pair rows exist yet.
+n_high_epsilon_zero_lift_rows: 4
+n_single_channel_rows: 16
+n_multichannel_rows: 16
+n_multichannel_positive_lift_rows: 2
+interpretation: Positive synchronized conditional lift rows exist, but they remain exploratory unless all gates and controls pass.
 
 Epsilon saturation
 ------------------------------------------------------------------------------
-pair_saturation: {'available': False, 'reason': 'no_valid_pair_rows'}
-model_saturation: {'available': False, 'reason': 'model_scores_missing_or_empty'}
+pair_saturation: {'available': True, 'eps_saturation_value': 0.8, 'warning_fraction': 0.5, 'n_valid_pair_rows': 32, 'max_baseline_eps_test': 0.8, 'max_augmented_eps_test': 0.8, 'n_either_saturated': 10, 'n_both_saturated': 4, 'either_saturation_fraction': 0.3125, 'both_saturation_fraction': 0.125, 'warning': False, 'reason': 'ok'}
+model_saturation: {'available': True, 'eps_saturation_value': 0.8, 'warning_fraction': 0.5, 'n_model_rows': 56, 'columns': {'eps_candidate': {'max': 0.8, 'mean': 0.7000000000000001, 'median': 0.8, 'n_saturated': 49, 'saturation_fraction': 0.875}, 'eps_calib': {'max': 0.8, 'mean': 0.7000000000000001, 'median': 0.8, 'n_saturated': 49, 'saturation_fraction': 0.875}, 'eps_test': {'max': 0.8, 'mean': 0.14285714285714285, 'median': 0.0, 'n_saturated': 10, 'saturation_fraction': 0.17857142857142858}}, 'max_saturation_fraction': 0.875, 'warning': True, 'reason': 'epsilon_saturation_warning'}
 
 Control diagnostics
 ------------------------------------------------------------------------------
-status: pending_synchronized_data
-protocol_only: True
+status: controls_passed
+protocol_only: False
 available: True
-n_control_runs: 0
-n_valid_control_runs: 0
-n_control_types: 0
-n_failed_control_types: None
-failed_control_types: ['within_subject_qrng_shuffle', 'within_subject_eeg_shuffle', 'circular_qrng_shift', 'subject_mismatch', 'conditional_target_shuffle', 'sync_break_control']
-required_control_types: ('within_subject_qrng_shuffle', 'within_subject_eeg_shuffle', 'circular_qrng_shift', 'subject_mismatch', 'conditional_target_shuffle', 'sync_break_control')
-interpretation: Controls are protocol-only or unavailable because no synchronized alignment frames exist.
+n_control_runs: 864
+n_valid_control_runs: 864
+n_control_types: 9
+n_failed_control_types: 0
+failed_control_types: []
+required_control_types: ['within_subject_qrng_shuffle', 'within_subject_eeg_shuffle', 'circular_qrng_shift', 'subject_mismatch', 'conditional_target_shuffle', 'sync_break_control']
+interpretation: All synchronized negative controls collapsed under the official criteria.
 
 Official gates
 ------------------------------------------------------------------------------
-status: pending_synchronized_data
-protocol_only: True
-passed_gates: ['F11']
-failed_gates: []
-warning_gates: []
-not_evaluated_gates: ['F1', 'F2', 'F3', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F12']
+status: exploratory_lead_with_saturation_warning
+protocol_only: False
+passed_gates: ['F2', 'F3', 'F11']
+failed_gates: ['F9', 'F10']
+warning_gates: ['F12']
+not_evaluated_gates: ['F1', 'F5', 'F6', 'F7', 'F8']
 can_claim_empirical_cdr: False
 
 Gate sensitivity — F7/F8/F12
 ------------------------------------------------------------------------------
-status: pending_synchronized_data
-protocol_only: True
+status: gate_sensitivity_completed
+protocol_only: False
 available: True
-official_gate_statuses: {'F7': 'NOT_EVALUATED', 'F8': 'NOT_EVALUATED', 'F12': 'NOT_EVALUATED'}
+official_gate_statuses: {'F7': 'NOT_EVALUATED', 'F8': 'NOT_EVALUATED', 'F12': 'WARN'}
 f7_subject_consistency: {'available': False, 'reason': 'no_primary_pair_rows', 'official_threshold': 0.6, 'max_primary_fraction_positive_lift': 0.0, 'distance_to_official_threshold': -0.6, 'official_passed_by_data': False, 'closest_threshold_passed': None, 'strictest_threshold_passed': None, 'interpretation': 'F7 cannot be diagnosed because there are no primary pair rows.'}
 f8_complexity_penalty: {'available': False, 'reason': 'no_primary_pair_rows', 'official_threshold': 0.0, 'max_primary_bic_improvement': 0.0, 'max_primary_aic_improvement': 0.0, 'max_primary_ll_improvement': 0.0, 'distance_to_official_threshold': 0.0, 'official_passed_by_data': False, 'bic_failed_but_aic_positive': False, 'bic_failed_but_ll_positive': False, 'interpretation': 'F8 cannot be diagnosed because there are no primary pair rows.'}
-f12_epsilon_saturation: {'available': False, 'reason': 'no_epsilon_values_available', 'official_eps_saturation_value': 0.8, 'official_warning_fraction': 0.5, 'max_saturation_fraction': 0.0, 'official_warning_by_data': False, 'distance_to_warning_fraction': -0.5, 'interpretation': 'F12 cannot be diagnosed because no epsilon values are available.'}
-interpretation: No synchronized EEG–QRNG dataset is available. Gate sensitivity was generated in protocol-only mode. F7/F8/F12 cannot be empirically diagnosed until synchronized data exist.
+f12_epsilon_saturation: {'available': True, 'reason': 'ok', 'official_eps_saturation_value': 0.8, 'official_warning_fraction': 0.5, 'official_saturation_fraction': 0.5258620689655172, 'official_warning_by_data': True, 'max_saturation_fraction': 0.5258620689655172, 'distance_to_warning_fraction': 0.025862068965517238, 'n_model_eps_values': 168, 'n_pair_eps_values': 64, 'n_total_eps_values': 232, 'max_epsilon': 0.8, 'mean_epsilon': 0.42068965517241386, 'median_epsilon': 0.8, 'interpretation': 'F12 raises an official epsilon saturation warning. This does not prove absence of signal, but blocks strong interpretation until additional diagnostics explain why epsilon saturates.'}
+interpretation: Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds.
 
 Multiple-comparison guard
 ------------------------------------------------------------------------------
 available: True
 enabled: True
-n_valid_tests: 0
-n_positive_lift_tests: 0
+n_valid_tests: 32
+n_positive_lift_tests: 2
 n_primary_positive_lift_tests: 0
-n_exploratory_lift_tests: 0
+n_exploratory_lift_tests: 2
 n_strong_candidate_tests: 0
 n_primary_strong_candidate_tests: 0
-n_multichannel_tests: 0
+n_multichannel_tests: 16
 
 ==============================================================================

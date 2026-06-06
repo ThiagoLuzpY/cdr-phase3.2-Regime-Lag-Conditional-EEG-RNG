@@ -2,36 +2,36 @@
 Phase III.2E — Loader Summary
 ==============================================================================
 
-status: pending_synchronized_data
-interpretation: No synchronized EEG–QRNG input CSV was found. Loader completed in protocol-only mode and saved empty canonical outputs. Empirical windowing, feature construction and CDR remain blocked until real synchronized data are provided.
+status: loaded_synchronized_data
+interpretation: Synchronized EEG–QRNG input CSV was loaded successfully after schema and synchronization validation. The dataset can proceed to windowing, feature construction, controls and empirical synchronized CDR.
 
 input_file: data\raw\phase3_2e\synchronized\phase3_2e_synchronized_input.csv
 output_csv: data\interim\phase3_2e\phase3_2e_loaded_synchronized_windows.csv
 metadata_json: data\interim\phase3_2e\phase3_2e_loader_metadata.json
 
-schema_status: pending_synchronized_data
-sync_status: pending_synchronized_data
+schema_status: schema_valid
+sync_status: sync_valid
 
-can_proceed_to_windowing: False
-can_proceed_to_feature_construction: False
-can_proceed_to_empirical_cdr: False
+can_proceed_to_windowing: True
+can_proceed_to_feature_construction: True
+can_proceed_to_empirical_cdr: True
 
-n_rows: 0
-n_subjects: 0
-n_sessions: 0
-n_windows: 0
+n_rows: 27597
+n_subjects: 10
+n_sessions: 10
+n_windows: 2848
 
-window_seconds_counts: {}
-sync_mode_counts: {}
-sync_row_valid_counts: {}
+window_seconds_counts: {'30': 27597}
+sync_mode_counts: {'software_timestamp_aligned': 27597}
+sync_row_valid_counts: {'1': 27597}
 
-sync_quality: {'min': None, 'mean': None, 'median': None, 'max': None}
-clock_drift_abs_ms: {'min': None, 'mean': None, 'median': None, 'max': None}
-eeg_qrng_gap_ms: {'min': None, 'mean': None, 'median': None, 'max': None}
+sync_quality: {'min': 0.9849868015959592, 'mean': 0.9930010368948892, 'median': 0.9933133221340424, 'max': 0.9949999011330124}
+clock_drift_abs_ms: {'min': 9.886698759679616e-05, 'mean': 1.9989631051106351, 'median': 1.686677865957682, 'max': 10.013198404040686}
+eeg_qrng_gap_ms: {'min': 0.0, 'mean': 2.026452150596079, 'median': 2.0, 'max': 10.0}
 
-qrng_state_counts: {}
-eeg_channel_counts: {}
-primary_channel_counts: {}
-secondary_channel_counts: {}
+qrng_state_counts: {'0': 13873, '1': 13724}
+eeg_channel_counts: {'EEG Fpz-Cz': 27597}
+primary_channel_counts: {'EEG Fpz-Cz': 27597}
+secondary_channel_counts: {'EEG Pz-Oz': 27597}
 
 ==============================================================================

@@ -3,35 +3,35 @@
   "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
   "module": "phase3_2e_gate_sensitivity",
   "gate_sensitivity_version": "phase3_2e_gate_sensitivity_v1_f7_f8_f12_diagnostics",
-  "created_at": "2026-06-04 11:56:11",
-  "status": "pending_synchronized_data",
+  "created_at": "2026-06-05 21:41:19",
+  "status": "gate_sensitivity_completed",
   "result": {
-    "status": "pending_synchronized_data",
-    "protocol_only": true,
+    "status": "gate_sensitivity_completed",
+    "protocol_only": false,
     "official_f7_threshold": 0.6,
     "official_f8_threshold": 0.0,
     "official_f12_eps_saturation_value": 0.8,
     "official_f12_warning_fraction": 0.5,
     "f7_available": false,
     "f8_available": false,
-    "f12_available": false,
+    "f12_available": true,
     "f7_official_passed": false,
     "f8_official_passed": false,
-    "f12_official_warning": false,
+    "f12_official_warning": true,
     "f7_best_value": 0.0,
     "f8_best_bic_value": 0.0,
-    "f12_max_saturation_fraction": 0.0,
+    "f12_max_saturation_fraction": 0.5258620689655172,
     "f7_distance_to_threshold": -0.6,
     "f8_distance_to_threshold": 0.0,
-    "f12_distance_to_warning": -0.5,
+    "f12_distance_to_warning": 0.025862068965517238,
     "can_proceed_to_diagnostics": true,
     "can_claim_empirical_cdr": false,
-    "interpretation": "No synchronized EEG–QRNG dataset is available. Gate sensitivity was generated in protocol-only mode. F7/F8/F12 cannot be empirically diagnosed until synchronized data exist."
+    "interpretation": "Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds."
   },
   "official_gate_statuses": {
     "F7": "NOT_EVALUATED",
     "F8": "NOT_EVALUATED",
-    "F12": "NOT_EVALUATED"
+    "F12": "WARN"
   },
   "f7_subject_consistency": {
     "available": false,
@@ -58,18 +58,25 @@
     "interpretation": "F8 cannot be diagnosed because there are no primary pair rows."
   },
   "f12_epsilon_saturation": {
-    "available": false,
-    "reason": "no_epsilon_values_available",
+    "available": true,
+    "reason": "ok",
     "official_eps_saturation_value": 0.8,
     "official_warning_fraction": 0.5,
-    "max_saturation_fraction": 0.0,
-    "official_warning_by_data": false,
-    "distance_to_warning_fraction": -0.5,
-    "interpretation": "F12 cannot be diagnosed because no epsilon values are available."
+    "official_saturation_fraction": 0.5258620689655172,
+    "official_warning_by_data": true,
+    "max_saturation_fraction": 0.5258620689655172,
+    "distance_to_warning_fraction": 0.025862068965517238,
+    "n_model_eps_values": 168,
+    "n_pair_eps_values": 64,
+    "n_total_eps_values": 232,
+    "max_epsilon": 0.8,
+    "mean_epsilon": 0.42068965517241386,
+    "median_epsilon": 0.8,
+    "interpretation": "F12 raises an official epsilon saturation warning. This does not prove absence of signal, but blocks strong interpretation until additional diagnostics explain why epsilon saturates."
   },
   "input_shapes": {
-    "pair_rows": 0,
-    "model_rows": 0
+    "pair_rows": 32,
+    "model_rows": 56
   },
   "files": {
     "f7_sensitivity_csv": "results\\phase3_2e\\phase3_2e_f7_subject_sensitivity.csv",

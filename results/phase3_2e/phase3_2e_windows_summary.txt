@@ -2,34 +2,34 @@
 Phase III.2E — Window Summary
 ==============================================================================
 
-status: pending_synchronized_data
-protocol_only: True
-input_rows: 0
-output_rows: 0
-n_subjects: 0
-n_sessions: 0
+status: windows_ready_exploratory_only
+protocol_only: False
+input_rows: 27597
+output_rows: 27597
+n_subjects: 10
+n_sessions: 10
 
-n_valid_windows: 0
+n_valid_windows: 27597
 n_primary_valid_windows: 0
-n_exploratory_valid_windows: 0
-n_registered_window_sizes: 0
+n_exploratory_valid_windows: 27597
+n_registered_window_sizes: 1
 n_unregistered_window_rows: 0
 
-can_proceed_to_feature_construction: False
+can_proceed_to_feature_construction: True
 can_proceed_to_empirical_cdr: False
 
-window_seconds_counts: {}
-window_status_counts: {}
-window_scope_counts: {}
+window_seconds_counts: {'30': 27597}
+window_status_counts: {'ready_window': 27597}
+window_scope_counts: {'exploratory': 27597}
 
-sync_quality: {'min': None, 'mean': None, 'median': None, 'max': None}
-eeg_qrng_gap_ms: {'min': None, 'mean': None, 'median': None, 'max': None}
-clock_drift_abs_ms: {'min': None, 'mean': None, 'median': None, 'max': None}
+sync_quality: {'min': 0.9849868015959592, 'mean': 0.9930010368948892, 'median': 0.9933133221340424, 'max': 0.9949999011330124}
+eeg_qrng_gap_ms: {'min': 0.0, 'mean': 2.026452150596079, 'median': 2.0, 'max': 10.0}
+clock_drift_abs_ms: {'min': 9.886698759679616e-05, 'mean': 1.9989631051106351, 'median': 1.686677865957682, 'max': 10.013198404040686}
 
-ready_window_specs: []
+ready_window_specs: ['w30s']
 primary_ready_window_specs: []
 
 interpretation:
-No synchronized EEG–QRNG dataset is available. Window building completed in protocol-only mode with empty canonical outputs.
+Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked.
 
 ==============================================================================

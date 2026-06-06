@@ -572,7 +572,7 @@ def build_lagged_alignment_frame(
         "target_mc_informational_joint_state",
     ]:
         if col in out.columns:
-            out[col] = pd.to_numeric(out[col], errors="ignore")
+            out[col] = pd.to_numeric(out[col], errors="coerce")
 
     return enforce_alignment_column_order(out, cfg)
 

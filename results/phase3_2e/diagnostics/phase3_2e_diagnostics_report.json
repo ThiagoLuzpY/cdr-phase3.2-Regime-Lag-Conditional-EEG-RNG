@@ -3,7 +3,7 @@
   "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
   "module": "phase3_2e_diagnostics",
   "diagnostics_version": "phase3_2e_diagnostics_v1_protocol_sync_gate_sensitivity",
-  "created_at": "2026-06-04 11:56:11",
+  "created_at": "2026-06-05 21:41:24",
   "source_files": {
     "synchronized_input_csv": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
     "schema_report": "results\\phase3_2e\\phase3_2e_schema_report.json",
@@ -51,18 +51,18 @@
   "file_status": {
     "synchronized_input_csv": {
       "path": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-      "exists": false,
-      "size_bytes": 0
+      "exists": true,
+      "size_bytes": 23514699
     },
     "schema_report": {
       "path": "results\\phase3_2e\\phase3_2e_schema_report.json",
       "exists": true,
-      "size_bytes": 3276
+      "size_bytes": 3517
     },
     "schema_summary": {
       "path": "results\\phase3_2e\\phase3_2e_schema_summary.txt",
       "exists": true,
-      "size_bytes": 1578
+      "size_bytes": 855
     },
     "sync_validation_report": {
       "path": "results\\phase3_2e\\phase3_2e_sync_validation_report.json",
@@ -77,172 +77,172 @@
     "loaded_windows": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_loaded_synchronized_windows.csv",
       "exists": true,
-      "size_bytes": 989
+      "size_bytes": 27171470
     },
     "loader_metadata": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_loader_metadata.json",
       "exists": true,
-      "size_bytes": 9729
+      "size_bytes": 10045
     },
     "loader_report": {
       "path": "results\\phase3_2e\\phase3_2e_loader_report.json",
       "exists": true,
-      "size_bytes": 3134
+      "size_bytes": 3299
     },
     "loader_summary": {
       "path": "results\\phase3_2e\\phase3_2e_loader_summary.txt",
       "exists": true,
-      "size_bytes": 1454
+      "size_bytes": 1664
     },
     "windows": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_windows.csv",
       "exists": true,
-      "size_bytes": 340
+      "size_bytes": 28650854
     },
     "window_inventory": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_window_inventory.csv",
       "exists": true,
-      "size_bytes": 839
+      "size_bytes": 854
     },
     "windows_report": {
       "path": "results\\phase3_2e\\phase3_2e_windows_report.json",
       "exists": true,
-      "size_bytes": 5255
+      "size_bytes": 7227
     },
     "windows_summary": {
       "path": "results\\phase3_2e\\phase3_2e_windows_summary.txt",
       "exists": true,
-      "size_bytes": 1130
+      "size_bytes": 1391
     },
     "features": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_features.csv",
       "exists": true,
-      "size_bytes": 547
+      "size_bytes": 33868495
     },
     "feature_specs": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_feature_specs.json",
       "exists": true,
-      "size_bytes": 1456
+      "size_bytes": 10087
     },
     "features_report": {
       "path": "results\\phase3_2e\\phase3_2e_features_report.json",
       "exists": true,
-      "size_bytes": 8990
+      "size_bytes": 15441
     },
     "features_summary": {
       "path": "results\\phase3_2e\\phase3_2e_features_summary.txt",
       "exists": true,
-      "size_bytes": 994
+      "size_bytes": 1338
     },
     "alignment_inventory": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_alignment_inventory.csv",
       "exists": true,
-      "size_bytes": 6248
+      "size_bytes": 6508
     },
     "alignment_metadata": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_alignment_metadata.json",
       "exists": true,
-      "size_bytes": 7468
+      "size_bytes": 7538
     },
     "alignment_report": {
       "path": "results\\phase3_2e\\phase3_2e_alignment_report.json",
       "exists": true,
-      "size_bytes": 29823
+      "size_bytes": 37860
     },
     "alignment_summary": {
       "path": "results\\phase3_2e\\phase3_2e_alignment_summary.txt",
       "exists": true,
-      "size_bytes": 1030
+      "size_bytes": 1660
     },
     "lagged_frames_dir": {
       "path": "data\\interim\\phase3_2e\\lagged_frames",
       "exists": true,
-      "size_bytes": 0
+      "size_bytes": 20480
     },
     "conditional_model_scores": {
       "path": "results\\phase3_2e\\phase3_2e_conditional_model_scores.csv",
       "exists": true,
-      "size_bytes": 2
+      "size_bytes": 20639
     },
     "conditional_pair_scores": {
       "path": "results\\phase3_2e\\phase3_2e_conditional_pair_scores.csv",
       "exists": true,
-      "size_bytes": 2
+      "size_bytes": 10472
     },
     "conditional_summary_json": {
       "path": "results\\phase3_2e\\phase3_2e_conditional_summary.json",
       "exists": true,
-      "size_bytes": 1610
+      "size_bytes": 10683
     },
     "conditional_summary_txt": {
       "path": "results\\phase3_2e\\phase3_2e_conditional_summary.txt",
       "exists": true,
-      "size_bytes": 579
+      "size_bytes": 3583
     },
     "conditional_report": {
       "path": "results\\phase3_2e\\phase3_2e_conditional_report.json",
       "exists": true,
-      "size_bytes": 8960
+      "size_bytes": 18108
     },
     "control_runs": {
       "path": "results\\phase3_2e\\phase3_2e_control_runs.csv",
       "exists": true,
-      "size_bytes": 616
+      "size_bytes": 167170
     },
     "control_pair_scores": {
       "path": "results\\phase3_2e\\phase3_2e_control_pair_scores.csv",
       "exists": true,
-      "size_bytes": 279
+      "size_bytes": 1216739
     },
     "controls_json": {
       "path": "results\\phase3_2e\\phase3_2e_controls.json",
       "exists": true,
-      "size_bytes": 9377
+      "size_bytes": 19444
     },
     "controls_summary": {
       "path": "results\\phase3_2e\\phase3_2e_controls_summary.txt",
       "exists": true,
-      "size_bytes": 917
+      "size_bytes": 8162
     },
     "controls_report": {
       "path": "results\\phase3_2e\\phase3_2e_controls_report.json",
       "exists": true,
-      "size_bytes": 9377
+      "size_bytes": 19444
     },
     "gates_json": {
       "path": "results\\phase3_2e\\phase3_2e_gates.json",
       "exists": true,
-      "size_bytes": 17290
+      "size_bytes": 53412
     },
     "metrics_table": {
       "path": "results\\phase3_2e\\phase3_2e_metrics_table.csv",
       "exists": true,
-      "size_bytes": 3246
+      "size_bytes": 10596
     },
     "metrics_summary": {
       "path": "results\\phase3_2e\\phase3_2e_metrics_summary.txt",
       "exists": true,
-      "size_bytes": 3718
+      "size_bytes": 7720
     },
     "metrics_report": {
       "path": "results\\phase3_2e\\phase3_2e_metrics_report.json",
       "exists": true,
-      "size_bytes": 17290
+      "size_bytes": 53412
     },
     "multiple_comparison_guard": {
       "path": "results\\phase3_2e\\phase3_2e_multiple_comparison_guard.json",
       "exists": true,
-      "size_bytes": 1579
+      "size_bytes": 5897
     },
     "gate_sensitivity_report": {
       "path": "results\\phase3_2e\\phase3_2e_gate_sensitivity_report.json",
       "exists": true,
-      "size_bytes": 9358
+      "size_bytes": 9749
     },
     "gate_sensitivity_summary": {
       "path": "results\\phase3_2e\\phase3_2e_gate_sensitivity_summary.txt",
       "exists": true,
-      "size_bytes": 2220
+      "size_bytes": 2356
     },
     "f7_sensitivity": {
       "path": "results\\phase3_2e\\phase3_2e_f7_subject_sensitivity.csv",
@@ -257,7 +257,7 @@
     "f12_sensitivity": {
       "path": "results\\phase3_2e\\phase3_2e_f12_epsilon_saturation_sensitivity.csv",
       "exists": true,
-      "size_bytes": 102
+      "size_bytes": 5909
     }
   },
   "config": {
@@ -491,42 +491,42 @@
     "multiple_comparison_guard": true
   },
   "protocol_readiness": {
-    "status": "pending_synchronized_data",
+    "status": "sync_pipeline_not_empirically_ready",
     "synchronized_input": {
       "path": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-      "exists": false,
-      "size_bytes": 0
+      "exists": true,
+      "size_bytes": 23514699
     },
     "allow_protocol_only_without_data": true,
     "require_real_synchronized_data_for_claim": true,
-    "any_protocol_only_stage": true,
+    "any_protocol_only_stage": false,
     "can_proceed_to_empirical_cdr": false,
     "stages": [
       {
         "stage": "schema",
         "available": true,
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
+        "status": "schema_valid",
+        "protocol_only": false,
         "result": {
-          "status": "pending_synchronized_data",
-          "schema_valid": false,
-          "protocol_only": true,
+          "status": "schema_valid",
+          "schema_valid": true,
+          "protocol_only": false,
           "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-          "input_exists": false,
-          "n_rows": 0,
-          "n_columns": 0,
+          "input_exists": true,
+          "n_rows": 27597,
+          "n_columns": 40,
           "n_required_columns": 30,
-          "n_missing_required_columns": 30,
-          "n_optional_columns_present": 0,
+          "n_missing_required_columns": 0,
+          "n_optional_columns_present": 1,
           "n_failures": 0,
           "n_errors": 0,
           "n_warnings": 0,
-          "can_proceed_to_sync_validation": false,
+          "can_proceed_to_sync_validation": true,
           "can_proceed_to_empirical_cdr": false,
-          "interpretation": "No synchronized EEG–QRNG input CSV was found. This is valid for protocol-only development. Empirical CDR cannot run until a real synchronized dataset is provided."
+          "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
         },
         "summary": {},
-        "interpretation": "No synchronized EEG–QRNG input CSV was found. This is valid for protocol-only development. Empirical CDR cannot run until a real synchronized dataset is provided."
+        "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
       },
       {
         "stage": "sync_validation",
@@ -540,169 +540,241 @@
       {
         "stage": "loader",
         "available": true,
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
+        "status": "loaded_synchronized_data",
+        "protocol_only": false,
         "result": {},
         "summary": {
-          "n_rows": 0,
-          "n_subjects": 0,
-          "n_sessions": 0,
-          "n_windows": 0,
-          "window_seconds_counts": {},
-          "sync_mode_counts": {},
-          "sync_row_valid_counts": {},
+          "n_rows": 27597,
+          "n_subjects": 10,
+          "n_sessions": 10,
+          "n_windows": 2848,
+          "window_seconds_counts": {
+            "30": 27597
+          },
+          "sync_mode_counts": {
+            "software_timestamp_aligned": 27597
+          },
+          "sync_row_valid_counts": {
+            "1": 27597
+          },
           "sync_quality": {
-            "min": null,
-            "mean": null,
-            "median": null,
-            "max": null
+            "min": 0.9849868015959592,
+            "mean": 0.9930010368948892,
+            "median": 0.9933133221340424,
+            "max": 0.9949999011330124
           },
           "clock_drift_abs_ms": {
-            "min": null,
-            "mean": null,
-            "median": null,
-            "max": null
+            "min": 9.886698759679616e-05,
+            "mean": 1.9989631051106351,
+            "median": 1.686677865957682,
+            "max": 10.013198404040686
           },
           "eeg_qrng_gap_ms": {
-            "min": null,
-            "mean": null,
-            "median": null,
-            "max": null
+            "min": 0.0,
+            "mean": 2.026452150596079,
+            "median": 2.0,
+            "max": 10.0
           },
-          "qrng_state_counts": {},
-          "eeg_channel_counts": {},
-          "primary_channel_counts": {},
-          "secondary_channel_counts": {}
+          "qrng_state_counts": {
+            "0": 13873,
+            "1": 13724
+          },
+          "eeg_channel_counts": {
+            "EEG Fpz-Cz": 27597
+          },
+          "primary_channel_counts": {
+            "EEG Fpz-Cz": 27597
+          },
+          "secondary_channel_counts": {
+            "EEG Pz-Oz": 27597
+          }
         },
-        "interpretation": "No synchronized EEG–QRNG input CSV was found. Loader completed in protocol-only mode and saved empty canonical outputs. Empirical windowing, feature construction and CDR remain blocked until real synchronized data are provided."
+        "interpretation": "Synchronized EEG–QRNG input CSV was loaded successfully after schema and synchronization validation. The dataset can proceed to windowing, feature construction, controls and empirical synchronized CDR."
       },
       {
         "stage": "windows",
         "available": true,
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
+        "status": "windows_ready_exploratory_only",
+        "protocol_only": false,
         "result": {
-          "status": "pending_synchronized_data",
-          "protocol_only": true,
-          "input_rows": 0,
-          "output_rows": 0,
-          "n_subjects": 0,
-          "n_sessions": 0,
-          "n_valid_windows": 0,
+          "status": "windows_ready_exploratory_only",
+          "protocol_only": false,
+          "input_rows": 27597,
+          "output_rows": 27597,
+          "n_subjects": 10,
+          "n_sessions": 10,
+          "n_valid_windows": 27597,
           "n_primary_valid_windows": 0,
-          "n_exploratory_valid_windows": 0,
-          "n_registered_window_sizes": 0,
+          "n_exploratory_valid_windows": 27597,
+          "n_registered_window_sizes": 1,
           "n_unregistered_window_rows": 0,
-          "can_proceed_to_feature_construction": false,
+          "can_proceed_to_feature_construction": true,
           "can_proceed_to_empirical_cdr": false,
-          "interpretation": "No synchronized EEG–QRNG dataset is available. Window building completed in protocol-only mode with empty canonical outputs."
+          "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
         },
         "summary": {
-          "n_rows": 0,
-          "n_subjects": 0,
-          "n_sessions": 0,
-          "n_valid_windows": 0,
+          "n_rows": 27597,
+          "n_subjects": 10,
+          "n_sessions": 10,
+          "n_valid_windows": 27597,
           "n_primary_valid_windows": 0,
-          "n_exploratory_valid_windows": 0,
-          "window_seconds_counts": {},
-          "window_status_counts": {},
-          "window_scope_counts": {},
+          "n_exploratory_valid_windows": 27597,
+          "n_unregistered_window_rows": 0,
+          "window_seconds_counts": {
+            "30": 27597
+          },
+          "window_status_counts": {
+            "ready_window": 27597
+          },
+          "window_scope_counts": {
+            "exploratory": 27597
+          },
           "sync_quality": {
-            "min": null,
-            "mean": null,
-            "median": null,
-            "max": null
+            "min": 0.9849868015959592,
+            "mean": 0.9930010368948892,
+            "median": 0.9933133221340424,
+            "max": 0.9949999011330124
           },
           "eeg_qrng_gap_ms": {
-            "min": null,
-            "mean": null,
-            "median": null,
-            "max": null
+            "min": 0.0,
+            "mean": 2.026452150596079,
+            "median": 2.0,
+            "max": 10.0
           },
           "clock_drift_abs_ms": {
-            "min": null,
-            "mean": null,
-            "median": null,
-            "max": null
+            "min": 9.886698759679616e-05,
+            "mean": 1.9989631051106351,
+            "median": 1.686677865957682,
+            "max": 10.013198404040686
           },
-          "ready_window_specs": [],
+          "ready_window_specs": [
+            "w30s"
+          ],
           "primary_ready_window_specs": []
         },
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Window building completed in protocol-only mode with empty canonical outputs."
+        "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
       },
       {
         "stage": "features",
         "available": true,
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
+        "status": "features_ready",
+        "protocol_only": false,
         "result": {
-          "status": "pending_synchronized_data",
-          "protocol_only": true,
-          "input_rows": 0,
-          "output_rows": 0,
-          "n_subjects": 0,
-          "n_sessions": 0,
-          "n_window_sizes": 0,
-          "n_valid_feature_rows": 0,
-          "n_valid_next_state_rows": 0,
-          "n_valid_mc_next_state_rows": 0,
-          "eeg_state_n_unique": 0,
-          "qrng_state_n_unique": 0,
-          "mc_eeg_state_n_unique": 0,
-          "can_proceed_to_alignment": false,
-          "can_proceed_to_conditional_cdr": false,
-          "can_proceed_to_empirical_cdr": false,
-          "interpretation": "No synchronized EEG–QRNG dataset is available. Feature construction completed in protocol-only mode with empty canonical outputs."
+          "status": "features_ready",
+          "protocol_only": false,
+          "input_rows": 27597,
+          "output_rows": 27597,
+          "n_subjects": 10,
+          "n_sessions": 10,
+          "n_window_sizes": 1,
+          "n_valid_feature_rows": 27597,
+          "n_valid_next_state_rows": 27587,
+          "n_valid_mc_next_state_rows": 27587,
+          "eeg_state_n_unique": 9,
+          "qrng_state_n_unique": 2,
+          "mc_eeg_state_n_unique": 9,
+          "can_proceed_to_alignment": true,
+          "can_proceed_to_conditional_cdr": true,
+          "can_proceed_to_empirical_cdr": true,
+          "interpretation": "Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR."
         },
         "summary": {
-          "n_rows": 0,
-          "n_columns": 31,
-          "n_subjects": 0,
-          "n_sessions": 0,
-          "n_window_sizes": 0,
-          "n_valid_feature_rows": 0,
-          "n_valid_next_state_rows": 0,
-          "n_valid_mc_next_state_rows": 0,
-          "n_valid_conditional_rows": 0,
-          "n_valid_mc_conditional_rows": 0,
-          "eeg_state_n_unique": 0,
-          "qrng_state_n_unique": 0,
-          "mc_eeg_state_n_unique": 0
+          "n_rows": 27597,
+          "n_columns": 100,
+          "n_subjects": 10,
+          "subjects": [
+            "SC4001",
+            "SC4002",
+            "SC4011",
+            "SC4012",
+            "SC4021",
+            "SC4022",
+            "SC4031",
+            "SC4032",
+            "SC4041",
+            "SC4042"
+          ],
+          "n_sessions": 10,
+          "n_window_sizes": 1,
+          "window_seconds_counts": {
+            "30": 27597
+          },
+          "valid_feature_row_rows": 27597,
+          "valid_next_state_rows": 27587,
+          "valid_mc_next_state_rows": 27587,
+          "valid_conditional_row_rows": 27587,
+          "valid_mc_conditional_row_rows": 27587,
+          "valid_for_primary_analysis_rows": 0,
+          "valid_for_exploratory_analysis_rows": 27597,
+          "eeg_state_n_unique": 9,
+          "qrng_state_n_unique": 2,
+          "mc_eeg_state_n_unique": 9,
+          "observed_joint_state_n_unique": 18,
+          "mc_observed_joint_state_n_unique": 18,
+          "informational_joint_state_n_unique": 9,
+          "mc_informational_joint_state_n_unique": 9,
+          "eeg_info_bin_n_unique": 3,
+          "qrng_info_bin_n_unique": 3,
+          "mc_eeg_info_bin_n_unique": 3,
+          "sync_quality": {
+            "min": 0.9849868015959592,
+            "mean": 0.9930010368948892,
+            "median": 0.9933133221340424,
+            "max": 0.9949999011330124
+          },
+          "eeg_qrng_gap_ms": {
+            "min": 0.0,
+            "mean": 2.026452150596079,
+            "median": 2.0,
+            "max": 10.0
+          },
+          "clock_drift_abs_ms": {
+            "min": 9.886698759679616e-05,
+            "mean": 1.9989631051106351,
+            "median": 1.686677865957682,
+            "max": 10.013198404040686
+          },
+          "feature_status_counts": {
+            "valid_feature_row": 27597
+          },
+          "window_scope_counts": {
+            "exploratory": 27597
+          }
         },
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Feature construction completed in protocol-only mode with empty canonical outputs."
+        "interpretation": "Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR."
       },
       {
         "stage": "alignment",
         "available": true,
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
+        "status": "alignment_ready_exploratory_only",
+        "protocol_only": false,
         "result": {
-          "status": "pending_synchronized_data",
-          "protocol_only": true,
-          "input_rows": 0,
+          "status": "alignment_ready_exploratory_only",
+          "protocol_only": false,
+          "input_rows": 220776,
           "n_frames": 40,
           "n_window_sizes": 5,
           "n_lags": 8,
-          "n_total_aligned_rows": 0,
-          "n_valid_alignment_rows": 0,
+          "n_total_aligned_rows": 220776,
+          "n_valid_alignment_rows": 220576,
           "n_valid_primary_alignment_rows": 0,
-          "n_valid_exploratory_alignment_rows": 0,
-          "n_valid_conditional_rows": 0,
-          "n_valid_mc_conditional_rows": 0,
-          "can_proceed_to_conditional_cdr": false,
+          "n_valid_exploratory_alignment_rows": 220576,
+          "n_valid_conditional_rows": 220576,
+          "n_valid_mc_conditional_rows": 220576,
+          "can_proceed_to_conditional_cdr": true,
           "can_proceed_to_empirical_cdr": false,
-          "interpretation": "No synchronized EEG–QRNG dataset is available. Lagged alignment completed in protocol-only mode with empty canonical inventory."
+          "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
         },
         "summary": {
           "n_frames": 40,
           "n_window_sizes": 5,
           "n_lags": 8,
-          "n_total_aligned_rows": 0,
-          "n_valid_alignment_rows": 0,
+          "n_total_aligned_rows": 220776,
+          "n_valid_alignment_rows": 220576,
           "n_valid_primary_alignment_rows": 0,
-          "n_valid_exploratory_alignment_rows": 0,
-          "n_valid_conditional_rows": 0,
-          "n_valid_mc_conditional_rows": 0,
+          "n_valid_exploratory_alignment_rows": 220576,
+          "n_valid_conditional_rows": 220576,
+          "n_valid_mc_conditional_rows": 220576,
           "scope_counts": {
             "exploratory": 34,
             "primary": 6
@@ -713,42 +785,52 @@
             "concurrent": 5
           },
           "status_counts": {
-            "pending_synchronized_data": 40
+            "empty_frame": 32,
+            "alignment_ready": 8
           },
-          "ready_frames": [],
+          "ready_frames": [
+            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m5.csv",
+            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m3.csv",
+            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m1.csv",
+            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_0.csv",
+            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p1.csv",
+            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p2.csv",
+            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p3.csv",
+            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p5.csv"
+          ],
           "primary_ready_frames": []
         },
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Lagged alignment completed in protocol-only mode with empty canonical inventory."
+        "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
       }
     ],
-    "interpretation": "No synchronized EEG–QRNG input CSV exists. Phase III.2E is valid as a protocol-only implementation, but empirical CDR is blocked."
+    "interpretation": "A synchronized input path may exist, but one or more upstream stages do not report empirical readiness."
   },
   "stage_payloads": {
     "schema": {
       "stage": "schema",
       "available": true,
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
+      "status": "schema_valid",
+      "protocol_only": false,
       "result": {
-        "status": "pending_synchronized_data",
-        "schema_valid": false,
-        "protocol_only": true,
+        "status": "schema_valid",
+        "schema_valid": true,
+        "protocol_only": false,
         "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-        "input_exists": false,
-        "n_rows": 0,
-        "n_columns": 0,
+        "input_exists": true,
+        "n_rows": 27597,
+        "n_columns": 40,
         "n_required_columns": 30,
-        "n_missing_required_columns": 30,
-        "n_optional_columns_present": 0,
+        "n_missing_required_columns": 0,
+        "n_optional_columns_present": 1,
         "n_failures": 0,
         "n_errors": 0,
         "n_warnings": 0,
-        "can_proceed_to_sync_validation": false,
+        "can_proceed_to_sync_validation": true,
         "can_proceed_to_empirical_cdr": false,
-        "interpretation": "No synchronized EEG–QRNG input CSV was found. This is valid for protocol-only development. Empirical CDR cannot run until a real synchronized dataset is provided."
+        "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
       },
       "summary": {},
-      "interpretation": "No synchronized EEG–QRNG input CSV was found. This is valid for protocol-only development. Empirical CDR cannot run until a real synchronized dataset is provided."
+      "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
     },
     "sync_validation": {
       "stage": "sync_validation",
@@ -762,169 +844,241 @@
     "loader": {
       "stage": "loader",
       "available": true,
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
+      "status": "loaded_synchronized_data",
+      "protocol_only": false,
       "result": {},
       "summary": {
-        "n_rows": 0,
-        "n_subjects": 0,
-        "n_sessions": 0,
-        "n_windows": 0,
-        "window_seconds_counts": {},
-        "sync_mode_counts": {},
-        "sync_row_valid_counts": {},
+        "n_rows": 27597,
+        "n_subjects": 10,
+        "n_sessions": 10,
+        "n_windows": 2848,
+        "window_seconds_counts": {
+          "30": 27597
+        },
+        "sync_mode_counts": {
+          "software_timestamp_aligned": 27597
+        },
+        "sync_row_valid_counts": {
+          "1": 27597
+        },
         "sync_quality": {
-          "min": null,
-          "mean": null,
-          "median": null,
-          "max": null
+          "min": 0.9849868015959592,
+          "mean": 0.9930010368948892,
+          "median": 0.9933133221340424,
+          "max": 0.9949999011330124
         },
         "clock_drift_abs_ms": {
-          "min": null,
-          "mean": null,
-          "median": null,
-          "max": null
+          "min": 9.886698759679616e-05,
+          "mean": 1.9989631051106351,
+          "median": 1.686677865957682,
+          "max": 10.013198404040686
         },
         "eeg_qrng_gap_ms": {
-          "min": null,
-          "mean": null,
-          "median": null,
-          "max": null
+          "min": 0.0,
+          "mean": 2.026452150596079,
+          "median": 2.0,
+          "max": 10.0
         },
-        "qrng_state_counts": {},
-        "eeg_channel_counts": {},
-        "primary_channel_counts": {},
-        "secondary_channel_counts": {}
+        "qrng_state_counts": {
+          "0": 13873,
+          "1": 13724
+        },
+        "eeg_channel_counts": {
+          "EEG Fpz-Cz": 27597
+        },
+        "primary_channel_counts": {
+          "EEG Fpz-Cz": 27597
+        },
+        "secondary_channel_counts": {
+          "EEG Pz-Oz": 27597
+        }
       },
-      "interpretation": "No synchronized EEG–QRNG input CSV was found. Loader completed in protocol-only mode and saved empty canonical outputs. Empirical windowing, feature construction and CDR remain blocked until real synchronized data are provided."
+      "interpretation": "Synchronized EEG–QRNG input CSV was loaded successfully after schema and synchronization validation. The dataset can proceed to windowing, feature construction, controls and empirical synchronized CDR."
     },
     "windows": {
       "stage": "windows",
       "available": true,
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
+      "status": "windows_ready_exploratory_only",
+      "protocol_only": false,
       "result": {
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
-        "input_rows": 0,
-        "output_rows": 0,
-        "n_subjects": 0,
-        "n_sessions": 0,
-        "n_valid_windows": 0,
+        "status": "windows_ready_exploratory_only",
+        "protocol_only": false,
+        "input_rows": 27597,
+        "output_rows": 27597,
+        "n_subjects": 10,
+        "n_sessions": 10,
+        "n_valid_windows": 27597,
         "n_primary_valid_windows": 0,
-        "n_exploratory_valid_windows": 0,
-        "n_registered_window_sizes": 0,
+        "n_exploratory_valid_windows": 27597,
+        "n_registered_window_sizes": 1,
         "n_unregistered_window_rows": 0,
-        "can_proceed_to_feature_construction": false,
+        "can_proceed_to_feature_construction": true,
         "can_proceed_to_empirical_cdr": false,
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Window building completed in protocol-only mode with empty canonical outputs."
+        "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
       },
       "summary": {
-        "n_rows": 0,
-        "n_subjects": 0,
-        "n_sessions": 0,
-        "n_valid_windows": 0,
+        "n_rows": 27597,
+        "n_subjects": 10,
+        "n_sessions": 10,
+        "n_valid_windows": 27597,
         "n_primary_valid_windows": 0,
-        "n_exploratory_valid_windows": 0,
-        "window_seconds_counts": {},
-        "window_status_counts": {},
-        "window_scope_counts": {},
+        "n_exploratory_valid_windows": 27597,
+        "n_unregistered_window_rows": 0,
+        "window_seconds_counts": {
+          "30": 27597
+        },
+        "window_status_counts": {
+          "ready_window": 27597
+        },
+        "window_scope_counts": {
+          "exploratory": 27597
+        },
         "sync_quality": {
-          "min": null,
-          "mean": null,
-          "median": null,
-          "max": null
+          "min": 0.9849868015959592,
+          "mean": 0.9930010368948892,
+          "median": 0.9933133221340424,
+          "max": 0.9949999011330124
         },
         "eeg_qrng_gap_ms": {
-          "min": null,
-          "mean": null,
-          "median": null,
-          "max": null
+          "min": 0.0,
+          "mean": 2.026452150596079,
+          "median": 2.0,
+          "max": 10.0
         },
         "clock_drift_abs_ms": {
-          "min": null,
-          "mean": null,
-          "median": null,
-          "max": null
+          "min": 9.886698759679616e-05,
+          "mean": 1.9989631051106351,
+          "median": 1.686677865957682,
+          "max": 10.013198404040686
         },
-        "ready_window_specs": [],
+        "ready_window_specs": [
+          "w30s"
+        ],
         "primary_ready_window_specs": []
       },
-      "interpretation": "No synchronized EEG–QRNG dataset is available. Window building completed in protocol-only mode with empty canonical outputs."
+      "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
     },
     "features": {
       "stage": "features",
       "available": true,
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
+      "status": "features_ready",
+      "protocol_only": false,
       "result": {
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
-        "input_rows": 0,
-        "output_rows": 0,
-        "n_subjects": 0,
-        "n_sessions": 0,
-        "n_window_sizes": 0,
-        "n_valid_feature_rows": 0,
-        "n_valid_next_state_rows": 0,
-        "n_valid_mc_next_state_rows": 0,
-        "eeg_state_n_unique": 0,
-        "qrng_state_n_unique": 0,
-        "mc_eeg_state_n_unique": 0,
-        "can_proceed_to_alignment": false,
-        "can_proceed_to_conditional_cdr": false,
-        "can_proceed_to_empirical_cdr": false,
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Feature construction completed in protocol-only mode with empty canonical outputs."
+        "status": "features_ready",
+        "protocol_only": false,
+        "input_rows": 27597,
+        "output_rows": 27597,
+        "n_subjects": 10,
+        "n_sessions": 10,
+        "n_window_sizes": 1,
+        "n_valid_feature_rows": 27597,
+        "n_valid_next_state_rows": 27587,
+        "n_valid_mc_next_state_rows": 27587,
+        "eeg_state_n_unique": 9,
+        "qrng_state_n_unique": 2,
+        "mc_eeg_state_n_unique": 9,
+        "can_proceed_to_alignment": true,
+        "can_proceed_to_conditional_cdr": true,
+        "can_proceed_to_empirical_cdr": true,
+        "interpretation": "Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR."
       },
       "summary": {
-        "n_rows": 0,
-        "n_columns": 31,
-        "n_subjects": 0,
-        "n_sessions": 0,
-        "n_window_sizes": 0,
-        "n_valid_feature_rows": 0,
-        "n_valid_next_state_rows": 0,
-        "n_valid_mc_next_state_rows": 0,
-        "n_valid_conditional_rows": 0,
-        "n_valid_mc_conditional_rows": 0,
-        "eeg_state_n_unique": 0,
-        "qrng_state_n_unique": 0,
-        "mc_eeg_state_n_unique": 0
+        "n_rows": 27597,
+        "n_columns": 100,
+        "n_subjects": 10,
+        "subjects": [
+          "SC4001",
+          "SC4002",
+          "SC4011",
+          "SC4012",
+          "SC4021",
+          "SC4022",
+          "SC4031",
+          "SC4032",
+          "SC4041",
+          "SC4042"
+        ],
+        "n_sessions": 10,
+        "n_window_sizes": 1,
+        "window_seconds_counts": {
+          "30": 27597
+        },
+        "valid_feature_row_rows": 27597,
+        "valid_next_state_rows": 27587,
+        "valid_mc_next_state_rows": 27587,
+        "valid_conditional_row_rows": 27587,
+        "valid_mc_conditional_row_rows": 27587,
+        "valid_for_primary_analysis_rows": 0,
+        "valid_for_exploratory_analysis_rows": 27597,
+        "eeg_state_n_unique": 9,
+        "qrng_state_n_unique": 2,
+        "mc_eeg_state_n_unique": 9,
+        "observed_joint_state_n_unique": 18,
+        "mc_observed_joint_state_n_unique": 18,
+        "informational_joint_state_n_unique": 9,
+        "mc_informational_joint_state_n_unique": 9,
+        "eeg_info_bin_n_unique": 3,
+        "qrng_info_bin_n_unique": 3,
+        "mc_eeg_info_bin_n_unique": 3,
+        "sync_quality": {
+          "min": 0.9849868015959592,
+          "mean": 0.9930010368948892,
+          "median": 0.9933133221340424,
+          "max": 0.9949999011330124
+        },
+        "eeg_qrng_gap_ms": {
+          "min": 0.0,
+          "mean": 2.026452150596079,
+          "median": 2.0,
+          "max": 10.0
+        },
+        "clock_drift_abs_ms": {
+          "min": 9.886698759679616e-05,
+          "mean": 1.9989631051106351,
+          "median": 1.686677865957682,
+          "max": 10.013198404040686
+        },
+        "feature_status_counts": {
+          "valid_feature_row": 27597
+        },
+        "window_scope_counts": {
+          "exploratory": 27597
+        }
       },
-      "interpretation": "No synchronized EEG–QRNG dataset is available. Feature construction completed in protocol-only mode with empty canonical outputs."
+      "interpretation": "Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR."
     },
     "alignment": {
       "stage": "alignment",
       "available": true,
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
+      "status": "alignment_ready_exploratory_only",
+      "protocol_only": false,
       "result": {
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
-        "input_rows": 0,
+        "status": "alignment_ready_exploratory_only",
+        "protocol_only": false,
+        "input_rows": 220776,
         "n_frames": 40,
         "n_window_sizes": 5,
         "n_lags": 8,
-        "n_total_aligned_rows": 0,
-        "n_valid_alignment_rows": 0,
+        "n_total_aligned_rows": 220776,
+        "n_valid_alignment_rows": 220576,
         "n_valid_primary_alignment_rows": 0,
-        "n_valid_exploratory_alignment_rows": 0,
-        "n_valid_conditional_rows": 0,
-        "n_valid_mc_conditional_rows": 0,
-        "can_proceed_to_conditional_cdr": false,
+        "n_valid_exploratory_alignment_rows": 220576,
+        "n_valid_conditional_rows": 220576,
+        "n_valid_mc_conditional_rows": 220576,
+        "can_proceed_to_conditional_cdr": true,
         "can_proceed_to_empirical_cdr": false,
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Lagged alignment completed in protocol-only mode with empty canonical inventory."
+        "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
       },
       "summary": {
         "n_frames": 40,
         "n_window_sizes": 5,
         "n_lags": 8,
-        "n_total_aligned_rows": 0,
-        "n_valid_alignment_rows": 0,
+        "n_total_aligned_rows": 220776,
+        "n_valid_alignment_rows": 220576,
         "n_valid_primary_alignment_rows": 0,
-        "n_valid_exploratory_alignment_rows": 0,
-        "n_valid_conditional_rows": 0,
-        "n_valid_mc_conditional_rows": 0,
+        "n_valid_exploratory_alignment_rows": 220576,
+        "n_valid_conditional_rows": 220576,
+        "n_valid_mc_conditional_rows": 220576,
         "scope_counts": {
           "exploratory": 34,
           "primary": 6
@@ -935,88 +1089,349 @@
           "concurrent": 5
         },
         "status_counts": {
-          "pending_synchronized_data": 40
+          "empty_frame": 32,
+          "alignment_ready": 8
         },
-        "ready_frames": [],
+        "ready_frames": [
+          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m5.csv",
+          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m3.csv",
+          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m1.csv",
+          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_0.csv",
+          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p1.csv",
+          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p2.csv",
+          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p3.csv",
+          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p5.csv"
+        ],
         "primary_ready_frames": []
       },
-      "interpretation": "No synchronized EEG–QRNG dataset is available. Lagged alignment completed in protocol-only mode with empty canonical inventory."
+      "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
     },
     "conditional": {
       "stage": "conditional",
       "available": true,
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
+      "status": "conditional_exploratory_leads",
+      "protocol_only": false,
       "result": {
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
-        "n_model_rows": 0,
-        "n_pair_rows": 0,
-        "n_valid_pair_rows": 0,
+        "status": "conditional_exploratory_leads",
+        "protocol_only": false,
+        "n_model_rows": 56,
+        "n_pair_rows": 32,
+        "n_valid_pair_rows": 32,
         "n_primary_pair_rows": 0,
-        "n_positive_lift_rows": 0,
+        "n_positive_lift_rows": 2,
         "n_primary_positive_lift_rows": 0,
         "n_strong_candidate_rows": 0,
-        "n_multichannel_rows": 0,
-        "n_multichannel_positive_lift_rows": 0,
-        "max_baseline_eps_test": 0.0,
-        "max_augmented_eps_test": 0.0,
-        "max_conditional_lift": 0.0,
-        "can_proceed_to_controls": false,
+        "n_multichannel_rows": 16,
+        "n_multichannel_positive_lift_rows": 2,
+        "max_baseline_eps_test": 0.8,
+        "max_augmented_eps_test": 0.8,
+        "max_conditional_lift": 0.8,
+        "can_proceed_to_controls": true,
         "can_proceed_to_metrics": true,
         "can_proceed_to_empirical_cdr": false,
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Conditional CDR completed in protocol-only mode with empty canonical outputs."
+        "interpretation": "Conditional CDR produced exploratory positive-lift rows. These require controls, F7/F8/F12 diagnostics and final gates before interpretation."
       },
       "summary": {
-        "available": false,
-        "reason": "empty_pair_scores",
-        "n_rows": 0,
-        "n_valid_rows": 0,
+        "available": true,
+        "module": "phase3_2e_conditional",
+        "conditional_version": "phase3_2e_conditional_v1_leakage_safe_sync_ref_calib_test",
+        "n_rows": 32,
+        "n_valid_rows": 32,
         "n_primary_rows": 0,
-        "n_positive_lift_rows": 0,
+        "n_positive_lift_rows": 2,
         "n_primary_positive_lift_rows": 0,
         "n_strong_candidate_rows": 0,
-        "n_multichannel_rows": 0,
-        "n_multichannel_positive_lift_rows": 0,
-        "max_baseline_eps_test": 0.0,
-        "max_augmented_eps_test": 0.0,
-        "max_conditional_lift": 0.0,
-        "n_model_rows": 0
+        "n_multichannel_rows": 16,
+        "n_multichannel_positive_lift_rows": 2,
+        "max_baseline_eps_test": 0.8,
+        "max_augmented_eps_test": 0.8,
+        "max_conditional_lift": 0.8,
+        "best_by_conditional_lift": {
+          "window_seconds": 30,
+          "lag_windows": -1,
+          "lag_seconds": -30,
+          "lag_direction": "past_target",
+          "alignment_scope": "exploratory",
+          "family": "QRNG_next",
+          "baseline_model": "E2_QRNG_next_given_QRNG",
+          "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+          "conditional_lift": 0.8,
+          "baseline_eps_test": 0.0,
+          "augmented_eps_test": 0.8,
+          "fraction_positive_lift": 0.1,
+          "ll_improvement": -1.4388171061737012,
+          "bic_improvement": -147.23286509011814,
+          "aic_improvement": -34.8776342123474,
+          "primary": false,
+          "multichannel": true
+        },
+        "best_by_bic_improvement": {
+          "window_seconds": 30,
+          "lag_windows": 5,
+          "lag_seconds": 150,
+          "lag_direction": "future_target",
+          "alignment_scope": "exploratory",
+          "family": "QRNG_next",
+          "baseline_model": "E2_QRNG_next_given_QRNG",
+          "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+          "conditional_lift": 0.8,
+          "baseline_eps_test": 0.0,
+          "augmented_eps_test": 0.8,
+          "fraction_positive_lift": 0.1,
+          "ll_improvement": 6.206867485865587,
+          "bic_improvement": -131.9163705762403,
+          "aic_improvement": -19.586265028268826,
+          "primary": false,
+          "multichannel": true
+        },
+        "best_by_ll_improvement": {
+          "window_seconds": 30,
+          "lag_windows": 5,
+          "lag_seconds": 150,
+          "lag_direction": "future_target",
+          "alignment_scope": "exploratory",
+          "family": "QRNG_next",
+          "baseline_model": "E2_QRNG_next_given_QRNG",
+          "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+          "conditional_lift": 0.8,
+          "baseline_eps_test": 0.0,
+          "augmented_eps_test": 0.8,
+          "fraction_positive_lift": 0.1,
+          "ll_improvement": 6.206867485865587,
+          "bic_improvement": -131.9163705762403,
+          "aic_improvement": -19.586265028268826,
+          "primary": false,
+          "multichannel": true
+        },
+        "best_multichannel_by_conditional_lift": {
+          "window_seconds": 30,
+          "lag_windows": -1,
+          "lag_seconds": -30,
+          "lag_direction": "past_target",
+          "alignment_scope": "exploratory",
+          "family": "QRNG_next",
+          "baseline_model": "E2_QRNG_next_given_QRNG",
+          "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+          "conditional_lift": 0.8,
+          "baseline_eps_test": 0.0,
+          "augmented_eps_test": 0.8,
+          "fraction_positive_lift": 0.1,
+          "ll_improvement": -1.4388171061737012,
+          "bic_improvement": -147.23286509011814,
+          "aic_improvement": -34.8776342123474,
+          "primary": false,
+          "multichannel": true
+        },
+        "best_multichannel_by_bic_improvement": {
+          "window_seconds": 30,
+          "lag_windows": 5,
+          "lag_seconds": 150,
+          "lag_direction": "future_target",
+          "alignment_scope": "exploratory",
+          "family": "QRNG_next",
+          "baseline_model": "E2_QRNG_next_given_QRNG",
+          "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+          "conditional_lift": 0.8,
+          "baseline_eps_test": 0.0,
+          "augmented_eps_test": 0.8,
+          "fraction_positive_lift": 0.1,
+          "ll_improvement": 6.206867485865587,
+          "bic_improvement": -131.9163705762403,
+          "aic_improvement": -19.586265028268826,
+          "primary": false,
+          "multichannel": true
+        },
+        "positive_lift_rows": [
+          {
+            "window_seconds": 30,
+            "lag_windows": -1,
+            "lag_seconds": -30,
+            "lag_label": "m1",
+            "lag_direction": "past_target",
+            "alignment_scope": "exploratory",
+            "family": "QRNG_next",
+            "baseline_model": "E2_QRNG_next_given_QRNG",
+            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+            "valid": true,
+            "primary": false,
+            "multichannel": true,
+            "baseline_eps_test": 0.0,
+            "augmented_eps_test": 0.8,
+            "conditional_lift": 0.8,
+            "baseline_ll_test": -5744.829823540104,
+            "augmented_ll_test": -5746.268640646278,
+            "ll_improvement": -1.4388171061737012,
+            "baseline_bic_test": 11507.70405093993,
+            "augmented_bic_test": 11654.936916030048,
+            "bic_improvement": -147.23286509011814,
+            "baseline_aic_test": 11493.659647080209,
+            "augmented_aic_test": 11528.537281292556,
+            "aic_improvement": -34.8776342123474,
+            "n_subjects_evaluated": 10,
+            "n_subjects_positive_lift": 1,
+            "fraction_positive_lift": 0.1,
+            "reason": "ok"
+          },
+          {
+            "window_seconds": 30,
+            "lag_windows": 5,
+            "lag_seconds": 150,
+            "lag_label": "p5",
+            "lag_direction": "future_target",
+            "alignment_scope": "exploratory",
+            "family": "QRNG_next",
+            "baseline_model": "E2_QRNG_next_given_QRNG",
+            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+            "valid": true,
+            "primary": false,
+            "multichannel": true,
+            "baseline_eps_test": 0.0,
+            "augmented_eps_test": 0.8,
+            "conditional_lift": 0.8,
+            "baseline_ll_test": -5735.436874371776,
+            "augmented_ll_test": -5729.23000688591,
+            "ll_improvement": 6.206867485865587,
+            "baseline_bic_test": 11488.915011937048,
+            "augmented_bic_test": 11620.831382513288,
+            "bic_improvement": -131.9163705762403,
+            "baseline_aic_test": 11474.873748743552,
+            "augmented_aic_test": 11494.46001377182,
+            "aic_improvement": -19.586265028268826,
+            "n_subjects_evaluated": 10,
+            "n_subjects_positive_lift": 1,
+            "fraction_positive_lift": 0.1,
+            "reason": "ok"
+          }
+        ],
+        "multichannel_positive_lift_rows": [
+          {
+            "window_seconds": 30,
+            "lag_windows": -1,
+            "lag_seconds": -30,
+            "lag_label": "m1",
+            "lag_direction": "past_target",
+            "alignment_scope": "exploratory",
+            "family": "QRNG_next",
+            "baseline_model": "E2_QRNG_next_given_QRNG",
+            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+            "valid": true,
+            "primary": false,
+            "multichannel": true,
+            "baseline_eps_test": 0.0,
+            "augmented_eps_test": 0.8,
+            "conditional_lift": 0.8,
+            "baseline_ll_test": -5744.829823540104,
+            "augmented_ll_test": -5746.268640646278,
+            "ll_improvement": -1.4388171061737012,
+            "baseline_bic_test": 11507.70405093993,
+            "augmented_bic_test": 11654.936916030048,
+            "bic_improvement": -147.23286509011814,
+            "baseline_aic_test": 11493.659647080209,
+            "augmented_aic_test": 11528.537281292556,
+            "aic_improvement": -34.8776342123474,
+            "n_subjects_evaluated": 10,
+            "n_subjects_positive_lift": 1,
+            "fraction_positive_lift": 0.1,
+            "reason": "ok"
+          },
+          {
+            "window_seconds": 30,
+            "lag_windows": 5,
+            "lag_seconds": 150,
+            "lag_label": "p5",
+            "lag_direction": "future_target",
+            "alignment_scope": "exploratory",
+            "family": "QRNG_next",
+            "baseline_model": "E2_QRNG_next_given_QRNG",
+            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+            "valid": true,
+            "primary": false,
+            "multichannel": true,
+            "baseline_eps_test": 0.0,
+            "augmented_eps_test": 0.8,
+            "conditional_lift": 0.8,
+            "baseline_ll_test": -5735.436874371776,
+            "augmented_ll_test": -5729.23000688591,
+            "ll_improvement": 6.206867485865587,
+            "baseline_bic_test": 11488.915011937048,
+            "augmented_bic_test": 11620.831382513288,
+            "bic_improvement": -131.9163705762403,
+            "baseline_aic_test": 11474.873748743552,
+            "augmented_aic_test": 11494.46001377182,
+            "aic_improvement": -19.586265028268826,
+            "n_subjects_evaluated": 10,
+            "n_subjects_positive_lift": 1,
+            "fraction_positive_lift": 0.1,
+            "reason": "ok"
+          }
+        ],
+        "strong_candidate_rows": [],
+        "active_conditional_pairs": [
+          [
+            "E0_EEG_next_given_EEG",
+            "E1_EEG_next_given_EEG_QRNG"
+          ],
+          [
+            "E2_QRNG_next_given_QRNG",
+            "E3_QRNG_next_given_QRNG_EEG"
+          ],
+          [
+            "E4_MCEEG_next_given_MCEEG",
+            "E5_MCEEG_next_given_MCEEG_QRNG"
+          ],
+          [
+            "E2_QRNG_next_given_QRNG",
+            "E6_QRNG_next_given_QRNG_MCEEG"
+          ]
+        ],
+        "primary_conditional_pairs": [
+          [
+            "E0_EEG_next_given_EEG",
+            "E1_EEG_next_given_EEG_QRNG"
+          ],
+          [
+            "E2_QRNG_next_given_QRNG",
+            "E3_QRNG_next_given_QRNG_EEG"
+          ]
+        ],
+        "multichannel_conditional_pairs": [
+          [
+            "E4_MCEEG_next_given_MCEEG",
+            "E5_MCEEG_next_given_MCEEG_QRNG"
+          ],
+          [
+            "E2_QRNG_next_given_QRNG",
+            "E6_QRNG_next_given_QRNG_MCEEG"
+          ]
+        ],
+        "n_model_rows": 56
       },
-      "interpretation": "No synchronized EEG–QRNG dataset is available. Conditional CDR completed in protocol-only mode with empty canonical outputs."
+      "interpretation": "Conditional CDR produced exploratory positive-lift rows. These require controls, F7/F8/F12 diagnostics and final gates before interpretation."
     },
     "controls": {
       "stage": "controls",
       "available": true,
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
+      "status": "controls_passed",
+      "protocol_only": false,
       "result": {
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
-        "n_control_runs": 0,
-        "n_valid_control_runs": 0,
-        "n_control_pair_rows": 0,
-        "n_control_types": 0,
-        "overall_passed": false,
-        "failed_control_types": [
-          "within_subject_qrng_shuffle",
-          "within_subject_eeg_shuffle",
-          "circular_qrng_shift",
-          "subject_mismatch",
-          "conditional_target_shuffle",
-          "sync_break_control"
-        ],
+        "status": "controls_passed",
+        "protocol_only": false,
+        "n_control_runs": 864,
+        "n_valid_control_runs": 864,
+        "n_control_pair_rows": 3456,
+        "n_control_types": 9,
+        "overall_passed": true,
+        "failed_control_types": [],
         "can_proceed_to_metrics": true,
-        "can_proceed_to_empirical_cdr": false,
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Controls completed in protocol-only mode with empty canonical outputs."
+        "can_proceed_to_empirical_cdr": true,
+        "interpretation": "Required synchronized negative controls passed. This permits metrics and gate evaluation, but does not by itself establish a positive claim."
       },
       "summary": {
-        "available": false,
-        "reason": "empty_control_runs",
-        "passed": false,
-        "n_control_types": 0,
-        "control_summaries": [],
-        "failed_control_types": [
+        "available": true,
+        "passed": true,
+        "n_control_types": 9,
+        "n_required_control_types": 6,
+        "required_control_types": [
           "within_subject_qrng_shuffle",
           "within_subject_eeg_shuffle",
           "circular_qrng_shift",
@@ -1024,15 +1439,253 @@
           "conditional_target_shuffle",
           "sync_break_control"
         ],
-        "interpretation": "No control runs are available. This is expected only in protocol-only mode or when no synchronized alignment frames can proceed to controls."
+        "all_required_present": true,
+        "control_summaries": [
+          {
+            "control_type": "circular_qrng_shift",
+            "n_runs": 96,
+            "n_valid_runs": 96,
+            "median_max_baseline_eps_test": 0.8,
+            "median_max_augmented_eps_test": 0.8,
+            "mean_max_augmented_eps_test": 0.5083333333333333,
+            "max_augmented_eps_test": 0.8,
+            "median_max_conditional_lift": 0.0,
+            "mean_max_conditional_lift": 0.06666666666666667,
+            "max_conditional_lift": 0.8,
+            "median_max_bic_improvement": -145.72885788018903,
+            "max_bic_improvement": -13.493938888488628,
+            "median_max_ll_improvement": -0.6587709760924554,
+            "max_ll_improvement": 65.43064599464105,
+            "median_eps_saturation_fraction": 0.5,
+            "max_eps_saturation_fraction": 0.5,
+            "total_multichannel_pair_rows": 192,
+            "total_multichannel_positive_lift_rows": 6,
+            "total_multichannel_strong_candidate_rows": 0,
+            "fraction_runs_below_control_tol": 0.9166666666666666,
+            "fraction_runs_collapsed_overall": 0.9166666666666666,
+            "control_tol": 0.05,
+            "passed": true,
+            "reason": "ok"
+          },
+          {
+            "control_type": "conditional_target_shuffle",
+            "n_runs": 96,
+            "n_valid_runs": 96,
+            "median_max_baseline_eps_test": 0.8,
+            "median_max_augmented_eps_test": 0.8,
+            "mean_max_augmented_eps_test": 0.725,
+            "max_augmented_eps_test": 0.8,
+            "median_max_conditional_lift": 0.0,
+            "mean_max_conditional_lift": 0.075,
+            "max_conditional_lift": 0.8,
+            "median_max_bic_improvement": -150.91548825792415,
+            "max_bic_improvement": -139.4103096345989,
+            "median_max_ll_improvement": -3.3009203165524923,
+            "max_ll_improvement": 2.4656985611700293,
+            "median_eps_saturation_fraction": 0.75,
+            "max_eps_saturation_fraction": 1.0,
+            "total_multichannel_pair_rows": 192,
+            "total_multichannel_positive_lift_rows": 5,
+            "total_multichannel_strong_candidate_rows": 0,
+            "fraction_runs_below_control_tol": 0.8854166666666666,
+            "fraction_runs_collapsed_overall": 0.8854166666666666,
+            "control_tol": 0.05,
+            "passed": true,
+            "reason": "ok"
+          },
+          {
+            "control_type": "phase_randomized_eeg_control",
+            "n_runs": 96,
+            "n_valid_runs": 96,
+            "median_max_baseline_eps_test": 0.4,
+            "median_max_augmented_eps_test": 0.0,
+            "mean_max_augmented_eps_test": 0.23333333333333336,
+            "max_augmented_eps_test": 0.8,
+            "median_max_conditional_lift": 0.0,
+            "mean_max_conditional_lift": 0.08333333333333333,
+            "max_conditional_lift": 0.8,
+            "median_max_bic_improvement": -147.79694923293482,
+            "max_bic_improvement": -131.30368144153545,
+            "median_max_ll_improvement": -1.6905703176253155,
+            "max_ll_improvement": 6.5257747181176455,
+            "median_eps_saturation_fraction": 0.375,
+            "max_eps_saturation_fraction": 0.5,
+            "total_multichannel_pair_rows": 192,
+            "total_multichannel_positive_lift_rows": 6,
+            "total_multichannel_strong_candidate_rows": 0,
+            "fraction_runs_below_control_tol": 0.8958333333333334,
+            "fraction_runs_collapsed_overall": 0.8958333333333334,
+            "control_tol": 0.05,
+            "passed": true,
+            "reason": "ok"
+          },
+          {
+            "control_type": "subject_mismatch",
+            "n_runs": 96,
+            "n_valid_runs": 96,
+            "median_max_baseline_eps_test": 0.8,
+            "median_max_augmented_eps_test": 0.8,
+            "mean_max_augmented_eps_test": 0.4749999999999999,
+            "max_augmented_eps_test": 0.8,
+            "median_max_conditional_lift": 0.0,
+            "mean_max_conditional_lift": 0.075,
+            "max_conditional_lift": 0.8,
+            "median_max_bic_improvement": -145.97273215098176,
+            "max_bic_improvement": 115.70725088880681,
+            "median_max_ll_improvement": -0.815031969055326,
+            "max_ll_improvement": 130.03124088328877,
+            "median_eps_saturation_fraction": 0.5,
+            "max_eps_saturation_fraction": 0.5,
+            "total_multichannel_pair_rows": 192,
+            "total_multichannel_positive_lift_rows": 5,
+            "total_multichannel_strong_candidate_rows": 0,
+            "fraction_runs_below_control_tol": 0.8645833333333334,
+            "fraction_runs_collapsed_overall": 0.8645833333333334,
+            "control_tol": 0.05,
+            "passed": true,
+            "reason": "ok"
+          },
+          {
+            "control_type": "sync_break_control",
+            "n_runs": 96,
+            "n_valid_runs": 96,
+            "median_max_baseline_eps_test": 0.8,
+            "median_max_augmented_eps_test": 0.0,
+            "mean_max_augmented_eps_test": 0.3,
+            "max_augmented_eps_test": 0.8,
+            "median_max_conditional_lift": 0.0,
+            "mean_max_conditional_lift": 0.10000000000000002,
+            "max_conditional_lift": 0.8,
+            "median_max_bic_improvement": -151.8997763636071,
+            "max_bic_improvement": -141.94964553965474,
+            "median_max_ll_improvement": -3.7790348033340706,
+            "max_ll_improvement": 1.1737720810060637,
+            "median_eps_saturation_fraction": 0.5,
+            "max_eps_saturation_fraction": 0.5,
+            "total_multichannel_pair_rows": 192,
+            "total_multichannel_positive_lift_rows": 12,
+            "total_multichannel_strong_candidate_rows": 0,
+            "fraction_runs_below_control_tol": 0.875,
+            "fraction_runs_collapsed_overall": 0.875,
+            "control_tol": 0.05,
+            "passed": true,
+            "reason": "ok"
+          },
+          {
+            "control_type": "timestamp_jitter_control",
+            "n_runs": 96,
+            "n_valid_runs": 96,
+            "median_max_baseline_eps_test": 0.8,
+            "median_max_augmented_eps_test": 0.8,
+            "mean_max_augmented_eps_test": 0.5,
+            "max_augmented_eps_test": 0.8,
+            "median_max_conditional_lift": 0.0,
+            "mean_max_conditional_lift": 0.0,
+            "max_conditional_lift": 0.0,
+            "median_max_bic_improvement": -145.94961477573727,
+            "max_bic_improvement": -138.0915455121485,
+            "median_max_ll_improvement": -0.8034732814331119,
+            "max_ll_improvement": 3.1318426828111114,
+            "median_eps_saturation_fraction": 0.5,
+            "max_eps_saturation_fraction": 0.5,
+            "total_multichannel_pair_rows": 192,
+            "total_multichannel_positive_lift_rows": 0,
+            "total_multichannel_strong_candidate_rows": 0,
+            "fraction_runs_below_control_tol": 1.0,
+            "fraction_runs_collapsed_overall": 1.0,
+            "control_tol": 0.05,
+            "passed": true,
+            "reason": "ok"
+          },
+          {
+            "control_type": "window_permutation_control",
+            "n_runs": 96,
+            "n_valid_runs": 96,
+            "median_max_baseline_eps_test": 0.8,
+            "median_max_augmented_eps_test": 0.8,
+            "mean_max_augmented_eps_test": 0.725,
+            "max_augmented_eps_test": 0.8,
+            "median_max_conditional_lift": 0.0,
+            "mean_max_conditional_lift": 0.075,
+            "max_conditional_lift": 0.8,
+            "median_max_bic_improvement": -150.91548825792415,
+            "max_bic_improvement": -139.4103096345989,
+            "median_max_ll_improvement": -3.3009203165524923,
+            "max_ll_improvement": 2.4656985611700293,
+            "median_eps_saturation_fraction": 0.75,
+            "max_eps_saturation_fraction": 1.0,
+            "total_multichannel_pair_rows": 192,
+            "total_multichannel_positive_lift_rows": 5,
+            "total_multichannel_strong_candidate_rows": 0,
+            "fraction_runs_below_control_tol": 0.8854166666666666,
+            "fraction_runs_collapsed_overall": 0.8854166666666666,
+            "control_tol": 0.05,
+            "passed": true,
+            "reason": "ok"
+          },
+          {
+            "control_type": "within_subject_eeg_shuffle",
+            "n_runs": 96,
+            "n_valid_runs": 96,
+            "median_max_baseline_eps_test": 0.4,
+            "median_max_augmented_eps_test": 0.0,
+            "mean_max_augmented_eps_test": 0.3833333333333333,
+            "max_augmented_eps_test": 0.8,
+            "median_max_conditional_lift": 0.0,
+            "mean_max_conditional_lift": 0.10000000000000002,
+            "max_conditional_lift": 0.8,
+            "median_max_bic_improvement": -147.11101022673392,
+            "max_bic_improvement": -134.56207446725057,
+            "median_max_ll_improvement": -1.381753942382602,
+            "max_ll_improvement": 4.88981614484419,
+            "median_eps_saturation_fraction": 0.5,
+            "max_eps_saturation_fraction": 0.5,
+            "total_multichannel_pair_rows": 192,
+            "total_multichannel_positive_lift_rows": 7,
+            "total_multichannel_strong_candidate_rows": 0,
+            "fraction_runs_below_control_tol": 0.875,
+            "fraction_runs_collapsed_overall": 0.875,
+            "control_tol": 0.05,
+            "passed": true,
+            "reason": "ok"
+          },
+          {
+            "control_type": "within_subject_qrng_shuffle",
+            "n_runs": 96,
+            "n_valid_runs": 96,
+            "median_max_baseline_eps_test": 0.8,
+            "median_max_augmented_eps_test": 0.8,
+            "mean_max_augmented_eps_test": 0.5166666666666666,
+            "max_augmented_eps_test": 0.8,
+            "median_max_conditional_lift": 0.0,
+            "mean_max_conditional_lift": 0.10000000000000002,
+            "max_conditional_lift": 0.8,
+            "median_max_bic_improvement": -144.85852812568282,
+            "max_bic_improvement": -125.95516024619974,
+            "median_max_ll_improvement": -0.16320107082356117,
+            "max_ll_improvement": 9.200035315785499,
+            "median_eps_saturation_fraction": 0.5,
+            "max_eps_saturation_fraction": 0.5,
+            "total_multichannel_pair_rows": 192,
+            "total_multichannel_positive_lift_rows": 10,
+            "total_multichannel_strong_candidate_rows": 0,
+            "fraction_runs_below_control_tol": 0.875,
+            "fraction_runs_collapsed_overall": 0.875,
+            "control_tol": 0.05,
+            "passed": true,
+            "reason": "ok"
+          }
+        ],
+        "failed_control_types": [],
+        "interpretation": "Controls pass only when required synchronized negative controls collapse conditional lift, BIC improvement, subject-level persistence and strong candidate survival. Epsilon saturation is tracked as a diagnostic, not as a direct failure criterion."
       },
-      "interpretation": "No synchronized EEG–QRNG dataset is available. Controls completed in protocol-only mode with empty canonical outputs."
+      "interpretation": "Required synchronized negative controls passed. This permits metrics and gate evaluation, but does not by itself establish a positive claim."
     },
     "metrics": {
       "stage": "metrics",
       "available": true,
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
+      "status": "exploratory_lead_with_saturation_warning",
+      "protocol_only": false,
       "result": {},
       "summary": {},
       "interpretation": ""
@@ -1040,33 +1693,33 @@
     "gate_sensitivity": {
       "stage": "gate_sensitivity",
       "available": true,
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
+      "status": "gate_sensitivity_completed",
+      "protocol_only": false,
       "result": {
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
+        "status": "gate_sensitivity_completed",
+        "protocol_only": false,
         "official_f7_threshold": 0.6,
         "official_f8_threshold": 0.0,
         "official_f12_eps_saturation_value": 0.8,
         "official_f12_warning_fraction": 0.5,
         "f7_available": false,
         "f8_available": false,
-        "f12_available": false,
+        "f12_available": true,
         "f7_official_passed": false,
         "f8_official_passed": false,
-        "f12_official_warning": false,
+        "f12_official_warning": true,
         "f7_best_value": 0.0,
         "f8_best_bic_value": 0.0,
-        "f12_max_saturation_fraction": 0.0,
+        "f12_max_saturation_fraction": 0.5258620689655172,
         "f7_distance_to_threshold": -0.6,
         "f8_distance_to_threshold": 0.0,
-        "f12_distance_to_warning": -0.5,
+        "f12_distance_to_warning": 0.025862068965517238,
         "can_proceed_to_diagnostics": true,
         "can_claim_empirical_cdr": false,
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Gate sensitivity was generated in protocol-only mode. F7/F8/F12 cannot be empirically diagnosed until synchronized data exist."
+        "interpretation": "Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds."
       },
       "summary": {},
-      "interpretation": "No synchronized EEG–QRNG dataset is available. Gate sensitivity was generated in protocol-only mode. F7/F8/F12 cannot be empirically diagnosed until synchronized data exist."
+      "interpretation": "Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds."
     }
   },
   "metadata": {
@@ -1077,68 +1730,68 @@
       "config_version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
       "loader_module": "phase3_2e_loader",
       "loader_version": "phase3_2e_loader_v1_protocol_sync_aware",
-      "created_at": "2026-06-04 11:56:10",
-      "status": "pending_synchronized_data",
-      "interpretation": "No synchronized EEG–QRNG input CSV was found. Loader completed in protocol-only mode and saved empty canonical outputs. Empirical windowing, feature construction and CDR remain blocked until real synchronized data are provided.",
+      "created_at": "2026-06-05 00:42:25",
+      "status": "loaded_synchronized_data",
+      "interpretation": "Synchronized EEG–QRNG input CSV was loaded successfully after schema and synchronization validation. The dataset can proceed to windowing, feature construction, controls and empirical synchronized CDR.",
       "protocol_status": "protocol_ready",
       "empirical_execution_status": "pending_synchronized_eeg_qrng_data",
       "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
       "input_file_info": {
-        "exists": false,
-        "size_bytes": null,
-        "mtime": null,
-        "mtime_human": null
+        "exists": true,
+        "size_bytes": 23514699,
+        "mtime": 1780628437.120241,
+        "mtime_human": "2026-06-05 00:00:37"
       },
       "output_csv": "data\\interim\\phase3_2e\\phase3_2e_loaded_synchronized_windows.csv",
       "metadata_json": "data\\interim\\phase3_2e\\phase3_2e_loader_metadata.json",
       "loader_report_json": "results\\phase3_2e\\phase3_2e_loader_report.json",
       "loader_summary_txt": "results\\phase3_2e\\phase3_2e_loader_summary.txt",
-      "schema_status": "pending_synchronized_data",
+      "schema_status": "schema_valid",
       "schema_result": {
-        "status": "pending_synchronized_data",
-        "schema_valid": false,
-        "protocol_only": true,
+        "status": "schema_valid",
+        "schema_valid": true,
+        "protocol_only": false,
         "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-        "input_exists": false,
-        "n_rows": 0,
-        "n_columns": 0,
+        "input_exists": true,
+        "n_rows": 27597,
+        "n_columns": 40,
         "n_required_columns": 30,
-        "n_missing_required_columns": 30,
-        "n_optional_columns_present": 0,
+        "n_missing_required_columns": 0,
+        "n_optional_columns_present": 1,
         "n_failures": 0,
         "n_errors": 0,
         "n_warnings": 0,
-        "can_proceed_to_sync_validation": false,
+        "can_proceed_to_sync_validation": true,
         "can_proceed_to_empirical_cdr": false,
-        "interpretation": "No synchronized EEG–QRNG input CSV was found. This is valid for protocol-only development. Empirical CDR cannot run until a real synchronized dataset is provided."
+        "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
       },
-      "sync_status": "pending_synchronized_data",
+      "sync_status": "sync_valid",
       "sync_result": {
-        "status": "pending_synchronized_data",
-        "sync_valid": false,
-        "protocol_only": true,
+        "status": "sync_valid",
+        "sync_valid": true,
+        "protocol_only": false,
         "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-        "input_exists": false,
-        "schema_status": "pending_synchronized_data",
-        "schema_valid": false,
-        "n_rows": 0,
-        "n_subjects": 0,
-        "n_sessions": 0,
-        "n_windows": 0,
-        "min_sync_quality": null,
-        "mean_sync_quality": null,
-        "max_clock_drift_ms_abs": null,
-        "max_eeg_qrng_gap_ms": null,
-        "median_eeg_qrng_gap_ms": null,
-        "n_failures": 0,
+        "input_exists": true,
+        "schema_status": "schema_valid",
+        "schema_valid": true,
+        "n_rows": 27597,
+        "n_subjects": 10,
+        "n_sessions": 10,
+        "n_windows": 2848,
+        "min_sync_quality": 0.9849868015959592,
+        "mean_sync_quality": 0.9930010368948892,
+        "max_clock_drift_ms_abs": 10.013198404040686,
+        "max_eeg_qrng_gap_ms": 10.0,
+        "median_eeg_qrng_gap_ms": 2.0,
+        "n_failures": 1,
         "n_errors": 0,
-        "n_warnings": 0,
-        "can_proceed_to_empirical_cdr": false,
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Synchronization validation is in protocol-only mode. Empirical CDR cannot proceed until a real synchronized dataset is provided."
+        "n_warnings": 1,
+        "can_proceed_to_empirical_cdr": true,
+        "interpretation": "The synchronized EEG–QRNG input passed synchronization validation. The dataset can proceed to empirical synchronized CDR, subject to later windowing, feature, control and gate checks."
       },
-      "can_proceed_to_windowing": false,
-      "can_proceed_to_feature_construction": false,
-      "can_proceed_to_empirical_cdr": false,
+      "can_proceed_to_windowing": true,
+      "can_proceed_to_feature_construction": true,
+      "can_proceed_to_empirical_cdr": true,
       "config": {
         "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
         "phase_name": "Phase III.2E",
@@ -1370,103 +2023,387 @@
         "multiple_comparison_guard": true
       },
       "summary": {
-        "n_rows": 0,
-        "n_subjects": 0,
-        "n_sessions": 0,
-        "n_windows": 0,
-        "window_seconds_counts": {},
-        "sync_mode_counts": {},
-        "sync_row_valid_counts": {},
+        "n_rows": 27597,
+        "n_subjects": 10,
+        "n_sessions": 10,
+        "n_windows": 2848,
+        "window_seconds_counts": {
+          "30": 27597
+        },
+        "sync_mode_counts": {
+          "software_timestamp_aligned": 27597
+        },
+        "sync_row_valid_counts": {
+          "1": 27597
+        },
         "sync_quality": {
-          "min": null,
-          "mean": null,
-          "median": null,
-          "max": null
+          "min": 0.9849868015959592,
+          "mean": 0.9930010368948892,
+          "median": 0.9933133221340424,
+          "max": 0.9949999011330124
         },
         "clock_drift_abs_ms": {
-          "min": null,
-          "mean": null,
-          "median": null,
-          "max": null
+          "min": 9.886698759679616e-05,
+          "mean": 1.9989631051106351,
+          "median": 1.686677865957682,
+          "max": 10.013198404040686
         },
         "eeg_qrng_gap_ms": {
-          "min": null,
-          "mean": null,
-          "median": null,
-          "max": null
+          "min": 0.0,
+          "mean": 2.026452150596079,
+          "median": 2.0,
+          "max": 10.0
         },
-        "qrng_state_counts": {},
-        "eeg_channel_counts": {},
-        "primary_channel_counts": {},
-        "secondary_channel_counts": {}
+        "qrng_state_counts": {
+          "0": 13873,
+          "1": 13724
+        },
+        "eeg_channel_counts": {
+          "EEG Fpz-Cz": 27597
+        },
+        "primary_channel_counts": {
+          "EEG Fpz-Cz": 27597
+        },
+        "secondary_channel_counts": {
+          "EEG Pz-Oz": 27597
+        }
       }
     },
     "feature_specs": {
       "metadata": {
         "phase": "Phase III.2E",
         "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
+        "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
+        "config_version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
+        "feature_module": "phase3_2e_features",
         "feature_version": "phase3_2e_features_v1_sync_window_state_layer",
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
-        "n_rows": 0,
-        "bin_specs": {},
-        "summary": {
-          "n_rows": 0,
-          "n_columns": 31,
-          "n_subjects": 0,
-          "n_sessions": 0,
-          "n_window_sizes": 0,
-          "n_valid_feature_rows": 0,
-          "n_valid_next_state_rows": 0,
-          "n_valid_mc_next_state_rows": 0,
-          "n_valid_conditional_rows": 0,
-          "n_valid_mc_conditional_rows": 0,
-          "eeg_state_n_unique": 0,
-          "qrng_state_n_unique": 0,
-          "mc_eeg_state_n_unique": 0
+        "created_at": "2026-06-05 00:42:34",
+        "train_index_used": false,
+        "n_train_rows_for_bins": 27597,
+        "bin_specs": {
+          "eeg_delta_bin": {
+            "name": "eeg_delta_bin",
+            "source_column": "eeg_delta_power",
+            "n_requested_bins": 3,
+            "edges": [
+              1.6004085083476191e-10,
+              4.4661222421266696e-10
+            ],
+            "effective_bins": 3,
+            "constant": false,
+            "fill_value": 3.9164947225062517e-10,
+            "train_min": 4.308483708472268e-13,
+            "train_max": 3.2928468131562233e-09,
+            "train_mean": 3.9164947225062517e-10,
+            "train_std": 3.661582076639249e-10
+          },
+          "eeg_alpha_bin": {
+            "name": "eeg_alpha_bin",
+            "source_column": "eeg_alpha_power",
+            "n_requested_bins": 3,
+            "edges": [
+              4.19056857338711e-12,
+              9.774565475855347e-12
+            ],
+            "effective_bins": 3,
+            "constant": false,
+            "fill_value": 9.310260394372487e-12,
+            "train_min": 4.623532264200944e-15,
+            "train_max": 2.7734559425324564e-10,
+            "train_mean": 9.310260394372487e-12,
+            "train_std": 9.419609804790895e-12
+          },
+          "eeg_info_bin": {
+            "name": "eeg_info_bin",
+            "source_column": "eeg_info_score",
+            "n_requested_bins": 3,
+            "edges": [
+              -0.38135579794491137,
+              0.09969658532494144
+            ],
+            "effective_bins": 3,
+            "constant": false,
+            "fill_value": 3.2956288791279063e-17,
+            "train_min": -1.2941911518659701,
+            "train_max": 11.33500044376881,
+            "train_mean": 3.2956288791279063e-17,
+            "train_std": 0.7169439127685495
+          },
+          "qrng_info_bin": {
+            "name": "qrng_info_bin",
+            "source_column": "qrng_info_score",
+            "n_requested_bins": 3,
+            "edges": [
+              -0.15128631507970514,
+              0.2845252961291493
+            ],
+            "effective_bins": 3,
+            "constant": false,
+            "fill_value": -5.09663856737007e-16,
+            "train_min": -3.5798787319340435,
+            "train_max": 1.5001648614578516,
+            "train_mean": -5.09663856737007e-16,
+            "train_std": 0.5804540902471743
+          },
+          "mc_activation_bin": {
+            "name": "mc_activation_bin",
+            "source_column": "mc_activation_score",
+            "n_requested_bins": 3,
+            "edges": [
+              6.145554628169549e-11,
+              1.3560511729577257e-10
+            ],
+            "effective_bins": 3,
+            "constant": false,
+            "fill_value": 1.2136101288043362e-10,
+            "train_min": 1.9250106621109467e-13,
+            "train_max": 1.3751551793098903e-09,
+            "train_mean": 1.2136101288043362e-10,
+            "train_std": 1.0173679097916295e-10
+          },
+          "mc_cross_channel_bin": {
+            "name": "mc_cross_channel_bin",
+            "source_column": "mc_cross_channel_score",
+            "n_requested_bins": 3,
+            "edges": [
+              -0.24374168323127415,
+              0.018171228392150372
+            ],
+            "effective_bins": 3,
+            "constant": false,
+            "fill_value": -8.239072197819766e-18,
+            "train_min": -4.3295235416083155,
+            "train_max": 11.841579493038461,
+            "train_mean": -8.239072197819766e-18,
+            "train_std": 0.5559724578440398
+          },
+          "mc_eeg_info_bin": {
+            "name": "mc_eeg_info_bin",
+            "source_column": "mc_eeg_info_score",
+            "n_requested_bins": 3,
+            "edges": [
+              -0.22205110398920647,
+              0.010747171798877294
+            ],
+            "effective_bins": 3,
+            "constant": false,
+            "fill_value": 0.0,
+            "train_min": -0.6550709903834351,
+            "train_max": 11.007912141925031,
+            "train_mean": 0.0,
+            "train_std": 0.4646961511808058
+          }
         },
-        "windows_status": "pending_synchronized_data",
-        "windows_result": {
-          "status": "pending_synchronized_data",
-          "protocol_only": true,
-          "input_rows": 0,
-          "output_rows": 0,
-          "n_subjects": 0,
-          "n_sessions": 0,
-          "n_valid_windows": 0,
-          "n_primary_valid_windows": 0,
-          "n_exploratory_valid_windows": 0,
-          "n_registered_window_sizes": 0,
-          "n_unregistered_window_rows": 0,
-          "can_proceed_to_feature_construction": false,
-          "can_proceed_to_empirical_cdr": false,
-          "interpretation": "No synchronized EEG–QRNG dataset is available. Window building completed in protocol-only mode with empty canonical outputs."
+        "state_columns": {
+          "E0_EEG_next_given_EEG": "eeg_state -> eeg_next_state",
+          "E1_EEG_next_given_EEG_QRNG": "(eeg_state, qrng_state) -> eeg_next_state",
+          "E2_QRNG_next_given_QRNG": "qrng_state -> qrng_next_state",
+          "E3_QRNG_next_given_QRNG_EEG": "(qrng_state, eeg_state) -> qrng_next_state",
+          "E4_MCEEG_next_given_MCEEG": "mc_eeg_state -> mc_eeg_next_state",
+          "E5_MCEEG_next_given_MCEEG_QRNG": "(mc_eeg_state, qrng_state) -> mc_eeg_next_state",
+          "E6_QRNG_next_given_QRNG_MCEEG": "(qrng_state, mc_eeg_state) -> qrng_next_state"
+        },
+        "summary": {
+          "n_rows": 27597,
+          "n_columns": 100,
+          "n_subjects": 10,
+          "subjects": [
+            "SC4001",
+            "SC4002",
+            "SC4011",
+            "SC4012",
+            "SC4021",
+            "SC4022",
+            "SC4031",
+            "SC4032",
+            "SC4041",
+            "SC4042"
+          ],
+          "n_sessions": 10,
+          "n_window_sizes": 1,
+          "window_seconds_counts": {
+            "30": 27597
+          },
+          "valid_feature_row_rows": 27597,
+          "valid_next_state_rows": 27587,
+          "valid_mc_next_state_rows": 27587,
+          "valid_conditional_row_rows": 27587,
+          "valid_mc_conditional_row_rows": 27587,
+          "valid_for_primary_analysis_rows": 0,
+          "valid_for_exploratory_analysis_rows": 27597,
+          "eeg_state_n_unique": 9,
+          "qrng_state_n_unique": 2,
+          "mc_eeg_state_n_unique": 9,
+          "observed_joint_state_n_unique": 18,
+          "mc_observed_joint_state_n_unique": 18,
+          "informational_joint_state_n_unique": 9,
+          "mc_informational_joint_state_n_unique": 9,
+          "eeg_info_bin_n_unique": 3,
+          "qrng_info_bin_n_unique": 3,
+          "mc_eeg_info_bin_n_unique": 3,
+          "sync_quality": {
+            "min": 0.9849868015959592,
+            "mean": 0.9930010368948892,
+            "median": 0.9933133221340424,
+            "max": 0.9949999011330124
+          },
+          "eeg_qrng_gap_ms": {
+            "min": 0.0,
+            "mean": 2.026452150596079,
+            "median": 2.0,
+            "max": 10.0
+          },
+          "clock_drift_abs_ms": {
+            "min": 9.886698759679616e-05,
+            "mean": 1.9989631051106351,
+            "median": 1.686677865957682,
+            "max": 10.013198404040686
+          },
+          "feature_status_counts": {
+            "valid_feature_row": 27597
+          },
+          "window_scope_counts": {
+            "exploratory": 27597
+          }
         }
       },
-      "bin_specs": {}
+      "bin_specs": {
+        "eeg_delta_bin": {
+          "name": "eeg_delta_bin",
+          "source_column": "eeg_delta_power",
+          "n_requested_bins": 3,
+          "edges": [
+            1.6004085083476191e-10,
+            4.4661222421266696e-10
+          ],
+          "effective_bins": 3,
+          "constant": false,
+          "fill_value": 3.9164947225062517e-10,
+          "train_min": 4.308483708472268e-13,
+          "train_max": 3.2928468131562233e-09,
+          "train_mean": 3.9164947225062517e-10,
+          "train_std": 3.661582076639249e-10
+        },
+        "eeg_alpha_bin": {
+          "name": "eeg_alpha_bin",
+          "source_column": "eeg_alpha_power",
+          "n_requested_bins": 3,
+          "edges": [
+            4.19056857338711e-12,
+            9.774565475855347e-12
+          ],
+          "effective_bins": 3,
+          "constant": false,
+          "fill_value": 9.310260394372487e-12,
+          "train_min": 4.623532264200944e-15,
+          "train_max": 2.7734559425324564e-10,
+          "train_mean": 9.310260394372487e-12,
+          "train_std": 9.419609804790895e-12
+        },
+        "eeg_info_bin": {
+          "name": "eeg_info_bin",
+          "source_column": "eeg_info_score",
+          "n_requested_bins": 3,
+          "edges": [
+            -0.38135579794491137,
+            0.09969658532494144
+          ],
+          "effective_bins": 3,
+          "constant": false,
+          "fill_value": 3.2956288791279063e-17,
+          "train_min": -1.2941911518659701,
+          "train_max": 11.33500044376881,
+          "train_mean": 3.2956288791279063e-17,
+          "train_std": 0.7169439127685495
+        },
+        "qrng_info_bin": {
+          "name": "qrng_info_bin",
+          "source_column": "qrng_info_score",
+          "n_requested_bins": 3,
+          "edges": [
+            -0.15128631507970514,
+            0.2845252961291493
+          ],
+          "effective_bins": 3,
+          "constant": false,
+          "fill_value": -5.09663856737007e-16,
+          "train_min": -3.5798787319340435,
+          "train_max": 1.5001648614578516,
+          "train_mean": -5.09663856737007e-16,
+          "train_std": 0.5804540902471743
+        },
+        "mc_activation_bin": {
+          "name": "mc_activation_bin",
+          "source_column": "mc_activation_score",
+          "n_requested_bins": 3,
+          "edges": [
+            6.145554628169549e-11,
+            1.3560511729577257e-10
+          ],
+          "effective_bins": 3,
+          "constant": false,
+          "fill_value": 1.2136101288043362e-10,
+          "train_min": 1.9250106621109467e-13,
+          "train_max": 1.3751551793098903e-09,
+          "train_mean": 1.2136101288043362e-10,
+          "train_std": 1.0173679097916295e-10
+        },
+        "mc_cross_channel_bin": {
+          "name": "mc_cross_channel_bin",
+          "source_column": "mc_cross_channel_score",
+          "n_requested_bins": 3,
+          "edges": [
+            -0.24374168323127415,
+            0.018171228392150372
+          ],
+          "effective_bins": 3,
+          "constant": false,
+          "fill_value": -8.239072197819766e-18,
+          "train_min": -4.3295235416083155,
+          "train_max": 11.841579493038461,
+          "train_mean": -8.239072197819766e-18,
+          "train_std": 0.5559724578440398
+        },
+        "mc_eeg_info_bin": {
+          "name": "mc_eeg_info_bin",
+          "source_column": "mc_eeg_info_score",
+          "n_requested_bins": 3,
+          "edges": [
+            -0.22205110398920647,
+            0.010747171798877294
+          ],
+          "effective_bins": 3,
+          "constant": false,
+          "fill_value": 0.0,
+          "train_min": -0.6550709903834351,
+          "train_max": 11.007912141925031,
+          "train_mean": 0.0,
+          "train_std": 0.4646961511808058
+        }
+      }
     },
     "alignment_metadata": {
       "phase": "Phase III.2E",
       "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
       "module": "phase3_2e_alignment",
       "alignment_version": "phase3_2e_alignment_v1_directional_sync_lags",
-      "created_at": "2026-06-03 22:52:40",
+      "created_at": "2026-06-05 00:51:51",
       "result": {
-        "status": "pending_synchronized_data",
-        "protocol_only": true,
-        "input_rows": 0,
+        "status": "alignment_ready_exploratory_only",
+        "protocol_only": false,
+        "input_rows": 220776,
         "n_frames": 40,
         "n_window_sizes": 5,
         "n_lags": 8,
-        "n_total_aligned_rows": 0,
-        "n_valid_alignment_rows": 0,
+        "n_total_aligned_rows": 220776,
+        "n_valid_alignment_rows": 220576,
         "n_valid_primary_alignment_rows": 0,
-        "n_valid_exploratory_alignment_rows": 0,
-        "n_valid_conditional_rows": 0,
-        "n_valid_mc_conditional_rows": 0,
-        "can_proceed_to_conditional_cdr": false,
+        "n_valid_exploratory_alignment_rows": 220576,
+        "n_valid_conditional_rows": 220576,
+        "n_valid_mc_conditional_rows": 220576,
+        "can_proceed_to_conditional_cdr": true,
         "can_proceed_to_empirical_cdr": false,
-        "interpretation": "No synchronized EEG–QRNG dataset is available. Lagged alignment completed in protocol-only mode with empty canonical inventory."
+        "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
       },
       "alignment_inventory_csv": "data\\interim\\phase3_2e\\phase3_2e_alignment_inventory.csv",
       "alignment_report_json": "results\\phase3_2e\\phase3_2e_alignment_report.json",
@@ -1723,22 +2660,22 @@
     }
   },
   "artifact_table_diagnostics": {
-    "loaded_windows_rows": 0,
-    "windows_rows": 0,
-    "features_rows": 0,
+    "loaded_windows_rows": 27597,
+    "windows_rows": 27597,
+    "features_rows": 27597,
     "alignment_inventory_rows": 40,
-    "loaded_subjects": 0,
-    "loaded_sessions": 0,
-    "windows_subjects": 0,
-    "windows_sessions": 0,
-    "features_subjects": 0,
-    "features_sessions": 0,
+    "loaded_subjects": 10,
+    "loaded_sessions": 10,
+    "windows_subjects": 10,
+    "windows_sessions": 10,
+    "features_subjects": 10,
+    "features_sessions": 10,
     "alignment_inventory_subjects": 0,
     "alignment_inventory_sessions": 0,
-    "alignment_total_n_valid_alignment_rows": 0,
+    "alignment_total_n_valid_alignment_rows": 220576,
     "alignment_total_n_valid_primary_alignment_rows": 0,
-    "alignment_total_n_valid_conditional_rows": 0,
-    "alignment_total_n_valid_mc_conditional_rows": 0,
+    "alignment_total_n_valid_conditional_rows": 220576,
+    "alignment_total_n_valid_mc_conditional_rows": 220576,
     "alignment_scope_counts": {
       "exploratory": 34,
       "primary": 6
@@ -1751,21 +2688,21 @@
   },
   "conditional_diagnostics": {
     "available": true,
-    "protocol_only": true,
-    "status": "pending_synchronized_data",
-    "n_model_rows": 0,
-    "n_rows": 0,
-    "n_valid_rows": 0,
+    "protocol_only": false,
+    "status": "conditional_exploratory_leads",
+    "n_model_rows": 56,
+    "n_rows": 32,
+    "n_valid_rows": 32,
     "n_primary_rows": 0,
-    "n_positive_lift_rows": 0,
+    "n_positive_lift_rows": 2,
     "n_primary_positive_lift_rows": 0,
-    "n_exploratory_lift_rows": 0,
+    "n_exploratory_lift_rows": 2,
     "n_strong_candidate_rows": 0,
     "n_primary_strong_candidate_rows": 0,
-    "n_high_epsilon_zero_lift_rows": 0,
-    "n_single_channel_rows": 0,
-    "n_multichannel_rows": 0,
-    "n_multichannel_positive_lift_rows": 0,
+    "n_high_epsilon_zero_lift_rows": 4,
+    "n_single_channel_rows": 16,
+    "n_multichannel_rows": 16,
+    "n_multichannel_positive_lift_rows": 2,
     "thresholds": {
       "conditional_lift_min": 0.03,
       "strong_eps_min": 0.07,
@@ -1773,38 +2710,487 @@
       "eps_saturation_value": 0.8
     },
     "model_saturation": {
-      "available": false,
-      "reason": "model_scores_missing_or_empty"
+      "available": true,
+      "eps_saturation_value": 0.8,
+      "warning_fraction": 0.5,
+      "n_model_rows": 56,
+      "columns": {
+        "eps_candidate": {
+          "max": 0.8,
+          "mean": 0.7000000000000001,
+          "median": 0.8,
+          "n_saturated": 49,
+          "saturation_fraction": 0.875
+        },
+        "eps_calib": {
+          "max": 0.8,
+          "mean": 0.7000000000000001,
+          "median": 0.8,
+          "n_saturated": 49,
+          "saturation_fraction": 0.875
+        },
+        "eps_test": {
+          "max": 0.8,
+          "mean": 0.14285714285714285,
+          "median": 0.0,
+          "n_saturated": 10,
+          "saturation_fraction": 0.17857142857142858
+        }
+      },
+      "max_saturation_fraction": 0.875,
+      "warning": true,
+      "reason": "epsilon_saturation_warning"
     },
     "pair_saturation": {
-      "available": false,
-      "reason": "no_valid_pair_rows"
+      "available": true,
+      "eps_saturation_value": 0.8,
+      "warning_fraction": 0.5,
+      "n_valid_pair_rows": 32,
+      "max_baseline_eps_test": 0.8,
+      "max_augmented_eps_test": 0.8,
+      "n_either_saturated": 10,
+      "n_both_saturated": 4,
+      "either_saturation_fraction": 0.3125,
+      "both_saturation_fraction": 0.125,
+      "warning": false,
+      "reason": "ok"
     },
-    "best_rows_by_metric": [],
+    "best_rows_by_metric": [
+      {
+        "selected_by": "conditional_lift",
+        "window_seconds": 30,
+        "lag_windows": -1,
+        "lag_seconds": -30,
+        "lag_direction": "past_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "primary": false,
+        "multichannel": true,
+        "valid": true,
+        "baseline_eps_test": 0.0,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.8,
+        "fraction_positive_lift": 0.1,
+        "ll_improvement": -1.4388171061737012,
+        "bic_improvement": -147.23286509011814,
+        "aic_improvement": -34.8776342123474,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "reason": "ok"
+      },
+      {
+        "selected_by": "augmented_eps_test",
+        "window_seconds": 30,
+        "lag_windows": -3,
+        "lag_seconds": -90,
+        "lag_direction": "past_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "primary": false,
+        "multichannel": true,
+        "valid": true,
+        "baseline_eps_test": 0.8,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.0,
+        "fraction_positive_lift": 0.1,
+        "ll_improvement": -0.376171664616777,
+        "bic_improvement": -145.09211713540026,
+        "aic_improvement": -32.752343329233554,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "reason": "ok"
+      },
+      {
+        "selected_by": "baseline_eps_test",
+        "window_seconds": 30,
+        "lag_windows": -3,
+        "lag_seconds": -90,
+        "lag_direction": "past_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E3_QRNG_next_given_QRNG_EEG",
+        "primary": false,
+        "multichannel": false,
+        "valid": true,
+        "baseline_eps_test": 0.8,
+        "augmented_eps_test": 0.0,
+        "conditional_lift": -0.8,
+        "fraction_positive_lift": 0.1,
+        "ll_improvement": -8.750442628082965,
+        "bic_improvement": -161.84065906233263,
+        "aic_improvement": -49.50088525616593,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "reason": "ok"
+      },
+      {
+        "selected_by": "ll_improvement",
+        "window_seconds": 30,
+        "lag_windows": 5,
+        "lag_seconds": 150,
+        "lag_direction": "future_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "primary": false,
+        "multichannel": true,
+        "valid": true,
+        "baseline_eps_test": 0.0,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.8,
+        "fraction_positive_lift": 0.1,
+        "ll_improvement": 6.206867485865587,
+        "bic_improvement": -131.9163705762403,
+        "aic_improvement": -19.586265028268823,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "reason": "ok"
+      },
+      {
+        "selected_by": "bic_improvement",
+        "window_seconds": 30,
+        "lag_windows": 5,
+        "lag_seconds": 150,
+        "lag_direction": "future_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "primary": false,
+        "multichannel": true,
+        "valid": true,
+        "baseline_eps_test": 0.0,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.8,
+        "fraction_positive_lift": 0.1,
+        "ll_improvement": 6.206867485865587,
+        "bic_improvement": -131.9163705762403,
+        "aic_improvement": -19.586265028268823,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "reason": "ok"
+      },
+      {
+        "selected_by": "aic_improvement",
+        "window_seconds": 30,
+        "lag_windows": 5,
+        "lag_seconds": 150,
+        "lag_direction": "future_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "primary": false,
+        "multichannel": true,
+        "valid": true,
+        "baseline_eps_test": 0.0,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.8,
+        "fraction_positive_lift": 0.1,
+        "ll_improvement": 6.206867485865587,
+        "bic_improvement": -131.9163705762403,
+        "aic_improvement": -19.586265028268823,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "reason": "ok"
+      },
+      {
+        "selected_by": "fraction_positive_lift",
+        "window_seconds": 30,
+        "lag_windows": 1,
+        "lag_seconds": 30,
+        "lag_direction": "future_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "primary": false,
+        "multichannel": true,
+        "valid": true,
+        "baseline_eps_test": 0.8,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.0,
+        "fraction_positive_lift": 0.3,
+        "ll_improvement": 0.7213885824785393,
+        "bic_improvement": -142.91245371281366,
+        "aic_improvement": -30.55722283504292,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 3,
+        "reason": "ok"
+      }
+    ],
     "primary_rows": [],
-    "positive_lift_rows": [],
+    "positive_lift_rows": [
+      {
+        "window_seconds": 30,
+        "lag_windows": -1,
+        "lag_seconds": -30,
+        "lag_label": "m1",
+        "lag_direction": "past_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "valid": true,
+        "primary": false,
+        "multichannel": true,
+        "baseline_eps_test": 0.0,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.8,
+        "baseline_ll_test": -5744.829823540104,
+        "augmented_ll_test": -5746.268640646278,
+        "ll_improvement": -1.4388171061737012,
+        "baseline_bic_test": 11507.70405093993,
+        "augmented_bic_test": 11654.936916030048,
+        "bic_improvement": -147.23286509011814,
+        "baseline_aic_test": 11493.659647080209,
+        "augmented_aic_test": 11528.537281292556,
+        "aic_improvement": -34.8776342123474,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "fraction_positive_lift": 0.1,
+        "reason": "ok"
+      },
+      {
+        "window_seconds": 30,
+        "lag_windows": 5,
+        "lag_seconds": 150,
+        "lag_label": "p5",
+        "lag_direction": "future_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "valid": true,
+        "primary": false,
+        "multichannel": true,
+        "baseline_eps_test": 0.0,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.8,
+        "baseline_ll_test": -5735.436874371776,
+        "augmented_ll_test": -5729.23000688591,
+        "ll_improvement": 6.206867485865587,
+        "baseline_bic_test": 11488.915011937048,
+        "augmented_bic_test": 11620.831382513288,
+        "bic_improvement": -131.9163705762403,
+        "baseline_aic_test": 11474.873748743552,
+        "augmented_aic_test": 11494.46001377182,
+        "aic_improvement": -19.586265028268823,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "fraction_positive_lift": 0.1,
+        "reason": "ok"
+      }
+    ],
     "primary_positive_lift_rows": [],
-    "exploratory_lift_rows": [],
+    "exploratory_lift_rows": [
+      {
+        "window_seconds": 30,
+        "lag_windows": -1,
+        "lag_seconds": -30,
+        "lag_label": "m1",
+        "lag_direction": "past_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "valid": true,
+        "primary": false,
+        "multichannel": true,
+        "baseline_eps_test": 0.0,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.8,
+        "baseline_ll_test": -5744.829823540104,
+        "augmented_ll_test": -5746.268640646278,
+        "ll_improvement": -1.4388171061737012,
+        "baseline_bic_test": 11507.70405093993,
+        "augmented_bic_test": 11654.936916030048,
+        "bic_improvement": -147.23286509011814,
+        "baseline_aic_test": 11493.659647080209,
+        "augmented_aic_test": 11528.537281292556,
+        "aic_improvement": -34.8776342123474,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "fraction_positive_lift": 0.1,
+        "reason": "ok"
+      },
+      {
+        "window_seconds": 30,
+        "lag_windows": 5,
+        "lag_seconds": 150,
+        "lag_label": "p5",
+        "lag_direction": "future_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "valid": true,
+        "primary": false,
+        "multichannel": true,
+        "baseline_eps_test": 0.0,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.8,
+        "baseline_ll_test": -5735.436874371776,
+        "augmented_ll_test": -5729.23000688591,
+        "ll_improvement": 6.206867485865587,
+        "baseline_bic_test": 11488.915011937048,
+        "augmented_bic_test": 11620.831382513288,
+        "bic_improvement": -131.9163705762403,
+        "baseline_aic_test": 11474.873748743552,
+        "augmented_aic_test": 11494.46001377182,
+        "aic_improvement": -19.586265028268823,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "fraction_positive_lift": 0.1,
+        "reason": "ok"
+      }
+    ],
     "strong_candidate_rows": [],
     "primary_strong_candidate_rows": [],
-    "high_epsilon_zero_lift_rows": [],
-    "interpretation": "Conditional CDR is in protocol-only mode. No synchronized EEG–QRNG pair rows exist yet."
+    "high_epsilon_zero_lift_rows": [
+      {
+        "window_seconds": 30,
+        "lag_windows": -3,
+        "lag_seconds": -90,
+        "lag_label": "m3",
+        "lag_direction": "past_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "valid": true,
+        "primary": false,
+        "multichannel": true,
+        "baseline_eps_test": 0.8,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.0,
+        "baseline_ll_test": -5739.133825050341,
+        "augmented_ll_test": -5739.509996714958,
+        "ll_improvement": -0.376171664616777,
+        "baseline_bic_test": 11496.310121826453,
+        "augmented_bic_test": 11641.402238961851,
+        "bic_improvement": -145.09211713540026,
+        "baseline_aic_test": 11482.267650100684,
+        "augmented_aic_test": 11515.019993429916,
+        "aic_improvement": -32.752343329233554,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "fraction_positive_lift": 0.1,
+        "reason": "ok"
+      },
+      {
+        "window_seconds": 30,
+        "lag_windows": 1,
+        "lag_seconds": 30,
+        "lag_label": "p1",
+        "lag_direction": "future_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E3_QRNG_next_given_QRNG_EEG",
+        "valid": true,
+        "primary": false,
+        "multichannel": false,
+        "baseline_eps_test": 0.8,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.0,
+        "baseline_ll_test": -5744.958485936534,
+        "augmented_ll_test": -5744.115832135921,
+        "ll_improvement": 0.8426538006133342,
+        "baseline_bic_test": 11507.96137573279,
+        "augmented_bic_test": 11650.631299009334,
+        "bic_improvement": -142.66992327654407,
+        "baseline_aic_test": 11493.916971873068,
+        "augmented_aic_test": 11524.231664271842,
+        "aic_improvement": -30.31469239877333,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 2,
+        "fraction_positive_lift": 0.2,
+        "reason": "ok"
+      },
+      {
+        "window_seconds": 30,
+        "lag_windows": 1,
+        "lag_seconds": 30,
+        "lag_label": "p1",
+        "lag_direction": "future_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "valid": true,
+        "primary": false,
+        "multichannel": true,
+        "baseline_eps_test": 0.8,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.0,
+        "baseline_ll_test": -5744.958485936534,
+        "augmented_ll_test": -5744.237097354056,
+        "ll_improvement": 0.7213885824785393,
+        "baseline_bic_test": 11507.96137573279,
+        "augmented_bic_test": 11650.873829445603,
+        "bic_improvement": -142.91245371281366,
+        "baseline_aic_test": 11493.916971873068,
+        "augmented_aic_test": 11524.474194708111,
+        "aic_improvement": -30.55722283504292,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 3,
+        "fraction_positive_lift": 0.3,
+        "reason": "ok"
+      },
+      {
+        "window_seconds": 30,
+        "lag_windows": 2,
+        "lag_seconds": 60,
+        "lag_label": "p2",
+        "lag_direction": "future_target",
+        "alignment_scope": "exploratory",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E3_QRNG_next_given_QRNG_EEG",
+        "valid": true,
+        "primary": false,
+        "multichannel": false,
+        "baseline_eps_test": 0.8,
+        "augmented_eps_test": 0.8,
+        "conditional_lift": 0.0,
+        "baseline_ll_test": -5739.337205556664,
+        "augmented_ll_test": -5741.302185730762,
+        "ll_improvement": -1.9649801740979456,
+        "baseline_bic_test": 11496.717124457946,
+        "augmented_bic_test": 11644.98879156308,
+        "bic_improvement": -148.27166710513484,
+        "baseline_aic_test": 11482.674411113328,
+        "augmented_aic_test": 11518.604371461524,
+        "aic_improvement": -35.92996034819589,
+        "n_subjects_evaluated": 10,
+        "n_subjects_positive_lift": 1,
+        "fraction_positive_lift": 0.1,
+        "reason": "ok"
+      }
+    ],
+    "max_conditional_lift": 0.8,
+    "max_augmented_eps_test": 0.8,
+    "max_fraction_positive_lift": 0.3,
+    "best_bic_improvement": -131.9163705762403,
+    "best_ll_improvement": 6.206867485865587,
+    "interpretation": "Positive synchronized conditional lift rows exist, but they remain exploratory unless all gates and controls pass."
   },
   "control_diagnostics": {
     "available": true,
-    "protocol_only": true,
-    "status": "pending_synchronized_data",
-    "n_control_runs": 0,
-    "n_valid_control_runs": 0,
-    "n_control_types": 0,
-    "failed_control_types": [
-      "within_subject_qrng_shuffle",
-      "within_subject_eeg_shuffle",
-      "circular_qrng_shift",
-      "subject_mismatch",
-      "conditional_target_shuffle",
-      "sync_break_control"
-    ],
+    "protocol_only": false,
+    "status": "controls_passed",
+    "n_control_runs": 864,
+    "n_valid_control_runs": 864,
+    "n_control_types": 9,
+    "n_failed_control_types": 0,
+    "failed_control_types": [],
     "required_control_types": [
       "within_subject_qrng_shuffle",
       "within_subject_eeg_shuffle",
@@ -1813,55 +3199,205 @@
       "conditional_target_shuffle",
       "sync_break_control"
     ],
-    "interpretation": "Controls are protocol-only or unavailable because no synchronized alignment frames exist."
+    "control_breakdown": [
+      {
+        "control_type": "circular_qrng_shift",
+        "n_runs": 96,
+        "n_valid_runs": 96,
+        "median_max_augmented_eps_test": 0.8,
+        "max_augmented_eps_test": 0.8,
+        "median_max_lift": 0.0,
+        "max_lift": 0.8,
+        "median_max_bic_improvement": -145.72885788018903,
+        "max_bic_improvement": -13.493938888488628,
+        "fraction_collapsed_overall": 0.9166666666666666,
+        "required_control_fraction": 0.75,
+        "control_tol": 0.05,
+        "passed_estimate": true,
+        "reason": "ok"
+      },
+      {
+        "control_type": "conditional_target_shuffle",
+        "n_runs": 96,
+        "n_valid_runs": 96,
+        "median_max_augmented_eps_test": 0.8,
+        "max_augmented_eps_test": 0.8,
+        "median_max_lift": 0.0,
+        "max_lift": 0.8,
+        "median_max_bic_improvement": -150.91548825792415,
+        "max_bic_improvement": -139.4103096345989,
+        "fraction_collapsed_overall": 0.8854166666666666,
+        "required_control_fraction": 0.75,
+        "control_tol": 0.05,
+        "passed_estimate": true,
+        "reason": "ok"
+      },
+      {
+        "control_type": "phase_randomized_eeg_control",
+        "n_runs": 96,
+        "n_valid_runs": 96,
+        "median_max_augmented_eps_test": 0.0,
+        "max_augmented_eps_test": 0.8,
+        "median_max_lift": 0.0,
+        "max_lift": 0.8,
+        "median_max_bic_improvement": -147.79694923293482,
+        "max_bic_improvement": -131.30368144153545,
+        "fraction_collapsed_overall": 0.8958333333333334,
+        "required_control_fraction": 0.75,
+        "control_tol": 0.05,
+        "passed_estimate": true,
+        "reason": "ok"
+      },
+      {
+        "control_type": "subject_mismatch",
+        "n_runs": 96,
+        "n_valid_runs": 96,
+        "median_max_augmented_eps_test": 0.8,
+        "max_augmented_eps_test": 0.8,
+        "median_max_lift": 0.0,
+        "max_lift": 0.8,
+        "median_max_bic_improvement": -145.97273215098176,
+        "max_bic_improvement": 115.7072508888068,
+        "fraction_collapsed_overall": 0.8645833333333334,
+        "required_control_fraction": 0.75,
+        "control_tol": 0.05,
+        "passed_estimate": true,
+        "reason": "ok"
+      },
+      {
+        "control_type": "sync_break_control",
+        "n_runs": 96,
+        "n_valid_runs": 96,
+        "median_max_augmented_eps_test": 0.0,
+        "max_augmented_eps_test": 0.8,
+        "median_max_lift": 0.0,
+        "max_lift": 0.8,
+        "median_max_bic_improvement": -151.8997763636071,
+        "max_bic_improvement": -141.94964553965474,
+        "fraction_collapsed_overall": 0.875,
+        "required_control_fraction": 0.75,
+        "control_tol": 0.05,
+        "passed_estimate": true,
+        "reason": "ok"
+      },
+      {
+        "control_type": "timestamp_jitter_control",
+        "n_runs": 96,
+        "n_valid_runs": 96,
+        "median_max_augmented_eps_test": 0.8,
+        "max_augmented_eps_test": 0.8,
+        "median_max_lift": 0.0,
+        "max_lift": 0.0,
+        "median_max_bic_improvement": -145.94961477573727,
+        "max_bic_improvement": -138.0915455121485,
+        "fraction_collapsed_overall": 1.0,
+        "required_control_fraction": 0.75,
+        "control_tol": 0.05,
+        "passed_estimate": true,
+        "reason": "ok"
+      },
+      {
+        "control_type": "window_permutation_control",
+        "n_runs": 96,
+        "n_valid_runs": 96,
+        "median_max_augmented_eps_test": 0.8,
+        "max_augmented_eps_test": 0.8,
+        "median_max_lift": 0.0,
+        "max_lift": 0.8,
+        "median_max_bic_improvement": -150.91548825792415,
+        "max_bic_improvement": -139.4103096345989,
+        "fraction_collapsed_overall": 0.8854166666666666,
+        "required_control_fraction": 0.75,
+        "control_tol": 0.05,
+        "passed_estimate": true,
+        "reason": "ok"
+      },
+      {
+        "control_type": "within_subject_eeg_shuffle",
+        "n_runs": 96,
+        "n_valid_runs": 96,
+        "median_max_augmented_eps_test": 0.0,
+        "max_augmented_eps_test": 0.8,
+        "median_max_lift": 0.0,
+        "max_lift": 0.8,
+        "median_max_bic_improvement": -147.11101022673392,
+        "max_bic_improvement": -134.56207446725057,
+        "fraction_collapsed_overall": 0.875,
+        "required_control_fraction": 0.75,
+        "control_tol": 0.05,
+        "passed_estimate": true,
+        "reason": "ok"
+      },
+      {
+        "control_type": "within_subject_qrng_shuffle",
+        "n_runs": 96,
+        "n_valid_runs": 96,
+        "median_max_augmented_eps_test": 0.8,
+        "max_augmented_eps_test": 0.8,
+        "median_max_lift": 0.0,
+        "max_lift": 0.8,
+        "median_max_bic_improvement": -144.85852812568282,
+        "max_bic_improvement": -125.95516024619974,
+        "fraction_collapsed_overall": 0.875,
+        "required_control_fraction": 0.75,
+        "control_tol": 0.05,
+        "passed_estimate": true,
+        "reason": "ok"
+      }
+    ],
+    "interpretation": "All synchronized negative controls collapsed under the official criteria."
   },
   "gates_diagnostics": {
     "available": true,
     "final_status": {
-      "status": "pending_synchronized_data",
-      "protocol_only": true,
-      "interpretation": "No synchronized EEG–QRNG dataset is available. Phase III.2E metrics were generated in protocol-only mode. Empirical CDR remains blocked until real synchronized data are provided.",
+      "status": "exploratory_lead_with_saturation_warning",
+      "protocol_only": false,
+      "interpretation": "Exploratory synchronized conditional lift appeared, but epsilon saturation diagnostics raised a warning. The result cannot be interpreted as evidence without additional diagnostics.",
       "passed_gates": [
-        "F11"
-      ],
-      "failed_gates": [],
-      "warning_gates": [],
-      "not_evaluated_gates": [
-        "F1",
         "F2",
         "F3",
+        "F11"
+      ],
+      "failed_gates": [
+        "F9",
+        "F10"
+      ],
+      "warning_gates": [
+        "F12"
+      ],
+      "not_evaluated_gates": [
+        "F1",
         "F5",
         "F6",
         "F7",
-        "F8",
-        "F9",
-        "F10",
-        "F12"
+        "F8"
       ],
       "can_claim_empirical_cdr": false,
       "can_proceed_to_gate_sensitivity": true,
       "can_proceed_to_diagnostics": true
     },
-    "status": "pending_synchronized_data",
-    "protocol_only": true,
+    "status": "exploratory_lead_with_saturation_warning",
+    "protocol_only": false,
     "can_claim_empirical_cdr": false,
     "passed_gates": [
-      "F11"
-    ],
-    "failed_gates": [],
-    "not_evaluated_gates": [
-      "F1",
       "F2",
       "F3",
+      "F11"
+    ],
+    "failed_gates": [
+      "F9",
+      "F10"
+    ],
+    "not_evaluated_gates": [
+      "F1",
       "F5",
       "F6",
       "F7",
-      "F8",
-      "F9",
-      "F10",
+      "F8"
+    ],
+    "warning_gates": [
       "F12"
     ],
-    "warning_gates": [],
     "gates": [
       {
         "gate": "F1",
@@ -1879,60 +3415,248 @@
       {
         "gate": "F2",
         "name": "Controls collapse",
-        "passed": false,
-        "status": "NOT_EVALUATED",
-        "value": 0.0,
+        "passed": true,
+        "status": "PASS",
+        "value": 0.8645833333333334,
         "threshold": 0.75,
-        "reason": "pending_synchronized_data; controls cannot run without real synchronized frames",
+        "reason": "ok",
         "details": {
-          "available": false,
-          "protocol_only": true,
-          "passed": false,
-          "reason": "pending_synchronized_data",
-          "status": "pending_synchronized_data",
-          "result": {
-            "status": "pending_synchronized_data",
-            "protocol_only": true,
-            "n_control_runs": 0,
-            "n_valid_control_runs": 0,
-            "n_control_pair_rows": 0,
-            "n_control_types": 0,
-            "overall_passed": false,
-            "failed_control_types": [
-              "within_subject_qrng_shuffle",
-              "within_subject_eeg_shuffle",
-              "circular_qrng_shift",
-              "subject_mismatch",
-              "conditional_target_shuffle",
-              "sync_break_control"
-            ],
-            "can_proceed_to_metrics": true,
-            "can_proceed_to_empirical_cdr": false,
-            "interpretation": "No synchronized EEG–QRNG dataset is available. Controls completed in protocol-only mode with empty canonical outputs."
-          },
-          "summary": {
-            "available": false,
-            "reason": "empty_control_runs",
-            "passed": false,
-            "n_control_types": 0,
-            "control_summaries": [],
-            "failed_control_types": [
-              "within_subject_qrng_shuffle",
-              "within_subject_eeg_shuffle",
-              "circular_qrng_shift",
-              "subject_mismatch",
-              "conditional_target_shuffle",
-              "sync_break_control"
-            ],
-            "interpretation": "No control runs are available. This is expected only in protocol-only mode or when no synchronized alignment frames can proceed to controls."
-          },
-          "failed_control_types": [
-            "within_subject_qrng_shuffle",
-            "within_subject_eeg_shuffle",
-            "circular_qrng_shift",
-            "subject_mismatch",
-            "conditional_target_shuffle",
-            "sync_break_control"
+          "failed_control_types": [],
+          "control_summaries": [
+            {
+              "control_type": "circular_qrng_shift",
+              "n_runs": 96,
+              "n_valid_runs": 96,
+              "median_max_baseline_eps_test": 0.8,
+              "median_max_augmented_eps_test": 0.8,
+              "mean_max_augmented_eps_test": 0.5083333333333333,
+              "max_augmented_eps_test": 0.8,
+              "median_max_conditional_lift": 0.0,
+              "mean_max_conditional_lift": 0.06666666666666667,
+              "max_conditional_lift": 0.8,
+              "median_max_bic_improvement": -145.72885788018903,
+              "max_bic_improvement": -13.493938888488628,
+              "median_max_ll_improvement": -0.6587709760924554,
+              "max_ll_improvement": 65.43064599464105,
+              "median_eps_saturation_fraction": 0.5,
+              "max_eps_saturation_fraction": 0.5,
+              "total_multichannel_pair_rows": 192,
+              "total_multichannel_positive_lift_rows": 6,
+              "total_multichannel_strong_candidate_rows": 0,
+              "fraction_runs_below_control_tol": 0.9166666666666666,
+              "fraction_runs_collapsed_overall": 0.9166666666666666,
+              "control_tol": 0.05,
+              "passed": true,
+              "reason": "ok"
+            },
+            {
+              "control_type": "conditional_target_shuffle",
+              "n_runs": 96,
+              "n_valid_runs": 96,
+              "median_max_baseline_eps_test": 0.8,
+              "median_max_augmented_eps_test": 0.8,
+              "mean_max_augmented_eps_test": 0.725,
+              "max_augmented_eps_test": 0.8,
+              "median_max_conditional_lift": 0.0,
+              "mean_max_conditional_lift": 0.075,
+              "max_conditional_lift": 0.8,
+              "median_max_bic_improvement": -150.91548825792415,
+              "max_bic_improvement": -139.4103096345989,
+              "median_max_ll_improvement": -3.3009203165524923,
+              "max_ll_improvement": 2.4656985611700293,
+              "median_eps_saturation_fraction": 0.75,
+              "max_eps_saturation_fraction": 1.0,
+              "total_multichannel_pair_rows": 192,
+              "total_multichannel_positive_lift_rows": 5,
+              "total_multichannel_strong_candidate_rows": 0,
+              "fraction_runs_below_control_tol": 0.8854166666666666,
+              "fraction_runs_collapsed_overall": 0.8854166666666666,
+              "control_tol": 0.05,
+              "passed": true,
+              "reason": "ok"
+            },
+            {
+              "control_type": "phase_randomized_eeg_control",
+              "n_runs": 96,
+              "n_valid_runs": 96,
+              "median_max_baseline_eps_test": 0.4,
+              "median_max_augmented_eps_test": 0.0,
+              "mean_max_augmented_eps_test": 0.23333333333333336,
+              "max_augmented_eps_test": 0.8,
+              "median_max_conditional_lift": 0.0,
+              "mean_max_conditional_lift": 0.08333333333333333,
+              "max_conditional_lift": 0.8,
+              "median_max_bic_improvement": -147.79694923293482,
+              "max_bic_improvement": -131.30368144153545,
+              "median_max_ll_improvement": -1.6905703176253155,
+              "max_ll_improvement": 6.5257747181176455,
+              "median_eps_saturation_fraction": 0.375,
+              "max_eps_saturation_fraction": 0.5,
+              "total_multichannel_pair_rows": 192,
+              "total_multichannel_positive_lift_rows": 6,
+              "total_multichannel_strong_candidate_rows": 0,
+              "fraction_runs_below_control_tol": 0.8958333333333334,
+              "fraction_runs_collapsed_overall": 0.8958333333333334,
+              "control_tol": 0.05,
+              "passed": true,
+              "reason": "ok"
+            },
+            {
+              "control_type": "subject_mismatch",
+              "n_runs": 96,
+              "n_valid_runs": 96,
+              "median_max_baseline_eps_test": 0.8,
+              "median_max_augmented_eps_test": 0.8,
+              "mean_max_augmented_eps_test": 0.4749999999999999,
+              "max_augmented_eps_test": 0.8,
+              "median_max_conditional_lift": 0.0,
+              "mean_max_conditional_lift": 0.075,
+              "max_conditional_lift": 0.8,
+              "median_max_bic_improvement": -145.97273215098176,
+              "max_bic_improvement": 115.70725088880681,
+              "median_max_ll_improvement": -0.815031969055326,
+              "max_ll_improvement": 130.03124088328877,
+              "median_eps_saturation_fraction": 0.5,
+              "max_eps_saturation_fraction": 0.5,
+              "total_multichannel_pair_rows": 192,
+              "total_multichannel_positive_lift_rows": 5,
+              "total_multichannel_strong_candidate_rows": 0,
+              "fraction_runs_below_control_tol": 0.8645833333333334,
+              "fraction_runs_collapsed_overall": 0.8645833333333334,
+              "control_tol": 0.05,
+              "passed": true,
+              "reason": "ok"
+            },
+            {
+              "control_type": "sync_break_control",
+              "n_runs": 96,
+              "n_valid_runs": 96,
+              "median_max_baseline_eps_test": 0.8,
+              "median_max_augmented_eps_test": 0.0,
+              "mean_max_augmented_eps_test": 0.3,
+              "max_augmented_eps_test": 0.8,
+              "median_max_conditional_lift": 0.0,
+              "mean_max_conditional_lift": 0.10000000000000002,
+              "max_conditional_lift": 0.8,
+              "median_max_bic_improvement": -151.8997763636071,
+              "max_bic_improvement": -141.94964553965474,
+              "median_max_ll_improvement": -3.7790348033340706,
+              "max_ll_improvement": 1.1737720810060637,
+              "median_eps_saturation_fraction": 0.5,
+              "max_eps_saturation_fraction": 0.5,
+              "total_multichannel_pair_rows": 192,
+              "total_multichannel_positive_lift_rows": 12,
+              "total_multichannel_strong_candidate_rows": 0,
+              "fraction_runs_below_control_tol": 0.875,
+              "fraction_runs_collapsed_overall": 0.875,
+              "control_tol": 0.05,
+              "passed": true,
+              "reason": "ok"
+            },
+            {
+              "control_type": "timestamp_jitter_control",
+              "n_runs": 96,
+              "n_valid_runs": 96,
+              "median_max_baseline_eps_test": 0.8,
+              "median_max_augmented_eps_test": 0.8,
+              "mean_max_augmented_eps_test": 0.5,
+              "max_augmented_eps_test": 0.8,
+              "median_max_conditional_lift": 0.0,
+              "mean_max_conditional_lift": 0.0,
+              "max_conditional_lift": 0.0,
+              "median_max_bic_improvement": -145.94961477573727,
+              "max_bic_improvement": -138.0915455121485,
+              "median_max_ll_improvement": -0.8034732814331119,
+              "max_ll_improvement": 3.1318426828111114,
+              "median_eps_saturation_fraction": 0.5,
+              "max_eps_saturation_fraction": 0.5,
+              "total_multichannel_pair_rows": 192,
+              "total_multichannel_positive_lift_rows": 0,
+              "total_multichannel_strong_candidate_rows": 0,
+              "fraction_runs_below_control_tol": 1.0,
+              "fraction_runs_collapsed_overall": 1.0,
+              "control_tol": 0.05,
+              "passed": true,
+              "reason": "ok"
+            },
+            {
+              "control_type": "window_permutation_control",
+              "n_runs": 96,
+              "n_valid_runs": 96,
+              "median_max_baseline_eps_test": 0.8,
+              "median_max_augmented_eps_test": 0.8,
+              "mean_max_augmented_eps_test": 0.725,
+              "max_augmented_eps_test": 0.8,
+              "median_max_conditional_lift": 0.0,
+              "mean_max_conditional_lift": 0.075,
+              "max_conditional_lift": 0.8,
+              "median_max_bic_improvement": -150.91548825792415,
+              "max_bic_improvement": -139.4103096345989,
+              "median_max_ll_improvement": -3.3009203165524923,
+              "max_ll_improvement": 2.4656985611700293,
+              "median_eps_saturation_fraction": 0.75,
+              "max_eps_saturation_fraction": 1.0,
+              "total_multichannel_pair_rows": 192,
+              "total_multichannel_positive_lift_rows": 5,
+              "total_multichannel_strong_candidate_rows": 0,
+              "fraction_runs_below_control_tol": 0.8854166666666666,
+              "fraction_runs_collapsed_overall": 0.8854166666666666,
+              "control_tol": 0.05,
+              "passed": true,
+              "reason": "ok"
+            },
+            {
+              "control_type": "within_subject_eeg_shuffle",
+              "n_runs": 96,
+              "n_valid_runs": 96,
+              "median_max_baseline_eps_test": 0.4,
+              "median_max_augmented_eps_test": 0.0,
+              "mean_max_augmented_eps_test": 0.3833333333333333,
+              "max_augmented_eps_test": 0.8,
+              "median_max_conditional_lift": 0.0,
+              "mean_max_conditional_lift": 0.10000000000000002,
+              "max_conditional_lift": 0.8,
+              "median_max_bic_improvement": -147.11101022673392,
+              "max_bic_improvement": -134.56207446725057,
+              "median_max_ll_improvement": -1.381753942382602,
+              "max_ll_improvement": 4.88981614484419,
+              "median_eps_saturation_fraction": 0.5,
+              "max_eps_saturation_fraction": 0.5,
+              "total_multichannel_pair_rows": 192,
+              "total_multichannel_positive_lift_rows": 7,
+              "total_multichannel_strong_candidate_rows": 0,
+              "fraction_runs_below_control_tol": 0.875,
+              "fraction_runs_collapsed_overall": 0.875,
+              "control_tol": 0.05,
+              "passed": true,
+              "reason": "ok"
+            },
+            {
+              "control_type": "within_subject_qrng_shuffle",
+              "n_runs": 96,
+              "n_valid_runs": 96,
+              "median_max_baseline_eps_test": 0.8,
+              "median_max_augmented_eps_test": 0.8,
+              "mean_max_augmented_eps_test": 0.5166666666666666,
+              "max_augmented_eps_test": 0.8,
+              "median_max_conditional_lift": 0.0,
+              "mean_max_conditional_lift": 0.10000000000000002,
+              "max_conditional_lift": 0.8,
+              "median_max_bic_improvement": -144.85852812568282,
+              "max_bic_improvement": -125.95516024619974,
+              "median_max_ll_improvement": -0.16320107082356117,
+              "max_ll_improvement": 9.200035315785499,
+              "median_eps_saturation_fraction": 0.5,
+              "max_eps_saturation_fraction": 0.5,
+              "total_multichannel_pair_rows": 192,
+              "total_multichannel_positive_lift_rows": 10,
+              "total_multichannel_strong_candidate_rows": 0,
+              "fraction_runs_below_control_tol": 0.875,
+              "fraction_runs_collapsed_overall": 0.875,
+              "control_tol": 0.05,
+              "passed": true,
+              "reason": "ok"
+            }
           ],
           "required_control_types": [
             "within_subject_qrng_shuffle",
@@ -1947,12 +3671,16 @@
       {
         "gate": "F3",
         "name": "Holdout generalization",
-        "passed": false,
-        "status": "NOT_EVALUATED",
-        "value": 0.0,
+        "passed": true,
+        "status": "PASS",
+        "value": 1.0,
         "threshold": 1.0,
-        "reason": "no_valid_conditional_pair_rows",
-        "details": {}
+        "reason": "valid synchronized ref/calib/test conditional evaluations exist",
+        "details": {
+          "n_valid_pair_rows": 32,
+          "n_total_pair_rows": 32,
+          "split": "reference_train -> calibration -> test_holdout"
+        }
       },
       {
         "gate": "F5",
@@ -2001,21 +3729,37 @@
         "gate": "F9",
         "name": "Lag stability",
         "passed": false,
-        "status": "NOT_EVALUATED",
-        "value": 0.0,
+        "status": "FAIL",
+        "value": -0.8,
         "threshold": 0.0,
-        "reason": "no_valid_pair_rows",
-        "details": {}
+        "reason": "secondary_lag_effect_exceeds_primary_lag_effect",
+        "details": {
+          "primary_test_lags_windows": [
+            0,
+            1,
+            2
+          ],
+          "primary_max_lift": 0.0,
+          "secondary_max_lift": 0.8,
+          "any_meaningful_secondary": true
+        }
       },
       {
         "gate": "F10",
         "name": "Window specificity",
         "passed": false,
-        "status": "NOT_EVALUATED",
+        "status": "FAIL",
         "value": 0.0,
         "threshold": 0.03,
-        "reason": "no_valid_pair_rows",
-        "details": {}
+        "reason": "only_secondary_or_exploratory_window_has_meaningful_lift",
+        "details": {
+          "primary_test_window_seconds": [
+            5,
+            10
+          ],
+          "primary_max_lift": 0.0,
+          "secondary_max_lift": 0.8
+        }
       },
       {
         "gate": "F11",
@@ -2034,53 +3778,83 @@
         "gate": "F12",
         "name": "Epsilon saturation diagnostic",
         "passed": false,
-        "status": "NOT_EVALUATED",
-        "value": 0.0,
+        "status": "WARN",
+        "value": 0.875,
         "threshold": 0.5,
-        "reason": "no_epsilon_rows_available",
+        "reason": "epsilon_saturation_warning",
         "details": {
           "model_saturation": {
-            "available": false,
-            "reason": "model_scores_missing_or_empty",
-            "saturation_fraction": 0.0,
-            "warning": false
+            "available": true,
+            "epsilon_column_used": "eps_candidate",
+            "eps_saturation_value": 0.8,
+            "eps_saturation_warning_fraction": 0.5,
+            "n_model_rows": 56,
+            "n_saturated_rows": 49,
+            "saturation_fraction": 0.875,
+            "max_epsilon": 0.8,
+            "warning": true,
+            "reason": "eps_saturation_warning",
+            "explicit_eps_saturated_rows": 49,
+            "explicit_eps_saturated_fraction": 0.875
           },
           "pair_saturation": {
-            "available": false,
-            "reason": "no_valid_pair_rows",
+            "available": true,
+            "eps_saturation_value": 0.8,
+            "eps_saturation_warning_fraction": 0.5,
+            "n_valid_pair_rows": 32,
+            "n_either_saturated_rows": 10,
+            "n_both_saturated_rows": 4,
+            "either_saturation_fraction": 0.3125,
+            "both_saturation_fraction": 0.125,
+            "max_baseline_eps_test": 0.8,
+            "max_augmented_eps_test": 0.8,
             "warning": false,
-            "either_saturation_fraction": 0.0,
-            "both_saturation_fraction": 0.0
+            "reason": "ok"
           }
         }
       }
     ],
     "epsilon_saturation": {
       "model_saturation": {
-        "available": false,
-        "reason": "model_scores_missing_or_empty",
-        "saturation_fraction": 0.0,
-        "warning": false
+        "available": true,
+        "epsilon_column_used": "eps_candidate",
+        "eps_saturation_value": 0.8,
+        "eps_saturation_warning_fraction": 0.5,
+        "n_model_rows": 56,
+        "n_saturated_rows": 49,
+        "saturation_fraction": 0.875,
+        "max_epsilon": 0.8,
+        "warning": true,
+        "reason": "eps_saturation_warning",
+        "explicit_eps_saturated_rows": 49,
+        "explicit_eps_saturated_fraction": 0.875
       },
       "pair_saturation": {
-        "available": false,
-        "reason": "no_valid_pair_rows",
+        "available": true,
+        "eps_saturation_value": 0.8,
+        "eps_saturation_warning_fraction": 0.5,
+        "n_valid_pair_rows": 32,
+        "n_either_saturated_rows": 10,
+        "n_both_saturated_rows": 4,
+        "either_saturation_fraction": 0.3125,
+        "both_saturation_fraction": 0.125,
+        "max_baseline_eps_test": 0.8,
+        "max_augmented_eps_test": 0.8,
         "warning": false,
-        "either_saturation_fraction": 0.0,
-        "both_saturation_fraction": 0.0
+        "reason": "ok"
       }
     }
   },
   "gate_sensitivity_diagnostics": {
     "available": true,
-    "status": "pending_synchronized_data",
-    "protocol_only": true,
+    "status": "gate_sensitivity_completed",
+    "protocol_only": false,
     "can_proceed_to_diagnostics": true,
     "can_claim_empirical_cdr": false,
     "official_gate_statuses": {
       "F7": "NOT_EVALUATED",
       "F8": "NOT_EVALUATED",
-      "F12": "NOT_EVALUATED"
+      "F12": "WARN"
     },
     "f7_subject_consistency": {
       "available": false,
@@ -2107,47 +3881,56 @@
       "interpretation": "F8 cannot be diagnosed because there are no primary pair rows."
     },
     "f12_epsilon_saturation": {
-      "available": false,
-      "reason": "no_epsilon_values_available",
+      "available": true,
+      "reason": "ok",
       "official_eps_saturation_value": 0.8,
       "official_warning_fraction": 0.5,
-      "max_saturation_fraction": 0.0,
-      "official_warning_by_data": false,
-      "distance_to_warning_fraction": -0.5,
-      "interpretation": "F12 cannot be diagnosed because no epsilon values are available."
+      "official_saturation_fraction": 0.5258620689655172,
+      "official_warning_by_data": true,
+      "max_saturation_fraction": 0.5258620689655172,
+      "distance_to_warning_fraction": 0.025862068965517238,
+      "n_model_eps_values": 168,
+      "n_pair_eps_values": 64,
+      "n_total_eps_values": 232,
+      "max_epsilon": 0.8,
+      "mean_epsilon": 0.42068965517241386,
+      "median_epsilon": 0.8,
+      "interpretation": "F12 raises an official epsilon saturation warning. This does not prove absence of signal, but blocks strong interpretation until additional diagnostics explain why epsilon saturates."
     },
     "f7_rows": 0,
     "f8_rows": 0,
-    "f12_rows": 0,
-    "interpretation": "No synchronized EEG–QRNG dataset is available. Gate sensitivity was generated in protocol-only mode. F7/F8/F12 cannot be empirically diagnosed until synchronized data exist."
+    "f12_rows": 56,
+    "interpretation": "Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds."
   },
   "multiple_comparison_guard": {
     "available": true,
     "enabled": true,
-    "n_valid_tests": 0,
-    "n_positive_lift_tests": 0,
+    "n_valid_tests": 32,
+    "n_positive_lift_tests": 2,
     "n_primary_positive_lift_tests": 0,
-    "n_exploratory_lift_tests": 0,
+    "n_exploratory_lift_tests": 2,
     "n_strong_candidate_tests": 0,
     "n_primary_strong_candidate_tests": 0,
-    "n_multichannel_tests": 0,
+    "n_multichannel_tests": 16,
     "interpretation": "Strong claims are allowed only from registered primary tests. Exploratory windows, exploratory lags or secondary model families can generate leads but not claims without replication."
   },
   "final_interpretation": {
-    "headline": "Phase III.2E is protocol-ready but empirically pending synchronized EEG–QRNG data.",
-    "status": "pending_synchronized_data",
-    "protocol_only": true,
+    "headline": "Phase III.2E produced exploratory synchronized conditional leads only.",
+    "status": "exploratory_lead_with_saturation_warning",
+    "protocol_only": false,
     "can_claim_empirical_cdr": false,
     "scientific_read": [
-      "The current III.2E execution is protocol-only because no real synchronized EEG–QRNG input CSV is available.",
+      "The current III.2E execution used empirical synchronized rows.",
       "Protocol empirical readiness: False.",
-      "Positive conditional lift rows: 0; primary positive rows: 0.",
+      "Positive conditional lift rows: 2; primary positive rows: 0.",
       "Strong candidate rows: 0; primary strong candidates: 0.",
-      "Multichannel synchronized positive lift rows: 0.",
-      "Not evaluated gates: ['F1', 'F2', 'F3', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F12'].",
+      "Multichannel synchronized positive lift rows: 2.",
+      "Failed official gates: ['F9', 'F10'].",
+      "Warning gates: ['F12'].",
+      "Not evaluated gates: ['F1', 'F5', 'F6', 'F7', 'F8'].",
       "F7/F8/F12 sensitivity diagnostics were generated without changing official gate thresholds.",
       "A positive claim remains prohibited unless synchronized data exist and all required controls/gates support the result."
     ],
-    "recommendation": "Treat Phase III.2E as a completed protocol implementation, not an empirical result. The next scientific requirement is a real synchronized EEG + QRNG dataset with valid timestamp alignment. Do not claim EEG–QRNG coupling from protocol-only outputs."
+    "recommendation": "Document exploratory leads but do not claim empirical CDR unless controls, F7, F8, F12 and primary-gate criteria are satisfied."
   }
 }
