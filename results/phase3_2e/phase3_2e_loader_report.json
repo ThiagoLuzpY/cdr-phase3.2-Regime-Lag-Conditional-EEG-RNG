@@ -5,7 +5,7 @@
   "loader_version": "phase3_2e_loader_v1_protocol_sync_aware",
   "status": "loaded_synchronized_data",
   "interpretation": "Synchronized EEG–QRNG input CSV was loaded successfully after schema and synchronization validation. The dataset can proceed to windowing, feature construction, controls and empirical synchronized CDR.",
-  "created_at": "2026-06-05 00:42:25",
+  "created_at": "2026-06-09 11:50:45",
   "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
   "output_csv": "data\\interim\\phase3_2e\\phase3_2e_loaded_synchronized_windows.csv",
   "metadata_json": "data\\interim\\phase3_2e\\phase3_2e_loader_metadata.json",

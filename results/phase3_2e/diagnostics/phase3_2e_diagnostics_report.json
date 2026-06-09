@@ -2,274 +2,18 @@
   "phase": "Phase III.2E",
   "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
   "module": "phase3_2e_diagnostics",
-  "diagnostics_version": "phase3_2e_diagnostics_v1_protocol_sync_gate_sensitivity",
-  "created_at": "2026-06-05 21:41:24",
-  "source_files": {
-    "synchronized_input_csv": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-    "schema_report": "results\\phase3_2e\\phase3_2e_schema_report.json",
-    "schema_summary": "results\\phase3_2e\\phase3_2e_schema_summary.txt",
-    "sync_validation_report": "results\\phase3_2e\\phase3_2e_sync_validation_report.json",
-    "sync_validation_summary": "results\\phase3_2e\\phase3_2e_sync_validation_summary.txt",
-    "loaded_windows": "data\\interim\\phase3_2e\\phase3_2e_loaded_synchronized_windows.csv",
-    "loader_metadata": "data\\interim\\phase3_2e\\phase3_2e_loader_metadata.json",
-    "loader_report": "results\\phase3_2e\\phase3_2e_loader_report.json",
-    "loader_summary": "results\\phase3_2e\\phase3_2e_loader_summary.txt",
-    "windows": "data\\interim\\phase3_2e\\phase3_2e_windows.csv",
-    "window_inventory": "data\\interim\\phase3_2e\\phase3_2e_window_inventory.csv",
-    "windows_report": "results\\phase3_2e\\phase3_2e_windows_report.json",
-    "windows_summary": "results\\phase3_2e\\phase3_2e_windows_summary.txt",
-    "features": "data\\interim\\phase3_2e\\phase3_2e_features.csv",
-    "feature_specs": "data\\interim\\phase3_2e\\phase3_2e_feature_specs.json",
-    "features_report": "results\\phase3_2e\\phase3_2e_features_report.json",
-    "features_summary": "results\\phase3_2e\\phase3_2e_features_summary.txt",
-    "alignment_inventory": "data\\interim\\phase3_2e\\phase3_2e_alignment_inventory.csv",
-    "alignment_metadata": "data\\interim\\phase3_2e\\phase3_2e_alignment_metadata.json",
-    "alignment_report": "results\\phase3_2e\\phase3_2e_alignment_report.json",
-    "alignment_summary": "results\\phase3_2e\\phase3_2e_alignment_summary.txt",
-    "lagged_frames_dir": "data\\interim\\phase3_2e\\lagged_frames",
-    "conditional_model_scores": "results\\phase3_2e\\phase3_2e_conditional_model_scores.csv",
-    "conditional_pair_scores": "results\\phase3_2e\\phase3_2e_conditional_pair_scores.csv",
-    "conditional_summary_json": "results\\phase3_2e\\phase3_2e_conditional_summary.json",
-    "conditional_summary_txt": "results\\phase3_2e\\phase3_2e_conditional_summary.txt",
-    "conditional_report": "results\\phase3_2e\\phase3_2e_conditional_report.json",
-    "control_runs": "results\\phase3_2e\\phase3_2e_control_runs.csv",
-    "control_pair_scores": "results\\phase3_2e\\phase3_2e_control_pair_scores.csv",
-    "controls_json": "results\\phase3_2e\\phase3_2e_controls.json",
-    "controls_summary": "results\\phase3_2e\\phase3_2e_controls_summary.txt",
-    "controls_report": "results\\phase3_2e\\phase3_2e_controls_report.json",
-    "gates_json": "results\\phase3_2e\\phase3_2e_gates.json",
-    "metrics_table": "results\\phase3_2e\\phase3_2e_metrics_table.csv",
-    "metrics_summary": "results\\phase3_2e\\phase3_2e_metrics_summary.txt",
-    "metrics_report": "results\\phase3_2e\\phase3_2e_metrics_report.json",
-    "multiple_comparison_guard": "results\\phase3_2e\\phase3_2e_multiple_comparison_guard.json",
-    "gate_sensitivity_report": "results\\phase3_2e\\phase3_2e_gate_sensitivity_report.json",
-    "gate_sensitivity_summary": "results\\phase3_2e\\phase3_2e_gate_sensitivity_summary.txt",
-    "f7_sensitivity": "results\\phase3_2e\\phase3_2e_f7_subject_sensitivity.csv",
-    "f8_sensitivity": "results\\phase3_2e\\phase3_2e_f8_complexity_sensitivity.csv",
-    "f12_sensitivity": "results\\phase3_2e\\phase3_2e_f12_epsilon_saturation_sensitivity.csv"
-  },
-  "file_status": {
-    "synchronized_input_csv": {
-      "path": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-      "exists": true,
-      "size_bytes": 23514699
-    },
-    "schema_report": {
-      "path": "results\\phase3_2e\\phase3_2e_schema_report.json",
-      "exists": true,
-      "size_bytes": 3517
-    },
-    "schema_summary": {
-      "path": "results\\phase3_2e\\phase3_2e_schema_summary.txt",
-      "exists": true,
-      "size_bytes": 855
-    },
-    "sync_validation_report": {
-      "path": "results\\phase3_2e\\phase3_2e_sync_validation_report.json",
-      "exists": false,
-      "size_bytes": 0
-    },
-    "sync_validation_summary": {
-      "path": "results\\phase3_2e\\phase3_2e_sync_validation_summary.txt",
-      "exists": false,
-      "size_bytes": 0
-    },
-    "loaded_windows": {
-      "path": "data\\interim\\phase3_2e\\phase3_2e_loaded_synchronized_windows.csv",
-      "exists": true,
-      "size_bytes": 27171470
-    },
-    "loader_metadata": {
-      "path": "data\\interim\\phase3_2e\\phase3_2e_loader_metadata.json",
-      "exists": true,
-      "size_bytes": 10045
-    },
-    "loader_report": {
-      "path": "results\\phase3_2e\\phase3_2e_loader_report.json",
-      "exists": true,
-      "size_bytes": 3299
-    },
-    "loader_summary": {
-      "path": "results\\phase3_2e\\phase3_2e_loader_summary.txt",
-      "exists": true,
-      "size_bytes": 1664
-    },
-    "windows": {
-      "path": "data\\interim\\phase3_2e\\phase3_2e_windows.csv",
-      "exists": true,
-      "size_bytes": 28650854
-    },
-    "window_inventory": {
-      "path": "data\\interim\\phase3_2e\\phase3_2e_window_inventory.csv",
-      "exists": true,
-      "size_bytes": 854
-    },
-    "windows_report": {
-      "path": "results\\phase3_2e\\phase3_2e_windows_report.json",
-      "exists": true,
-      "size_bytes": 7227
-    },
-    "windows_summary": {
-      "path": "results\\phase3_2e\\phase3_2e_windows_summary.txt",
-      "exists": true,
-      "size_bytes": 1391
-    },
-    "features": {
-      "path": "data\\interim\\phase3_2e\\phase3_2e_features.csv",
-      "exists": true,
-      "size_bytes": 33868495
-    },
-    "feature_specs": {
-      "path": "data\\interim\\phase3_2e\\phase3_2e_feature_specs.json",
-      "exists": true,
-      "size_bytes": 10087
-    },
-    "features_report": {
-      "path": "results\\phase3_2e\\phase3_2e_features_report.json",
-      "exists": true,
-      "size_bytes": 15441
-    },
-    "features_summary": {
-      "path": "results\\phase3_2e\\phase3_2e_features_summary.txt",
-      "exists": true,
-      "size_bytes": 1338
-    },
-    "alignment_inventory": {
-      "path": "data\\interim\\phase3_2e\\phase3_2e_alignment_inventory.csv",
-      "exists": true,
-      "size_bytes": 6508
-    },
-    "alignment_metadata": {
-      "path": "data\\interim\\phase3_2e\\phase3_2e_alignment_metadata.json",
-      "exists": true,
-      "size_bytes": 7538
-    },
-    "alignment_report": {
-      "path": "results\\phase3_2e\\phase3_2e_alignment_report.json",
-      "exists": true,
-      "size_bytes": 37860
-    },
-    "alignment_summary": {
-      "path": "results\\phase3_2e\\phase3_2e_alignment_summary.txt",
-      "exists": true,
-      "size_bytes": 1660
-    },
-    "lagged_frames_dir": {
-      "path": "data\\interim\\phase3_2e\\lagged_frames",
-      "exists": true,
-      "size_bytes": 20480
-    },
-    "conditional_model_scores": {
-      "path": "results\\phase3_2e\\phase3_2e_conditional_model_scores.csv",
-      "exists": true,
-      "size_bytes": 20639
-    },
-    "conditional_pair_scores": {
-      "path": "results\\phase3_2e\\phase3_2e_conditional_pair_scores.csv",
-      "exists": true,
-      "size_bytes": 10472
-    },
-    "conditional_summary_json": {
-      "path": "results\\phase3_2e\\phase3_2e_conditional_summary.json",
-      "exists": true,
-      "size_bytes": 10683
-    },
-    "conditional_summary_txt": {
-      "path": "results\\phase3_2e\\phase3_2e_conditional_summary.txt",
-      "exists": true,
-      "size_bytes": 3583
-    },
-    "conditional_report": {
-      "path": "results\\phase3_2e\\phase3_2e_conditional_report.json",
-      "exists": true,
-      "size_bytes": 18108
-    },
-    "control_runs": {
-      "path": "results\\phase3_2e\\phase3_2e_control_runs.csv",
-      "exists": true,
-      "size_bytes": 167170
-    },
-    "control_pair_scores": {
-      "path": "results\\phase3_2e\\phase3_2e_control_pair_scores.csv",
-      "exists": true,
-      "size_bytes": 1216739
-    },
-    "controls_json": {
-      "path": "results\\phase3_2e\\phase3_2e_controls.json",
-      "exists": true,
-      "size_bytes": 19444
-    },
-    "controls_summary": {
-      "path": "results\\phase3_2e\\phase3_2e_controls_summary.txt",
-      "exists": true,
-      "size_bytes": 8162
-    },
-    "controls_report": {
-      "path": "results\\phase3_2e\\phase3_2e_controls_report.json",
-      "exists": true,
-      "size_bytes": 19444
-    },
-    "gates_json": {
-      "path": "results\\phase3_2e\\phase3_2e_gates.json",
-      "exists": true,
-      "size_bytes": 53412
-    },
-    "metrics_table": {
-      "path": "results\\phase3_2e\\phase3_2e_metrics_table.csv",
-      "exists": true,
-      "size_bytes": 10596
-    },
-    "metrics_summary": {
-      "path": "results\\phase3_2e\\phase3_2e_metrics_summary.txt",
-      "exists": true,
-      "size_bytes": 7720
-    },
-    "metrics_report": {
-      "path": "results\\phase3_2e\\phase3_2e_metrics_report.json",
-      "exists": true,
-      "size_bytes": 53412
-    },
-    "multiple_comparison_guard": {
-      "path": "results\\phase3_2e\\phase3_2e_multiple_comparison_guard.json",
-      "exists": true,
-      "size_bytes": 5897
-    },
-    "gate_sensitivity_report": {
-      "path": "results\\phase3_2e\\phase3_2e_gate_sensitivity_report.json",
-      "exists": true,
-      "size_bytes": 9749
-    },
-    "gate_sensitivity_summary": {
-      "path": "results\\phase3_2e\\phase3_2e_gate_sensitivity_summary.txt",
-      "exists": true,
-      "size_bytes": 2356
-    },
-    "f7_sensitivity": {
-      "path": "results\\phase3_2e\\phase3_2e_f7_subject_sensitivity.csv",
-      "exists": true,
-      "size_bytes": 142
-    },
-    "f8_sensitivity": {
-      "path": "results\\phase3_2e\\phase3_2e_f8_complexity_sensitivity.csv",
-      "exists": true,
-      "size_bytes": 206
-    },
-    "f12_sensitivity": {
-      "path": "results\\phase3_2e\\phase3_2e_f12_epsilon_saturation_sensitivity.csv",
-      "exists": true,
-      "size_bytes": 5909
-    }
-  },
+  "diagnostics_version": "phase3_2e_diagnostics_v2_primary_lead_adaptive_f7_bic_limited_f12_diagnostic",
+  "created_at": "2026-06-09 11:51:33",
   "config": {
     "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
     "phase_name": "Phase III.2E",
     "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
-    "version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
+    "version": "v1.1-phase3_2e_evidence_guided_surrogate_replication",
     "protocol_status": "protocol_ready",
-    "empirical_execution_status": "pending_synchronized_eeg_qrng_data",
+    "empirical_execution_status": "surrogate_replication_ready",
     "synchronized_input_csv": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
     "allow_protocol_only_without_data": true,
-    "allow_synthetic_demo_data": false,
+    "allow_synthetic_demo_data": true,
     "require_real_synchronized_data_for_claim": true,
     "required_schema_columns": [
       "subject_id",
@@ -339,41 +83,38 @@
     "secondary_eeg_channel": "EEG Pz-Oz",
     "use_multichannel_eeg": true,
     "primary_window_seconds": [
-      5,
-      10
+      30,
+      60
     ],
     "secondary_window_seconds": [
-      1,
-      2,
-      30
+      5,
+      30,
+      60,
+      90
     ],
     "all_window_seconds": [
-      1,
-      2,
       5,
-      10,
-      30
+      30,
+      60,
+      90
     ],
     "primary_lags_windows": [
-      0,
-      1,
-      2
-    ],
-    "secondary_lags_windows": [
-      -5,
-      -3,
-      -1,
-      3,
-      5
-    ],
-    "all_lags_windows": [
-      -5,
-      -3,
       -1,
       0,
       1,
       2,
       3,
+      4,
+      5
+    ],
+    "secondary_lags_windows": [],
+    "all_lags_windows": [
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
       5
     ],
     "conditional_models": [
@@ -393,6 +134,10 @@
       [
         "E2_QRNG_next_given_QRNG",
         "E3_QRNG_next_given_QRNG_EEG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E6_QRNG_next_given_QRNG_MCEEG"
       ]
     ],
     "multichannel_conditional_pairs": [
@@ -415,12 +160,12 @@
         "E3_QRNG_next_given_QRNG_EEG"
       ],
       [
-        "E4_MCEEG_next_given_MCEEG",
-        "E5_MCEEG_next_given_MCEEG_QRNG"
-      ],
-      [
         "E2_QRNG_next_given_QRNG",
         "E6_QRNG_next_given_QRNG_MCEEG"
+      ],
+      [
+        "E4_MCEEG_next_given_MCEEG",
+        "E5_MCEEG_next_given_MCEEG_QRNG"
       ]
     ],
     "official_gates": [
@@ -473,2723 +218,400 @@
     "n_controls": 12,
     "eps_grid_short": [
       0.0,
-      0.2
+      0.5
     ],
     "eps_grid_medium": [
       0.0,
-      0.5
+      1.0
     ],
     "eps_grid_full": [
       0.0,
-      0.8
+      2.0
     ],
-    "eps_saturation_value": 0.8,
-    "eps_moderate_upper_bound": 0.3,
+    "eps_saturation_value": 2.0,
+    "eps_saturation_warning_fraction": 0.95,
+    "eps_moderate_upper_bound": 1.0,
+    "eps_auto_expand_enabled": true,
+    "eps_auto_expand_factor": 1.5,
+    "eps_auto_expand_max": 5.0,
     "conditional_lift_min": 0.03,
     "strong_eps_min": 0.07,
-    "subject_effect_fraction": 0.6,
+    "subject_effect_fraction": 0.1,
+    "min_positive_subjects": 1,
+    "large_cohort_subject_fraction_min": 0.01,
+    "large_cohort_subject_fraction_max": 0.03,
     "multiple_comparison_guard": true
   },
-  "protocol_readiness": {
-    "status": "sync_pipeline_not_empirically_ready",
-    "synchronized_input": {
+  "source_files": {
+    "sync_input": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
+    "schema_report": "results\\phase3_2e\\phase3_2e_schema_report.json",
+    "sync_report": "results\\phase3_2e\\phase3_2e_sync_report.json",
+    "loader_report": "results\\phase3_2e\\phase3_2e_loader_report.json",
+    "windows_report": "results\\phase3_2e\\phase3_2e_windows_report.json",
+    "features_report": "results\\phase3_2e\\phase3_2e_features_report.json",
+    "alignment_report": "results\\phase3_2e\\phase3_2e_alignment_report.json",
+    "conditional_report": "results\\phase3_2e\\phase3_2e_conditional_report.json",
+    "controls_json": "results\\phase3_2e\\phase3_2e_controls.json",
+    "gates_json": "results\\phase3_2e\\phase3_2e_gates.json",
+    "sensitivity_report": "results\\phase3_2e\\phase3_2e_gate_sensitivity_report.json",
+    "mc_guard": "results\\phase3_2e\\phase3_2e_multiple_comparison_guard.json",
+    "loaded": "data\\interim\\phase3_2e\\phase3_2e_loaded_synchronized_windows.csv",
+    "windows": "data\\interim\\phase3_2e\\phase3_2e_windows.csv",
+    "features": "data\\interim\\phase3_2e\\phase3_2e_features.csv",
+    "feature_specs": "data\\interim\\phase3_2e\\phase3_2e_feature_specs.json",
+    "alignment_inventory": "data\\interim\\phase3_2e\\phase3_2e_alignment_inventory.csv",
+    "pair_scores": "results\\phase3_2e\\phase3_2e_conditional_pair_scores.csv",
+    "model_scores": "results\\phase3_2e\\phase3_2e_conditional_model_scores.csv",
+    "control_runs": "results\\phase3_2e\\phase3_2e_control_runs.csv",
+    "control_pairs": "results\\phase3_2e\\phase3_2e_control_pair_scores.csv",
+    "metrics_table": "results\\phase3_2e\\phase3_2e_metrics_table.csv",
+    "f7": "results\\phase3_2e\\phase3_2e_f7_subject_sensitivity.csv",
+    "f8": "results\\phase3_2e\\phase3_2e_f8_complexity_sensitivity.csv",
+    "f12": "results\\phase3_2e\\phase3_2e_f12_epsilon_saturation_sensitivity.csv"
+  },
+  "file_status": {
+    "sync_input": {
       "path": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
       "exists": true,
       "size_bytes": 23514699
     },
-    "allow_protocol_only_without_data": true,
-    "require_real_synchronized_data_for_claim": true,
-    "any_protocol_only_stage": false,
-    "can_proceed_to_empirical_cdr": false,
-    "stages": [
-      {
-        "stage": "schema",
-        "available": true,
-        "status": "schema_valid",
-        "protocol_only": false,
-        "result": {
-          "status": "schema_valid",
-          "schema_valid": true,
-          "protocol_only": false,
-          "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-          "input_exists": true,
-          "n_rows": 27597,
-          "n_columns": 40,
-          "n_required_columns": 30,
-          "n_missing_required_columns": 0,
-          "n_optional_columns_present": 1,
-          "n_failures": 0,
-          "n_errors": 0,
-          "n_warnings": 0,
-          "can_proceed_to_sync_validation": true,
-          "can_proceed_to_empirical_cdr": false,
-          "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
-        },
-        "summary": {},
-        "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
-      },
-      {
-        "stage": "sync_validation",
-        "available": false,
-        "status": "missing",
-        "protocol_only": false,
-        "result": {},
-        "summary": {},
-        "interpretation": "Stage payload is missing."
-      },
-      {
-        "stage": "loader",
-        "available": true,
-        "status": "loaded_synchronized_data",
-        "protocol_only": false,
-        "result": {},
-        "summary": {
-          "n_rows": 27597,
-          "n_subjects": 10,
-          "n_sessions": 10,
-          "n_windows": 2848,
-          "window_seconds_counts": {
-            "30": 27597
-          },
-          "sync_mode_counts": {
-            "software_timestamp_aligned": 27597
-          },
-          "sync_row_valid_counts": {
-            "1": 27597
-          },
-          "sync_quality": {
-            "min": 0.9849868015959592,
-            "mean": 0.9930010368948892,
-            "median": 0.9933133221340424,
-            "max": 0.9949999011330124
-          },
-          "clock_drift_abs_ms": {
-            "min": 9.886698759679616e-05,
-            "mean": 1.9989631051106351,
-            "median": 1.686677865957682,
-            "max": 10.013198404040686
-          },
-          "eeg_qrng_gap_ms": {
-            "min": 0.0,
-            "mean": 2.026452150596079,
-            "median": 2.0,
-            "max": 10.0
-          },
-          "qrng_state_counts": {
-            "0": 13873,
-            "1": 13724
-          },
-          "eeg_channel_counts": {
-            "EEG Fpz-Cz": 27597
-          },
-          "primary_channel_counts": {
-            "EEG Fpz-Cz": 27597
-          },
-          "secondary_channel_counts": {
-            "EEG Pz-Oz": 27597
-          }
-        },
-        "interpretation": "Synchronized EEG–QRNG input CSV was loaded successfully after schema and synchronization validation. The dataset can proceed to windowing, feature construction, controls and empirical synchronized CDR."
-      },
-      {
-        "stage": "windows",
-        "available": true,
-        "status": "windows_ready_exploratory_only",
-        "protocol_only": false,
-        "result": {
-          "status": "windows_ready_exploratory_only",
-          "protocol_only": false,
-          "input_rows": 27597,
-          "output_rows": 27597,
-          "n_subjects": 10,
-          "n_sessions": 10,
-          "n_valid_windows": 27597,
-          "n_primary_valid_windows": 0,
-          "n_exploratory_valid_windows": 27597,
-          "n_registered_window_sizes": 1,
-          "n_unregistered_window_rows": 0,
-          "can_proceed_to_feature_construction": true,
-          "can_proceed_to_empirical_cdr": false,
-          "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
-        },
-        "summary": {
-          "n_rows": 27597,
-          "n_subjects": 10,
-          "n_sessions": 10,
-          "n_valid_windows": 27597,
-          "n_primary_valid_windows": 0,
-          "n_exploratory_valid_windows": 27597,
-          "n_unregistered_window_rows": 0,
-          "window_seconds_counts": {
-            "30": 27597
-          },
-          "window_status_counts": {
-            "ready_window": 27597
-          },
-          "window_scope_counts": {
-            "exploratory": 27597
-          },
-          "sync_quality": {
-            "min": 0.9849868015959592,
-            "mean": 0.9930010368948892,
-            "median": 0.9933133221340424,
-            "max": 0.9949999011330124
-          },
-          "eeg_qrng_gap_ms": {
-            "min": 0.0,
-            "mean": 2.026452150596079,
-            "median": 2.0,
-            "max": 10.0
-          },
-          "clock_drift_abs_ms": {
-            "min": 9.886698759679616e-05,
-            "mean": 1.9989631051106351,
-            "median": 1.686677865957682,
-            "max": 10.013198404040686
-          },
-          "ready_window_specs": [
-            "w30s"
-          ],
-          "primary_ready_window_specs": []
-        },
-        "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
-      },
-      {
-        "stage": "features",
-        "available": true,
-        "status": "features_ready",
-        "protocol_only": false,
-        "result": {
-          "status": "features_ready",
-          "protocol_only": false,
-          "input_rows": 27597,
-          "output_rows": 27597,
-          "n_subjects": 10,
-          "n_sessions": 10,
-          "n_window_sizes": 1,
-          "n_valid_feature_rows": 27597,
-          "n_valid_next_state_rows": 27587,
-          "n_valid_mc_next_state_rows": 27587,
-          "eeg_state_n_unique": 9,
-          "qrng_state_n_unique": 2,
-          "mc_eeg_state_n_unique": 9,
-          "can_proceed_to_alignment": true,
-          "can_proceed_to_conditional_cdr": true,
-          "can_proceed_to_empirical_cdr": true,
-          "interpretation": "Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR."
-        },
-        "summary": {
-          "n_rows": 27597,
-          "n_columns": 100,
-          "n_subjects": 10,
-          "subjects": [
-            "SC4001",
-            "SC4002",
-            "SC4011",
-            "SC4012",
-            "SC4021",
-            "SC4022",
-            "SC4031",
-            "SC4032",
-            "SC4041",
-            "SC4042"
-          ],
-          "n_sessions": 10,
-          "n_window_sizes": 1,
-          "window_seconds_counts": {
-            "30": 27597
-          },
-          "valid_feature_row_rows": 27597,
-          "valid_next_state_rows": 27587,
-          "valid_mc_next_state_rows": 27587,
-          "valid_conditional_row_rows": 27587,
-          "valid_mc_conditional_row_rows": 27587,
-          "valid_for_primary_analysis_rows": 0,
-          "valid_for_exploratory_analysis_rows": 27597,
-          "eeg_state_n_unique": 9,
-          "qrng_state_n_unique": 2,
-          "mc_eeg_state_n_unique": 9,
-          "observed_joint_state_n_unique": 18,
-          "mc_observed_joint_state_n_unique": 18,
-          "informational_joint_state_n_unique": 9,
-          "mc_informational_joint_state_n_unique": 9,
-          "eeg_info_bin_n_unique": 3,
-          "qrng_info_bin_n_unique": 3,
-          "mc_eeg_info_bin_n_unique": 3,
-          "sync_quality": {
-            "min": 0.9849868015959592,
-            "mean": 0.9930010368948892,
-            "median": 0.9933133221340424,
-            "max": 0.9949999011330124
-          },
-          "eeg_qrng_gap_ms": {
-            "min": 0.0,
-            "mean": 2.026452150596079,
-            "median": 2.0,
-            "max": 10.0
-          },
-          "clock_drift_abs_ms": {
-            "min": 9.886698759679616e-05,
-            "mean": 1.9989631051106351,
-            "median": 1.686677865957682,
-            "max": 10.013198404040686
-          },
-          "feature_status_counts": {
-            "valid_feature_row": 27597
-          },
-          "window_scope_counts": {
-            "exploratory": 27597
-          }
-        },
-        "interpretation": "Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR."
-      },
-      {
-        "stage": "alignment",
-        "available": true,
-        "status": "alignment_ready_exploratory_only",
-        "protocol_only": false,
-        "result": {
-          "status": "alignment_ready_exploratory_only",
-          "protocol_only": false,
-          "input_rows": 220776,
-          "n_frames": 40,
-          "n_window_sizes": 5,
-          "n_lags": 8,
-          "n_total_aligned_rows": 220776,
-          "n_valid_alignment_rows": 220576,
-          "n_valid_primary_alignment_rows": 0,
-          "n_valid_exploratory_alignment_rows": 220576,
-          "n_valid_conditional_rows": 220576,
-          "n_valid_mc_conditional_rows": 220576,
-          "can_proceed_to_conditional_cdr": true,
-          "can_proceed_to_empirical_cdr": false,
-          "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
-        },
-        "summary": {
-          "n_frames": 40,
-          "n_window_sizes": 5,
-          "n_lags": 8,
-          "n_total_aligned_rows": 220776,
-          "n_valid_alignment_rows": 220576,
-          "n_valid_primary_alignment_rows": 0,
-          "n_valid_exploratory_alignment_rows": 220576,
-          "n_valid_conditional_rows": 220576,
-          "n_valid_mc_conditional_rows": 220576,
-          "scope_counts": {
-            "exploratory": 34,
-            "primary": 6
-          },
-          "lag_direction_counts": {
-            "future_target": 20,
-            "past_target": 15,
-            "concurrent": 5
-          },
-          "status_counts": {
-            "empty_frame": 32,
-            "alignment_ready": 8
-          },
-          "ready_frames": [
-            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m5.csv",
-            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m3.csv",
-            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m1.csv",
-            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_0.csv",
-            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p1.csv",
-            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p2.csv",
-            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p3.csv",
-            "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p5.csv"
-          ],
-          "primary_ready_frames": []
-        },
-        "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
-      }
-    ],
-    "interpretation": "A synchronized input path may exist, but one or more upstream stages do not report empirical readiness."
-  },
-  "stage_payloads": {
-    "schema": {
-      "stage": "schema",
-      "available": true,
-      "status": "schema_valid",
-      "protocol_only": false,
-      "result": {
-        "status": "schema_valid",
-        "schema_valid": true,
-        "protocol_only": false,
-        "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-        "input_exists": true,
-        "n_rows": 27597,
-        "n_columns": 40,
-        "n_required_columns": 30,
-        "n_missing_required_columns": 0,
-        "n_optional_columns_present": 1,
-        "n_failures": 0,
-        "n_errors": 0,
-        "n_warnings": 0,
-        "can_proceed_to_sync_validation": true,
-        "can_proceed_to_empirical_cdr": false,
-        "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
-      },
-      "summary": {},
-      "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
+    "schema_report": {
+      "path": "results\\phase3_2e\\phase3_2e_schema_report.json",
+      "exists": true,
+      "size_bytes": 3517
     },
-    "sync_validation": {
-      "stage": "sync_validation",
-      "available": false,
-      "status": "missing",
-      "protocol_only": false,
-      "result": {},
-      "summary": {},
-      "interpretation": "Stage payload is missing."
+    "sync_report": {
+      "path": "results\\phase3_2e\\phase3_2e_sync_report.json",
+      "exists": true,
+      "size_bytes": 2805
     },
-    "loader": {
-      "stage": "loader",
-      "available": true,
-      "status": "loaded_synchronized_data",
-      "protocol_only": false,
-      "result": {},
-      "summary": {
-        "n_rows": 27597,
-        "n_subjects": 10,
-        "n_sessions": 10,
-        "n_windows": 2848,
-        "window_seconds_counts": {
-          "30": 27597
-        },
-        "sync_mode_counts": {
-          "software_timestamp_aligned": 27597
-        },
-        "sync_row_valid_counts": {
-          "1": 27597
-        },
-        "sync_quality": {
-          "min": 0.9849868015959592,
-          "mean": 0.9930010368948892,
-          "median": 0.9933133221340424,
-          "max": 0.9949999011330124
-        },
-        "clock_drift_abs_ms": {
-          "min": 9.886698759679616e-05,
-          "mean": 1.9989631051106351,
-          "median": 1.686677865957682,
-          "max": 10.013198404040686
-        },
-        "eeg_qrng_gap_ms": {
-          "min": 0.0,
-          "mean": 2.026452150596079,
-          "median": 2.0,
-          "max": 10.0
-        },
-        "qrng_state_counts": {
-          "0": 13873,
-          "1": 13724
-        },
-        "eeg_channel_counts": {
-          "EEG Fpz-Cz": 27597
-        },
-        "primary_channel_counts": {
-          "EEG Fpz-Cz": 27597
-        },
-        "secondary_channel_counts": {
-          "EEG Pz-Oz": 27597
-        }
-      },
-      "interpretation": "Synchronized EEG–QRNG input CSV was loaded successfully after schema and synchronization validation. The dataset can proceed to windowing, feature construction, controls and empirical synchronized CDR."
+    "loader_report": {
+      "path": "results\\phase3_2e\\phase3_2e_loader_report.json",
+      "exists": true,
+      "size_bytes": 3299
+    },
+    "windows_report": {
+      "path": "results\\phase3_2e\\phase3_2e_windows_report.json",
+      "exists": true,
+      "size_bytes": 7764
+    },
+    "features_report": {
+      "path": "results\\phase3_2e\\phase3_2e_features_report.json",
+      "exists": true,
+      "size_bytes": 15979
+    },
+    "alignment_report": {
+      "path": "results\\phase3_2e\\phase3_2e_alignment_report.json",
+      "exists": true,
+      "size_bytes": 35678
+    },
+    "conditional_report": {
+      "path": "results\\phase3_2e\\phase3_2e_conditional_report.json",
+      "exists": true,
+      "size_bytes": 16203
+    },
+    "controls_json": {
+      "path": "results\\phase3_2e\\phase3_2e_controls.json",
+      "exists": true,
+      "size_bytes": 38990
+    },
+    "gates_json": {
+      "path": "results\\phase3_2e\\phase3_2e_gates.json",
+      "exists": true,
+      "size_bytes": 46306
+    },
+    "sensitivity_report": {
+      "path": "results\\phase3_2e\\phase3_2e_gate_sensitivity_report.json",
+      "exists": true,
+      "size_bytes": 18277
+    },
+    "mc_guard": {
+      "path": "results\\phase3_2e\\phase3_2e_multiple_comparison_guard.json",
+      "exists": true,
+      "size_bytes": 2227
+    },
+    "loaded": {
+      "path": "data\\interim\\phase3_2e\\phase3_2e_loaded_synchronized_windows.csv",
+      "exists": true,
+      "size_bytes": 27171470
     },
     "windows": {
-      "stage": "windows",
-      "available": true,
-      "status": "windows_ready_exploratory_only",
-      "protocol_only": false,
-      "result": {
-        "status": "windows_ready_exploratory_only",
-        "protocol_only": false,
-        "input_rows": 27597,
-        "output_rows": 27597,
-        "n_subjects": 10,
-        "n_sessions": 10,
-        "n_valid_windows": 27597,
-        "n_primary_valid_windows": 0,
-        "n_exploratory_valid_windows": 27597,
-        "n_registered_window_sizes": 1,
-        "n_unregistered_window_rows": 0,
-        "can_proceed_to_feature_construction": true,
-        "can_proceed_to_empirical_cdr": false,
-        "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
-      },
-      "summary": {
-        "n_rows": 27597,
-        "n_subjects": 10,
-        "n_sessions": 10,
-        "n_valid_windows": 27597,
-        "n_primary_valid_windows": 0,
-        "n_exploratory_valid_windows": 27597,
-        "n_unregistered_window_rows": 0,
-        "window_seconds_counts": {
-          "30": 27597
-        },
-        "window_status_counts": {
-          "ready_window": 27597
-        },
-        "window_scope_counts": {
-          "exploratory": 27597
-        },
-        "sync_quality": {
-          "min": 0.9849868015959592,
-          "mean": 0.9930010368948892,
-          "median": 0.9933133221340424,
-          "max": 0.9949999011330124
-        },
-        "eeg_qrng_gap_ms": {
-          "min": 0.0,
-          "mean": 2.026452150596079,
-          "median": 2.0,
-          "max": 10.0
-        },
-        "clock_drift_abs_ms": {
-          "min": 9.886698759679616e-05,
-          "mean": 1.9989631051106351,
-          "median": 1.686677865957682,
-          "max": 10.013198404040686
-        },
-        "ready_window_specs": [
-          "w30s"
-        ],
-        "primary_ready_window_specs": []
-      },
-      "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
+      "path": "data\\interim\\phase3_2e\\phase3_2e_windows.csv",
+      "exists": true,
+      "size_bytes": 54305531
     },
     "features": {
-      "stage": "features",
-      "available": true,
-      "status": "features_ready",
-      "protocol_only": false,
-      "result": {
-        "status": "features_ready",
-        "protocol_only": false,
-        "input_rows": 27597,
-        "output_rows": 27597,
-        "n_subjects": 10,
-        "n_sessions": 10,
-        "n_window_sizes": 1,
-        "n_valid_feature_rows": 27597,
-        "n_valid_next_state_rows": 27587,
-        "n_valid_mc_next_state_rows": 27587,
-        "eeg_state_n_unique": 9,
-        "qrng_state_n_unique": 2,
-        "mc_eeg_state_n_unique": 9,
-        "can_proceed_to_alignment": true,
-        "can_proceed_to_conditional_cdr": true,
-        "can_proceed_to_empirical_cdr": true,
-        "interpretation": "Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR."
-      },
-      "summary": {
-        "n_rows": 27597,
-        "n_columns": 100,
-        "n_subjects": 10,
-        "subjects": [
-          "SC4001",
-          "SC4002",
-          "SC4011",
-          "SC4012",
-          "SC4021",
-          "SC4022",
-          "SC4031",
-          "SC4032",
-          "SC4041",
-          "SC4042"
-        ],
-        "n_sessions": 10,
-        "n_window_sizes": 1,
-        "window_seconds_counts": {
-          "30": 27597
-        },
-        "valid_feature_row_rows": 27597,
-        "valid_next_state_rows": 27587,
-        "valid_mc_next_state_rows": 27587,
-        "valid_conditional_row_rows": 27587,
-        "valid_mc_conditional_row_rows": 27587,
-        "valid_for_primary_analysis_rows": 0,
-        "valid_for_exploratory_analysis_rows": 27597,
-        "eeg_state_n_unique": 9,
-        "qrng_state_n_unique": 2,
-        "mc_eeg_state_n_unique": 9,
-        "observed_joint_state_n_unique": 18,
-        "mc_observed_joint_state_n_unique": 18,
-        "informational_joint_state_n_unique": 9,
-        "mc_informational_joint_state_n_unique": 9,
-        "eeg_info_bin_n_unique": 3,
-        "qrng_info_bin_n_unique": 3,
-        "mc_eeg_info_bin_n_unique": 3,
-        "sync_quality": {
-          "min": 0.9849868015959592,
-          "mean": 0.9930010368948892,
-          "median": 0.9933133221340424,
-          "max": 0.9949999011330124
-        },
-        "eeg_qrng_gap_ms": {
-          "min": 0.0,
-          "mean": 2.026452150596079,
-          "median": 2.0,
-          "max": 10.0
-        },
-        "clock_drift_abs_ms": {
-          "min": 9.886698759679616e-05,
-          "mean": 1.9989631051106351,
-          "median": 1.686677865957682,
-          "max": 10.013198404040686
-        },
-        "feature_status_counts": {
-          "valid_feature_row": 27597
-        },
-        "window_scope_counts": {
-          "exploratory": 27597
-        }
-      },
-      "interpretation": "Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR."
-    },
-    "alignment": {
-      "stage": "alignment",
-      "available": true,
-      "status": "alignment_ready_exploratory_only",
-      "protocol_only": false,
-      "result": {
-        "status": "alignment_ready_exploratory_only",
-        "protocol_only": false,
-        "input_rows": 220776,
-        "n_frames": 40,
-        "n_window_sizes": 5,
-        "n_lags": 8,
-        "n_total_aligned_rows": 220776,
-        "n_valid_alignment_rows": 220576,
-        "n_valid_primary_alignment_rows": 0,
-        "n_valid_exploratory_alignment_rows": 220576,
-        "n_valid_conditional_rows": 220576,
-        "n_valid_mc_conditional_rows": 220576,
-        "can_proceed_to_conditional_cdr": true,
-        "can_proceed_to_empirical_cdr": false,
-        "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
-      },
-      "summary": {
-        "n_frames": 40,
-        "n_window_sizes": 5,
-        "n_lags": 8,
-        "n_total_aligned_rows": 220776,
-        "n_valid_alignment_rows": 220576,
-        "n_valid_primary_alignment_rows": 0,
-        "n_valid_exploratory_alignment_rows": 220576,
-        "n_valid_conditional_rows": 220576,
-        "n_valid_mc_conditional_rows": 220576,
-        "scope_counts": {
-          "exploratory": 34,
-          "primary": 6
-        },
-        "lag_direction_counts": {
-          "future_target": 20,
-          "past_target": 15,
-          "concurrent": 5
-        },
-        "status_counts": {
-          "empty_frame": 32,
-          "alignment_ready": 8
-        },
-        "ready_frames": [
-          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m5.csv",
-          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m3.csv",
-          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_m1.csv",
-          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_0.csv",
-          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p1.csv",
-          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p2.csv",
-          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p3.csv",
-          "data\\interim\\phase3_2e\\lagged_frames\\phase3_2e_w30s_lag_p5.csv"
-        ],
-        "primary_ready_frames": []
-      },
-      "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
-    },
-    "conditional": {
-      "stage": "conditional",
-      "available": true,
-      "status": "conditional_exploratory_leads",
-      "protocol_only": false,
-      "result": {
-        "status": "conditional_exploratory_leads",
-        "protocol_only": false,
-        "n_model_rows": 56,
-        "n_pair_rows": 32,
-        "n_valid_pair_rows": 32,
-        "n_primary_pair_rows": 0,
-        "n_positive_lift_rows": 2,
-        "n_primary_positive_lift_rows": 0,
-        "n_strong_candidate_rows": 0,
-        "n_multichannel_rows": 16,
-        "n_multichannel_positive_lift_rows": 2,
-        "max_baseline_eps_test": 0.8,
-        "max_augmented_eps_test": 0.8,
-        "max_conditional_lift": 0.8,
-        "can_proceed_to_controls": true,
-        "can_proceed_to_metrics": true,
-        "can_proceed_to_empirical_cdr": false,
-        "interpretation": "Conditional CDR produced exploratory positive-lift rows. These require controls, F7/F8/F12 diagnostics and final gates before interpretation."
-      },
-      "summary": {
-        "available": true,
-        "module": "phase3_2e_conditional",
-        "conditional_version": "phase3_2e_conditional_v1_leakage_safe_sync_ref_calib_test",
-        "n_rows": 32,
-        "n_valid_rows": 32,
-        "n_primary_rows": 0,
-        "n_positive_lift_rows": 2,
-        "n_primary_positive_lift_rows": 0,
-        "n_strong_candidate_rows": 0,
-        "n_multichannel_rows": 16,
-        "n_multichannel_positive_lift_rows": 2,
-        "max_baseline_eps_test": 0.8,
-        "max_augmented_eps_test": 0.8,
-        "max_conditional_lift": 0.8,
-        "best_by_conditional_lift": {
-          "window_seconds": 30,
-          "lag_windows": -1,
-          "lag_seconds": -30,
-          "lag_direction": "past_target",
-          "alignment_scope": "exploratory",
-          "family": "QRNG_next",
-          "baseline_model": "E2_QRNG_next_given_QRNG",
-          "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-          "conditional_lift": 0.8,
-          "baseline_eps_test": 0.0,
-          "augmented_eps_test": 0.8,
-          "fraction_positive_lift": 0.1,
-          "ll_improvement": -1.4388171061737012,
-          "bic_improvement": -147.23286509011814,
-          "aic_improvement": -34.8776342123474,
-          "primary": false,
-          "multichannel": true
-        },
-        "best_by_bic_improvement": {
-          "window_seconds": 30,
-          "lag_windows": 5,
-          "lag_seconds": 150,
-          "lag_direction": "future_target",
-          "alignment_scope": "exploratory",
-          "family": "QRNG_next",
-          "baseline_model": "E2_QRNG_next_given_QRNG",
-          "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-          "conditional_lift": 0.8,
-          "baseline_eps_test": 0.0,
-          "augmented_eps_test": 0.8,
-          "fraction_positive_lift": 0.1,
-          "ll_improvement": 6.206867485865587,
-          "bic_improvement": -131.9163705762403,
-          "aic_improvement": -19.586265028268826,
-          "primary": false,
-          "multichannel": true
-        },
-        "best_by_ll_improvement": {
-          "window_seconds": 30,
-          "lag_windows": 5,
-          "lag_seconds": 150,
-          "lag_direction": "future_target",
-          "alignment_scope": "exploratory",
-          "family": "QRNG_next",
-          "baseline_model": "E2_QRNG_next_given_QRNG",
-          "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-          "conditional_lift": 0.8,
-          "baseline_eps_test": 0.0,
-          "augmented_eps_test": 0.8,
-          "fraction_positive_lift": 0.1,
-          "ll_improvement": 6.206867485865587,
-          "bic_improvement": -131.9163705762403,
-          "aic_improvement": -19.586265028268826,
-          "primary": false,
-          "multichannel": true
-        },
-        "best_multichannel_by_conditional_lift": {
-          "window_seconds": 30,
-          "lag_windows": -1,
-          "lag_seconds": -30,
-          "lag_direction": "past_target",
-          "alignment_scope": "exploratory",
-          "family": "QRNG_next",
-          "baseline_model": "E2_QRNG_next_given_QRNG",
-          "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-          "conditional_lift": 0.8,
-          "baseline_eps_test": 0.0,
-          "augmented_eps_test": 0.8,
-          "fraction_positive_lift": 0.1,
-          "ll_improvement": -1.4388171061737012,
-          "bic_improvement": -147.23286509011814,
-          "aic_improvement": -34.8776342123474,
-          "primary": false,
-          "multichannel": true
-        },
-        "best_multichannel_by_bic_improvement": {
-          "window_seconds": 30,
-          "lag_windows": 5,
-          "lag_seconds": 150,
-          "lag_direction": "future_target",
-          "alignment_scope": "exploratory",
-          "family": "QRNG_next",
-          "baseline_model": "E2_QRNG_next_given_QRNG",
-          "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-          "conditional_lift": 0.8,
-          "baseline_eps_test": 0.0,
-          "augmented_eps_test": 0.8,
-          "fraction_positive_lift": 0.1,
-          "ll_improvement": 6.206867485865587,
-          "bic_improvement": -131.9163705762403,
-          "aic_improvement": -19.586265028268826,
-          "primary": false,
-          "multichannel": true
-        },
-        "positive_lift_rows": [
-          {
-            "window_seconds": 30,
-            "lag_windows": -1,
-            "lag_seconds": -30,
-            "lag_label": "m1",
-            "lag_direction": "past_target",
-            "alignment_scope": "exploratory",
-            "family": "QRNG_next",
-            "baseline_model": "E2_QRNG_next_given_QRNG",
-            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-            "valid": true,
-            "primary": false,
-            "multichannel": true,
-            "baseline_eps_test": 0.0,
-            "augmented_eps_test": 0.8,
-            "conditional_lift": 0.8,
-            "baseline_ll_test": -5744.829823540104,
-            "augmented_ll_test": -5746.268640646278,
-            "ll_improvement": -1.4388171061737012,
-            "baseline_bic_test": 11507.70405093993,
-            "augmented_bic_test": 11654.936916030048,
-            "bic_improvement": -147.23286509011814,
-            "baseline_aic_test": 11493.659647080209,
-            "augmented_aic_test": 11528.537281292556,
-            "aic_improvement": -34.8776342123474,
-            "n_subjects_evaluated": 10,
-            "n_subjects_positive_lift": 1,
-            "fraction_positive_lift": 0.1,
-            "reason": "ok"
-          },
-          {
-            "window_seconds": 30,
-            "lag_windows": 5,
-            "lag_seconds": 150,
-            "lag_label": "p5",
-            "lag_direction": "future_target",
-            "alignment_scope": "exploratory",
-            "family": "QRNG_next",
-            "baseline_model": "E2_QRNG_next_given_QRNG",
-            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-            "valid": true,
-            "primary": false,
-            "multichannel": true,
-            "baseline_eps_test": 0.0,
-            "augmented_eps_test": 0.8,
-            "conditional_lift": 0.8,
-            "baseline_ll_test": -5735.436874371776,
-            "augmented_ll_test": -5729.23000688591,
-            "ll_improvement": 6.206867485865587,
-            "baseline_bic_test": 11488.915011937048,
-            "augmented_bic_test": 11620.831382513288,
-            "bic_improvement": -131.9163705762403,
-            "baseline_aic_test": 11474.873748743552,
-            "augmented_aic_test": 11494.46001377182,
-            "aic_improvement": -19.586265028268826,
-            "n_subjects_evaluated": 10,
-            "n_subjects_positive_lift": 1,
-            "fraction_positive_lift": 0.1,
-            "reason": "ok"
-          }
-        ],
-        "multichannel_positive_lift_rows": [
-          {
-            "window_seconds": 30,
-            "lag_windows": -1,
-            "lag_seconds": -30,
-            "lag_label": "m1",
-            "lag_direction": "past_target",
-            "alignment_scope": "exploratory",
-            "family": "QRNG_next",
-            "baseline_model": "E2_QRNG_next_given_QRNG",
-            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-            "valid": true,
-            "primary": false,
-            "multichannel": true,
-            "baseline_eps_test": 0.0,
-            "augmented_eps_test": 0.8,
-            "conditional_lift": 0.8,
-            "baseline_ll_test": -5744.829823540104,
-            "augmented_ll_test": -5746.268640646278,
-            "ll_improvement": -1.4388171061737012,
-            "baseline_bic_test": 11507.70405093993,
-            "augmented_bic_test": 11654.936916030048,
-            "bic_improvement": -147.23286509011814,
-            "baseline_aic_test": 11493.659647080209,
-            "augmented_aic_test": 11528.537281292556,
-            "aic_improvement": -34.8776342123474,
-            "n_subjects_evaluated": 10,
-            "n_subjects_positive_lift": 1,
-            "fraction_positive_lift": 0.1,
-            "reason": "ok"
-          },
-          {
-            "window_seconds": 30,
-            "lag_windows": 5,
-            "lag_seconds": 150,
-            "lag_label": "p5",
-            "lag_direction": "future_target",
-            "alignment_scope": "exploratory",
-            "family": "QRNG_next",
-            "baseline_model": "E2_QRNG_next_given_QRNG",
-            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-            "valid": true,
-            "primary": false,
-            "multichannel": true,
-            "baseline_eps_test": 0.0,
-            "augmented_eps_test": 0.8,
-            "conditional_lift": 0.8,
-            "baseline_ll_test": -5735.436874371776,
-            "augmented_ll_test": -5729.23000688591,
-            "ll_improvement": 6.206867485865587,
-            "baseline_bic_test": 11488.915011937048,
-            "augmented_bic_test": 11620.831382513288,
-            "bic_improvement": -131.9163705762403,
-            "baseline_aic_test": 11474.873748743552,
-            "augmented_aic_test": 11494.46001377182,
-            "aic_improvement": -19.586265028268826,
-            "n_subjects_evaluated": 10,
-            "n_subjects_positive_lift": 1,
-            "fraction_positive_lift": 0.1,
-            "reason": "ok"
-          }
-        ],
-        "strong_candidate_rows": [],
-        "active_conditional_pairs": [
-          [
-            "E0_EEG_next_given_EEG",
-            "E1_EEG_next_given_EEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E3_QRNG_next_given_QRNG_EEG"
-          ],
-          [
-            "E4_MCEEG_next_given_MCEEG",
-            "E5_MCEEG_next_given_MCEEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E6_QRNG_next_given_QRNG_MCEEG"
-          ]
-        ],
-        "primary_conditional_pairs": [
-          [
-            "E0_EEG_next_given_EEG",
-            "E1_EEG_next_given_EEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E3_QRNG_next_given_QRNG_EEG"
-          ]
-        ],
-        "multichannel_conditional_pairs": [
-          [
-            "E4_MCEEG_next_given_MCEEG",
-            "E5_MCEEG_next_given_MCEEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E6_QRNG_next_given_QRNG_MCEEG"
-          ]
-        ],
-        "n_model_rows": 56
-      },
-      "interpretation": "Conditional CDR produced exploratory positive-lift rows. These require controls, F7/F8/F12 diagnostics and final gates before interpretation."
-    },
-    "controls": {
-      "stage": "controls",
-      "available": true,
-      "status": "controls_passed",
-      "protocol_only": false,
-      "result": {
-        "status": "controls_passed",
-        "protocol_only": false,
-        "n_control_runs": 864,
-        "n_valid_control_runs": 864,
-        "n_control_pair_rows": 3456,
-        "n_control_types": 9,
-        "overall_passed": true,
-        "failed_control_types": [],
-        "can_proceed_to_metrics": true,
-        "can_proceed_to_empirical_cdr": true,
-        "interpretation": "Required synchronized negative controls passed. This permits metrics and gate evaluation, but does not by itself establish a positive claim."
-      },
-      "summary": {
-        "available": true,
-        "passed": true,
-        "n_control_types": 9,
-        "n_required_control_types": 6,
-        "required_control_types": [
-          "within_subject_qrng_shuffle",
-          "within_subject_eeg_shuffle",
-          "circular_qrng_shift",
-          "subject_mismatch",
-          "conditional_target_shuffle",
-          "sync_break_control"
-        ],
-        "all_required_present": true,
-        "control_summaries": [
-          {
-            "control_type": "circular_qrng_shift",
-            "n_runs": 96,
-            "n_valid_runs": 96,
-            "median_max_baseline_eps_test": 0.8,
-            "median_max_augmented_eps_test": 0.8,
-            "mean_max_augmented_eps_test": 0.5083333333333333,
-            "max_augmented_eps_test": 0.8,
-            "median_max_conditional_lift": 0.0,
-            "mean_max_conditional_lift": 0.06666666666666667,
-            "max_conditional_lift": 0.8,
-            "median_max_bic_improvement": -145.72885788018903,
-            "max_bic_improvement": -13.493938888488628,
-            "median_max_ll_improvement": -0.6587709760924554,
-            "max_ll_improvement": 65.43064599464105,
-            "median_eps_saturation_fraction": 0.5,
-            "max_eps_saturation_fraction": 0.5,
-            "total_multichannel_pair_rows": 192,
-            "total_multichannel_positive_lift_rows": 6,
-            "total_multichannel_strong_candidate_rows": 0,
-            "fraction_runs_below_control_tol": 0.9166666666666666,
-            "fraction_runs_collapsed_overall": 0.9166666666666666,
-            "control_tol": 0.05,
-            "passed": true,
-            "reason": "ok"
-          },
-          {
-            "control_type": "conditional_target_shuffle",
-            "n_runs": 96,
-            "n_valid_runs": 96,
-            "median_max_baseline_eps_test": 0.8,
-            "median_max_augmented_eps_test": 0.8,
-            "mean_max_augmented_eps_test": 0.725,
-            "max_augmented_eps_test": 0.8,
-            "median_max_conditional_lift": 0.0,
-            "mean_max_conditional_lift": 0.075,
-            "max_conditional_lift": 0.8,
-            "median_max_bic_improvement": -150.91548825792415,
-            "max_bic_improvement": -139.4103096345989,
-            "median_max_ll_improvement": -3.3009203165524923,
-            "max_ll_improvement": 2.4656985611700293,
-            "median_eps_saturation_fraction": 0.75,
-            "max_eps_saturation_fraction": 1.0,
-            "total_multichannel_pair_rows": 192,
-            "total_multichannel_positive_lift_rows": 5,
-            "total_multichannel_strong_candidate_rows": 0,
-            "fraction_runs_below_control_tol": 0.8854166666666666,
-            "fraction_runs_collapsed_overall": 0.8854166666666666,
-            "control_tol": 0.05,
-            "passed": true,
-            "reason": "ok"
-          },
-          {
-            "control_type": "phase_randomized_eeg_control",
-            "n_runs": 96,
-            "n_valid_runs": 96,
-            "median_max_baseline_eps_test": 0.4,
-            "median_max_augmented_eps_test": 0.0,
-            "mean_max_augmented_eps_test": 0.23333333333333336,
-            "max_augmented_eps_test": 0.8,
-            "median_max_conditional_lift": 0.0,
-            "mean_max_conditional_lift": 0.08333333333333333,
-            "max_conditional_lift": 0.8,
-            "median_max_bic_improvement": -147.79694923293482,
-            "max_bic_improvement": -131.30368144153545,
-            "median_max_ll_improvement": -1.6905703176253155,
-            "max_ll_improvement": 6.5257747181176455,
-            "median_eps_saturation_fraction": 0.375,
-            "max_eps_saturation_fraction": 0.5,
-            "total_multichannel_pair_rows": 192,
-            "total_multichannel_positive_lift_rows": 6,
-            "total_multichannel_strong_candidate_rows": 0,
-            "fraction_runs_below_control_tol": 0.8958333333333334,
-            "fraction_runs_collapsed_overall": 0.8958333333333334,
-            "control_tol": 0.05,
-            "passed": true,
-            "reason": "ok"
-          },
-          {
-            "control_type": "subject_mismatch",
-            "n_runs": 96,
-            "n_valid_runs": 96,
-            "median_max_baseline_eps_test": 0.8,
-            "median_max_augmented_eps_test": 0.8,
-            "mean_max_augmented_eps_test": 0.4749999999999999,
-            "max_augmented_eps_test": 0.8,
-            "median_max_conditional_lift": 0.0,
-            "mean_max_conditional_lift": 0.075,
-            "max_conditional_lift": 0.8,
-            "median_max_bic_improvement": -145.97273215098176,
-            "max_bic_improvement": 115.70725088880681,
-            "median_max_ll_improvement": -0.815031969055326,
-            "max_ll_improvement": 130.03124088328877,
-            "median_eps_saturation_fraction": 0.5,
-            "max_eps_saturation_fraction": 0.5,
-            "total_multichannel_pair_rows": 192,
-            "total_multichannel_positive_lift_rows": 5,
-            "total_multichannel_strong_candidate_rows": 0,
-            "fraction_runs_below_control_tol": 0.8645833333333334,
-            "fraction_runs_collapsed_overall": 0.8645833333333334,
-            "control_tol": 0.05,
-            "passed": true,
-            "reason": "ok"
-          },
-          {
-            "control_type": "sync_break_control",
-            "n_runs": 96,
-            "n_valid_runs": 96,
-            "median_max_baseline_eps_test": 0.8,
-            "median_max_augmented_eps_test": 0.0,
-            "mean_max_augmented_eps_test": 0.3,
-            "max_augmented_eps_test": 0.8,
-            "median_max_conditional_lift": 0.0,
-            "mean_max_conditional_lift": 0.10000000000000002,
-            "max_conditional_lift": 0.8,
-            "median_max_bic_improvement": -151.8997763636071,
-            "max_bic_improvement": -141.94964553965474,
-            "median_max_ll_improvement": -3.7790348033340706,
-            "max_ll_improvement": 1.1737720810060637,
-            "median_eps_saturation_fraction": 0.5,
-            "max_eps_saturation_fraction": 0.5,
-            "total_multichannel_pair_rows": 192,
-            "total_multichannel_positive_lift_rows": 12,
-            "total_multichannel_strong_candidate_rows": 0,
-            "fraction_runs_below_control_tol": 0.875,
-            "fraction_runs_collapsed_overall": 0.875,
-            "control_tol": 0.05,
-            "passed": true,
-            "reason": "ok"
-          },
-          {
-            "control_type": "timestamp_jitter_control",
-            "n_runs": 96,
-            "n_valid_runs": 96,
-            "median_max_baseline_eps_test": 0.8,
-            "median_max_augmented_eps_test": 0.8,
-            "mean_max_augmented_eps_test": 0.5,
-            "max_augmented_eps_test": 0.8,
-            "median_max_conditional_lift": 0.0,
-            "mean_max_conditional_lift": 0.0,
-            "max_conditional_lift": 0.0,
-            "median_max_bic_improvement": -145.94961477573727,
-            "max_bic_improvement": -138.0915455121485,
-            "median_max_ll_improvement": -0.8034732814331119,
-            "max_ll_improvement": 3.1318426828111114,
-            "median_eps_saturation_fraction": 0.5,
-            "max_eps_saturation_fraction": 0.5,
-            "total_multichannel_pair_rows": 192,
-            "total_multichannel_positive_lift_rows": 0,
-            "total_multichannel_strong_candidate_rows": 0,
-            "fraction_runs_below_control_tol": 1.0,
-            "fraction_runs_collapsed_overall": 1.0,
-            "control_tol": 0.05,
-            "passed": true,
-            "reason": "ok"
-          },
-          {
-            "control_type": "window_permutation_control",
-            "n_runs": 96,
-            "n_valid_runs": 96,
-            "median_max_baseline_eps_test": 0.8,
-            "median_max_augmented_eps_test": 0.8,
-            "mean_max_augmented_eps_test": 0.725,
-            "max_augmented_eps_test": 0.8,
-            "median_max_conditional_lift": 0.0,
-            "mean_max_conditional_lift": 0.075,
-            "max_conditional_lift": 0.8,
-            "median_max_bic_improvement": -150.91548825792415,
-            "max_bic_improvement": -139.4103096345989,
-            "median_max_ll_improvement": -3.3009203165524923,
-            "max_ll_improvement": 2.4656985611700293,
-            "median_eps_saturation_fraction": 0.75,
-            "max_eps_saturation_fraction": 1.0,
-            "total_multichannel_pair_rows": 192,
-            "total_multichannel_positive_lift_rows": 5,
-            "total_multichannel_strong_candidate_rows": 0,
-            "fraction_runs_below_control_tol": 0.8854166666666666,
-            "fraction_runs_collapsed_overall": 0.8854166666666666,
-            "control_tol": 0.05,
-            "passed": true,
-            "reason": "ok"
-          },
-          {
-            "control_type": "within_subject_eeg_shuffle",
-            "n_runs": 96,
-            "n_valid_runs": 96,
-            "median_max_baseline_eps_test": 0.4,
-            "median_max_augmented_eps_test": 0.0,
-            "mean_max_augmented_eps_test": 0.3833333333333333,
-            "max_augmented_eps_test": 0.8,
-            "median_max_conditional_lift": 0.0,
-            "mean_max_conditional_lift": 0.10000000000000002,
-            "max_conditional_lift": 0.8,
-            "median_max_bic_improvement": -147.11101022673392,
-            "max_bic_improvement": -134.56207446725057,
-            "median_max_ll_improvement": -1.381753942382602,
-            "max_ll_improvement": 4.88981614484419,
-            "median_eps_saturation_fraction": 0.5,
-            "max_eps_saturation_fraction": 0.5,
-            "total_multichannel_pair_rows": 192,
-            "total_multichannel_positive_lift_rows": 7,
-            "total_multichannel_strong_candidate_rows": 0,
-            "fraction_runs_below_control_tol": 0.875,
-            "fraction_runs_collapsed_overall": 0.875,
-            "control_tol": 0.05,
-            "passed": true,
-            "reason": "ok"
-          },
-          {
-            "control_type": "within_subject_qrng_shuffle",
-            "n_runs": 96,
-            "n_valid_runs": 96,
-            "median_max_baseline_eps_test": 0.8,
-            "median_max_augmented_eps_test": 0.8,
-            "mean_max_augmented_eps_test": 0.5166666666666666,
-            "max_augmented_eps_test": 0.8,
-            "median_max_conditional_lift": 0.0,
-            "mean_max_conditional_lift": 0.10000000000000002,
-            "max_conditional_lift": 0.8,
-            "median_max_bic_improvement": -144.85852812568282,
-            "max_bic_improvement": -125.95516024619974,
-            "median_max_ll_improvement": -0.16320107082356117,
-            "max_ll_improvement": 9.200035315785499,
-            "median_eps_saturation_fraction": 0.5,
-            "max_eps_saturation_fraction": 0.5,
-            "total_multichannel_pair_rows": 192,
-            "total_multichannel_positive_lift_rows": 10,
-            "total_multichannel_strong_candidate_rows": 0,
-            "fraction_runs_below_control_tol": 0.875,
-            "fraction_runs_collapsed_overall": 0.875,
-            "control_tol": 0.05,
-            "passed": true,
-            "reason": "ok"
-          }
-        ],
-        "failed_control_types": [],
-        "interpretation": "Controls pass only when required synchronized negative controls collapse conditional lift, BIC improvement, subject-level persistence and strong candidate survival. Epsilon saturation is tracked as a diagnostic, not as a direct failure criterion."
-      },
-      "interpretation": "Required synchronized negative controls passed. This permits metrics and gate evaluation, but does not by itself establish a positive claim."
-    },
-    "metrics": {
-      "stage": "metrics",
-      "available": true,
-      "status": "exploratory_lead_with_saturation_warning",
-      "protocol_only": false,
-      "result": {},
-      "summary": {},
-      "interpretation": ""
-    },
-    "gate_sensitivity": {
-      "stage": "gate_sensitivity",
-      "available": true,
-      "status": "gate_sensitivity_completed",
-      "protocol_only": false,
-      "result": {
-        "status": "gate_sensitivity_completed",
-        "protocol_only": false,
-        "official_f7_threshold": 0.6,
-        "official_f8_threshold": 0.0,
-        "official_f12_eps_saturation_value": 0.8,
-        "official_f12_warning_fraction": 0.5,
-        "f7_available": false,
-        "f8_available": false,
-        "f12_available": true,
-        "f7_official_passed": false,
-        "f8_official_passed": false,
-        "f12_official_warning": true,
-        "f7_best_value": 0.0,
-        "f8_best_bic_value": 0.0,
-        "f12_max_saturation_fraction": 0.5258620689655172,
-        "f7_distance_to_threshold": -0.6,
-        "f8_distance_to_threshold": 0.0,
-        "f12_distance_to_warning": 0.025862068965517238,
-        "can_proceed_to_diagnostics": true,
-        "can_claim_empirical_cdr": false,
-        "interpretation": "Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds."
-      },
-      "summary": {},
-      "interpretation": "Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds."
-    }
-  },
-  "metadata": {
-    "loader_metadata": {
-      "phase": "Phase III.2E",
-      "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
-      "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
-      "config_version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
-      "loader_module": "phase3_2e_loader",
-      "loader_version": "phase3_2e_loader_v1_protocol_sync_aware",
-      "created_at": "2026-06-05 00:42:25",
-      "status": "loaded_synchronized_data",
-      "interpretation": "Synchronized EEG–QRNG input CSV was loaded successfully after schema and synchronization validation. The dataset can proceed to windowing, feature construction, controls and empirical synchronized CDR.",
-      "protocol_status": "protocol_ready",
-      "empirical_execution_status": "pending_synchronized_eeg_qrng_data",
-      "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-      "input_file_info": {
-        "exists": true,
-        "size_bytes": 23514699,
-        "mtime": 1780628437.120241,
-        "mtime_human": "2026-06-05 00:00:37"
-      },
-      "output_csv": "data\\interim\\phase3_2e\\phase3_2e_loaded_synchronized_windows.csv",
-      "metadata_json": "data\\interim\\phase3_2e\\phase3_2e_loader_metadata.json",
-      "loader_report_json": "results\\phase3_2e\\phase3_2e_loader_report.json",
-      "loader_summary_txt": "results\\phase3_2e\\phase3_2e_loader_summary.txt",
-      "schema_status": "schema_valid",
-      "schema_result": {
-        "status": "schema_valid",
-        "schema_valid": true,
-        "protocol_only": false,
-        "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-        "input_exists": true,
-        "n_rows": 27597,
-        "n_columns": 40,
-        "n_required_columns": 30,
-        "n_missing_required_columns": 0,
-        "n_optional_columns_present": 1,
-        "n_failures": 0,
-        "n_errors": 0,
-        "n_warnings": 0,
-        "can_proceed_to_sync_validation": true,
-        "can_proceed_to_empirical_cdr": false,
-        "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
-      },
-      "sync_status": "sync_valid",
-      "sync_result": {
-        "status": "sync_valid",
-        "sync_valid": true,
-        "protocol_only": false,
-        "input_file": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-        "input_exists": true,
-        "schema_status": "schema_valid",
-        "schema_valid": true,
-        "n_rows": 27597,
-        "n_subjects": 10,
-        "n_sessions": 10,
-        "n_windows": 2848,
-        "min_sync_quality": 0.9849868015959592,
-        "mean_sync_quality": 0.9930010368948892,
-        "max_clock_drift_ms_abs": 10.013198404040686,
-        "max_eeg_qrng_gap_ms": 10.0,
-        "median_eeg_qrng_gap_ms": 2.0,
-        "n_failures": 1,
-        "n_errors": 0,
-        "n_warnings": 1,
-        "can_proceed_to_empirical_cdr": true,
-        "interpretation": "The synchronized EEG–QRNG input passed synchronization validation. The dataset can proceed to empirical synchronized CDR, subject to later windowing, feature, control and gate checks."
-      },
-      "can_proceed_to_windowing": true,
-      "can_proceed_to_feature_construction": true,
-      "can_proceed_to_empirical_cdr": true,
-      "config": {
-        "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
-        "phase_name": "Phase III.2E",
-        "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
-        "version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
-        "protocol_status": "protocol_ready",
-        "empirical_execution_status": "pending_synchronized_eeg_qrng_data",
-        "synchronized_input_csv": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-        "allow_protocol_only_without_data": true,
-        "allow_synthetic_demo_data": false,
-        "require_real_synchronized_data_for_claim": true,
-        "required_schema_columns": [
-          "subject_id",
-          "session_id",
-          "window_id",
-          "window_start_utc",
-          "window_end_utc",
-          "eeg_timestamp_utc",
-          "qrng_timestamp_utc",
-          "sync_quality",
-          "clock_drift_ms",
-          "eeg_channel",
-          "eeg_delta_power",
-          "eeg_theta_power",
-          "eeg_alpha_power",
-          "eeg_beta_power",
-          "eeg_entropy",
-          "qrng_state",
-          "qrng_bit_balance",
-          "qrng_transition_rate",
-          "qrng_entropy",
-          "eeg_primary_channel",
-          "eeg_secondary_channel",
-          "eeg_primary_delta_power",
-          "eeg_primary_alpha_power",
-          "eeg_secondary_delta_power",
-          "eeg_secondary_alpha_power",
-          "interchannel_delta_ratio",
-          "interchannel_alpha_ratio",
-          "fronto_parietal_delta_shift",
-          "fronto_parietal_alpha_shift",
-          "cross_channel_corr"
-        ],
-        "optional_schema_columns": [
-          "eeg_gamma_power",
-          "eeg_hjorth_mobility",
-          "eeg_hjorth_complexity",
-          "eeg_line_length",
-          "eeg_signal_std",
-          "eeg_artifact_score",
-          "eeg_quality_score",
-          "qrng_run_length_mean",
-          "qrng_run_length_std",
-          "qrng_run_length_max",
-          "qrng_compressibility_proxy",
-          "qrng_surprise_index",
-          "qrng_transition_asymmetry",
-          "qrng_quality_score",
-          "sync_mode"
-        ],
-        "min_sync_quality": 0.95,
-        "max_clock_drift_ms": 50.0,
-        "max_timestamp_gap_ms": 250.0,
-        "accepted_sync_modes": [
-          "hardware_shared_clock",
-          "software_timestamp_aligned",
-          "posthoc_clock_drift_corrected",
-          "external_sync_marker"
-        ],
-        "rejected_sync_modes": [
-          "unknown_clock_relation",
-          "manual_alignment_without_log",
-          "random_pairing",
-          "posthoc_alignment_to_maximize_signal"
-        ],
-        "primary_eeg_channel": "EEG Fpz-Cz",
-        "secondary_eeg_channel": "EEG Pz-Oz",
-        "use_multichannel_eeg": true,
-        "primary_window_seconds": [
-          5,
-          10
-        ],
-        "secondary_window_seconds": [
-          1,
-          2,
-          30
-        ],
-        "all_window_seconds": [
-          1,
-          2,
-          5,
-          10,
-          30
-        ],
-        "primary_lags_windows": [
-          0,
-          1,
-          2
-        ],
-        "secondary_lags_windows": [
-          -5,
-          -3,
-          -1,
-          3,
-          5
-        ],
-        "all_lags_windows": [
-          -5,
-          -3,
-          -1,
-          0,
-          1,
-          2,
-          3,
-          5
-        ],
-        "conditional_models": [
-          "E0_EEG_next_given_EEG",
-          "E1_EEG_next_given_EEG_QRNG",
-          "E2_QRNG_next_given_QRNG",
-          "E3_QRNG_next_given_QRNG_EEG",
-          "E4_MCEEG_next_given_MCEEG",
-          "E5_MCEEG_next_given_MCEEG_QRNG",
-          "E6_QRNG_next_given_QRNG_MCEEG"
-        ],
-        "primary_conditional_pairs": [
-          [
-            "E0_EEG_next_given_EEG",
-            "E1_EEG_next_given_EEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E3_QRNG_next_given_QRNG_EEG"
-          ]
-        ],
-        "multichannel_conditional_pairs": [
-          [
-            "E4_MCEEG_next_given_MCEEG",
-            "E5_MCEEG_next_given_MCEEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E6_QRNG_next_given_QRNG_MCEEG"
-          ]
-        ],
-        "active_conditional_pairs": [
-          [
-            "E0_EEG_next_given_EEG",
-            "E1_EEG_next_given_EEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E3_QRNG_next_given_QRNG_EEG"
-          ],
-          [
-            "E4_MCEEG_next_given_MCEEG",
-            "E5_MCEEG_next_given_MCEEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E6_QRNG_next_given_QRNG_MCEEG"
-          ]
-        ],
-        "official_gates": [
-          "F2",
-          "F3",
-          "F6",
-          "F7",
-          "F8",
-          "F9",
-          "F10",
-          "F11",
-          "F12"
-        ],
-        "gate_sensitivity_specs": [
-          "F7_official",
-          "F7_bootstrap",
-          "F7_weighted",
-          "F7_cluster",
-          "F7_LOSO",
-          "F8_BIC_official",
-          "F8_AIC_secondary",
-          "F8_heldout_LL",
-          "F8_cross_validated_LL",
-          "F8_state_density_corrected_BIC",
-          "F8_effective_complexity",
-          "F12_epsilon_grid_short",
-          "F12_epsilon_grid_medium",
-          "F12_epsilon_grid_full",
-          "F12_saturation_fraction"
-        ],
-        "control_types": [
-          "within_subject_qrng_shuffle",
-          "within_subject_eeg_shuffle",
-          "circular_qrng_shift",
-          "subject_mismatch",
-          "timestamp_jitter_control",
-          "phase_randomized_eeg_control",
-          "window_permutation_control",
-          "conditional_target_shuffle",
-          "sync_break_control"
-        ],
-        "required_control_types": [
-          "within_subject_qrng_shuffle",
-          "within_subject_eeg_shuffle",
-          "circular_qrng_shift",
-          "subject_mismatch",
-          "conditional_target_shuffle",
-          "sync_break_control"
-        ],
-        "n_controls": 12,
-        "eps_grid_short": [
-          0.0,
-          0.2
-        ],
-        "eps_grid_medium": [
-          0.0,
-          0.5
-        ],
-        "eps_grid_full": [
-          0.0,
-          0.8
-        ],
-        "eps_saturation_value": 0.8,
-        "eps_moderate_upper_bound": 0.3,
-        "conditional_lift_min": 0.03,
-        "strong_eps_min": 0.07,
-        "subject_effect_fraction": 0.6,
-        "multiple_comparison_guard": true
-      },
-      "summary": {
-        "n_rows": 27597,
-        "n_subjects": 10,
-        "n_sessions": 10,
-        "n_windows": 2848,
-        "window_seconds_counts": {
-          "30": 27597
-        },
-        "sync_mode_counts": {
-          "software_timestamp_aligned": 27597
-        },
-        "sync_row_valid_counts": {
-          "1": 27597
-        },
-        "sync_quality": {
-          "min": 0.9849868015959592,
-          "mean": 0.9930010368948892,
-          "median": 0.9933133221340424,
-          "max": 0.9949999011330124
-        },
-        "clock_drift_abs_ms": {
-          "min": 9.886698759679616e-05,
-          "mean": 1.9989631051106351,
-          "median": 1.686677865957682,
-          "max": 10.013198404040686
-        },
-        "eeg_qrng_gap_ms": {
-          "min": 0.0,
-          "mean": 2.026452150596079,
-          "median": 2.0,
-          "max": 10.0
-        },
-        "qrng_state_counts": {
-          "0": 13873,
-          "1": 13724
-        },
-        "eeg_channel_counts": {
-          "EEG Fpz-Cz": 27597
-        },
-        "primary_channel_counts": {
-          "EEG Fpz-Cz": 27597
-        },
-        "secondary_channel_counts": {
-          "EEG Pz-Oz": 27597
-        }
-      }
+      "path": "data\\interim\\phase3_2e\\phase3_2e_features.csv",
+      "exists": true,
+      "size_bytes": 63877197
     },
     "feature_specs": {
-      "metadata": {
-        "phase": "Phase III.2E",
-        "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
-        "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
-        "config_version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
-        "feature_module": "phase3_2e_features",
-        "feature_version": "phase3_2e_features_v1_sync_window_state_layer",
-        "created_at": "2026-06-05 00:42:34",
-        "train_index_used": false,
-        "n_train_rows_for_bins": 27597,
-        "bin_specs": {
-          "eeg_delta_bin": {
-            "name": "eeg_delta_bin",
-            "source_column": "eeg_delta_power",
-            "n_requested_bins": 3,
-            "edges": [
-              1.6004085083476191e-10,
-              4.4661222421266696e-10
-            ],
-            "effective_bins": 3,
-            "constant": false,
-            "fill_value": 3.9164947225062517e-10,
-            "train_min": 4.308483708472268e-13,
-            "train_max": 3.2928468131562233e-09,
-            "train_mean": 3.9164947225062517e-10,
-            "train_std": 3.661582076639249e-10
-          },
-          "eeg_alpha_bin": {
-            "name": "eeg_alpha_bin",
-            "source_column": "eeg_alpha_power",
-            "n_requested_bins": 3,
-            "edges": [
-              4.19056857338711e-12,
-              9.774565475855347e-12
-            ],
-            "effective_bins": 3,
-            "constant": false,
-            "fill_value": 9.310260394372487e-12,
-            "train_min": 4.623532264200944e-15,
-            "train_max": 2.7734559425324564e-10,
-            "train_mean": 9.310260394372487e-12,
-            "train_std": 9.419609804790895e-12
-          },
-          "eeg_info_bin": {
-            "name": "eeg_info_bin",
-            "source_column": "eeg_info_score",
-            "n_requested_bins": 3,
-            "edges": [
-              -0.38135579794491137,
-              0.09969658532494144
-            ],
-            "effective_bins": 3,
-            "constant": false,
-            "fill_value": 3.2956288791279063e-17,
-            "train_min": -1.2941911518659701,
-            "train_max": 11.33500044376881,
-            "train_mean": 3.2956288791279063e-17,
-            "train_std": 0.7169439127685495
-          },
-          "qrng_info_bin": {
-            "name": "qrng_info_bin",
-            "source_column": "qrng_info_score",
-            "n_requested_bins": 3,
-            "edges": [
-              -0.15128631507970514,
-              0.2845252961291493
-            ],
-            "effective_bins": 3,
-            "constant": false,
-            "fill_value": -5.09663856737007e-16,
-            "train_min": -3.5798787319340435,
-            "train_max": 1.5001648614578516,
-            "train_mean": -5.09663856737007e-16,
-            "train_std": 0.5804540902471743
-          },
-          "mc_activation_bin": {
-            "name": "mc_activation_bin",
-            "source_column": "mc_activation_score",
-            "n_requested_bins": 3,
-            "edges": [
-              6.145554628169549e-11,
-              1.3560511729577257e-10
-            ],
-            "effective_bins": 3,
-            "constant": false,
-            "fill_value": 1.2136101288043362e-10,
-            "train_min": 1.9250106621109467e-13,
-            "train_max": 1.3751551793098903e-09,
-            "train_mean": 1.2136101288043362e-10,
-            "train_std": 1.0173679097916295e-10
-          },
-          "mc_cross_channel_bin": {
-            "name": "mc_cross_channel_bin",
-            "source_column": "mc_cross_channel_score",
-            "n_requested_bins": 3,
-            "edges": [
-              -0.24374168323127415,
-              0.018171228392150372
-            ],
-            "effective_bins": 3,
-            "constant": false,
-            "fill_value": -8.239072197819766e-18,
-            "train_min": -4.3295235416083155,
-            "train_max": 11.841579493038461,
-            "train_mean": -8.239072197819766e-18,
-            "train_std": 0.5559724578440398
-          },
-          "mc_eeg_info_bin": {
-            "name": "mc_eeg_info_bin",
-            "source_column": "mc_eeg_info_score",
-            "n_requested_bins": 3,
-            "edges": [
-              -0.22205110398920647,
-              0.010747171798877294
-            ],
-            "effective_bins": 3,
-            "constant": false,
-            "fill_value": 0.0,
-            "train_min": -0.6550709903834351,
-            "train_max": 11.007912141925031,
-            "train_mean": 0.0,
-            "train_std": 0.4646961511808058
-          }
-        },
-        "state_columns": {
-          "E0_EEG_next_given_EEG": "eeg_state -> eeg_next_state",
-          "E1_EEG_next_given_EEG_QRNG": "(eeg_state, qrng_state) -> eeg_next_state",
-          "E2_QRNG_next_given_QRNG": "qrng_state -> qrng_next_state",
-          "E3_QRNG_next_given_QRNG_EEG": "(qrng_state, eeg_state) -> qrng_next_state",
-          "E4_MCEEG_next_given_MCEEG": "mc_eeg_state -> mc_eeg_next_state",
-          "E5_MCEEG_next_given_MCEEG_QRNG": "(mc_eeg_state, qrng_state) -> mc_eeg_next_state",
-          "E6_QRNG_next_given_QRNG_MCEEG": "(qrng_state, mc_eeg_state) -> qrng_next_state"
-        },
-        "summary": {
-          "n_rows": 27597,
-          "n_columns": 100,
-          "n_subjects": 10,
-          "subjects": [
-            "SC4001",
-            "SC4002",
-            "SC4011",
-            "SC4012",
-            "SC4021",
-            "SC4022",
-            "SC4031",
-            "SC4032",
-            "SC4041",
-            "SC4042"
-          ],
-          "n_sessions": 10,
-          "n_window_sizes": 1,
-          "window_seconds_counts": {
-            "30": 27597
-          },
-          "valid_feature_row_rows": 27597,
-          "valid_next_state_rows": 27587,
-          "valid_mc_next_state_rows": 27587,
-          "valid_conditional_row_rows": 27587,
-          "valid_mc_conditional_row_rows": 27587,
-          "valid_for_primary_analysis_rows": 0,
-          "valid_for_exploratory_analysis_rows": 27597,
-          "eeg_state_n_unique": 9,
-          "qrng_state_n_unique": 2,
-          "mc_eeg_state_n_unique": 9,
-          "observed_joint_state_n_unique": 18,
-          "mc_observed_joint_state_n_unique": 18,
-          "informational_joint_state_n_unique": 9,
-          "mc_informational_joint_state_n_unique": 9,
-          "eeg_info_bin_n_unique": 3,
-          "qrng_info_bin_n_unique": 3,
-          "mc_eeg_info_bin_n_unique": 3,
-          "sync_quality": {
-            "min": 0.9849868015959592,
-            "mean": 0.9930010368948892,
-            "median": 0.9933133221340424,
-            "max": 0.9949999011330124
-          },
-          "eeg_qrng_gap_ms": {
-            "min": 0.0,
-            "mean": 2.026452150596079,
-            "median": 2.0,
-            "max": 10.0
-          },
-          "clock_drift_abs_ms": {
-            "min": 9.886698759679616e-05,
-            "mean": 1.9989631051106351,
-            "median": 1.686677865957682,
-            "max": 10.013198404040686
-          },
-          "feature_status_counts": {
-            "valid_feature_row": 27597
-          },
-          "window_scope_counts": {
-            "exploratory": 27597
-          }
-        }
-      },
-      "bin_specs": {
-        "eeg_delta_bin": {
-          "name": "eeg_delta_bin",
-          "source_column": "eeg_delta_power",
-          "n_requested_bins": 3,
-          "edges": [
-            1.6004085083476191e-10,
-            4.4661222421266696e-10
-          ],
-          "effective_bins": 3,
-          "constant": false,
-          "fill_value": 3.9164947225062517e-10,
-          "train_min": 4.308483708472268e-13,
-          "train_max": 3.2928468131562233e-09,
-          "train_mean": 3.9164947225062517e-10,
-          "train_std": 3.661582076639249e-10
-        },
-        "eeg_alpha_bin": {
-          "name": "eeg_alpha_bin",
-          "source_column": "eeg_alpha_power",
-          "n_requested_bins": 3,
-          "edges": [
-            4.19056857338711e-12,
-            9.774565475855347e-12
-          ],
-          "effective_bins": 3,
-          "constant": false,
-          "fill_value": 9.310260394372487e-12,
-          "train_min": 4.623532264200944e-15,
-          "train_max": 2.7734559425324564e-10,
-          "train_mean": 9.310260394372487e-12,
-          "train_std": 9.419609804790895e-12
-        },
-        "eeg_info_bin": {
-          "name": "eeg_info_bin",
-          "source_column": "eeg_info_score",
-          "n_requested_bins": 3,
-          "edges": [
-            -0.38135579794491137,
-            0.09969658532494144
-          ],
-          "effective_bins": 3,
-          "constant": false,
-          "fill_value": 3.2956288791279063e-17,
-          "train_min": -1.2941911518659701,
-          "train_max": 11.33500044376881,
-          "train_mean": 3.2956288791279063e-17,
-          "train_std": 0.7169439127685495
-        },
-        "qrng_info_bin": {
-          "name": "qrng_info_bin",
-          "source_column": "qrng_info_score",
-          "n_requested_bins": 3,
-          "edges": [
-            -0.15128631507970514,
-            0.2845252961291493
-          ],
-          "effective_bins": 3,
-          "constant": false,
-          "fill_value": -5.09663856737007e-16,
-          "train_min": -3.5798787319340435,
-          "train_max": 1.5001648614578516,
-          "train_mean": -5.09663856737007e-16,
-          "train_std": 0.5804540902471743
-        },
-        "mc_activation_bin": {
-          "name": "mc_activation_bin",
-          "source_column": "mc_activation_score",
-          "n_requested_bins": 3,
-          "edges": [
-            6.145554628169549e-11,
-            1.3560511729577257e-10
-          ],
-          "effective_bins": 3,
-          "constant": false,
-          "fill_value": 1.2136101288043362e-10,
-          "train_min": 1.9250106621109467e-13,
-          "train_max": 1.3751551793098903e-09,
-          "train_mean": 1.2136101288043362e-10,
-          "train_std": 1.0173679097916295e-10
-        },
-        "mc_cross_channel_bin": {
-          "name": "mc_cross_channel_bin",
-          "source_column": "mc_cross_channel_score",
-          "n_requested_bins": 3,
-          "edges": [
-            -0.24374168323127415,
-            0.018171228392150372
-          ],
-          "effective_bins": 3,
-          "constant": false,
-          "fill_value": -8.239072197819766e-18,
-          "train_min": -4.3295235416083155,
-          "train_max": 11.841579493038461,
-          "train_mean": -8.239072197819766e-18,
-          "train_std": 0.5559724578440398
-        },
-        "mc_eeg_info_bin": {
-          "name": "mc_eeg_info_bin",
-          "source_column": "mc_eeg_info_score",
-          "n_requested_bins": 3,
-          "edges": [
-            -0.22205110398920647,
-            0.010747171798877294
-          ],
-          "effective_bins": 3,
-          "constant": false,
-          "fill_value": 0.0,
-          "train_min": -0.6550709903834351,
-          "train_max": 11.007912141925031,
-          "train_mean": 0.0,
-          "train_std": 0.4646961511808058
-        }
-      }
+      "path": "data\\interim\\phase3_2e\\phase3_2e_feature_specs.json",
+      "exists": true,
+      "size_bytes": 10239
     },
-    "alignment_metadata": {
-      "phase": "Phase III.2E",
-      "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
-      "module": "phase3_2e_alignment",
-      "alignment_version": "phase3_2e_alignment_v1_directional_sync_lags",
-      "created_at": "2026-06-05 00:51:51",
-      "result": {
-        "status": "alignment_ready_exploratory_only",
-        "protocol_only": false,
-        "input_rows": 220776,
-        "n_frames": 40,
-        "n_window_sizes": 5,
-        "n_lags": 8,
-        "n_total_aligned_rows": 220776,
-        "n_valid_alignment_rows": 220576,
-        "n_valid_primary_alignment_rows": 0,
-        "n_valid_exploratory_alignment_rows": 220576,
-        "n_valid_conditional_rows": 220576,
-        "n_valid_mc_conditional_rows": 220576,
-        "can_proceed_to_conditional_cdr": true,
-        "can_proceed_to_empirical_cdr": false,
-        "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
-      },
-      "alignment_inventory_csv": "data\\interim\\phase3_2e\\phase3_2e_alignment_inventory.csv",
-      "alignment_report_json": "results\\phase3_2e\\phase3_2e_alignment_report.json",
-      "alignment_summary_txt": "results\\phase3_2e\\phase3_2e_alignment_summary.txt",
-      "lagged_frames_dir": "data\\interim\\phase3_2e\\lagged_frames",
-      "active_conditional_pairs": [
-        [
-          "E0_EEG_next_given_EEG",
-          "E1_EEG_next_given_EEG_QRNG"
-        ],
-        [
-          "E2_QRNG_next_given_QRNG",
-          "E3_QRNG_next_given_QRNG_EEG"
-        ],
-        [
-          "E4_MCEEG_next_given_MCEEG",
-          "E5_MCEEG_next_given_MCEEG_QRNG"
-        ],
-        [
-          "E2_QRNG_next_given_QRNG",
-          "E6_QRNG_next_given_QRNG_MCEEG"
-        ]
-      ],
-      "config": {
-        "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
-        "phase_name": "Phase III.2E",
-        "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
-        "version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
-        "protocol_status": "protocol_ready",
-        "empirical_execution_status": "pending_synchronized_eeg_qrng_data",
-        "synchronized_input_csv": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-        "allow_protocol_only_without_data": true,
-        "allow_synthetic_demo_data": false,
-        "require_real_synchronized_data_for_claim": true,
-        "required_schema_columns": [
-          "subject_id",
-          "session_id",
-          "window_id",
-          "window_start_utc",
-          "window_end_utc",
-          "eeg_timestamp_utc",
-          "qrng_timestamp_utc",
-          "sync_quality",
-          "clock_drift_ms",
-          "eeg_channel",
-          "eeg_delta_power",
-          "eeg_theta_power",
-          "eeg_alpha_power",
-          "eeg_beta_power",
-          "eeg_entropy",
-          "qrng_state",
-          "qrng_bit_balance",
-          "qrng_transition_rate",
-          "qrng_entropy",
-          "eeg_primary_channel",
-          "eeg_secondary_channel",
-          "eeg_primary_delta_power",
-          "eeg_primary_alpha_power",
-          "eeg_secondary_delta_power",
-          "eeg_secondary_alpha_power",
-          "interchannel_delta_ratio",
-          "interchannel_alpha_ratio",
-          "fronto_parietal_delta_shift",
-          "fronto_parietal_alpha_shift",
-          "cross_channel_corr"
-        ],
-        "optional_schema_columns": [
-          "eeg_gamma_power",
-          "eeg_hjorth_mobility",
-          "eeg_hjorth_complexity",
-          "eeg_line_length",
-          "eeg_signal_std",
-          "eeg_artifact_score",
-          "eeg_quality_score",
-          "qrng_run_length_mean",
-          "qrng_run_length_std",
-          "qrng_run_length_max",
-          "qrng_compressibility_proxy",
-          "qrng_surprise_index",
-          "qrng_transition_asymmetry",
-          "qrng_quality_score",
-          "sync_mode"
-        ],
-        "min_sync_quality": 0.95,
-        "max_clock_drift_ms": 50.0,
-        "max_timestamp_gap_ms": 250.0,
-        "accepted_sync_modes": [
-          "hardware_shared_clock",
-          "software_timestamp_aligned",
-          "posthoc_clock_drift_corrected",
-          "external_sync_marker"
-        ],
-        "rejected_sync_modes": [
-          "unknown_clock_relation",
-          "manual_alignment_without_log",
-          "random_pairing",
-          "posthoc_alignment_to_maximize_signal"
-        ],
-        "primary_eeg_channel": "EEG Fpz-Cz",
-        "secondary_eeg_channel": "EEG Pz-Oz",
-        "use_multichannel_eeg": true,
-        "primary_window_seconds": [
-          5,
-          10
-        ],
-        "secondary_window_seconds": [
-          1,
-          2,
-          30
-        ],
-        "all_window_seconds": [
-          1,
-          2,
-          5,
-          10,
-          30
-        ],
-        "primary_lags_windows": [
-          0,
-          1,
-          2
-        ],
-        "secondary_lags_windows": [
-          -5,
-          -3,
-          -1,
-          3,
-          5
-        ],
-        "all_lags_windows": [
-          -5,
-          -3,
-          -1,
-          0,
-          1,
-          2,
-          3,
-          5
-        ],
-        "conditional_models": [
-          "E0_EEG_next_given_EEG",
-          "E1_EEG_next_given_EEG_QRNG",
-          "E2_QRNG_next_given_QRNG",
-          "E3_QRNG_next_given_QRNG_EEG",
-          "E4_MCEEG_next_given_MCEEG",
-          "E5_MCEEG_next_given_MCEEG_QRNG",
-          "E6_QRNG_next_given_QRNG_MCEEG"
-        ],
-        "primary_conditional_pairs": [
-          [
-            "E0_EEG_next_given_EEG",
-            "E1_EEG_next_given_EEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E3_QRNG_next_given_QRNG_EEG"
-          ]
-        ],
-        "multichannel_conditional_pairs": [
-          [
-            "E4_MCEEG_next_given_MCEEG",
-            "E5_MCEEG_next_given_MCEEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E6_QRNG_next_given_QRNG_MCEEG"
-          ]
-        ],
-        "active_conditional_pairs": [
-          [
-            "E0_EEG_next_given_EEG",
-            "E1_EEG_next_given_EEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E3_QRNG_next_given_QRNG_EEG"
-          ],
-          [
-            "E4_MCEEG_next_given_MCEEG",
-            "E5_MCEEG_next_given_MCEEG_QRNG"
-          ],
-          [
-            "E2_QRNG_next_given_QRNG",
-            "E6_QRNG_next_given_QRNG_MCEEG"
-          ]
-        ],
-        "official_gates": [
-          "F2",
-          "F3",
-          "F6",
-          "F7",
-          "F8",
-          "F9",
-          "F10",
-          "F11",
-          "F12"
-        ],
-        "gate_sensitivity_specs": [
-          "F7_official",
-          "F7_bootstrap",
-          "F7_weighted",
-          "F7_cluster",
-          "F7_LOSO",
-          "F8_BIC_official",
-          "F8_AIC_secondary",
-          "F8_heldout_LL",
-          "F8_cross_validated_LL",
-          "F8_state_density_corrected_BIC",
-          "F8_effective_complexity",
-          "F12_epsilon_grid_short",
-          "F12_epsilon_grid_medium",
-          "F12_epsilon_grid_full",
-          "F12_saturation_fraction"
-        ],
-        "control_types": [
-          "within_subject_qrng_shuffle",
-          "within_subject_eeg_shuffle",
-          "circular_qrng_shift",
-          "subject_mismatch",
-          "timestamp_jitter_control",
-          "phase_randomized_eeg_control",
-          "window_permutation_control",
-          "conditional_target_shuffle",
-          "sync_break_control"
-        ],
-        "required_control_types": [
-          "within_subject_qrng_shuffle",
-          "within_subject_eeg_shuffle",
-          "circular_qrng_shift",
-          "subject_mismatch",
-          "conditional_target_shuffle",
-          "sync_break_control"
-        ],
-        "n_controls": 12,
-        "eps_grid_short": [
-          0.0,
-          0.2
-        ],
-        "eps_grid_medium": [
-          0.0,
-          0.5
-        ],
-        "eps_grid_full": [
-          0.0,
-          0.8
-        ],
-        "eps_saturation_value": 0.8,
-        "eps_moderate_upper_bound": 0.3,
-        "conditional_lift_min": 0.03,
-        "strong_eps_min": 0.07,
-        "subject_effect_fraction": 0.6,
-        "multiple_comparison_guard": true
-      }
+    "alignment_inventory": {
+      "path": "data\\interim\\phase3_2e\\phase3_2e_alignment_inventory.csv",
+      "exists": true,
+      "size_bytes": 6038
+    },
+    "pair_scores": {
+      "path": "results\\phase3_2e\\phase3_2e_conditional_pair_scores.csv",
+      "exists": true,
+      "size_bytes": 26514
+    },
+    "model_scores": {
+      "path": "results\\phase3_2e\\phase3_2e_conditional_model_scores.csv",
+      "exists": true,
+      "size_bytes": 53352
+    },
+    "control_runs": {
+      "path": "results\\phase3_2e\\phase3_2e_control_runs.csv",
+      "exists": true,
+      "size_bytes": 477756
+    },
+    "control_pairs": {
+      "path": "results\\phase3_2e\\phase3_2e_control_pair_scores.csv",
+      "exists": true,
+      "size_bytes": 3206394
+    },
+    "metrics_table": {
+      "path": "results\\phase3_2e\\phase3_2e_metrics_table.csv",
+      "exists": true,
+      "size_bytes": 5932
+    },
+    "f7": {
+      "path": "results\\phase3_2e\\phase3_2e_f7_subject_sensitivity.csv",
+      "exists": true,
+      "size_bytes": 701
+    },
+    "f8": {
+      "path": "results\\phase3_2e\\phase3_2e_f8_complexity_sensitivity.csv",
+      "exists": true,
+      "size_bytes": 1599
+    },
+    "f12": {
+      "path": "results\\phase3_2e\\phase3_2e_f12_epsilon_saturation_sensitivity.csv",
+      "exists": true,
+      "size_bytes": 4740
     }
   },
-  "artifact_table_diagnostics": {
-    "loaded_windows_rows": 27597,
-    "windows_rows": 27597,
-    "features_rows": 27597,
-    "alignment_inventory_rows": 40,
-    "loaded_subjects": 10,
-    "loaded_sessions": 10,
-    "windows_subjects": 10,
-    "windows_sessions": 10,
-    "features_subjects": 10,
-    "features_sessions": 10,
-    "alignment_inventory_subjects": 0,
-    "alignment_inventory_sessions": 0,
-    "alignment_total_n_valid_alignment_rows": 220576,
-    "alignment_total_n_valid_primary_alignment_rows": 0,
-    "alignment_total_n_valid_conditional_rows": 220576,
-    "alignment_total_n_valid_mc_conditional_rows": 220576,
-    "alignment_scope_counts": {
-      "exploratory": 34,
-      "primary": 6
+  "stage_status": {
+    "schema": {
+      "available": true,
+      "status": "schema_valid"
     },
-    "lag_direction_counts": {
-      "future_target": 20,
-      "past_target": 15,
-      "concurrent": 5
+    "sync": {
+      "available": true,
+      "status": "sync_valid"
+    },
+    "loader": {
+      "available": true,
+      "status": "loaded_synchronized_data"
+    },
+    "windows": {
+      "available": true,
+      "status": "windows_ready"
+    },
+    "features": {
+      "available": true,
+      "status": "features_ready"
+    },
+    "alignment": {
+      "available": true,
+      "status": "alignment_ready"
+    },
+    "conditional": {
+      "available": true,
+      "status": "conditional_exploratory_leads"
+    },
+    "controls": {
+      "available": true,
+      "status": "controls_passed"
+    },
+    "gates": {
+      "available": true,
+      "status": "primary_lead_bic_limited"
+    },
+    "sensitivity": {
+      "available": true,
+      "status": "gate_sensitivity_completed"
     }
+  },
+  "artifact_rows": {
+    "loaded": 27597,
+    "windows": 50590,
+    "features": 50590,
+    "alignment_inventory": 28,
+    "conditional_models": 147,
+    "conditional_pairs": 84,
+    "control_runs": 2268,
+    "control_pairs": 9072
+  },
+  "provenance": {
+    "source_class": "surrogate_synchronized_input",
+    "source_modes": [
+      "surrogate_from_phase3_2d"
+    ],
+    "surrogate_detected": true,
+    "require_real_synchronized_data_for_claim": true,
+    "can_claim_empirical_cdr": false,
+    "interpretation": "Surrogate synchronized input: valid for pipeline validation, but not for an empirical EEG–QRNG claim."
+  },
+  "feature_audit": {
+    "passed": true,
+    "windows_rows": 50590,
+    "features_rows": 50590,
+    "missing_identity_columns": [],
+    "interpretation": "Feature audit passed: rebuilt features match the current windows table."
+  },
+  "grid_audit": {
+    "available": true,
+    "valid_rows": 84,
+    "derived_primary_rows": 42,
+    "derived_exploratory_rows": 42,
+    "stored_primary_disagreements": 0,
+    "windows_found": [
+      30,
+      60,
+      90
+    ],
+    "lags_found": [
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "primary_windows": [
+      30,
+      60
+    ],
+    "primary_lags": [
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "primary_pairs": [
+      [
+        "E0_EEG_next_given_EEG",
+        "E1_EEG_next_given_EEG_QRNG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E3_QRNG_next_given_QRNG_EEG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E6_QRNG_next_given_QRNG_MCEEG"
+      ]
+    ]
   },
   "conditional_diagnostics": {
-    "available": true,
-    "protocol_only": false,
     "status": "conditional_exploratory_leads",
-    "n_model_rows": 56,
-    "n_rows": 32,
-    "n_valid_rows": 32,
-    "n_primary_rows": 0,
-    "n_positive_lift_rows": 2,
-    "n_primary_positive_lift_rows": 0,
-    "n_exploratory_lift_rows": 2,
-    "n_strong_candidate_rows": 0,
-    "n_primary_strong_candidate_rows": 0,
-    "n_high_epsilon_zero_lift_rows": 4,
-    "n_single_channel_rows": 16,
-    "n_multichannel_rows": 16,
-    "n_multichannel_positive_lift_rows": 2,
-    "thresholds": {
-      "conditional_lift_min": 0.03,
-      "strong_eps_min": 0.07,
-      "subject_effect_fraction": 0.6,
-      "eps_saturation_value": 0.8
+    "n_model_rows": 147,
+    "n_pair_rows": 84,
+    "n_valid_rows": 84,
+    "n_primary_rows": 42,
+    "n_positive_lift_rows": 1,
+    "n_primary_positive_lift_rows": 1,
+    "n_exploratory_positive_lift_rows": 0,
+    "n_official_strong_candidate_rows": 0,
+    "n_official_primary_strong_candidate_rows": 0,
+    "n_multichannel_rows": 42,
+    "n_multichannel_positive_lift_rows": 1,
+    "selected_primary_lead": {
+      "window_seconds": "30",
+      "lag_windows": "5",
+      "lag_seconds": "150",
+      "lag_label": "p5",
+      "lag_direction": "future_target",
+      "alignment_scope": "primary",
+      "family": "QRNG_next",
+      "baseline_model": "E2_QRNG_next_given_QRNG",
+      "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+      "valid": "True",
+      "primary": "True",
+      "multichannel": "True",
+      "baseline_eps_test": "0.0",
+      "augmented_eps_test": "1.0",
+      "conditional_lift": "1.0",
+      "baseline_ll_test": "-5735.436874371776",
+      "augmented_ll_test": "-5729.368356979312",
+      "ll_improvement": "6.068517392463946",
+      "baseline_bic_test": "11488.915011937048",
+      "augmented_bic_test": "11621.108082700091",
+      "bic_improvement": "-132.19307076304358",
+      "baseline_aic_test": "11474.873748743552",
+      "augmented_aic_test": "11494.736713958624",
+      "aic_improvement": "-19.86296521507211",
+      "n_subjects_evaluated": "10",
+      "n_subjects_positive_lift": "1",
+      "fraction_positive_lift": "0.1",
+      "reason": "ok"
+    },
+    "localized_predictive_support": true,
+    "f7_adaptive_subject_consistency": {
+      "passed": true,
+      "n_subjects_evaluated": 10,
+      "n_subjects_positive_lift": 1,
+      "fraction_positive_lift": 0.1,
+      "required_positive_subjects": 1,
+      "required_positive_fraction": 0.1
+    },
+    "f8_complexity_interpretation": {
+      "official_rule": "bic_improvement >= 0",
+      "official_passed": false,
+      "bic_improvement": -132.19307076304358,
+      "aic_improvement": -19.86296521507211,
+      "heldout_ll_improvement": 6.068517392463946,
+      "does_not_negate_localized_structure": true,
+      "future_v3_review": {
+        "prospective_only": true,
+        "preserve_current_v2_result": true,
+        "options": [
+          "effective_sample_size_BIC",
+          "state_density_corrected_BIC",
+          "effective_complexity",
+          "subject_level_model_selection"
+        ]
+      }
     },
     "model_saturation": {
       "available": true,
-      "eps_saturation_value": 0.8,
-      "warning_fraction": 0.5,
-      "n_model_rows": 56,
-      "columns": {
-        "eps_candidate": {
-          "max": 0.8,
-          "mean": 0.7000000000000001,
-          "median": 0.8,
-          "n_saturated": 49,
-          "saturation_fraction": 0.875
-        },
-        "eps_calib": {
-          "max": 0.8,
-          "mean": 0.7000000000000001,
-          "median": 0.8,
-          "n_saturated": 49,
-          "saturation_fraction": 0.875
-        },
-        "eps_test": {
-          "max": 0.8,
-          "mean": 0.14285714285714285,
-          "median": 0.0,
-          "n_saturated": 10,
-          "saturation_fraction": 0.17857142857142858
-        }
-      },
-      "max_saturation_fraction": 0.875,
-      "warning": true,
-      "reason": "epsilon_saturation_warning"
+      "epsilon_column_used": "eps_test",
+      "eps_saturation_value": 2.0,
+      "eps_saturation_warning_fraction": 0.95,
+      "n_model_rows": 147,
+      "n_saturated_rows": 0,
+      "saturation_fraction": 0.0,
+      "warning": false,
+      "diagnostic_only": true
     },
     "pair_saturation": {
       "available": true,
-      "eps_saturation_value": 0.8,
-      "warning_fraction": 0.5,
-      "n_valid_pair_rows": 32,
-      "max_baseline_eps_test": 0.8,
-      "max_augmented_eps_test": 0.8,
-      "n_either_saturated": 10,
-      "n_both_saturated": 4,
-      "either_saturation_fraction": 0.3125,
-      "both_saturation_fraction": 0.125,
+      "eps_saturation_value": 2.0,
+      "eps_saturation_warning_fraction": 0.95,
+      "n_valid_pair_rows": 84,
+      "n_either_saturated_rows": 0,
+      "either_saturation_fraction": 0.0,
       "warning": false,
-      "reason": "ok"
+      "diagnostic_only": true
     },
-    "best_rows_by_metric": [
-      {
-        "selected_by": "conditional_lift",
-        "window_seconds": 30,
-        "lag_windows": -1,
-        "lag_seconds": -30,
-        "lag_direction": "past_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "primary": false,
-        "multichannel": true,
-        "valid": true,
-        "baseline_eps_test": 0.0,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.8,
-        "fraction_positive_lift": 0.1,
-        "ll_improvement": -1.4388171061737012,
-        "bic_improvement": -147.23286509011814,
-        "aic_improvement": -34.8776342123474,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "reason": "ok"
-      },
-      {
-        "selected_by": "augmented_eps_test",
-        "window_seconds": 30,
-        "lag_windows": -3,
-        "lag_seconds": -90,
-        "lag_direction": "past_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "primary": false,
-        "multichannel": true,
-        "valid": true,
-        "baseline_eps_test": 0.8,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.0,
-        "fraction_positive_lift": 0.1,
-        "ll_improvement": -0.376171664616777,
-        "bic_improvement": -145.09211713540026,
-        "aic_improvement": -32.752343329233554,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "reason": "ok"
-      },
-      {
-        "selected_by": "baseline_eps_test",
-        "window_seconds": 30,
-        "lag_windows": -3,
-        "lag_seconds": -90,
-        "lag_direction": "past_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E3_QRNG_next_given_QRNG_EEG",
-        "primary": false,
-        "multichannel": false,
-        "valid": true,
-        "baseline_eps_test": 0.8,
-        "augmented_eps_test": 0.0,
-        "conditional_lift": -0.8,
-        "fraction_positive_lift": 0.1,
-        "ll_improvement": -8.750442628082965,
-        "bic_improvement": -161.84065906233263,
-        "aic_improvement": -49.50088525616593,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "reason": "ok"
-      },
-      {
-        "selected_by": "ll_improvement",
-        "window_seconds": 30,
-        "lag_windows": 5,
-        "lag_seconds": 150,
-        "lag_direction": "future_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "primary": false,
-        "multichannel": true,
-        "valid": true,
-        "baseline_eps_test": 0.0,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.8,
-        "fraction_positive_lift": 0.1,
-        "ll_improvement": 6.206867485865587,
-        "bic_improvement": -131.9163705762403,
-        "aic_improvement": -19.586265028268823,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "reason": "ok"
-      },
-      {
-        "selected_by": "bic_improvement",
-        "window_seconds": 30,
-        "lag_windows": 5,
-        "lag_seconds": 150,
-        "lag_direction": "future_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "primary": false,
-        "multichannel": true,
-        "valid": true,
-        "baseline_eps_test": 0.0,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.8,
-        "fraction_positive_lift": 0.1,
-        "ll_improvement": 6.206867485865587,
-        "bic_improvement": -131.9163705762403,
-        "aic_improvement": -19.586265028268823,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "reason": "ok"
-      },
-      {
-        "selected_by": "aic_improvement",
-        "window_seconds": 30,
-        "lag_windows": 5,
-        "lag_seconds": 150,
-        "lag_direction": "future_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "primary": false,
-        "multichannel": true,
-        "valid": true,
-        "baseline_eps_test": 0.0,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.8,
-        "fraction_positive_lift": 0.1,
-        "ll_improvement": 6.206867485865587,
-        "bic_improvement": -131.9163705762403,
-        "aic_improvement": -19.586265028268823,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "reason": "ok"
-      },
-      {
-        "selected_by": "fraction_positive_lift",
-        "window_seconds": 30,
-        "lag_windows": 1,
-        "lag_seconds": 30,
-        "lag_direction": "future_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "primary": false,
-        "multichannel": true,
-        "valid": true,
-        "baseline_eps_test": 0.8,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.0,
-        "fraction_positive_lift": 0.3,
-        "ll_improvement": 0.7213885824785393,
-        "bic_improvement": -142.91245371281366,
-        "aic_improvement": -30.55722283504292,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 3,
-        "reason": "ok"
-      }
-    ],
-    "primary_rows": [],
-    "positive_lift_rows": [
-      {
-        "window_seconds": 30,
-        "lag_windows": -1,
-        "lag_seconds": -30,
-        "lag_label": "m1",
-        "lag_direction": "past_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "valid": true,
-        "primary": false,
-        "multichannel": true,
-        "baseline_eps_test": 0.0,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.8,
-        "baseline_ll_test": -5744.829823540104,
-        "augmented_ll_test": -5746.268640646278,
-        "ll_improvement": -1.4388171061737012,
-        "baseline_bic_test": 11507.70405093993,
-        "augmented_bic_test": 11654.936916030048,
-        "bic_improvement": -147.23286509011814,
-        "baseline_aic_test": 11493.659647080209,
-        "augmented_aic_test": 11528.537281292556,
-        "aic_improvement": -34.8776342123474,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "fraction_positive_lift": 0.1,
-        "reason": "ok"
-      },
-      {
-        "window_seconds": 30,
-        "lag_windows": 5,
-        "lag_seconds": 150,
-        "lag_label": "p5",
-        "lag_direction": "future_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "valid": true,
-        "primary": false,
-        "multichannel": true,
-        "baseline_eps_test": 0.0,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.8,
-        "baseline_ll_test": -5735.436874371776,
-        "augmented_ll_test": -5729.23000688591,
-        "ll_improvement": 6.206867485865587,
-        "baseline_bic_test": 11488.915011937048,
-        "augmented_bic_test": 11620.831382513288,
-        "bic_improvement": -131.9163705762403,
-        "baseline_aic_test": 11474.873748743552,
-        "augmented_aic_test": 11494.46001377182,
-        "aic_improvement": -19.586265028268823,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "fraction_positive_lift": 0.1,
-        "reason": "ok"
-      }
-    ],
-    "primary_positive_lift_rows": [],
-    "exploratory_lift_rows": [
-      {
-        "window_seconds": 30,
-        "lag_windows": -1,
-        "lag_seconds": -30,
-        "lag_label": "m1",
-        "lag_direction": "past_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "valid": true,
-        "primary": false,
-        "multichannel": true,
-        "baseline_eps_test": 0.0,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.8,
-        "baseline_ll_test": -5744.829823540104,
-        "augmented_ll_test": -5746.268640646278,
-        "ll_improvement": -1.4388171061737012,
-        "baseline_bic_test": 11507.70405093993,
-        "augmented_bic_test": 11654.936916030048,
-        "bic_improvement": -147.23286509011814,
-        "baseline_aic_test": 11493.659647080209,
-        "augmented_aic_test": 11528.537281292556,
-        "aic_improvement": -34.8776342123474,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "fraction_positive_lift": 0.1,
-        "reason": "ok"
-      },
-      {
-        "window_seconds": 30,
-        "lag_windows": 5,
-        "lag_seconds": 150,
-        "lag_label": "p5",
-        "lag_direction": "future_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "valid": true,
-        "primary": false,
-        "multichannel": true,
-        "baseline_eps_test": 0.0,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.8,
-        "baseline_ll_test": -5735.436874371776,
-        "augmented_ll_test": -5729.23000688591,
-        "ll_improvement": 6.206867485865587,
-        "baseline_bic_test": 11488.915011937048,
-        "augmented_bic_test": 11620.831382513288,
-        "bic_improvement": -131.9163705762403,
-        "baseline_aic_test": 11474.873748743552,
-        "augmented_aic_test": 11494.46001377182,
-        "aic_improvement": -19.586265028268823,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "fraction_positive_lift": 0.1,
-        "reason": "ok"
-      }
-    ],
-    "strong_candidate_rows": [],
-    "primary_strong_candidate_rows": [],
-    "high_epsilon_zero_lift_rows": [
-      {
-        "window_seconds": 30,
-        "lag_windows": -3,
-        "lag_seconds": -90,
-        "lag_label": "m3",
-        "lag_direction": "past_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "valid": true,
-        "primary": false,
-        "multichannel": true,
-        "baseline_eps_test": 0.8,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.0,
-        "baseline_ll_test": -5739.133825050341,
-        "augmented_ll_test": -5739.509996714958,
-        "ll_improvement": -0.376171664616777,
-        "baseline_bic_test": 11496.310121826453,
-        "augmented_bic_test": 11641.402238961851,
-        "bic_improvement": -145.09211713540026,
-        "baseline_aic_test": 11482.267650100684,
-        "augmented_aic_test": 11515.019993429916,
-        "aic_improvement": -32.752343329233554,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "fraction_positive_lift": 0.1,
-        "reason": "ok"
-      },
-      {
-        "window_seconds": 30,
-        "lag_windows": 1,
-        "lag_seconds": 30,
-        "lag_label": "p1",
-        "lag_direction": "future_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E3_QRNG_next_given_QRNG_EEG",
-        "valid": true,
-        "primary": false,
-        "multichannel": false,
-        "baseline_eps_test": 0.8,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.0,
-        "baseline_ll_test": -5744.958485936534,
-        "augmented_ll_test": -5744.115832135921,
-        "ll_improvement": 0.8426538006133342,
-        "baseline_bic_test": 11507.96137573279,
-        "augmented_bic_test": 11650.631299009334,
-        "bic_improvement": -142.66992327654407,
-        "baseline_aic_test": 11493.916971873068,
-        "augmented_aic_test": 11524.231664271842,
-        "aic_improvement": -30.31469239877333,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 2,
-        "fraction_positive_lift": 0.2,
-        "reason": "ok"
-      },
-      {
-        "window_seconds": 30,
-        "lag_windows": 1,
-        "lag_seconds": 30,
-        "lag_label": "p1",
-        "lag_direction": "future_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
-        "valid": true,
-        "primary": false,
-        "multichannel": true,
-        "baseline_eps_test": 0.8,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.0,
-        "baseline_ll_test": -5744.958485936534,
-        "augmented_ll_test": -5744.237097354056,
-        "ll_improvement": 0.7213885824785393,
-        "baseline_bic_test": 11507.96137573279,
-        "augmented_bic_test": 11650.873829445603,
-        "bic_improvement": -142.91245371281366,
-        "baseline_aic_test": 11493.916971873068,
-        "augmented_aic_test": 11524.474194708111,
-        "aic_improvement": -30.55722283504292,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 3,
-        "fraction_positive_lift": 0.3,
-        "reason": "ok"
-      },
-      {
-        "window_seconds": 30,
-        "lag_windows": 2,
-        "lag_seconds": 60,
-        "lag_label": "p2",
-        "lag_direction": "future_target",
-        "alignment_scope": "exploratory",
-        "family": "QRNG_next",
-        "baseline_model": "E2_QRNG_next_given_QRNG",
-        "augmented_model": "E3_QRNG_next_given_QRNG_EEG",
-        "valid": true,
-        "primary": false,
-        "multichannel": false,
-        "baseline_eps_test": 0.8,
-        "augmented_eps_test": 0.8,
-        "conditional_lift": 0.0,
-        "baseline_ll_test": -5739.337205556664,
-        "augmented_ll_test": -5741.302185730762,
-        "ll_improvement": -1.9649801740979456,
-        "baseline_bic_test": 11496.717124457946,
-        "augmented_bic_test": 11644.98879156308,
-        "bic_improvement": -148.27166710513484,
-        "baseline_aic_test": 11482.674411113328,
-        "augmented_aic_test": 11518.604371461524,
-        "aic_improvement": -35.92996034819589,
-        "n_subjects_evaluated": 10,
-        "n_subjects_positive_lift": 1,
-        "fraction_positive_lift": 0.1,
-        "reason": "ok"
-      }
-    ],
-    "max_conditional_lift": 0.8,
-    "max_augmented_eps_test": 0.8,
-    "max_fraction_positive_lift": 0.3,
-    "best_bic_improvement": -131.9163705762403,
-    "best_ll_improvement": 6.206867485865587,
-    "interpretation": "Positive synchronized conditional lift rows exist, but they remain exploratory unless all gates and controls pass."
+    "interpretation": "Registered primary localized predictive support is present, but the current official global BIC gate is not satisfied."
   },
   "control_diagnostics": {
-    "available": true,
-    "protocol_only": false,
     "status": "controls_passed",
-    "n_control_runs": 864,
-    "n_valid_control_runs": 864,
+    "passed": true,
+    "n_control_runs": 2268,
+    "n_valid_control_runs": 2268,
     "n_control_types": 9,
-    "n_failed_control_types": 0,
     "failed_control_types": [],
     "required_control_types": [
       "within_subject_qrng_shuffle",
@@ -3199,204 +621,338 @@
       "conditional_target_shuffle",
       "sync_break_control"
     ],
+    "control_subject_fraction_threshold": 0.6,
+    "discovery_subject_effect_fraction": 0.1,
     "control_breakdown": [
       {
         "control_type": "circular_qrng_shift",
-        "n_runs": 96,
-        "n_valid_runs": 96,
-        "median_max_augmented_eps_test": 0.8,
-        "max_augmented_eps_test": 0.8,
-        "median_max_lift": 0.0,
-        "max_lift": 0.8,
-        "median_max_bic_improvement": -145.72885788018903,
-        "max_bic_improvement": -13.493938888488628,
-        "fraction_collapsed_overall": 0.9166666666666666,
-        "required_control_fraction": 0.75,
+        "n_runs": 252,
+        "n_valid_runs": 252,
+        "median_max_baseline_eps_test": 1.0,
+        "median_max_augmented_eps_test": 0.0,
+        "mean_max_augmented_eps_test": 0.3134920634920635,
+        "max_augmented_eps_test": 1.0,
+        "median_max_conditional_lift": 0.0,
+        "mean_max_conditional_lift": 0.10325396825396825,
+        "max_conditional_lift": 1.0,
+        "max_primary_conditional_lift": 1.0,
+        "max_exploratory_conditional_lift": 1.0,
+        "median_max_bic_improvement": -140.34029524340713,
+        "max_bic_improvement": -91.53528550919371,
+        "median_max_ll_improvement": -1.9180593018227228,
+        "max_ll_improvement": 17.62783072450361,
+        "median_eps_saturation_fraction": 0.0,
+        "max_eps_saturation_fraction": 0.0,
+        "total_pair_rows": 1008,
+        "total_primary_pair_rows": 504,
+        "total_exploratory_pair_rows": 504,
+        "total_positive_lift_rows": 36,
+        "total_primary_positive_lift_rows": 9,
+        "total_exploratory_positive_lift_rows": 27,
+        "total_multichannel_pair_rows": 504,
+        "total_multichannel_positive_lift_rows": 23,
+        "total_multichannel_strong_candidate_rows": 0,
+        "fraction_runs_below_control_tol": 0.8968253968253969,
+        "fraction_runs_collapsed_overall": 0.8968253968253969,
         "control_tol": 0.05,
-        "passed_estimate": true,
+        "passed": true,
         "reason": "ok"
       },
       {
         "control_type": "conditional_target_shuffle",
-        "n_runs": 96,
-        "n_valid_runs": 96,
-        "median_max_augmented_eps_test": 0.8,
-        "max_augmented_eps_test": 0.8,
-        "median_max_lift": 0.0,
-        "max_lift": 0.8,
-        "median_max_bic_improvement": -150.91548825792415,
-        "max_bic_improvement": -139.4103096345989,
-        "fraction_collapsed_overall": 0.8854166666666666,
-        "required_control_fraction": 0.75,
+        "n_runs": 252,
+        "n_valid_runs": 252,
+        "median_max_baseline_eps_test": 1.0,
+        "median_max_augmented_eps_test": 0.0,
+        "mean_max_augmented_eps_test": 0.239484126984127,
+        "max_augmented_eps_test": 1.08,
+        "median_max_conditional_lift": 0.0,
+        "mean_max_conditional_lift": 0.03674603174603174,
+        "max_conditional_lift": 1.0,
+        "max_primary_conditional_lift": 1.0,
+        "max_exploratory_conditional_lift": 1.0,
+        "median_max_bic_improvement": -140.6966868805216,
+        "max_bic_improvement": -124.67797890814744,
+        "median_max_ll_improvement": -2.9337219026576804,
+        "max_ll_improvement": 3.641842674412146,
+        "median_eps_saturation_fraction": 0.0,
+        "max_eps_saturation_fraction": 0.0,
+        "total_pair_rows": 1008,
+        "total_primary_pair_rows": 504,
+        "total_exploratory_pair_rows": 504,
+        "total_positive_lift_rows": 24,
+        "total_primary_positive_lift_rows": 18,
+        "total_exploratory_positive_lift_rows": 6,
+        "total_multichannel_pair_rows": 504,
+        "total_multichannel_positive_lift_rows": 10,
+        "total_multichannel_strong_candidate_rows": 0,
+        "fraction_runs_below_control_tol": 0.9365079365079365,
+        "fraction_runs_collapsed_overall": 0.9365079365079365,
         "control_tol": 0.05,
-        "passed_estimate": true,
+        "passed": true,
         "reason": "ok"
       },
       {
         "control_type": "phase_randomized_eeg_control",
-        "n_runs": 96,
-        "n_valid_runs": 96,
+        "n_runs": 252,
+        "n_valid_runs": 252,
+        "median_max_baseline_eps_test": 1.0,
         "median_max_augmented_eps_test": 0.0,
-        "max_augmented_eps_test": 0.8,
-        "median_max_lift": 0.0,
-        "max_lift": 0.8,
-        "median_max_bic_improvement": -147.79694923293482,
-        "max_bic_improvement": -131.30368144153545,
-        "fraction_collapsed_overall": 0.8958333333333334,
-        "required_control_fraction": 0.75,
+        "mean_max_augmented_eps_test": 0.31746031746031744,
+        "max_augmented_eps_test": 1.0,
+        "median_max_conditional_lift": 0.0,
+        "mean_max_conditional_lift": 0.031746031746031744,
+        "max_conditional_lift": 1.0,
+        "max_primary_conditional_lift": 1.0,
+        "max_exploratory_conditional_lift": 0.0,
+        "median_max_bic_improvement": -140.5699769395801,
+        "max_bic_improvement": -123.50908371783726,
+        "median_max_ll_improvement": -2.9534859308926116,
+        "max_ll_improvement": 17.307728329432393,
+        "median_eps_saturation_fraction": 0.0,
+        "max_eps_saturation_fraction": 0.0,
+        "total_pair_rows": 1008,
+        "total_primary_pair_rows": 504,
+        "total_exploratory_pair_rows": 504,
+        "total_positive_lift_rows": 9,
+        "total_primary_positive_lift_rows": 9,
+        "total_exploratory_positive_lift_rows": 0,
+        "total_multichannel_pair_rows": 504,
+        "total_multichannel_positive_lift_rows": 6,
+        "total_multichannel_strong_candidate_rows": 0,
+        "fraction_runs_below_control_tol": 0.9523809523809523,
+        "fraction_runs_collapsed_overall": 0.9523809523809523,
         "control_tol": 0.05,
-        "passed_estimate": true,
+        "passed": true,
         "reason": "ok"
       },
       {
         "control_type": "subject_mismatch",
-        "n_runs": 96,
-        "n_valid_runs": 96,
-        "median_max_augmented_eps_test": 0.8,
-        "max_augmented_eps_test": 0.8,
-        "median_max_lift": 0.0,
-        "max_lift": 0.8,
-        "median_max_bic_improvement": -145.97273215098176,
-        "max_bic_improvement": 115.7072508888068,
-        "fraction_collapsed_overall": 0.8645833333333334,
-        "required_control_fraction": 0.75,
+        "n_runs": 252,
+        "n_valid_runs": 252,
+        "median_max_baseline_eps_test": 1.0,
+        "median_max_augmented_eps_test": 0.0,
+        "mean_max_augmented_eps_test": 0.32142857142857145,
+        "max_augmented_eps_test": 1.0,
+        "median_max_conditional_lift": 0.0,
+        "mean_max_conditional_lift": 0.09523809523809523,
+        "max_conditional_lift": 1.0,
+        "max_primary_conditional_lift": 1.0,
+        "max_exploratory_conditional_lift": 1.0,
+        "median_max_bic_improvement": -139.46110759607882,
+        "max_bic_improvement": 394.2100446419663,
+        "median_max_ll_improvement": -1.846992455704708,
+        "max_ll_improvement": 269.2826377598685,
+        "median_eps_saturation_fraction": 0.0,
+        "max_eps_saturation_fraction": 0.0,
+        "total_pair_rows": 1008,
+        "total_primary_pair_rows": 504,
+        "total_exploratory_pair_rows": 504,
+        "total_positive_lift_rows": 28,
+        "total_primary_positive_lift_rows": 12,
+        "total_exploratory_positive_lift_rows": 16,
+        "total_multichannel_pair_rows": 504,
+        "total_multichannel_positive_lift_rows": 21,
+        "total_multichannel_strong_candidate_rows": 0,
+        "fraction_runs_below_control_tol": 0.8849206349206349,
+        "fraction_runs_collapsed_overall": 0.8849206349206349,
         "control_tol": 0.05,
-        "passed_estimate": true,
+        "passed": true,
         "reason": "ok"
       },
       {
         "control_type": "sync_break_control",
-        "n_runs": 96,
-        "n_valid_runs": 96,
+        "n_runs": 252,
+        "n_valid_runs": 252,
+        "median_max_baseline_eps_test": 1.0,
         "median_max_augmented_eps_test": 0.0,
-        "max_augmented_eps_test": 0.8,
-        "median_max_lift": 0.0,
-        "max_lift": 0.8,
-        "median_max_bic_improvement": -151.8997763636071,
-        "max_bic_improvement": -141.94964553965474,
-        "fraction_collapsed_overall": 0.875,
-        "required_control_fraction": 0.75,
+        "mean_max_augmented_eps_test": 0.19047619047619047,
+        "max_augmented_eps_test": 1.0,
+        "median_max_conditional_lift": 0.0,
+        "mean_max_conditional_lift": 0.0,
+        "max_conditional_lift": 0.0,
+        "max_primary_conditional_lift": 0.0,
+        "max_exploratory_conditional_lift": 0.0,
+        "median_max_bic_improvement": -144.94961360829802,
+        "max_bic_improvement": -126.80253949920716,
+        "median_max_ll_improvement": -4.133126570229479,
+        "max_ll_improvement": 1.3333345289993304,
+        "median_eps_saturation_fraction": 0.0,
+        "max_eps_saturation_fraction": 0.0,
+        "total_pair_rows": 1008,
+        "total_primary_pair_rows": 504,
+        "total_exploratory_pair_rows": 504,
+        "total_positive_lift_rows": 0,
+        "total_primary_positive_lift_rows": 0,
+        "total_exploratory_positive_lift_rows": 0,
+        "total_multichannel_pair_rows": 504,
+        "total_multichannel_positive_lift_rows": 0,
+        "total_multichannel_strong_candidate_rows": 0,
+        "fraction_runs_below_control_tol": 1.0,
+        "fraction_runs_collapsed_overall": 1.0,
         "control_tol": 0.05,
-        "passed_estimate": true,
+        "passed": true,
         "reason": "ok"
       },
       {
         "control_type": "timestamp_jitter_control",
-        "n_runs": 96,
-        "n_valid_runs": 96,
-        "median_max_augmented_eps_test": 0.8,
-        "max_augmented_eps_test": 0.8,
-        "median_max_lift": 0.0,
-        "max_lift": 0.0,
-        "median_max_bic_improvement": -145.94961477573727,
-        "max_bic_improvement": -138.0915455121485,
-        "fraction_collapsed_overall": 1.0,
-        "required_control_fraction": 0.75,
+        "n_runs": 252,
+        "n_valid_runs": 252,
+        "median_max_baseline_eps_test": 1.0,
+        "median_max_augmented_eps_test": 0.0,
+        "mean_max_augmented_eps_test": 0.09523809523809523,
+        "max_augmented_eps_test": 1.0,
+        "median_max_conditional_lift": 0.0,
+        "mean_max_conditional_lift": 0.0,
+        "max_conditional_lift": 0.0,
+        "max_primary_conditional_lift": 0.0,
+        "max_exploratory_conditional_lift": 0.0,
+        "median_max_bic_improvement": -139.58669021962942,
+        "max_bic_improvement": -124.56529571327428,
+        "median_max_ll_improvement": -0.4913329013470502,
+        "max_ll_improvement": 4.965471802059255,
+        "median_eps_saturation_fraction": 0.0,
+        "max_eps_saturation_fraction": 0.0,
+        "total_pair_rows": 1008,
+        "total_primary_pair_rows": 504,
+        "total_exploratory_pair_rows": 504,
+        "total_positive_lift_rows": 0,
+        "total_primary_positive_lift_rows": 0,
+        "total_exploratory_positive_lift_rows": 0,
+        "total_multichannel_pair_rows": 504,
+        "total_multichannel_positive_lift_rows": 0,
+        "total_multichannel_strong_candidate_rows": 0,
+        "fraction_runs_below_control_tol": 1.0,
+        "fraction_runs_collapsed_overall": 1.0,
         "control_tol": 0.05,
-        "passed_estimate": true,
+        "passed": true,
         "reason": "ok"
       },
       {
         "control_type": "window_permutation_control",
-        "n_runs": 96,
-        "n_valid_runs": 96,
-        "median_max_augmented_eps_test": 0.8,
-        "max_augmented_eps_test": 0.8,
-        "median_max_lift": 0.0,
-        "max_lift": 0.8,
-        "median_max_bic_improvement": -150.91548825792415,
-        "max_bic_improvement": -139.4103096345989,
-        "fraction_collapsed_overall": 0.8854166666666666,
-        "required_control_fraction": 0.75,
+        "n_runs": 252,
+        "n_valid_runs": 252,
+        "median_max_baseline_eps_test": 1.0,
+        "median_max_augmented_eps_test": 0.0,
+        "mean_max_augmented_eps_test": 0.21123015873015874,
+        "max_augmented_eps_test": 1.09,
+        "median_max_conditional_lift": 0.0,
+        "mean_max_conditional_lift": 0.036190476190476197,
+        "max_conditional_lift": 1.0,
+        "max_primary_conditional_lift": 1.0,
+        "max_exploratory_conditional_lift": 1.0,
+        "median_max_bic_improvement": -141.87642077711712,
+        "max_bic_improvement": -119.3136182621297,
+        "median_max_ll_improvement": -3.3272768030107045,
+        "max_ll_improvement": 4.004624063401934,
+        "median_eps_saturation_fraction": 0.0,
+        "max_eps_saturation_fraction": 0.0,
+        "total_pair_rows": 1008,
+        "total_primary_pair_rows": 504,
+        "total_exploratory_pair_rows": 504,
+        "total_positive_lift_rows": 23,
+        "total_primary_positive_lift_rows": 14,
+        "total_exploratory_positive_lift_rows": 9,
+        "total_multichannel_pair_rows": 504,
+        "total_multichannel_positive_lift_rows": 7,
+        "total_multichannel_strong_candidate_rows": 0,
+        "fraction_runs_below_control_tol": 0.9246031746031746,
+        "fraction_runs_collapsed_overall": 0.9246031746031746,
         "control_tol": 0.05,
-        "passed_estimate": true,
+        "passed": true,
         "reason": "ok"
       },
       {
         "control_type": "within_subject_eeg_shuffle",
-        "n_runs": 96,
-        "n_valid_runs": 96,
+        "n_runs": 252,
+        "n_valid_runs": 252,
+        "median_max_baseline_eps_test": 1.0,
         "median_max_augmented_eps_test": 0.0,
-        "max_augmented_eps_test": 0.8,
-        "median_max_lift": 0.0,
-        "max_lift": 0.8,
-        "median_max_bic_improvement": -147.11101022673392,
-        "max_bic_improvement": -134.56207446725057,
-        "fraction_collapsed_overall": 0.875,
-        "required_control_fraction": 0.75,
+        "mean_max_augmented_eps_test": 0.32936507936507936,
+        "max_augmented_eps_test": 1.0,
+        "median_max_conditional_lift": 0.0,
+        "mean_max_conditional_lift": 0.03968253968253968,
+        "max_conditional_lift": 1.0,
+        "max_primary_conditional_lift": 1.0,
+        "max_exploratory_conditional_lift": 1.0,
+        "median_max_bic_improvement": -139.6986294830981,
+        "max_bic_improvement": -123.0321906847348,
+        "median_max_ll_improvement": -2.311521025091224,
+        "max_ll_improvement": 2.6929727423148506,
+        "median_eps_saturation_fraction": 0.0,
+        "max_eps_saturation_fraction": 0.0,
+        "total_pair_rows": 1008,
+        "total_primary_pair_rows": 504,
+        "total_exploratory_pair_rows": 504,
+        "total_positive_lift_rows": 10,
+        "total_primary_positive_lift_rows": 8,
+        "total_exploratory_positive_lift_rows": 2,
+        "total_multichannel_pair_rows": 504,
+        "total_multichannel_positive_lift_rows": 6,
+        "total_multichannel_strong_candidate_rows": 0,
+        "fraction_runs_below_control_tol": 0.9603174603174603,
+        "fraction_runs_collapsed_overall": 0.9603174603174603,
         "control_tol": 0.05,
-        "passed_estimate": true,
+        "passed": true,
         "reason": "ok"
       },
       {
         "control_type": "within_subject_qrng_shuffle",
-        "n_runs": 96,
-        "n_valid_runs": 96,
-        "median_max_augmented_eps_test": 0.8,
-        "max_augmented_eps_test": 0.8,
-        "median_max_lift": 0.0,
-        "max_lift": 0.8,
-        "median_max_bic_improvement": -144.85852812568282,
-        "max_bic_improvement": -125.95516024619974,
-        "fraction_collapsed_overall": 0.875,
-        "required_control_fraction": 0.75,
+        "n_runs": 252,
+        "n_valid_runs": 252,
+        "median_max_baseline_eps_test": 1.0,
+        "median_max_augmented_eps_test": 0.0,
+        "mean_max_augmented_eps_test": 0.3412698412698413,
+        "max_augmented_eps_test": 1.0,
+        "median_max_conditional_lift": 0.0,
+        "mean_max_conditional_lift": 0.09523809523809523,
+        "max_conditional_lift": 1.0,
+        "max_primary_conditional_lift": 1.0,
+        "max_exploratory_conditional_lift": 1.0,
+        "median_max_bic_improvement": -140.5577028285652,
+        "max_bic_improvement": -119.34129475256486,
+        "median_max_ll_improvement": -1.854109808579551,
+        "max_ll_improvement": 13.451109972200356,
+        "median_eps_saturation_fraction": 0.0,
+        "max_eps_saturation_fraction": 0.0,
+        "total_pair_rows": 1008,
+        "total_primary_pair_rows": 504,
+        "total_exploratory_pair_rows": 504,
+        "total_positive_lift_rows": 29,
+        "total_primary_positive_lift_rows": 10,
+        "total_exploratory_positive_lift_rows": 19,
+        "total_multichannel_pair_rows": 504,
+        "total_multichannel_positive_lift_rows": 20,
+        "total_multichannel_strong_candidate_rows": 0,
+        "fraction_runs_below_control_tol": 0.9047619047619048,
+        "fraction_runs_collapsed_overall": 0.9047619047619048,
         "control_tol": 0.05,
-        "passed_estimate": true,
+        "passed": true,
         "reason": "ok"
       }
     ],
-    "interpretation": "All synchronized negative controls collapsed under the official criteria."
+    "interpretation": "All required negative controls passed under the corrected control-specific classification."
   },
   "gates_diagnostics": {
-    "available": true,
-    "final_status": {
-      "status": "exploratory_lead_with_saturation_warning",
-      "protocol_only": false,
-      "interpretation": "Exploratory synchronized conditional lift appeared, but epsilon saturation diagnostics raised a warning. The result cannot be interpreted as evidence without additional diagnostics.",
-      "passed_gates": [
-        "F2",
-        "F3",
-        "F11"
-      ],
-      "failed_gates": [
-        "F9",
-        "F10"
-      ],
-      "warning_gates": [
-        "F12"
-      ],
-      "not_evaluated_gates": [
-        "F1",
-        "F5",
-        "F6",
-        "F7",
-        "F8"
-      ],
-      "can_claim_empirical_cdr": false,
-      "can_proceed_to_gate_sensitivity": true,
-      "can_proceed_to_diagnostics": true
-    },
-    "status": "exploratory_lead_with_saturation_warning",
-    "protocol_only": false,
+    "status": "primary_lead_bic_limited",
     "can_claim_empirical_cdr": false,
     "passed_gates": [
       "F2",
       "F3",
-      "F11"
-    ],
-    "failed_gates": [
-      "F9",
-      "F10"
-    ],
-    "not_evaluated_gates": [
-      "F1",
-      "F5",
       "F6",
       "F7",
+      "F9",
+      "F10",
+      "F11",
+      "F12"
+    ],
+    "failed_gates": [
       "F8"
     ],
-    "warning_gates": [
-      "F12"
+    "warning_gates": [],
+    "not_evaluated_gates": [
+      "F1",
+      "F5"
     ],
     "gates": [
       {
@@ -3406,266 +962,29 @@
         "status": "NOT_EVALUATED",
         "value": 0.0,
         "threshold": 0.05,
-        "reason": "not_evaluated_in_metrics; reserved for runner-level or synthetic injection test",
-        "details": {
-          "inj_eps_true": 0.05,
-          "note": "This gate is NOT_EVALUATED here, not interpreted as a scientific failure."
-        }
+        "reason": "not_evaluated_in_metrics; reserved for runner-level injection test",
+        "details": {}
       },
       {
         "gate": "F2",
         "name": "Controls collapse",
         "passed": true,
         "status": "PASS",
-        "value": 0.8645833333333334,
+        "value": 0.8849206349206349,
         "threshold": 0.75,
         "reason": "ok",
         "details": {
           "failed_control_types": [],
-          "control_summaries": [
-            {
-              "control_type": "circular_qrng_shift",
-              "n_runs": 96,
-              "n_valid_runs": 96,
-              "median_max_baseline_eps_test": 0.8,
-              "median_max_augmented_eps_test": 0.8,
-              "mean_max_augmented_eps_test": 0.5083333333333333,
-              "max_augmented_eps_test": 0.8,
-              "median_max_conditional_lift": 0.0,
-              "mean_max_conditional_lift": 0.06666666666666667,
-              "max_conditional_lift": 0.8,
-              "median_max_bic_improvement": -145.72885788018903,
-              "max_bic_improvement": -13.493938888488628,
-              "median_max_ll_improvement": -0.6587709760924554,
-              "max_ll_improvement": 65.43064599464105,
-              "median_eps_saturation_fraction": 0.5,
-              "max_eps_saturation_fraction": 0.5,
-              "total_multichannel_pair_rows": 192,
-              "total_multichannel_positive_lift_rows": 6,
-              "total_multichannel_strong_candidate_rows": 0,
-              "fraction_runs_below_control_tol": 0.9166666666666666,
-              "fraction_runs_collapsed_overall": 0.9166666666666666,
-              "control_tol": 0.05,
-              "passed": true,
-              "reason": "ok"
-            },
-            {
-              "control_type": "conditional_target_shuffle",
-              "n_runs": 96,
-              "n_valid_runs": 96,
-              "median_max_baseline_eps_test": 0.8,
-              "median_max_augmented_eps_test": 0.8,
-              "mean_max_augmented_eps_test": 0.725,
-              "max_augmented_eps_test": 0.8,
-              "median_max_conditional_lift": 0.0,
-              "mean_max_conditional_lift": 0.075,
-              "max_conditional_lift": 0.8,
-              "median_max_bic_improvement": -150.91548825792415,
-              "max_bic_improvement": -139.4103096345989,
-              "median_max_ll_improvement": -3.3009203165524923,
-              "max_ll_improvement": 2.4656985611700293,
-              "median_eps_saturation_fraction": 0.75,
-              "max_eps_saturation_fraction": 1.0,
-              "total_multichannel_pair_rows": 192,
-              "total_multichannel_positive_lift_rows": 5,
-              "total_multichannel_strong_candidate_rows": 0,
-              "fraction_runs_below_control_tol": 0.8854166666666666,
-              "fraction_runs_collapsed_overall": 0.8854166666666666,
-              "control_tol": 0.05,
-              "passed": true,
-              "reason": "ok"
-            },
-            {
-              "control_type": "phase_randomized_eeg_control",
-              "n_runs": 96,
-              "n_valid_runs": 96,
-              "median_max_baseline_eps_test": 0.4,
-              "median_max_augmented_eps_test": 0.0,
-              "mean_max_augmented_eps_test": 0.23333333333333336,
-              "max_augmented_eps_test": 0.8,
-              "median_max_conditional_lift": 0.0,
-              "mean_max_conditional_lift": 0.08333333333333333,
-              "max_conditional_lift": 0.8,
-              "median_max_bic_improvement": -147.79694923293482,
-              "max_bic_improvement": -131.30368144153545,
-              "median_max_ll_improvement": -1.6905703176253155,
-              "max_ll_improvement": 6.5257747181176455,
-              "median_eps_saturation_fraction": 0.375,
-              "max_eps_saturation_fraction": 0.5,
-              "total_multichannel_pair_rows": 192,
-              "total_multichannel_positive_lift_rows": 6,
-              "total_multichannel_strong_candidate_rows": 0,
-              "fraction_runs_below_control_tol": 0.8958333333333334,
-              "fraction_runs_collapsed_overall": 0.8958333333333334,
-              "control_tol": 0.05,
-              "passed": true,
-              "reason": "ok"
-            },
-            {
-              "control_type": "subject_mismatch",
-              "n_runs": 96,
-              "n_valid_runs": 96,
-              "median_max_baseline_eps_test": 0.8,
-              "median_max_augmented_eps_test": 0.8,
-              "mean_max_augmented_eps_test": 0.4749999999999999,
-              "max_augmented_eps_test": 0.8,
-              "median_max_conditional_lift": 0.0,
-              "mean_max_conditional_lift": 0.075,
-              "max_conditional_lift": 0.8,
-              "median_max_bic_improvement": -145.97273215098176,
-              "max_bic_improvement": 115.70725088880681,
-              "median_max_ll_improvement": -0.815031969055326,
-              "max_ll_improvement": 130.03124088328877,
-              "median_eps_saturation_fraction": 0.5,
-              "max_eps_saturation_fraction": 0.5,
-              "total_multichannel_pair_rows": 192,
-              "total_multichannel_positive_lift_rows": 5,
-              "total_multichannel_strong_candidate_rows": 0,
-              "fraction_runs_below_control_tol": 0.8645833333333334,
-              "fraction_runs_collapsed_overall": 0.8645833333333334,
-              "control_tol": 0.05,
-              "passed": true,
-              "reason": "ok"
-            },
-            {
-              "control_type": "sync_break_control",
-              "n_runs": 96,
-              "n_valid_runs": 96,
-              "median_max_baseline_eps_test": 0.8,
-              "median_max_augmented_eps_test": 0.0,
-              "mean_max_augmented_eps_test": 0.3,
-              "max_augmented_eps_test": 0.8,
-              "median_max_conditional_lift": 0.0,
-              "mean_max_conditional_lift": 0.10000000000000002,
-              "max_conditional_lift": 0.8,
-              "median_max_bic_improvement": -151.8997763636071,
-              "max_bic_improvement": -141.94964553965474,
-              "median_max_ll_improvement": -3.7790348033340706,
-              "max_ll_improvement": 1.1737720810060637,
-              "median_eps_saturation_fraction": 0.5,
-              "max_eps_saturation_fraction": 0.5,
-              "total_multichannel_pair_rows": 192,
-              "total_multichannel_positive_lift_rows": 12,
-              "total_multichannel_strong_candidate_rows": 0,
-              "fraction_runs_below_control_tol": 0.875,
-              "fraction_runs_collapsed_overall": 0.875,
-              "control_tol": 0.05,
-              "passed": true,
-              "reason": "ok"
-            },
-            {
-              "control_type": "timestamp_jitter_control",
-              "n_runs": 96,
-              "n_valid_runs": 96,
-              "median_max_baseline_eps_test": 0.8,
-              "median_max_augmented_eps_test": 0.8,
-              "mean_max_augmented_eps_test": 0.5,
-              "max_augmented_eps_test": 0.8,
-              "median_max_conditional_lift": 0.0,
-              "mean_max_conditional_lift": 0.0,
-              "max_conditional_lift": 0.0,
-              "median_max_bic_improvement": -145.94961477573727,
-              "max_bic_improvement": -138.0915455121485,
-              "median_max_ll_improvement": -0.8034732814331119,
-              "max_ll_improvement": 3.1318426828111114,
-              "median_eps_saturation_fraction": 0.5,
-              "max_eps_saturation_fraction": 0.5,
-              "total_multichannel_pair_rows": 192,
-              "total_multichannel_positive_lift_rows": 0,
-              "total_multichannel_strong_candidate_rows": 0,
-              "fraction_runs_below_control_tol": 1.0,
-              "fraction_runs_collapsed_overall": 1.0,
-              "control_tol": 0.05,
-              "passed": true,
-              "reason": "ok"
-            },
-            {
-              "control_type": "window_permutation_control",
-              "n_runs": 96,
-              "n_valid_runs": 96,
-              "median_max_baseline_eps_test": 0.8,
-              "median_max_augmented_eps_test": 0.8,
-              "mean_max_augmented_eps_test": 0.725,
-              "max_augmented_eps_test": 0.8,
-              "median_max_conditional_lift": 0.0,
-              "mean_max_conditional_lift": 0.075,
-              "max_conditional_lift": 0.8,
-              "median_max_bic_improvement": -150.91548825792415,
-              "max_bic_improvement": -139.4103096345989,
-              "median_max_ll_improvement": -3.3009203165524923,
-              "max_ll_improvement": 2.4656985611700293,
-              "median_eps_saturation_fraction": 0.75,
-              "max_eps_saturation_fraction": 1.0,
-              "total_multichannel_pair_rows": 192,
-              "total_multichannel_positive_lift_rows": 5,
-              "total_multichannel_strong_candidate_rows": 0,
-              "fraction_runs_below_control_tol": 0.8854166666666666,
-              "fraction_runs_collapsed_overall": 0.8854166666666666,
-              "control_tol": 0.05,
-              "passed": true,
-              "reason": "ok"
-            },
-            {
-              "control_type": "within_subject_eeg_shuffle",
-              "n_runs": 96,
-              "n_valid_runs": 96,
-              "median_max_baseline_eps_test": 0.4,
-              "median_max_augmented_eps_test": 0.0,
-              "mean_max_augmented_eps_test": 0.3833333333333333,
-              "max_augmented_eps_test": 0.8,
-              "median_max_conditional_lift": 0.0,
-              "mean_max_conditional_lift": 0.10000000000000002,
-              "max_conditional_lift": 0.8,
-              "median_max_bic_improvement": -147.11101022673392,
-              "max_bic_improvement": -134.56207446725057,
-              "median_max_ll_improvement": -1.381753942382602,
-              "max_ll_improvement": 4.88981614484419,
-              "median_eps_saturation_fraction": 0.5,
-              "max_eps_saturation_fraction": 0.5,
-              "total_multichannel_pair_rows": 192,
-              "total_multichannel_positive_lift_rows": 7,
-              "total_multichannel_strong_candidate_rows": 0,
-              "fraction_runs_below_control_tol": 0.875,
-              "fraction_runs_collapsed_overall": 0.875,
-              "control_tol": 0.05,
-              "passed": true,
-              "reason": "ok"
-            },
-            {
-              "control_type": "within_subject_qrng_shuffle",
-              "n_runs": 96,
-              "n_valid_runs": 96,
-              "median_max_baseline_eps_test": 0.8,
-              "median_max_augmented_eps_test": 0.8,
-              "mean_max_augmented_eps_test": 0.5166666666666666,
-              "max_augmented_eps_test": 0.8,
-              "median_max_conditional_lift": 0.0,
-              "mean_max_conditional_lift": 0.10000000000000002,
-              "max_conditional_lift": 0.8,
-              "median_max_bic_improvement": -144.85852812568282,
-              "max_bic_improvement": -125.95516024619974,
-              "median_max_ll_improvement": -0.16320107082356117,
-              "max_ll_improvement": 9.200035315785499,
-              "median_eps_saturation_fraction": 0.5,
-              "max_eps_saturation_fraction": 0.5,
-              "total_multichannel_pair_rows": 192,
-              "total_multichannel_positive_lift_rows": 10,
-              "total_multichannel_strong_candidate_rows": 0,
-              "fraction_runs_below_control_tol": 0.875,
-              "fraction_runs_collapsed_overall": 0.875,
-              "control_tol": 0.05,
-              "passed": true,
-              "reason": "ok"
-            }
-          ],
           "required_control_types": [
-            "within_subject_qrng_shuffle",
+            "conditional_target_shuffle",
             "within_subject_eeg_shuffle",
+            "within_subject_qrng_shuffle",
             "circular_qrng_shift",
             "subject_mismatch",
-            "conditional_target_shuffle",
             "sync_break_control"
-          ]
+          ],
+          "control_subject_fraction_threshold": 0.6,
+          "discovery_subject_effect_fraction": 0.1
         }
       },
       {
@@ -3673,13 +992,40 @@
         "name": "Holdout generalization",
         "passed": true,
         "status": "PASS",
-        "value": 1.0,
-        "threshold": 1.0,
-        "reason": "valid synchronized ref/calib/test conditional evaluations exist",
+        "value": 6.068517392463946,
+        "threshold": 0.0,
+        "reason": "ok",
         "details": {
-          "n_valid_pair_rows": 32,
-          "n_total_pair_rows": 32,
-          "split": "reference_train -> calibration -> test_holdout"
+          "selected_primary_lead": {
+            "window_seconds": "30",
+            "lag_windows": "5",
+            "lag_seconds": "150",
+            "lag_label": "p5",
+            "lag_direction": "future_target",
+            "alignment_scope": "primary",
+            "family": "QRNG_next",
+            "baseline_model": "E2_QRNG_next_given_QRNG",
+            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+            "valid": "True",
+            "primary": "True",
+            "multichannel": "True",
+            "baseline_eps_test": "0.0",
+            "augmented_eps_test": "1.0",
+            "conditional_lift": "1.0",
+            "baseline_ll_test": "-5735.436874371776",
+            "augmented_ll_test": "-5729.368356979312",
+            "ll_improvement": "6.068517392463946",
+            "baseline_bic_test": "11488.915011937048",
+            "augmented_bic_test": "11621.108082700091",
+            "bic_improvement": "-132.19307076304358",
+            "baseline_aic_test": "11474.873748743552",
+            "augmented_aic_test": "11494.736713958624",
+            "aic_improvement": "-19.86296521507211",
+            "n_subjects_evaluated": "10",
+            "n_subjects_positive_lift": "1",
+            "fraction_positive_lift": "0.1",
+            "reason": "ok"
+          }
         }
       },
       {
@@ -3689,248 +1035,480 @@
         "status": "NOT_EVALUATED",
         "value": 0.0,
         "threshold": 0.12,
-        "reason": "not_evaluated_in_metrics; evaluated by phase3_2e_gate_sensitivity.py",
-        "details": {
-          "next_module": "src.phase3_2e_gate_sensitivity",
-          "focus": "F7/F8/F12 official-threshold sensitivity without changing official gates"
-        }
+        "reason": "not_evaluated_in_metrics; use phase3_2e_gate_sensitivity.py",
+        "details": {}
       },
       {
         "gate": "F6",
         "name": "Conditional lift",
-        "passed": false,
-        "status": "NOT_EVALUATED",
-        "value": 0.0,
+        "passed": true,
+        "status": "PASS",
+        "value": 1.0,
         "threshold": 0.03,
-        "reason": "no_primary_pair_rows",
-        "details": {}
+        "reason": "ok",
+        "details": {
+          "selected_primary_lead": {
+            "window_seconds": "30",
+            "lag_windows": "5",
+            "lag_seconds": "150",
+            "lag_label": "p5",
+            "lag_direction": "future_target",
+            "alignment_scope": "primary",
+            "family": "QRNG_next",
+            "baseline_model": "E2_QRNG_next_given_QRNG",
+            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+            "valid": "True",
+            "primary": "True",
+            "multichannel": "True",
+            "baseline_eps_test": "0.0",
+            "augmented_eps_test": "1.0",
+            "conditional_lift": "1.0",
+            "baseline_ll_test": "-5735.436874371776",
+            "augmented_ll_test": "-5729.368356979312",
+            "ll_improvement": "6.068517392463946",
+            "baseline_bic_test": "11488.915011937048",
+            "augmented_bic_test": "11621.108082700091",
+            "bic_improvement": "-132.19307076304358",
+            "baseline_aic_test": "11474.873748743552",
+            "augmented_aic_test": "11494.736713958624",
+            "aic_improvement": "-19.86296521507211",
+            "n_subjects_evaluated": "10",
+            "n_subjects_positive_lift": "1",
+            "fraction_positive_lift": "0.1",
+            "reason": "ok"
+          },
+          "augmented_eps_test": 1.0
+        }
       },
       {
         "gate": "F7",
-        "name": "Subject consistency",
-        "passed": false,
-        "status": "NOT_EVALUATED",
-        "value": 0.0,
-        "threshold": 0.6,
-        "reason": "no_primary_pair_rows",
-        "details": {}
+        "name": "Adaptive subject consistency",
+        "passed": true,
+        "status": "PASS",
+        "value": 0.1,
+        "threshold": 0.1,
+        "reason": "ok",
+        "details": {
+          "selected_primary_lead": {
+            "window_seconds": "30",
+            "lag_windows": "5",
+            "lag_seconds": "150",
+            "lag_label": "p5",
+            "lag_direction": "future_target",
+            "alignment_scope": "primary",
+            "family": "QRNG_next",
+            "baseline_model": "E2_QRNG_next_given_QRNG",
+            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+            "valid": "True",
+            "primary": "True",
+            "multichannel": "True",
+            "baseline_eps_test": "0.0",
+            "augmented_eps_test": "1.0",
+            "conditional_lift": "1.0",
+            "baseline_ll_test": "-5735.436874371776",
+            "augmented_ll_test": "-5729.368356979312",
+            "ll_improvement": "6.068517392463946",
+            "baseline_bic_test": "11488.915011937048",
+            "augmented_bic_test": "11621.108082700091",
+            "bic_improvement": "-132.19307076304358",
+            "baseline_aic_test": "11474.873748743552",
+            "augmented_aic_test": "11494.736713958624",
+            "aic_improvement": "-19.86296521507211",
+            "n_subjects_evaluated": "10",
+            "n_subjects_positive_lift": "1",
+            "fraction_positive_lift": "0.1",
+            "reason": "ok"
+          },
+          "passed": true,
+          "n_subjects_evaluated": 10,
+          "n_subjects_positive_lift": 1,
+          "fraction_positive_lift": 0.1,
+          "required_positive_subjects": 1,
+          "required_positive_fraction": 0.1
+        }
       },
       {
         "gate": "F8",
         "name": "Complexity penalty / BIC",
         "passed": false,
-        "status": "NOT_EVALUATED",
-        "value": 0.0,
+        "status": "FAIL",
+        "value": -132.19307076304358,
         "threshold": 0.0,
-        "reason": "no_primary_pair_rows",
-        "details": {}
+        "reason": "primary_lead_not_favored_by_official_BIC",
+        "details": {
+          "selected_primary_lead": {
+            "window_seconds": "30",
+            "lag_windows": "5",
+            "lag_seconds": "150",
+            "lag_label": "p5",
+            "lag_direction": "future_target",
+            "alignment_scope": "primary",
+            "family": "QRNG_next",
+            "baseline_model": "E2_QRNG_next_given_QRNG",
+            "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+            "valid": "True",
+            "primary": "True",
+            "multichannel": "True",
+            "baseline_eps_test": "0.0",
+            "augmented_eps_test": "1.0",
+            "conditional_lift": "1.0",
+            "baseline_ll_test": "-5735.436874371776",
+            "augmented_ll_test": "-5729.368356979312",
+            "ll_improvement": "6.068517392463946",
+            "baseline_bic_test": "11488.915011937048",
+            "augmented_bic_test": "11621.108082700091",
+            "bic_improvement": "-132.19307076304358",
+            "baseline_aic_test": "11474.873748743552",
+            "augmented_aic_test": "11494.736713958624",
+            "aic_improvement": "-19.86296521507211",
+            "n_subjects_evaluated": "10",
+            "n_subjects_positive_lift": "1",
+            "fraction_positive_lift": "0.1",
+            "reason": "ok"
+          },
+          "ll_improvement": 6.068517392463946,
+          "aic_improvement": -19.86296521507211,
+          "next_module": "phase3_2e_gate_sensitivity.py"
+        }
       },
       {
         "gate": "F9",
-        "name": "Lag stability",
-        "passed": false,
-        "status": "FAIL",
-        "value": -0.8,
-        "threshold": 0.0,
-        "reason": "secondary_lag_effect_exceeds_primary_lag_effect",
+        "name": "Registered lag localization",
+        "passed": true,
+        "status": "PASS",
+        "value": 1.0,
+        "threshold": 1.0,
+        "reason": "ok",
         "details": {
-          "primary_test_lags_windows": [
+          "selected_lag": 5,
+          "primary_lags": [
+            -1,
             0,
             1,
-            2
-          ],
-          "primary_max_lift": 0.0,
-          "secondary_max_lift": 0.8,
-          "any_meaningful_secondary": true
+            2,
+            3,
+            4,
+            5
+          ]
         }
       },
       {
         "gate": "F10",
-        "name": "Window specificity",
-        "passed": false,
-        "status": "FAIL",
-        "value": 0.0,
+        "name": "Registered window localization",
+        "passed": true,
+        "status": "PASS",
+        "value": 1.0,
         "threshold": 0.03,
-        "reason": "only_secondary_or_exploratory_window_has_meaningful_lift",
+        "reason": "ok",
         "details": {
-          "primary_test_window_seconds": [
-            5,
-            10
-          ],
-          "primary_max_lift": 0.0,
-          "secondary_max_lift": 0.8
+          "selected_window": 30,
+          "primary_windows": [
+            30,
+            60
+          ]
         }
       },
       {
         "gate": "F11",
-        "name": "Multiple-comparison guard",
+        "name": "Registration-based multiple-comparison guard",
         "passed": true,
         "status": "PASS",
-        "value": 0.0,
-        "threshold": 0.0,
-        "reason": "no_strong_candidates_detected",
+        "value": 1.0,
+        "threshold": 1.0,
+        "reason": "ok",
         "details": {
-          "n_strong_candidates": 0,
-          "n_primary_strong_candidates": 0
+          "n_valid_tests": 84,
+          "n_positive_tests": 1,
+          "n_primary_positive_tests": 1
         }
       },
       {
         "gate": "F12",
         "name": "Epsilon saturation diagnostic",
-        "passed": false,
-        "status": "WARN",
-        "value": 0.875,
-        "threshold": 0.5,
-        "reason": "epsilon_saturation_warning",
+        "passed": true,
+        "status": "PASS",
+        "value": 0.0,
+        "threshold": 0.95,
+        "reason": "ok",
         "details": {
-          "model_saturation": {
+          "model": {
             "available": true,
-            "epsilon_column_used": "eps_candidate",
-            "eps_saturation_value": 0.8,
-            "eps_saturation_warning_fraction": 0.5,
-            "n_model_rows": 56,
-            "n_saturated_rows": 49,
-            "saturation_fraction": 0.875,
-            "max_epsilon": 0.8,
-            "warning": true,
-            "reason": "eps_saturation_warning",
-            "explicit_eps_saturated_rows": 49,
-            "explicit_eps_saturated_fraction": 0.875
-          },
-          "pair_saturation": {
-            "available": true,
-            "eps_saturation_value": 0.8,
-            "eps_saturation_warning_fraction": 0.5,
-            "n_valid_pair_rows": 32,
-            "n_either_saturated_rows": 10,
-            "n_both_saturated_rows": 4,
-            "either_saturation_fraction": 0.3125,
-            "both_saturation_fraction": 0.125,
-            "max_baseline_eps_test": 0.8,
-            "max_augmented_eps_test": 0.8,
+            "epsilon_column_used": "eps_test",
+            "eps_saturation_value": 2.0,
+            "eps_saturation_warning_fraction": 0.95,
+            "n_model_rows": 147,
+            "n_saturated_rows": 0,
+            "saturation_fraction": 0.0,
             "warning": false,
-            "reason": "ok"
-          }
+            "diagnostic_only": true
+          },
+          "pair": {
+            "available": true,
+            "eps_saturation_value": 2.0,
+            "eps_saturation_warning_fraction": 0.95,
+            "n_valid_pair_rows": 84,
+            "n_either_saturated_rows": 0,
+            "either_saturation_fraction": 0.0,
+            "warning": false,
+            "diagnostic_only": true
+          },
+          "diagnostic_only": true
         }
       }
-    ],
-    "epsilon_saturation": {
-      "model_saturation": {
-        "available": true,
-        "epsilon_column_used": "eps_candidate",
-        "eps_saturation_value": 0.8,
-        "eps_saturation_warning_fraction": 0.5,
-        "n_model_rows": 56,
-        "n_saturated_rows": 49,
-        "saturation_fraction": 0.875,
-        "max_epsilon": 0.8,
-        "warning": true,
-        "reason": "eps_saturation_warning",
-        "explicit_eps_saturated_rows": 49,
-        "explicit_eps_saturated_fraction": 0.875
-      },
-      "pair_saturation": {
-        "available": true,
-        "eps_saturation_value": 0.8,
-        "eps_saturation_warning_fraction": 0.5,
-        "n_valid_pair_rows": 32,
-        "n_either_saturated_rows": 10,
-        "n_both_saturated_rows": 4,
-        "either_saturation_fraction": 0.3125,
-        "both_saturation_fraction": 0.125,
-        "max_baseline_eps_test": 0.8,
-        "max_augmented_eps_test": 0.8,
-        "warning": false,
-        "reason": "ok"
-      }
-    }
+    ]
   },
   "gate_sensitivity_diagnostics": {
     "available": true,
     "status": "gate_sensitivity_completed",
-    "protocol_only": false,
-    "can_proceed_to_diagnostics": true,
-    "can_claim_empirical_cdr": false,
     "official_gate_statuses": {
-      "F7": "NOT_EVALUATED",
-      "F8": "NOT_EVALUATED",
-      "F12": "WARN"
+      "F7": "PASS",
+      "F8": "FAIL",
+      "F12": "PASS"
     },
     "f7_subject_consistency": {
-      "available": false,
-      "reason": "no_primary_pair_rows",
-      "official_threshold": 0.6,
-      "max_primary_fraction_positive_lift": 0.0,
-      "distance_to_official_threshold": -0.6,
-      "official_passed_by_data": false,
-      "closest_threshold_passed": null,
-      "strictest_threshold_passed": null,
-      "interpretation": "F7 cannot be diagnosed because there are no primary pair rows."
+      "available": true,
+      "reason": "ok",
+      "selected_primary_lead": {
+        "window_seconds": "30",
+        "lag_windows": "5",
+        "lag_seconds": "150",
+        "lag_label": "p5",
+        "lag_direction": "future_target",
+        "alignment_scope": "primary",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "valid": "True",
+        "primary": "True",
+        "multichannel": "True",
+        "baseline_eps_test": "0.0",
+        "augmented_eps_test": "1.0",
+        "conditional_lift": "1.0",
+        "baseline_ll_test": "-5735.436874371776",
+        "augmented_ll_test": "-5729.368356979312",
+        "ll_improvement": "6.068517392463946",
+        "baseline_bic_test": "11488.915011937048",
+        "augmented_bic_test": "11621.108082700091",
+        "bic_improvement": "-132.19307076304358",
+        "baseline_aic_test": "11474.873748743552",
+        "augmented_aic_test": "11494.736713958624",
+        "aic_improvement": "-19.86296521507211",
+        "n_subjects_evaluated": "10",
+        "n_subjects_positive_lift": "1",
+        "fraction_positive_lift": "0.1",
+        "reason": "ok"
+      },
+      "n_subjects_evaluated": 10,
+      "n_subjects_positive_lift": 1,
+      "observed_fraction_positive_lift": 0.1,
+      "official_required_subjects": 1,
+      "official_required_fraction": 0.1,
+      "official_passed_by_data": true,
+      "fraction_distance_to_official": 0.0,
+      "subject_count_distance_to_official": 0,
+      "strictest_fraction_passed": 0.1,
+      "strictest_subject_count_passed": 1,
+      "interpretation": "The selected primary lead satisfies the adaptive F7 rule."
     },
     "f8_complexity_penalty": {
-      "available": false,
-      "reason": "no_primary_pair_rows",
+      "available": true,
+      "reason": "ok",
+      "selected_primary_lead": {
+        "window_seconds": "30",
+        "lag_windows": "5",
+        "lag_seconds": "150",
+        "lag_label": "p5",
+        "lag_direction": "future_target",
+        "alignment_scope": "primary",
+        "family": "QRNG_next",
+        "baseline_model": "E2_QRNG_next_given_QRNG",
+        "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "valid": "True",
+        "primary": "True",
+        "multichannel": "True",
+        "baseline_eps_test": "0.0",
+        "augmented_eps_test": "1.0",
+        "conditional_lift": "1.0",
+        "baseline_ll_test": "-5735.436874371776",
+        "augmented_ll_test": "-5729.368356979312",
+        "ll_improvement": "6.068517392463946",
+        "baseline_bic_test": "11488.915011937048",
+        "augmented_bic_test": "11621.108082700091",
+        "bic_improvement": "-132.19307076304358",
+        "baseline_aic_test": "11474.873748743552",
+        "augmented_aic_test": "11494.736713958624",
+        "aic_improvement": "-19.86296521507211",
+        "n_subjects_evaluated": "10",
+        "n_subjects_positive_lift": "1",
+        "fraction_positive_lift": "0.1",
+        "reason": "ok"
+      },
       "official_threshold": 0.0,
-      "max_primary_bic_improvement": 0.0,
-      "max_primary_aic_improvement": 0.0,
-      "max_primary_ll_improvement": 0.0,
-      "distance_to_official_threshold": 0.0,
+      "official_bic_improvement": -132.19307076304358,
       "official_passed_by_data": false,
-      "bic_failed_but_aic_positive": false,
-      "bic_failed_but_ll_positive": false,
-      "interpretation": "F8 cannot be diagnosed because there are no primary pair rows."
+      "distance_to_official_threshold": -132.19307076304358,
+      "aic_improvement": -19.86296521507211,
+      "heldout_ll_improvement": 6.068517392463946,
+      "aic_positive": false,
+      "heldout_ll_positive": true,
+      "observed_complexity_penalty": 144.33010554797147,
+      "critical_complexity_penalty_scale": 0.08409219087624006,
+      "baseline_n_params": 2,
+      "augmented_n_params": 18,
+      "parameter_delta": 16,
+      "baseline_n_test": 8272,
+      "augmented_n_test": 8272,
+      "baseline_model_score": {
+        "model": "E2_QRNG_next_given_QRNG",
+        "label": "QRNG self-transition baseline",
+        "family": "QRNG_next",
+        "window_seconds": "30",
+        "lag_windows": "5",
+        "lag_seconds": "150",
+        "lag_label": "p5",
+        "lag_direction": "future_target",
+        "alignment_scope": "primary",
+        "valid": "True",
+        "primary": "True",
+        "multichannel": "False",
+        "n_rows_total": "27597",
+        "n_rows_model": "27547",
+        "n_ref": "13770",
+        "n_calib": "5505",
+        "n_test": "8272",
+        "n_current_states": "2",
+        "n_target_states": "2",
+        "n_params": "2",
+        "eps_train": "0.0",
+        "eps_calib": "1.0",
+        "eps_candidate": "1.0",
+        "eps_test": "0.0",
+        "eps_saturated": "False",
+        "ll_train": "-9543.75914366742",
+        "ll_calib": "-3815.1866899023576",
+        "ll_calib_eps0": "-3816.511362097163",
+        "ll_calib_gain_from_eps": "1.3246721948053164",
+        "ll_test": "-5735.436874371776",
+        "ll_test_eps0": "-5735.436874371776",
+        "ll_test_gain_from_eps": "0.0",
+        "bic_test": "11488.915011937048",
+        "aic_test": "11474.873748743552",
+        "transitions_per_current_state": "6885.0",
+        "reason": "ok"
+      },
+      "augmented_model_score": {
+        "model": "E6_QRNG_next_given_QRNG_MCEEG",
+        "label": "QRNG transition conditioned by multichannel EEG",
+        "family": "QRNG_next",
+        "window_seconds": "30",
+        "lag_windows": "5",
+        "lag_seconds": "150",
+        "lag_label": "p5",
+        "lag_direction": "future_target",
+        "alignment_scope": "primary",
+        "valid": "True",
+        "primary": "True",
+        "multichannel": "True",
+        "n_rows_total": "27597",
+        "n_rows_model": "27547",
+        "n_ref": "13770",
+        "n_calib": "5505",
+        "n_test": "8272",
+        "n_current_states": "18",
+        "n_target_states": "2",
+        "n_params": "18",
+        "eps_train": "0.0",
+        "eps_calib": "1.0",
+        "eps_candidate": "1.0",
+        "eps_test": "1.0",
+        "eps_saturated": "False",
+        "ll_train": "-9535.6101178055",
+        "ll_calib": "-3808.60287476768",
+        "ll_calib_eps0": "-3819.035124843731",
+        "ll_calib_gain_from_eps": "10.432250076051332",
+        "ll_test": "-5729.368356979312",
+        "ll_test_eps0": "-5739.849772308474",
+        "ll_test_gain_from_eps": "10.481415329161791",
+        "bic_test": "11621.108082700091",
+        "aic_test": "11494.736713958624",
+        "transitions_per_current_state": "765.0",
+        "reason": "ok"
+      },
+      "interpretation": "The selected primary lead fails official BIC, while held-out likelihood and/or AIC provide weaker support. Complexity-scaled scenarios are diagnostic only and do not replace official BIC."
     },
     "f12_epsilon_saturation": {
       "available": true,
       "reason": "ok",
-      "official_eps_saturation_value": 0.8,
-      "official_warning_fraction": 0.5,
-      "official_saturation_fraction": 0.5258620689655172,
-      "official_warning_by_data": true,
-      "max_saturation_fraction": 0.5258620689655172,
-      "distance_to_warning_fraction": 0.025862068965517238,
-      "n_model_eps_values": 168,
-      "n_pair_eps_values": 64,
-      "n_total_eps_values": 232,
-      "max_epsilon": 0.8,
-      "mean_epsilon": 0.42068965517241386,
-      "median_epsilon": 0.8,
-      "interpretation": "F12 raises an official epsilon saturation warning. This does not prove absence of signal, but blocks strong interpretation until additional diagnostics explain why epsilon saturates."
+      "official_eps_saturation_value": 2.0,
+      "official_warning_fraction": 0.95,
+      "official_saturation_fraction": 0.0,
+      "official_warning_by_data": false,
+      "distance_to_warning_fraction": -0.95,
+      "max_model_epsilon": 1.0,
+      "max_baseline_pair_epsilon": 1.0,
+      "max_augmented_pair_epsilon": 1.0,
+      "metrics_model_saturation_summary": {
+        "available": true,
+        "epsilon_column_used": "eps_test",
+        "eps_saturation_value": 2.0,
+        "eps_saturation_warning_fraction": 0.95,
+        "n_model_rows": 147,
+        "n_saturated_rows": 0,
+        "saturation_fraction": 0.0,
+        "warning": false,
+        "diagnostic_only": true
+      },
+      "metrics_pair_saturation_summary": {
+        "available": true,
+        "eps_saturation_value": 2.0,
+        "eps_saturation_warning_fraction": 0.95,
+        "n_valid_pair_rows": 84,
+        "n_either_saturated_rows": 0,
+        "either_saturation_fraction": 0.0,
+        "warning": false,
+        "diagnostic_only": true
+      },
+      "diagnostic_only": true,
+      "interpretation": "F12 does not raise an official diagnostic saturation warning. Exploratory threshold scenarios remain diagnostic only."
     },
-    "f7_rows": 0,
-    "f8_rows": 0,
-    "f12_rows": 56,
-    "interpretation": "Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds."
+    "f7_rows": 10,
+    "f8_rows": 9,
+    "f12_rows": 70,
+    "interpretation": "F7/F8/F12 sensitivity diagnostics completed without changing official gates. F7 uses the adaptive selected-lead rule, F8 preserves BIC as official while reporting weaker complexity sensitivities, and F12 remains diagnostic."
   },
   "multiple_comparison_guard": {
     "available": true,
     "enabled": true,
-    "n_valid_tests": 32,
-    "n_positive_lift_tests": 2,
-    "n_primary_positive_lift_tests": 0,
-    "n_exploratory_lift_tests": 2,
+    "guard_type": "registered_primary_region",
+    "n_valid_tests": 84,
+    "n_positive_lift_tests": 1,
+    "n_primary_positive_lift_tests": 1,
+    "n_exploratory_positive_lift_tests": 0,
     "n_strong_candidate_tests": 0,
-    "n_primary_strong_candidate_tests": 0,
-    "n_multichannel_tests": 16,
-    "interpretation": "Strong claims are allowed only from registered primary tests. Exploratory windows, exploratory lags or secondary model families can generate leads but not claims without replication."
+    "n_primary_strong_candidate_tests": 0
   },
   "final_interpretation": {
-    "headline": "Phase III.2E produced exploratory synchronized conditional leads only.",
-    "status": "exploratory_lead_with_saturation_warning",
-    "protocol_only": false,
+    "status": "primary_lead_bic_limited",
+    "scientific_classification": "surrogate_primary_localized_predictive_lead_bic_limited",
+    "headline": "A registered primary localized predictive lead was detected; only the current official global BIC gate remains unsatisfied.",
+    "surrogate": true,
     "can_claim_empirical_cdr": false,
-    "scientific_read": [
-      "The current III.2E execution used empirical synchronized rows.",
-      "Protocol empirical readiness: False.",
-      "Positive conditional lift rows: 2; primary positive rows: 0.",
-      "Strong candidate rows: 0; primary strong candidates: 0.",
-      "Multichannel synchronized positive lift rows: 2.",
-      "Failed official gates: ['F9', 'F10'].",
-      "Warning gates: ['F12'].",
-      "Not evaluated gates: ['F1', 'F5', 'F6', 'F7', 'F8'].",
-      "F7/F8/F12 sensitivity diagnostics were generated without changing official gate thresholds.",
-      "A positive claim remains prohibited unless synchronized data exist and all required controls/gates support the result."
+    "failed_gates": [
+      "F8"
     ],
-    "recommendation": "Document exploratory leads but do not claim empirical CDR unless controls, F7, F8, F12 and primary-gate criteria are satisfied."
+    "warning_gates": [],
+    "not_evaluated_gates": [
+      "F1",
+      "F5"
+    ],
+    "f8_failure_meaning": "Lack of global BIC parsimony support; not proof that the localized predictive structure is absent.",
+    "sensitivity_completed": true,
+    "recommendation": "Preserve the Phase III.2E v2 result as BIC-limited. A future v3 may prospectively re-evaluate F8 using effective sample size, effective complexity, state-density correction or subject-level selection, before any real-data analysis.",
+    "future_v3_f8_review": {
+      "allowed": true,
+      "prospective_only": true,
+      "must_precede_real_data_analysis": true,
+      "must_preserve_current_v2_result": true
+    }
   }
 }

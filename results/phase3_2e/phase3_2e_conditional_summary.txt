@@ -6,32 +6,32 @@ Leakage-safe synchronized ref/calib/test estimator
 status: conditional_exploratory_leads
 protocol_only: False
 
-Model rows: 56
-Valid pair rows: 32/32
-Primary rows: 0
-Positive lift rows: 2
-Primary positive lift rows: 0
+Model rows: 147
+Valid pair rows: 84/84
+Primary rows: 42
+Positive lift rows: 1
+Primary positive lift rows: 1
 Strong candidate rows: 0
-Multichannel rows: 16
-Multichannel positive lift rows: 2
-Max baseline eps_test: 0.8
-Max augmented eps_test: 0.8
-Max conditional lift: 0.8
+Multichannel rows: 42
+Multichannel positive lift rows: 1
+Max baseline eps_test: 1.0
+Max augmented eps_test: 1.0
+Max conditional lift: 1.0
 
 Best by conditional lift:
-{'window_seconds': 30, 'lag_windows': -1, 'lag_seconds': -30, 'lag_direction': 'past_target', 'alignment_scope': 'exploratory', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'conditional_lift': 0.8, 'baseline_eps_test': 0.0, 'augmented_eps_test': 0.8, 'fraction_positive_lift': 0.1, 'll_improvement': -1.4388171061737012, 'bic_improvement': -147.23286509011814, 'aic_improvement': -34.8776342123474, 'primary': False, 'multichannel': True}
+{'window_seconds': 30, 'lag_windows': 5, 'lag_seconds': 150, 'lag_direction': 'future_target', 'alignment_scope': 'primary', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'conditional_lift': 1.0, 'baseline_eps_test': 0.0, 'augmented_eps_test': 1.0, 'fraction_positive_lift': 0.1, 'll_improvement': 6.068517392463946, 'bic_improvement': -132.19307076304358, 'aic_improvement': -19.86296521507211, 'primary': True, 'multichannel': True}
 
 Best by BIC improvement:
-{'window_seconds': 30, 'lag_windows': 5, 'lag_seconds': 150, 'lag_direction': 'future_target', 'alignment_scope': 'exploratory', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'conditional_lift': 0.8, 'baseline_eps_test': 0.0, 'augmented_eps_test': 0.8, 'fraction_positive_lift': 0.1, 'll_improvement': 6.206867485865587, 'bic_improvement': -131.9163705762403, 'aic_improvement': -19.586265028268826, 'primary': False, 'multichannel': True}
+{'window_seconds': 90, 'lag_windows': 3, 'lag_seconds': 270, 'lag_direction': 'future_target', 'alignment_scope': 'exploratory', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E3_QRNG_next_given_QRNG_EEG', 'conditional_lift': -1.0, 'baseline_eps_test': 1.0, 'augmented_eps_test': 0.0, 'fraction_positive_lift': 0.1, 'll_improvement': 2.5937553070675676, 'bic_improvement': -121.5512529312573, 'aic_improvement': -26.812489385864865, 'primary': False, 'multichannel': False}
 
 Best by LL improvement:
-{'window_seconds': 30, 'lag_windows': 5, 'lag_seconds': 150, 'lag_direction': 'future_target', 'alignment_scope': 'exploratory', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'conditional_lift': 0.8, 'baseline_eps_test': 0.0, 'augmented_eps_test': 0.8, 'fraction_positive_lift': 0.1, 'll_improvement': 6.206867485865587, 'bic_improvement': -131.9163705762403, 'aic_improvement': -19.586265028268826, 'primary': False, 'multichannel': True}
+{'window_seconds': 30, 'lag_windows': 5, 'lag_seconds': 150, 'lag_direction': 'future_target', 'alignment_scope': 'primary', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'conditional_lift': 1.0, 'baseline_eps_test': 0.0, 'augmented_eps_test': 1.0, 'fraction_positive_lift': 0.1, 'll_improvement': 6.068517392463946, 'bic_improvement': -132.19307076304358, 'aic_improvement': -19.86296521507211, 'primary': True, 'multichannel': True}
 
 Best multichannel by conditional lift:
-{'window_seconds': 30, 'lag_windows': -1, 'lag_seconds': -30, 'lag_direction': 'past_target', 'alignment_scope': 'exploratory', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'conditional_lift': 0.8, 'baseline_eps_test': 0.0, 'augmented_eps_test': 0.8, 'fraction_positive_lift': 0.1, 'll_improvement': -1.4388171061737012, 'bic_improvement': -147.23286509011814, 'aic_improvement': -34.8776342123474, 'primary': False, 'multichannel': True}
+{'window_seconds': 30, 'lag_windows': 5, 'lag_seconds': 150, 'lag_direction': 'future_target', 'alignment_scope': 'primary', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'conditional_lift': 1.0, 'baseline_eps_test': 0.0, 'augmented_eps_test': 1.0, 'fraction_positive_lift': 0.1, 'll_improvement': 6.068517392463946, 'bic_improvement': -132.19307076304358, 'aic_improvement': -19.86296521507211, 'primary': True, 'multichannel': True}
 
 Best multichannel by BIC improvement:
-{'window_seconds': 30, 'lag_windows': 5, 'lag_seconds': 150, 'lag_direction': 'future_target', 'alignment_scope': 'exploratory', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'conditional_lift': 0.8, 'baseline_eps_test': 0.0, 'augmented_eps_test': 0.8, 'fraction_positive_lift': 0.1, 'll_improvement': 6.206867485865587, 'bic_improvement': -131.9163705762403, 'aic_improvement': -19.586265028268826, 'primary': False, 'multichannel': True}
+{'window_seconds': 90, 'lag_windows': 0, 'lag_seconds': 0, 'lag_direction': 'concurrent', 'alignment_scope': 'exploratory', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'conditional_lift': 0.0, 'baseline_eps_test': 0.0, 'augmented_eps_test': 0.0, 'fraction_positive_lift': 0.0, 'll_improvement': -9.676670585576778e-06, 'bic_improvement': -126.80253954893642, 'aic_improvement': -32.00001935334117, 'primary': False, 'multichannel': True}
 
 interpretation:
 Conditional CDR produced exploratory positive-lift rows. These require controls, F7/F8/F12 diagnostics and final gates before interpretation.

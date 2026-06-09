@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import math
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -15,96 +17,53 @@ from config.phase3_2e_config import (
     describe_config,
     load_phase3_2e_config,
 )
-
-
-# =========================================================
-# Phase III.2E — Gate Sensitivity Diagnostics
-# F7 / F8 / F12 without changing official gates
-# =========================================================
-#
-# Purpose:
-#
-#   Diagnose why the official gates F7, F8 and F12 pass/fail under the
-#   synchronized EEG–QRNG protocol, without weakening or changing the official
-#   gate rules.
-#
-# This module answers:
-#
-#   F7 — Subject consistency
-#       - Is F7 failing because the subject threshold is too strict?
-#       - How close is the best primary row to the official subject threshold?
-#       - Would the result pass under exploratory thresholds?
-#
-#   F8 — Complexity penalty / BIC
-#       - Is F8 failing because BIC penalizes the augmented model too strongly?
-#       - Are AIC or held-out LL improvements positive even when BIC fails?
-#       - How far is the best primary row from the official BIC >= 0 rule?
-#
-#   F12 — Epsilon saturation
-#       - Are epsilon values saturating at the upper grid?
-#       - Is saturation model-wide or pair-specific?
-#       - How sensitive is the warning to saturation threshold and warning fraction?
-#
-# Critical rule:
-#
-#   This module never changes official gates.
-#   It produces diagnostic / sensitivity reports only.
-#
-# If no synchronized dataset exists:
-#
-#   status = pending_synchronized_data
-#   protocol_only = True
-#   empty canonical sensitivity outputs are saved
-#
-
-
-# =========================================================
-# Constants
-# =========================================================
+from src.phase3_2e_metrics import (
+    effective_primary_mask,
+    model_saturation_summary,
+    pair_saturation_summary,
+    primary_lags,
+    primary_pairs,
+    primary_windows,
+    select_primary_lead_row,
+    subject_consistency_for_row,
+)
 
 GATE_SENSITIVITY_MODULE = "phase3_2e_gate_sensitivity"
-GATE_SENSITIVITY_VERSION = "phase3_2e_gate_sensitivity_v1_f7_f8_f12_diagnostics"
+GATE_SENSITIVITY_VERSION = (
+    "phase3_2e_gate_sensitivity_v2_"
+    "adaptive_f7_selected_lead_f8_f12_diagnostic"
+)
 
-
-# =========================================================
-# Dataclasses
-# =========================================================
 
 @dataclass
 class GateSensitivityResult:
     status: str
     protocol_only: bool
-
-    official_f7_threshold: float
+    official_f7_required_subjects: int
+    official_f7_required_fraction: float
     official_f8_threshold: float
     official_f12_eps_saturation_value: float
     official_f12_warning_fraction: float
-
     f7_available: bool
     f8_available: bool
     f12_available: bool
-
     f7_official_passed: bool
     f8_official_passed: bool
     f12_official_warning: bool
-
-    f7_best_value: float
-    f8_best_bic_value: float
-    f12_max_saturation_fraction: float
-
-    f7_distance_to_threshold: float
-    f8_distance_to_threshold: float
+    f7_selected_fraction: float
+    f7_selected_positive_subjects: int
+    f8_selected_bic_improvement: float
+    f8_selected_aic_improvement: float
+    f8_selected_ll_improvement: float
+    f12_official_saturation_fraction: float
+    f7_fraction_distance_to_official: float
+    f7_subject_count_distance_to_official: int
+    f8_distance_to_official: float
     f12_distance_to_warning: float
-
     can_proceed_to_diagnostics: bool
     can_claim_empirical_cdr: bool
-
     interpretation: str
 
-
-# =========================================================
-# Generic helpers
-# =========================================================
 
 def _now_str() -> str:
     return time.strftime("%Y-%m-%d %H:%M:%S")
@@ -113,13 +72,10 @@ def _now_str() -> str:
 def _json_default(obj: Any) -> Any:
     if isinstance(obj, Path):
         return str(obj)
-
-    if isinstance(obj, (np.integer,)):
+    if isinstance(obj, np.integer):
         return int(obj)
-
-    if isinstance(obj, (np.floating,)):
+    if isinstance(obj, np.floating):
         return float(obj)
-
     if isinstance(obj, np.ndarray):
         return obj.tolist()
 
@@ -129,18 +85,21 @@ def _json_default(obj: Any) -> Any:
     except Exception:
         pass
 
-    if hasattr(obj, "__dict__"):
-        return obj.__dict__
-
-    return str(obj)
+    return obj.__dict__ if hasattr(obj, "__dict__") else str(obj)
 
 
-def save_json(path: Path, payload: Dict[str, Any]) -> None:
+def save_json(path: Path, payload: Mapping[str, Any]) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2, ensure_ascii=False, default=_json_default)
+    path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            ensure_ascii=False,
+            default=_json_default,
+        ),
+        encoding="utf-8",
+    )
 
 
 def _load_json(path: Path) -> Dict[str, Any]:
@@ -149,8 +108,11 @@ def _load_json(path: Path) -> Dict[str, Any]:
     if not path.exists():
         return {}
 
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        return payload if isinstance(payload, dict) else {}
+    except (OSError, json.JSONDecodeError):
+        return {}
 
 
 def _load_csv(path: Path) -> pd.DataFrame:
@@ -161,184 +123,256 @@ def _load_csv(path: Path) -> pd.DataFrame:
 
     try:
         return pd.read_csv(path)
-    except pd.errors.EmptyDataError:
+    except (
+        OSError,
+        pd.errors.EmptyDataError,
+        pd.errors.ParserError,
+    ):
         return pd.DataFrame()
 
 
-def _safe_float(value: Any, default: float = 0.0) -> float:
+def _safe_float(
+    value: Any,
+    default: float = 0.0,
+) -> float:
     try:
-        if pd.isna(value):
-            return default
-
-        x = float(value)
-
-        if not np.isfinite(x):
-            return default
-
-        return x
-
+        number = float(value)
+        return number if np.isfinite(number) else default
     except Exception:
         return default
 
 
-def _safe_int(value: Any, default: int = 0) -> int:
+def _safe_int(
+    value: Any,
+    default: int = 0,
+) -> int:
     try:
-        if pd.isna(value):
-            return default
-
         return int(value)
-
     except Exception:
         return default
 
 
-def _as_bool_series(series: pd.Series) -> pd.Series:
+def _as_bool_series(
+    series: pd.Series,
+) -> pd.Series:
     if series.empty:
-        return pd.Series([], dtype=bool)
+        return pd.Series(
+            [],
+            index=series.index,
+            dtype=bool,
+        )
 
-    if series.dtype == bool:
-        return series
+    if pd.api.types.is_bool_dtype(series):
+        return series.fillna(False).astype(bool)
 
-    return series.astype(str).str.lower().isin(["true", "1", "yes", "y"])
+    return (
+        series.astype(str)
+        .str.strip()
+        .str.lower()
+        .isin(
+            {
+                "true",
+                "1",
+                "yes",
+                "y",
+                "sim",
+                "t",
+            }
+        )
+    )
 
 
-def _numeric_col(df: pd.DataFrame, col: str, default: float = 0.0) -> pd.Series:
+def _numeric_col(
+    df: pd.DataFrame,
+    column: str,
+    default: float = 0.0,
+) -> pd.Series:
     if df.empty:
-        return pd.Series([], dtype=float)
+        return pd.Series(
+            [],
+            index=df.index,
+            dtype=float,
+        )
 
-    if col not in df.columns:
-        return pd.Series([default] * len(df), index=df.index, dtype=float)
+    if column not in df.columns:
+        return pd.Series(
+            [default] * len(df),
+            index=df.index,
+            dtype=float,
+        )
 
-    return pd.to_numeric(df[col], errors="coerce").fillna(default)
+    return pd.to_numeric(
+        df[column],
+        errors="coerce",
+    ).fillna(default)
 
 
-def _bool_cfg(cfg: Phase32EConfig, name: str, default: bool) -> bool:
-    return bool(getattr(cfg, name, default))
-
-
-def _float_cfg(cfg: Phase32EConfig, name: str, default: float) -> float:
+def _float_cfg(
+    cfg: Phase32EConfig,
+    name: str,
+    default: float,
+) -> float:
     return float(getattr(cfg, name, default))
 
 
-def _list_cfg(cfg: Phase32EConfig, name: str, default: Sequence[Any]) -> List[Any]:
+def _int_cfg(
+    cfg: Phase32EConfig,
+    name: str,
+    default: int,
+) -> int:
+    return int(getattr(cfg, name, default))
+
+
+def _list_cfg(
+    cfg: Phase32EConfig,
+    name: str,
+    default: Sequence[Any],
+) -> List[Any]:
     value = getattr(cfg, name, None)
-
-    if value is None:
-        return list(default)
-
-    return list(value)
+    return list(default if value is None else value)
 
 
-# =========================================================
-# Paths
-# =========================================================
+def _row_payload(
+    row: Optional[pd.Series],
+) -> Dict[str, Any]:
+    if row is None:
+        return {}
 
-def conditional_pair_scores_csv_path(cfg: Phase32EConfig) -> Path:
+    return {
+        str(key): _json_default(value)
+        for key, value in row.to_dict().items()
+    }
+
+
+def _fingerprint(
+    payload: Mapping[str, Any],
+) -> str:
+    encoded = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+        default=_json_default,
+    ).encode("utf-8")
+
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def conditional_pair_scores_csv_path(
+    cfg: Phase32EConfig,
+) -> Path:
     return Path(
         getattr(
             cfg,
             "conditional_pair_scores_csv",
-            Path(cfg.results_dir) / "phase3_2e_conditional_pair_scores.csv",
+            Path(cfg.results_dir)
+            / "phase3_2e_conditional_pair_scores.csv",
         )
     )
 
 
-def conditional_model_scores_csv_path(cfg: Phase32EConfig) -> Path:
+def conditional_model_scores_csv_path(
+    cfg: Phase32EConfig,
+) -> Path:
     return Path(
         getattr(
             cfg,
             "conditional_model_scores_csv",
-            Path(cfg.results_dir) / "phase3_2e_conditional_model_scores.csv",
+            Path(cfg.results_dir)
+            / "phase3_2e_conditional_model_scores.csv",
         )
     )
 
 
-def gates_json_path(cfg: Phase32EConfig) -> Path:
+def gates_json_path(
+    cfg: Phase32EConfig,
+) -> Path:
     return Path(
         getattr(
             cfg,
             "gates_json",
-            Path(cfg.results_dir) / "phase3_2e_gates.json",
+            Path(cfg.results_dir)
+            / "phase3_2e_gates.json",
         )
     )
 
 
-def gate_sensitivity_report_json_path(cfg: Phase32EConfig) -> Path:
-    return Path(cfg.results_dir) / "phase3_2e_gate_sensitivity_report.json"
+def gate_sensitivity_report_json_path(
+    cfg: Phase32EConfig,
+) -> Path:
+    return (
+        Path(cfg.results_dir)
+        / "phase3_2e_gate_sensitivity_report.json"
+    )
 
 
-def gate_sensitivity_summary_txt_path(cfg: Phase32EConfig) -> Path:
-    return Path(cfg.results_dir) / "phase3_2e_gate_sensitivity_summary.txt"
+def gate_sensitivity_summary_txt_path(
+    cfg: Phase32EConfig,
+) -> Path:
+    return (
+        Path(cfg.results_dir)
+        / "phase3_2e_gate_sensitivity_summary.txt"
+    )
 
 
-def f7_sensitivity_csv_path(cfg: Phase32EConfig) -> Path:
-    return Path(cfg.results_dir) / "phase3_2e_f7_subject_sensitivity.csv"
+def f7_sensitivity_csv_path(
+    cfg: Phase32EConfig,
+) -> Path:
+    return (
+        Path(cfg.results_dir)
+        / "phase3_2e_f7_subject_sensitivity.csv"
+    )
 
 
-def f8_sensitivity_csv_path(cfg: Phase32EConfig) -> Path:
-    return Path(cfg.results_dir) / "phase3_2e_f8_complexity_sensitivity.csv"
+def f8_sensitivity_csv_path(
+    cfg: Phase32EConfig,
+) -> Path:
+    return (
+        Path(cfg.results_dir)
+        / "phase3_2e_f8_complexity_sensitivity.csv"
+    )
 
 
-def f12_sensitivity_csv_path(cfg: Phase32EConfig) -> Path:
-    return Path(cfg.results_dir) / "phase3_2e_f12_epsilon_saturation_sensitivity.csv"
+def f12_sensitivity_csv_path(
+    cfg: Phase32EConfig,
+) -> Path:
+    return (
+        Path(cfg.results_dir)
+        / "phase3_2e_f12_epsilon_saturation_sensitivity.csv"
+    )
 
 
-# =========================================================
-# Row selection
-# =========================================================
-
-def valid_pair_rows(pair_df: pd.DataFrame) -> pd.DataFrame:
-    if pair_df.empty or "valid" not in pair_df.columns:
+def valid_pair_rows(
+    pair_df: pd.DataFrame,
+) -> pd.DataFrame:
+    if pair_df.empty:
         return pd.DataFrame()
 
-    return pair_df[_as_bool_series(pair_df["valid"])].copy()
+    if "valid" not in pair_df.columns:
+        return pair_df.copy()
+
+    return pair_df[
+        _as_bool_series(pair_df["valid"])
+    ].copy()
 
 
-def primary_pair_rows(pair_df: pd.DataFrame) -> pd.DataFrame:
+def primary_pair_rows(
+    pair_df: pd.DataFrame,
+    cfg: Phase32EConfig,
+) -> pd.DataFrame:
     valid = valid_pair_rows(pair_df)
 
-    if valid.empty or "primary" not in valid.columns:
+    if valid.empty:
         return pd.DataFrame()
 
-    return valid[_as_bool_series(valid["primary"])].copy()
+    return valid[
+        effective_primary_mask(valid, cfg)
+    ].copy()
 
 
-def positive_pair_rows(pair_df: pd.DataFrame) -> pd.DataFrame:
-    valid = valid_pair_rows(pair_df)
-
-    if valid.empty or "conditional_lift" not in valid.columns:
-        return pd.DataFrame()
-
-    return valid[_numeric_col(valid, "conditional_lift") > 0.0].copy()
-
-
-def best_primary_row(pair_df: pd.DataFrame, column: str) -> Dict[str, Any]:
-    primary = primary_pair_rows(pair_df)
-
-    if primary.empty or column not in primary.columns:
-        return {}
-
-    row = primary.sort_values(column, ascending=False).iloc[0]
-
-    return row.to_dict()
-
-
-def best_valid_row(pair_df: pd.DataFrame, column: str) -> Dict[str, Any]:
-    valid = valid_pair_rows(pair_df)
-
-    if valid.empty or column not in valid.columns:
-        return {}
-
-    row = valid.sort_values(column, ascending=False).iloc[0]
-
-    return row.to_dict()
-
-
-# =========================================================
-# Official gate status helpers
-# =========================================================
-
-def load_official_gate_status(cfg: Phase32EConfig) -> Dict[str, Any]:
+def load_official_gate_status(
+    cfg: Phase32EConfig,
+) -> Dict[str, Any]:
     payload = _load_json(gates_json_path(cfg))
 
     if not payload:
@@ -347,418 +381,776 @@ def load_official_gate_status(cfg: Phase32EConfig) -> Dict[str, Any]:
             "reason": "gates_json_missing",
             "gates": {},
             "final_status": {},
+            "raw": {},
         }
 
-    gates = payload.get("gates", [])
+    gate_map: Dict[str, Dict[str, Any]] = {}
 
-    gate_map: Dict[str, Any] = {}
-
-    for gate in gates:
+    for gate in payload.get("gates", []):
         if not isinstance(gate, dict):
             continue
 
-        gate_id = str(gate.get("gate", ""))
+        gate_id = str(
+            gate.get("gate", "")
+        ).strip()
 
         if gate_id:
-            gate_map[gate_id] = gate
+            gate_map[gate_id] = dict(gate)
 
     return {
         "available": True,
         "reason": "ok",
         "gates": gate_map,
-        "final_status": payload.get("final_status", {}),
+        "final_status": payload.get(
+            "final_status",
+            {},
+        ),
         "raw": payload,
     }
 
 
-def official_gate_passed(gates_payload: Mapping[str, Any], gate_id: str) -> bool:
-    gates = gates_payload.get("gates", {})
+def official_gate_status(
+    gates_payload: Mapping[str, Any],
+    gate_id: str,
+) -> str:
+    gate = gates_payload.get(
+        "gates",
+        {},
+    ).get(
+        gate_id,
+        {},
+    )
 
-    if gate_id not in gates:
-        return False
-
-    return str(gates[gate_id].get("status", "")).upper() == "PASS"
-
-
-def official_gate_warning(gates_payload: Mapping[str, Any], gate_id: str) -> bool:
-    gates = gates_payload.get("gates", {})
-
-    if gate_id not in gates:
-        return False
-
-    return str(gates[gate_id].get("status", "")).upper() == "WARN"
-
-
-def official_gate_status(gates_payload: Mapping[str, Any], gate_id: str) -> str:
-    gates = gates_payload.get("gates", {})
-
-    if gate_id not in gates:
-        return "MISSING"
-
-    return str(gates[gate_id].get("status", "UNKNOWN"))
+    return str(
+        gate.get(
+            "status",
+            "MISSING",
+        )
+    ).upper()
 
 
-# =========================================================
-# F7 — Subject consistency sensitivity
-# =========================================================
+def official_gate_passed(
+    gates_payload: Mapping[str, Any],
+    gate_id: str,
+) -> bool:
+    return (
+        official_gate_status(
+            gates_payload,
+            gate_id,
+        )
+        == "PASS"
+    )
 
-def default_f7_threshold_grid(cfg: Phase32EConfig) -> List[float]:
-    official = float(cfg.subject_effect_fraction)
 
-    grid = [
+def official_gate_warning(
+    gates_payload: Mapping[str, Any],
+    gate_id: str,
+) -> bool:
+    return (
+        official_gate_status(
+            gates_payload,
+            gate_id,
+        )
+        == "WARN"
+    )
+
+
+def selected_primary_lead(
+    pair_df: pd.DataFrame,
+    cfg: Phase32EConfig,
+) -> Optional[pd.Series]:
+    return select_primary_lead_row(
+        pair_df,
+        cfg,
+    )
+
+
+def default_f7_fraction_grid(
+    official_fraction: float,
+) -> List[float]:
+    values = [
+        0.01,
+        0.02,
+        0.03,
+        0.05,
         0.10,
         0.20,
         0.30,
         0.40,
         0.50,
         0.60,
-        0.70,
-        0.80,
-        0.90,
-        official,
+        official_fraction,
     ]
 
-    grid = sorted(set(float(x) for x in grid if 0.0 <= float(x) <= 1.0))
-
-    return grid
+    return sorted(
+        {
+            float(value)
+            for value in values
+            if 0.0 <= float(value) <= 1.0
+        }
+    )
 
 
 def build_f7_subject_sensitivity(
     pair_df: pd.DataFrame,
     cfg: Phase32EConfig,
 ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-    primary = primary_pair_rows(pair_df)
-
-    official_threshold = float(cfg.subject_effect_fraction)
-
-    if primary.empty:
-        empty = pd.DataFrame(
-            columns=[
-                "threshold",
-                "official_threshold",
-                "max_primary_fraction_positive_lift",
-                "would_pass",
-                "distance_to_threshold",
-                "n_primary_rows",
-                "n_rows_at_or_above_threshold",
-            ]
-        )
-
-        summary = {
-            "available": False,
-            "reason": "no_primary_pair_rows",
-            "official_threshold": official_threshold,
-            "max_primary_fraction_positive_lift": 0.0,
-            "distance_to_official_threshold": -official_threshold,
-            "official_passed_by_data": False,
-            "closest_threshold_passed": None,
-            "strictest_threshold_passed": None,
-            "interpretation": (
-                "F7 cannot be diagnosed because there are no primary pair rows."
-            ),
-        }
-
-        return empty, summary
-
-    max_fraction = float(_numeric_col(primary, "fraction_positive_lift").max())
-
-    thresholds = _list_cfg(
+    lead = selected_primary_lead(
+        pair_df,
         cfg,
-        "f7_subject_sensitivity_thresholds",
-        default_f7_threshold_grid(cfg),
     )
 
-    thresholds = sorted(set(float(x) for x in thresholds if 0.0 <= float(x) <= 1.0))
+    columns = [
+        "required_fraction",
+        "required_subjects",
+        "n_subjects_evaluated",
+        "n_subjects_positive_lift",
+        "observed_fraction_positive_lift",
+        "official_required_fraction",
+        "official_required_subjects",
+        "would_pass",
+        "fraction_distance",
+        "subject_count_distance",
+        "is_official_scenario",
+    ]
+
+    if lead is None:
+        return (
+            pd.DataFrame(columns=columns),
+            {
+                "available": False,
+                "reason": "no_primary_lead",
+                "official_passed_by_data": False,
+                "interpretation": (
+                    "F7 sensitivity is unavailable because "
+                    "no primary lead row exists."
+                ),
+            },
+        )
+
+    official = subject_consistency_for_row(
+        lead,
+        cfg,
+    )
+
+    n_subjects = int(
+        official["n_subjects_evaluated"]
+    )
+    n_positive = int(
+        official["n_subjects_positive_lift"]
+    )
+    observed_fraction = float(
+        official["fraction_positive_lift"]
+    )
+    official_count = int(
+        official["required_positive_subjects"]
+    )
+    official_fraction = float(
+        official["required_positive_fraction"]
+    )
+
+    fractions = _list_cfg(
+        cfg,
+        "f7_subject_sensitivity_thresholds",
+        default_f7_fraction_grid(
+            official_fraction
+        ),
+    )
+
+    fractions = sorted(
+        {
+            float(value)
+            for value in fractions
+            if 0.0 <= float(value) <= 1.0
+        }
+        | {official_fraction}
+    )
+
+    minimum_count = max(
+        _int_cfg(
+            cfg,
+            "min_positive_subjects",
+            1,
+        ),
+        1,
+    )
 
     rows: List[Dict[str, Any]] = []
 
-    fractions = _numeric_col(primary, "fraction_positive_lift")
+    for fraction in fractions:
+        required_count = max(
+            minimum_count,
+            int(
+                math.ceil(
+                    n_subjects * fraction
+                    - 1e-12
+                )
+            ),
+        )
 
-    for threshold in thresholds:
-        threshold = float(threshold)
         rows.append(
             {
-                "threshold": threshold,
-                "official_threshold": official_threshold,
-                "max_primary_fraction_positive_lift": max_fraction,
-                "would_pass": bool(max_fraction >= threshold),
-                "distance_to_threshold": float(max_fraction - threshold),
-                "n_primary_rows": int(len(primary)),
-                "n_rows_at_or_above_threshold": int((fractions >= threshold).sum()),
+                "required_fraction": fraction,
+                "required_subjects": required_count,
+                "n_subjects_evaluated": n_subjects,
+                "n_subjects_positive_lift": n_positive,
+                "observed_fraction_positive_lift": observed_fraction,
+                "official_required_fraction": official_fraction,
+                "official_required_subjects": official_count,
+                "would_pass": bool(
+                    n_subjects > 0
+                    and n_positive
+                    >= required_count
+                ),
+                "fraction_distance": (
+                    observed_fraction
+                    - fraction
+                ),
+                "subject_count_distance": (
+                    n_positive
+                    - required_count
+                ),
+                "is_official_scenario": bool(
+                    np.isclose(
+                        fraction,
+                        official_fraction,
+                    )
+                    and required_count
+                    == official_count
+                ),
             }
         )
 
-    sensitivity_df = pd.DataFrame(rows)
+    sensitivity_df = pd.DataFrame(
+        rows,
+        columns=columns,
+    )
 
-    passed_thresholds = sensitivity_df[sensitivity_df["would_pass"].astype(bool)]["threshold"].tolist()
+    passing = sensitivity_df[
+        sensitivity_df[
+            "would_pass"
+        ].astype(bool)
+    ]
 
-    closest_passed = min(passed_thresholds) if passed_thresholds else None
-    strictest_passed = max(passed_thresholds) if passed_thresholds else None
-
-    official_passed = bool(max_fraction >= official_threshold)
-
-    if official_passed:
-        interpretation = (
-            "F7 passes under the official subject-consistency threshold."
+    strictest_fraction_passed = (
+        float(
+            passing[
+                "required_fraction"
+            ].max()
         )
-    elif max_fraction > 0:
-        interpretation = (
-            "F7 does not pass officially, but nonzero subject-level persistence exists. "
-            "This is diagnostic only and does not weaken the official gate."
+        if not passing.empty
+        else None
+    )
+
+    strictest_subject_count_passed = (
+        int(
+            passing[
+                "required_subjects"
+            ].max()
         )
-    else:
-        interpretation = (
-            "F7 does not pass and no subject-level positive-lift persistence was detected."
-        )
+        if not passing.empty
+        else None
+    )
+
+    official_pass = bool(
+        official["passed"]
+    )
 
     summary = {
         "available": True,
         "reason": "ok",
-        "official_threshold": official_threshold,
-        "max_primary_fraction_positive_lift": max_fraction,
-        "distance_to_official_threshold": float(max_fraction - official_threshold),
-        "official_passed_by_data": official_passed,
-        "closest_threshold_passed": closest_passed,
-        "strictest_threshold_passed": strictest_passed,
-        "n_primary_rows": int(len(primary)),
-        "best_primary_by_fraction": best_primary_row(pair_df, "fraction_positive_lift"),
-        "interpretation": interpretation,
+        "selected_primary_lead": _row_payload(
+            lead
+        ),
+        "n_subjects_evaluated": n_subjects,
+        "n_subjects_positive_lift": n_positive,
+        "observed_fraction_positive_lift": observed_fraction,
+        "official_required_subjects": official_count,
+        "official_required_fraction": official_fraction,
+        "official_passed_by_data": official_pass,
+        "fraction_distance_to_official": (
+            observed_fraction
+            - official_fraction
+        ),
+        "subject_count_distance_to_official": (
+            n_positive
+            - official_count
+        ),
+        "strictest_fraction_passed": (
+            strictest_fraction_passed
+        ),
+        "strictest_subject_count_passed": (
+            strictest_subject_count_passed
+        ),
+        "interpretation": (
+            "The selected primary lead satisfies "
+            "the adaptive F7 rule."
+            if official_pass
+            else (
+                "The selected primary lead does not "
+                "satisfy the adaptive F7 subject-count "
+                "rule. Sensitivity rows are diagnostic only."
+            )
+        ),
     }
 
     return sensitivity_df, summary
 
 
-# =========================================================
-# F8 — Complexity penalty / BIC sensitivity
-# =========================================================
+def _model_row_for_lead(
+    model_df: pd.DataFrame,
+    lead: pd.Series,
+    model_name: str,
+) -> Optional[pd.Series]:
+    if (
+        model_df.empty
+        or "model" not in model_df.columns
+    ):
+        return None
 
-def default_f8_bic_threshold_grid() -> List[float]:
+    mask = (
+        model_df["model"].astype(str)
+        == str(model_name)
+    )
+
+    for column in (
+        "window_seconds",
+        "lag_windows",
+    ):
+        if (
+            column in model_df.columns
+            and column in lead.index
+        ):
+            mask &= (
+                pd.to_numeric(
+                    model_df[column],
+                    errors="coerce",
+                )
+                == _safe_float(
+                    lead.get(column),
+                    float("nan"),
+                )
+            )
+
+    matches = model_df[mask].copy()
+
+    return (
+        matches.iloc[0]
+        if not matches.empty
+        else None
+    )
+
+
+def default_complexity_scale_grid() -> List[float]:
     return [
-        -100.0,
-        -50.0,
-        -25.0,
-        -10.0,
-        -5.0,
-        -1.0,
-        0.0,
-        1.0,
-        5.0,
-        10.0,
+        0.00,
+        0.05,
+        0.10,
+        0.25,
+        0.50,
+        0.75,
+        1.00,
+        1.25,
+        1.50,
     ]
 
 
 def build_f8_complexity_sensitivity(
     pair_df: pd.DataFrame,
+    model_df: pd.DataFrame,
     cfg: Phase32EConfig,
 ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-    primary = primary_pair_rows(pair_df)
-
-    official_threshold = 0.0
-
-    if primary.empty:
-        empty = pd.DataFrame(
-            columns=[
-                "bic_threshold",
-                "official_threshold",
-                "max_primary_bic_improvement",
-                "max_primary_aic_improvement",
-                "max_primary_ll_improvement",
-                "would_pass_bic",
-                "distance_to_bic_threshold",
-                "n_primary_rows",
-                "n_rows_at_or_above_bic_threshold",
-            ]
-        )
-
-        summary = {
-            "available": False,
-            "reason": "no_primary_pair_rows",
-            "official_threshold": official_threshold,
-            "max_primary_bic_improvement": 0.0,
-            "max_primary_aic_improvement": 0.0,
-            "max_primary_ll_improvement": 0.0,
-            "distance_to_official_threshold": 0.0,
-            "official_passed_by_data": False,
-            "bic_failed_but_aic_positive": False,
-            "bic_failed_but_ll_positive": False,
-            "interpretation": (
-                "F8 cannot be diagnosed because there are no primary pair rows."
-            ),
-        }
-
-        return empty, summary
-
-    bic = _numeric_col(primary, "bic_improvement")
-    aic = _numeric_col(primary, "aic_improvement")
-    ll = _numeric_col(primary, "ll_improvement")
-
-    max_bic = float(bic.max()) if len(bic) else 0.0
-    max_aic = float(aic.max()) if len(aic) else 0.0
-    max_ll = float(ll.max()) if len(ll) else 0.0
-
-    thresholds = _list_cfg(
+    lead = selected_primary_lead(
+        pair_df,
         cfg,
-        "f8_bic_sensitivity_thresholds",
-        default_f8_bic_threshold_grid(),
     )
 
-    thresholds = sorted(set(float(x) for x in thresholds))
+    columns = [
+        "scenario",
+        "complexity_penalty_scale",
+        "ll_improvement",
+        "observed_complexity_penalty",
+        "derived_bic_improvement",
+        "official_bic_improvement",
+        "aic_improvement",
+        "would_pass_bic_threshold",
+        "distance_to_official_threshold",
+        "is_official_scenario",
+    ]
+
+    if lead is None:
+        return (
+            pd.DataFrame(columns=columns),
+            {
+                "available": False,
+                "reason": "no_primary_lead",
+                "official_passed_by_data": False,
+                "interpretation": (
+                    "F8 sensitivity is unavailable because "
+                    "no primary lead row exists."
+                ),
+            },
+        )
+
+    bic_improvement = _safe_float(
+        lead.get("bic_improvement"),
+        float("-inf"),
+    )
+    aic_improvement = _safe_float(
+        lead.get("aic_improvement"),
+        float("-inf"),
+    )
+    ll_improvement = _safe_float(
+        lead.get("ll_improvement"),
+        float("-inf"),
+    )
+
+    observed_penalty = (
+        2.0 * ll_improvement
+        - bic_improvement
+        if (
+            np.isfinite(ll_improvement)
+            and np.isfinite(bic_improvement)
+        )
+        else float("nan")
+    )
+
+    scales = _list_cfg(
+        cfg,
+        "f8_effective_complexity_scales",
+        default_complexity_scale_grid(),
+    )
+
+    scales = sorted(
+        {
+            float(value)
+            for value in scales
+            if float(value) >= 0.0
+        }
+        | {1.0}
+    )
 
     rows: List[Dict[str, Any]] = []
 
-    for threshold in thresholds:
-        threshold = float(threshold)
+    for scale in scales:
+        derived_bic = (
+            2.0 * ll_improvement
+            - scale * observed_penalty
+        )
 
         rows.append(
             {
-                "bic_threshold": threshold,
-                "official_threshold": official_threshold,
-                "max_primary_bic_improvement": max_bic,
-                "max_primary_aic_improvement": max_aic,
-                "max_primary_ll_improvement": max_ll,
-                "would_pass_bic": bool(max_bic >= threshold),
-                "distance_to_bic_threshold": float(max_bic - threshold),
-                "n_primary_rows": int(len(primary)),
-                "n_rows_at_or_above_bic_threshold": int((bic >= threshold).sum()),
-                "n_rows_with_positive_aic": int((aic > 0.0).sum()),
-                "n_rows_with_positive_ll": int((ll > 0.0).sum()),
+                "scenario": (
+                    "official_bic"
+                    if np.isclose(
+                        scale,
+                        1.0,
+                    )
+                    else "complexity_scaled_bic"
+                ),
+                "complexity_penalty_scale": scale,
+                "ll_improvement": ll_improvement,
+                "observed_complexity_penalty": observed_penalty,
+                "derived_bic_improvement": derived_bic,
+                "official_bic_improvement": bic_improvement,
+                "aic_improvement": aic_improvement,
+                "would_pass_bic_threshold": bool(
+                    derived_bic >= 0.0
+                ),
+                "distance_to_official_threshold": derived_bic,
+                "is_official_scenario": bool(
+                    np.isclose(
+                        scale,
+                        1.0,
+                    )
+                ),
             }
         )
 
-    sensitivity_df = pd.DataFrame(rows)
+    sensitivity_df = pd.DataFrame(
+        rows,
+        columns=columns,
+    )
 
-    official_passed = bool(max_bic >= official_threshold)
-    bic_failed_but_aic_positive = bool((not official_passed) and max_aic > 0.0)
-    bic_failed_but_ll_positive = bool((not official_passed) and max_ll > 0.0)
-
-    if official_passed:
-        interpretation = (
-            "F8 passes under the official BIC >= 0 rule."
+    baseline_model = str(
+        lead.get(
+            "baseline_model",
+            "",
         )
-    elif bic_failed_but_aic_positive or bic_failed_but_ll_positive:
+    )
+    augmented_model = str(
+        lead.get(
+            "augmented_model",
+            "",
+        )
+    )
+
+    baseline_score = _model_row_for_lead(
+        model_df,
+        lead,
+        baseline_model,
+    )
+    augmented_score = _model_row_for_lead(
+        model_df,
+        lead,
+        augmented_model,
+    )
+
+    baseline_n_params = _safe_int(
+        baseline_score.get("n_params")
+        if baseline_score is not None
+        else None,
+        0,
+    )
+    augmented_n_params = _safe_int(
+        augmented_score.get("n_params")
+        if augmented_score is not None
+        else None,
+        0,
+    )
+    baseline_n_test = _safe_int(
+        baseline_score.get("n_test")
+        if baseline_score is not None
+        else None,
+        0,
+    )
+    augmented_n_test = _safe_int(
+        augmented_score.get("n_test")
+        if augmented_score is not None
+        else None,
+        0,
+    )
+
+    parameter_delta = (
+        augmented_n_params
+        - baseline_n_params
+    )
+
+    critical_scale = None
+
+    if (
+        np.isfinite(observed_penalty)
+        and observed_penalty > 0.0
+        and np.isfinite(ll_improvement)
+    ):
+        critical_scale = float(
+            2.0 * ll_improvement
+            / observed_penalty
+        )
+
+    official_pass = bool(
+        bic_improvement >= 0.0
+    )
+    aic_support = bool(
+        aic_improvement > 0.0
+    )
+    ll_support = bool(
+        ll_improvement > 0.0
+    )
+
+    if official_pass:
         interpretation = (
-            "F8 fails officially under BIC, but AIC and/or held-out log-likelihood "
-            "show weaker exploratory support. This is diagnostic only and does not "
-            "change the official BIC gate."
+            "The selected primary lead passes "
+            "the official F8 BIC rule."
+        )
+    elif ll_support or aic_support:
+        interpretation = (
+            "The selected primary lead fails official BIC, "
+            "while held-out likelihood and/or AIC provide "
+            "weaker support. Complexity-scaled scenarios "
+            "are diagnostic only and do not replace "
+            "official BIC."
         )
     else:
         interpretation = (
-            "F8 fails under BIC and no weaker AIC/LL support was detected."
+            "The selected primary lead fails official BIC "
+            "and has no weaker AIC/held-out-LL support."
         )
 
     summary = {
         "available": True,
         "reason": "ok",
-        "official_threshold": official_threshold,
-        "max_primary_bic_improvement": max_bic,
-        "max_primary_aic_improvement": max_aic,
-        "max_primary_ll_improvement": max_ll,
-        "distance_to_official_threshold": float(max_bic - official_threshold),
-        "official_passed_by_data": official_passed,
-        "bic_failed_but_aic_positive": bic_failed_but_aic_positive,
-        "bic_failed_but_ll_positive": bic_failed_but_ll_positive,
-        "n_primary_rows": int(len(primary)),
-        "best_primary_by_bic": best_primary_row(pair_df, "bic_improvement"),
-        "best_primary_by_aic": best_primary_row(pair_df, "aic_improvement"),
-        "best_primary_by_ll": best_primary_row(pair_df, "ll_improvement"),
+        "selected_primary_lead": _row_payload(
+            lead
+        ),
+        "official_threshold": 0.0,
+        "official_bic_improvement": bic_improvement,
+        "official_passed_by_data": official_pass,
+        "distance_to_official_threshold": bic_improvement,
+        "aic_improvement": aic_improvement,
+        "heldout_ll_improvement": ll_improvement,
+        "aic_positive": aic_support,
+        "heldout_ll_positive": ll_support,
+        "observed_complexity_penalty": observed_penalty,
+        "critical_complexity_penalty_scale": critical_scale,
+        "baseline_n_params": baseline_n_params,
+        "augmented_n_params": augmented_n_params,
+        "parameter_delta": parameter_delta,
+        "baseline_n_test": baseline_n_test,
+        "augmented_n_test": augmented_n_test,
+        "baseline_model_score": (
+            _row_payload(baseline_score)
+            if baseline_score is not None
+            else {}
+        ),
+        "augmented_model_score": (
+            _row_payload(augmented_score)
+            if augmented_score is not None
+            else {}
+        ),
         "interpretation": interpretation,
     }
 
     return sensitivity_df, summary
 
 
-# =========================================================
-# F12 — Epsilon saturation sensitivity
-# =========================================================
-
-def default_eps_saturation_values(cfg: Phase32EConfig) -> List[float]:
-    official = _float_cfg(cfg, "eps_saturation_value", 0.80)
+def default_eps_saturation_values(
+    cfg: Phase32EConfig,
+) -> List[float]:
+    official = _float_cfg(
+        cfg,
+        "eps_saturation_value",
+        2.0,
+    )
 
     values = [
-        0.30,
-        0.40,
         0.50,
-        0.60,
-        0.70,
         0.80,
-        0.90,
+        1.00,
+        1.25,
+        1.50,
+        2.00,
+        2.50,
+        3.00,
+        4.00,
+        5.00,
         official,
     ]
 
-    values = sorted(set(float(x) for x in values if 0.0 <= float(x) <= 1.0))
+    return sorted(
+        {
+            float(value)
+            for value in values
+            if float(value) >= 0.0
+        }
+    )
 
-    return values
 
-
-def default_eps_warning_fractions(cfg: Phase32EConfig) -> List[float]:
-    official = _float_cfg(cfg, "eps_saturation_warning_fraction", 0.50)
+def default_eps_warning_fractions(
+    cfg: Phase32EConfig,
+) -> List[float]:
+    official = _float_cfg(
+        cfg,
+        "eps_saturation_warning_fraction",
+        0.95,
+    )
 
     values = [
         0.10,
-        0.20,
-        0.30,
-        0.40,
+        0.25,
         0.50,
-        0.60,
-        0.70,
-        0.80,
+        0.75,
+        0.90,
+        0.95,
+        1.00,
         official,
     ]
 
-    values = sorted(set(float(x) for x in values if 0.0 <= float(x) <= 1.0))
+    return sorted(
+        {
+            float(value)
+            for value in values
+            if 0.0 <= float(value) <= 1.0
+        }
+    )
 
-    return values
 
-
-def epsilon_values_from_model_scores(model_df: pd.DataFrame) -> pd.Series:
+def _model_epsilon_values(
+    model_df: pd.DataFrame,
+) -> pd.Series:
     if model_df.empty:
         return pd.Series([], dtype=float)
 
-    eps_cols = [
-        col for col in [
-            "eps_candidate",
-            "eps_calib",
-            "eps_test",
-        ]
-        if col in model_df.columns
-    ]
+    epsilon_column = next(
+        (
+            column
+            for column in (
+                "eps_test",
+                "eps_candidate",
+                "eps_calib",
+            )
+            if column in model_df.columns
+        ),
+        None,
+    )
 
-    if not eps_cols:
+    if epsilon_column is None:
         return pd.Series([], dtype=float)
 
-    values: List[float] = []
+    return (
+        pd.to_numeric(
+            model_df[epsilon_column],
+            errors="coerce",
+        )
+        .dropna()
+        .astype(float)
+    )
 
-    for col in eps_cols:
-        series = pd.to_numeric(model_df[col], errors="coerce").dropna()
-        values.extend(series.astype(float).tolist())
 
-    return pd.Series(values, dtype=float)
-
-
-def epsilon_values_from_pair_scores(pair_df: pd.DataFrame) -> pd.Series:
+def _pair_epsilon_frame(
+    pair_df: pd.DataFrame,
+) -> pd.DataFrame:
     valid = valid_pair_rows(pair_df)
 
     if valid.empty:
-        return pd.Series([], dtype=float)
+        return pd.DataFrame(
+            columns=[
+                "baseline_eps_test",
+                "augmented_eps_test",
+                "baseline_eps_saturated",
+                "augmented_eps_saturated",
+            ]
+        )
 
-    eps_cols = [
-        col for col in [
-            "baseline_eps_test",
-            "augmented_eps_test",
-        ]
-        if col in valid.columns
-    ]
-
-    if not eps_cols:
-        return pd.Series([], dtype=float)
-
-    values: List[float] = []
-
-    for col in eps_cols:
-        series = pd.to_numeric(valid[col], errors="coerce").dropna()
-        values.extend(series.astype(float).tolist())
-
-    return pd.Series(values, dtype=float)
+    return pd.DataFrame(
+        {
+            "baseline_eps_test": _numeric_col(
+                valid,
+                "baseline_eps_test",
+            ),
+            "augmented_eps_test": _numeric_col(
+                valid,
+                "augmented_eps_test",
+            ),
+            "baseline_eps_saturated": (
+                _as_bool_series(
+                    valid[
+                        "baseline_eps_saturated"
+                    ]
+                )
+                if "baseline_eps_saturated"
+                in valid.columns
+                else pd.Series(
+                    False,
+                    index=valid.index,
+                )
+            ),
+            "augmented_eps_saturated": (
+                _as_bool_series(
+                    valid[
+                        "augmented_eps_saturated"
+                    ]
+                )
+                if "augmented_eps_saturated"
+                in valid.columns
+                else pd.Series(
+                    False,
+                    index=valid.index,
+                )
+            ),
+        },
+        index=valid.index,
+    )
 
 
 def build_f12_epsilon_sensitivity(
@@ -766,144 +1158,302 @@ def build_f12_epsilon_sensitivity(
     pair_df: pd.DataFrame,
     cfg: Phase32EConfig,
 ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-    official_eps_threshold = _float_cfg(cfg, "eps_saturation_value", 0.80)
-    official_warning_fraction = _float_cfg(cfg, "eps_saturation_warning_fraction", 0.50)
+    official_eps = _float_cfg(
+        cfg,
+        "eps_saturation_value",
+        2.0,
+    )
+    official_warning_fraction = _float_cfg(
+        cfg,
+        "eps_saturation_warning_fraction",
+        0.95,
+    )
 
-    model_eps = epsilon_values_from_model_scores(model_df)
-    pair_eps = epsilon_values_from_pair_scores(pair_df)
+    model_values = _model_epsilon_values(
+        model_df
+    )
 
-    all_eps = pd.concat([model_eps, pair_eps], ignore_index=True)
-
-    if all_eps.empty:
-        empty = pd.DataFrame(
-            columns=[
-                "eps_saturation_value",
-                "warning_fraction",
-                "saturation_fraction",
-                "would_warn",
-                "n_eps_values",
-                "n_saturated_values",
-            ]
+    model_explicit_saturation = (
+        _as_bool_series(
+            model_df["eps_saturated"]
         )
+        if (
+            not model_df.empty
+            and "eps_saturated"
+            in model_df.columns
+        )
+        else pd.Series(
+            False,
+            index=model_df.index,
+        )
+    )
 
-        summary = {
-            "available": False,
-            "reason": "no_epsilon_values_available",
-            "official_eps_saturation_value": official_eps_threshold,
-            "official_warning_fraction": official_warning_fraction,
-            "max_saturation_fraction": 0.0,
-            "official_warning_by_data": False,
-            "distance_to_warning_fraction": -official_warning_fraction,
-            "interpretation": (
-                "F12 cannot be diagnosed because no epsilon values are available."
-            ),
-        }
+    pair_values = _pair_epsilon_frame(
+        pair_df
+    )
 
-        return empty, summary
+    columns = [
+        "eps_saturation_value",
+        "warning_fraction",
+        "model_saturation_fraction",
+        "pair_either_saturation_fraction",
+        "official_metric_fraction",
+        "would_warn",
+        "distance_to_warning_fraction",
+        "n_model_values",
+        "n_pair_rows",
+        "is_official_scenario",
+    ]
+
+    if (
+        model_values.empty
+        and pair_values.empty
+    ):
+        return (
+            pd.DataFrame(columns=columns),
+            {
+                "available": False,
+                "reason": "no_epsilon_values_available",
+                "official_warning_by_data": False,
+                "interpretation": (
+                    "F12 sensitivity is unavailable because "
+                    "no epsilon values exist."
+                ),
+            },
+        )
 
     eps_thresholds = _list_cfg(
         cfg,
         "f12_eps_saturation_thresholds",
         default_eps_saturation_values(cfg),
     )
-
     warning_fractions = _list_cfg(
         cfg,
         "f12_warning_fraction_thresholds",
         default_eps_warning_fractions(cfg),
     )
 
-    eps_thresholds = sorted(set(float(x) for x in eps_thresholds if 0.0 <= float(x) <= 1.0))
-    warning_fractions = sorted(set(float(x) for x in warning_fractions if 0.0 <= float(x) <= 1.0))
+    eps_thresholds = sorted(
+        {
+            float(value)
+            for value in eps_thresholds
+            if float(value) >= 0.0
+        }
+        | {official_eps}
+    )
+
+    warning_fractions = sorted(
+        {
+            float(value)
+            for value in warning_fractions
+            if 0.0 <= float(value) <= 1.0
+        }
+        | {official_warning_fraction}
+    )
 
     rows: List[Dict[str, Any]] = []
 
     for eps_threshold in eps_thresholds:
-        saturated = all_eps >= float(eps_threshold)
-        saturation_fraction = float(np.mean(saturated.to_numpy(dtype=bool))) if len(all_eps) else 0.0
+        if model_values.empty:
+            model_fraction = 0.0
+        else:
+            model_saturated = (
+                model_values
+                >= eps_threshold
+            )
 
-        model_saturated = model_eps >= float(eps_threshold)
-        pair_saturated = pair_eps >= float(eps_threshold)
+            if (
+                np.isclose(
+                    eps_threshold,
+                    official_eps,
+                )
+                and len(
+                    model_explicit_saturation
+                )
+                == len(model_saturated)
+            ):
+                model_saturated = (
+                    model_saturated
+                    .reset_index(drop=True)
+                    | model_explicit_saturation
+                    .reset_index(drop=True)
+                )
 
-        model_fraction = float(np.mean(model_saturated.to_numpy(dtype=bool))) if len(model_eps) else 0.0
-        pair_fraction = float(np.mean(pair_saturated.to_numpy(dtype=bool))) if len(pair_eps) else 0.0
+            model_fraction = float(
+                model_saturated.mean()
+            )
+
+        if pair_values.empty:
+            pair_fraction = 0.0
+        else:
+            pair_saturated = (
+                (
+                    pair_values[
+                        "baseline_eps_test"
+                    ]
+                    >= eps_threshold
+                )
+                | (
+                    pair_values[
+                        "augmented_eps_test"
+                    ]
+                    >= eps_threshold
+                )
+            )
+
+            if np.isclose(
+                eps_threshold,
+                official_eps,
+            ):
+                pair_saturated = (
+                    pair_saturated
+                    | pair_values[
+                        "baseline_eps_saturated"
+                    ].astype(bool)
+                    | pair_values[
+                        "augmented_eps_saturated"
+                    ].astype(bool)
+                )
+
+            pair_fraction = float(
+                pair_saturated.mean()
+            )
+
+        official_metric = max(
+            model_fraction,
+            pair_fraction,
+        )
 
         for warning_fraction in warning_fractions:
             rows.append(
                 {
-                    "eps_saturation_value": float(eps_threshold),
-                    "warning_fraction": float(warning_fraction),
-                    "official_eps_saturation_value": official_eps_threshold,
-                    "official_warning_fraction": official_warning_fraction,
-                    "n_eps_values": int(len(all_eps)),
-                    "n_model_eps_values": int(len(model_eps)),
-                    "n_pair_eps_values": int(len(pair_eps)),
-                    "n_saturated_values": int(saturated.sum()),
-                    "saturation_fraction": saturation_fraction,
+                    "eps_saturation_value": eps_threshold,
+                    "warning_fraction": warning_fraction,
                     "model_saturation_fraction": model_fraction,
-                    "pair_saturation_fraction": pair_fraction,
-                    "would_warn": bool(saturation_fraction >= float(warning_fraction)),
-                    "distance_to_warning_fraction": float(saturation_fraction - float(warning_fraction)),
-                    "max_epsilon": float(all_eps.max()) if len(all_eps) else 0.0,
+                    "pair_either_saturation_fraction": pair_fraction,
+                    "official_metric_fraction": official_metric,
+                    "would_warn": bool(
+                        official_metric
+                        >= warning_fraction
+                    ),
+                    "distance_to_warning_fraction": (
+                        official_metric
+                        - warning_fraction
+                    ),
+                    "n_model_values": int(
+                        len(model_values)
+                    ),
+                    "n_pair_rows": int(
+                        len(pair_values)
+                    ),
+                    "is_official_scenario": bool(
+                        np.isclose(
+                            eps_threshold,
+                            official_eps,
+                        )
+                        and np.isclose(
+                            warning_fraction,
+                            official_warning_fraction,
+                        )
+                    ),
                 }
             )
 
-    sensitivity_df = pd.DataFrame(rows)
+    sensitivity_df = pd.DataFrame(
+        rows,
+        columns=columns,
+    )
 
-    official_row = sensitivity_df[
-        (np.isclose(sensitivity_df["eps_saturation_value"], official_eps_threshold))
-        & (np.isclose(sensitivity_df["warning_fraction"], official_warning_fraction))
-    ].copy()
+    official_rows = sensitivity_df[
+        sensitivity_df[
+            "is_official_scenario"
+        ].astype(bool)
+    ]
 
-    if official_row.empty:
-        official_saturation_fraction = float((all_eps >= official_eps_threshold).mean())
-        official_warning_by_data = bool(official_saturation_fraction >= official_warning_fraction)
+    if official_rows.empty:
+        official_fraction = 0.0
+        official_warning = False
     else:
-        official_saturation_fraction = float(official_row.iloc[0]["saturation_fraction"])
-        official_warning_by_data = bool(official_row.iloc[0]["would_warn"])
+        official_fraction = float(
+            official_rows.iloc[0][
+                "official_metric_fraction"
+            ]
+        )
+        official_warning = bool(
+            official_rows.iloc[0][
+                "would_warn"
+            ]
+        )
 
-    max_saturation_fraction = float(sensitivity_df["saturation_fraction"].max()) if not sensitivity_df.empty else 0.0
-
-    if official_warning_by_data:
-        interpretation = (
-            "F12 raises an official epsilon saturation warning. This does not prove "
-            "absence of signal, but blocks strong interpretation until additional "
-            "diagnostics explain why epsilon saturates."
+    metrics_model_summary = (
+        model_saturation_summary(
+            model_df,
+            cfg,
         )
-    elif max_saturation_fraction > 0:
-        interpretation = (
-            "F12 does not warn at the official threshold, but saturation exists under "
-            "some exploratory thresholds. This should be documented diagnostically."
+    )
+    metrics_pair_summary = (
+        pair_saturation_summary(
+            pair_df,
+            cfg,
         )
-    else:
-        interpretation = (
-            "No epsilon saturation pattern was detected under the tested thresholds."
-        )
+    )
 
     summary = {
         "available": True,
         "reason": "ok",
-        "official_eps_saturation_value": official_eps_threshold,
+        "official_eps_saturation_value": official_eps,
         "official_warning_fraction": official_warning_fraction,
-        "official_saturation_fraction": official_saturation_fraction,
-        "official_warning_by_data": official_warning_by_data,
-        "max_saturation_fraction": max_saturation_fraction,
-        "distance_to_warning_fraction": float(official_saturation_fraction - official_warning_fraction),
-        "n_model_eps_values": int(len(model_eps)),
-        "n_pair_eps_values": int(len(pair_eps)),
-        "n_total_eps_values": int(len(all_eps)),
-        "max_epsilon": float(all_eps.max()) if len(all_eps) else 0.0,
-        "mean_epsilon": float(all_eps.mean()) if len(all_eps) else 0.0,
-        "median_epsilon": float(all_eps.median()) if len(all_eps) else 0.0,
-        "interpretation": interpretation,
+        "official_saturation_fraction": official_fraction,
+        "official_warning_by_data": official_warning,
+        "distance_to_warning_fraction": (
+            official_fraction
+            - official_warning_fraction
+        ),
+        "max_model_epsilon": (
+            float(model_values.max())
+            if not model_values.empty
+            else 0.0
+        ),
+        "max_baseline_pair_epsilon": (
+            float(
+                pair_values[
+                    "baseline_eps_test"
+                ].max()
+            )
+            if not pair_values.empty
+            else 0.0
+        ),
+        "max_augmented_pair_epsilon": (
+            float(
+                pair_values[
+                    "augmented_eps_test"
+                ].max()
+            )
+            if not pair_values.empty
+            else 0.0
+        ),
+        "metrics_model_saturation_summary": (
+            metrics_model_summary
+        ),
+        "metrics_pair_saturation_summary": (
+            metrics_pair_summary
+        ),
+        "diagnostic_only": True,
+        "interpretation": (
+            "F12 raises an official diagnostic warning. "
+            "This does not erase a primary lead, but the "
+            "saturation pattern must be documented."
+            if official_warning
+            else (
+                "F12 does not raise an official diagnostic "
+                "saturation warning. Exploratory threshold "
+                "scenarios remain diagnostic only."
+            )
+        ),
     }
 
     return sensitivity_df, summary
 
-
-# =========================================================
-# Combined report
-# =========================================================
 
 def build_gate_sensitivity_result(
     f7_summary: Mapping[str, Any],
@@ -912,83 +1462,196 @@ def build_gate_sensitivity_result(
     gates_payload: Mapping[str, Any],
     cfg: Phase32EConfig,
 ) -> GateSensitivityResult:
-    protocol_only = False
+    final_status = gates_payload.get(
+        "final_status",
+        {},
+    )
 
-    final_status = gates_payload.get("final_status", {})
+    protocol_only = bool(
+        final_status.get(
+            "protocol_only",
+            False,
+        )
+        if isinstance(
+            final_status,
+            dict,
+        )
+        else False
+    )
 
-    if isinstance(final_status, dict):
-        protocol_only = bool(final_status.get("protocol_only", False))
-
-    if not gates_payload.get("available", False):
-        protocol_only = False
-
-    pending_status = getattr(cfg, "status_pending_synchronized_data", "pending_synchronized_data")
+    f7_available = bool(
+        f7_summary.get(
+            "available",
+            False,
+        )
+    )
+    f8_available = bool(
+        f8_summary.get(
+            "available",
+            False,
+        )
+    )
+    f12_available = bool(
+        f12_summary.get(
+            "available",
+            False,
+        )
+    )
 
     if protocol_only:
-        status = pending_status
+        status = getattr(
+            cfg,
+            "status_pending_synchronized_data",
+            "pending_synchronized_data",
+        )
         interpretation = (
-            "No synchronized EEG–QRNG dataset is available. Gate sensitivity was "
-            "generated in protocol-only mode. F7/F8/F12 cannot be empirically diagnosed "
-            "until synchronized data exist."
+            "No synchronized EEG–QRNG dataset is "
+            "available. Gate sensitivity remains "
+            "protocol-only."
+        )
+    elif not any(
+        (
+            f7_available,
+            f8_available,
+            f12_available,
+        )
+    ):
+        status = "gate_sensitivity_unavailable"
+        interpretation = (
+            "Gate sensitivity is unavailable because "
+            "no valid pair/model outputs exist."
+        )
+    else:
+        status = "gate_sensitivity_completed"
+        interpretation = (
+            "F7/F8/F12 sensitivity diagnostics completed "
+            "without changing official gates. F7 uses the "
+            "adaptive selected-lead rule, F8 preserves BIC "
+            "as official while reporting weaker complexity "
+            "sensitivities, and F12 remains diagnostic."
         )
 
-    else:
-        f7_available = bool(f7_summary.get("available", False))
-        f8_available = bool(f8_summary.get("available", False))
-        f12_available = bool(f12_summary.get("available", False))
+    f7_required_subjects = _safe_int(
+        f7_summary.get(
+            "official_required_subjects"
+        ),
+        0,
+    )
+    f7_required_fraction = _safe_float(
+        f7_summary.get(
+            "official_required_fraction"
+        ),
+        _float_cfg(
+            cfg,
+            "subject_effect_fraction",
+            0.10,
+        ),
+    )
+    f7_selected_fraction = _safe_float(
+        f7_summary.get(
+            "observed_fraction_positive_lift"
+        ),
+        0.0,
+    )
+    f7_selected_positive = _safe_int(
+        f7_summary.get(
+            "n_subjects_positive_lift"
+        ),
+        0,
+    )
 
-        if not any([f7_available, f8_available, f12_available]):
-            status = "gate_sensitivity_unavailable"
-            interpretation = (
-                "Gate sensitivity could not be evaluated because no valid pair/model "
-                "rows are available."
-            )
+    f8_bic = _safe_float(
+        f8_summary.get(
+            "official_bic_improvement"
+        ),
+        0.0,
+    )
+    f8_aic = _safe_float(
+        f8_summary.get(
+            "aic_improvement"
+        ),
+        0.0,
+    )
+    f8_ll = _safe_float(
+        f8_summary.get(
+            "heldout_ll_improvement"
+        ),
+        0.0,
+    )
 
-        else:
-            status = "gate_sensitivity_completed"
-            interpretation = (
-                "Gate sensitivity diagnostics completed. These diagnostics do not alter "
-                "official F7/F8/F12 gates; they only explain how close the current data "
-                "are to the official thresholds."
-            )
-
-    f7_best = _safe_float(f7_summary.get("max_primary_fraction_positive_lift"), 0.0)
-    f8_best = _safe_float(f8_summary.get("max_primary_bic_improvement"), 0.0)
-    f12_best = _safe_float(f12_summary.get("official_saturation_fraction"), 0.0)
-
-    official_f7 = float(cfg.subject_effect_fraction)
-    official_f8 = 0.0
-    official_f12_eps = _float_cfg(cfg, "eps_saturation_value", 0.80)
-    official_f12_warn = _float_cfg(cfg, "eps_saturation_warning_fraction", 0.50)
+    f12_fraction = _safe_float(
+        f12_summary.get(
+            "official_saturation_fraction"
+        ),
+        0.0,
+    )
+    f12_eps = _float_cfg(
+        cfg,
+        "eps_saturation_value",
+        2.0,
+    )
+    f12_warning_fraction = _float_cfg(
+        cfg,
+        "eps_saturation_warning_fraction",
+        0.95,
+    )
 
     return GateSensitivityResult(
         status=status,
-        protocol_only=bool(protocol_only),
-
-        official_f7_threshold=official_f7,
-        official_f8_threshold=official_f8,
-        official_f12_eps_saturation_value=official_f12_eps,
-        official_f12_warning_fraction=official_f12_warn,
-
-        f7_available=bool(f7_summary.get("available", False)),
-        f8_available=bool(f8_summary.get("available", False)),
-        f12_available=bool(f12_summary.get("available", False)),
-
-        f7_official_passed=official_gate_passed(gates_payload, "F7"),
-        f8_official_passed=official_gate_passed(gates_payload, "F8"),
-        f12_official_warning=official_gate_warning(gates_payload, "F12"),
-
-        f7_best_value=f7_best,
-        f8_best_bic_value=f8_best,
-        f12_max_saturation_fraction=f12_best,
-
-        f7_distance_to_threshold=float(f7_best - official_f7),
-        f8_distance_to_threshold=float(f8_best - official_f8),
-        f12_distance_to_warning=float(f12_best - official_f12_warn),
-
+        protocol_only=protocol_only,
+        official_f7_required_subjects=(
+            f7_required_subjects
+        ),
+        official_f7_required_fraction=(
+            f7_required_fraction
+        ),
+        official_f8_threshold=0.0,
+        official_f12_eps_saturation_value=(
+            f12_eps
+        ),
+        official_f12_warning_fraction=(
+            f12_warning_fraction
+        ),
+        f7_available=f7_available,
+        f8_available=f8_available,
+        f12_available=f12_available,
+        f7_official_passed=official_gate_passed(
+            gates_payload,
+            "F7",
+        ),
+        f8_official_passed=official_gate_passed(
+            gates_payload,
+            "F8",
+        ),
+        f12_official_warning=official_gate_warning(
+            gates_payload,
+            "F12",
+        ),
+        f7_selected_fraction=f7_selected_fraction,
+        f7_selected_positive_subjects=(
+            f7_selected_positive
+        ),
+        f8_selected_bic_improvement=f8_bic,
+        f8_selected_aic_improvement=f8_aic,
+        f8_selected_ll_improvement=f8_ll,
+        f12_official_saturation_fraction=(
+            f12_fraction
+        ),
+        f7_fraction_distance_to_official=(
+            f7_selected_fraction
+            - f7_required_fraction
+        ),
+        f7_subject_count_distance_to_official=(
+            f7_selected_positive
+            - f7_required_subjects
+        ),
+        f8_distance_to_official=f8_bic,
+        f12_distance_to_warning=(
+            f12_fraction
+            - f12_warning_fraction
+        ),
         can_proceed_to_diagnostics=True,
         can_claim_empirical_cdr=False,
-
         interpretation=interpretation,
     )
 
@@ -1001,74 +1664,220 @@ def write_gate_sensitivity_summary_txt(
     f12_summary: Mapping[str, Any],
     gates_payload: Mapping[str, Any],
 ) -> None:
+    lines = [
+        "=" * 78,
+        "Phase III.2E — Gate Sensitivity Summary",
+        (
+            "Adaptive F7 / official-BIC F8 / "
+            "diagnostic F12"
+        ),
+        "=" * 78,
+        f"status: {result.status}",
+        f"protocol_only: {result.protocol_only}",
+        (
+            "can_proceed_to_diagnostics: "
+            f"{result.can_proceed_to_diagnostics}"
+        ),
+        (
+            "can_claim_empirical_cdr: "
+            f"{result.can_claim_empirical_cdr}"
+        ),
+        "",
+        "Official gate statuses",
+        "-" * 78,
+        (
+            "F7 official status: "
+            f"{official_gate_status(gates_payload, 'F7')}"
+        ),
+        (
+            "F8 official status: "
+            f"{official_gate_status(gates_payload, 'F8')}"
+        ),
+        (
+            "F12 official status: "
+            f"{official_gate_status(gates_payload, 'F12')}"
+        ),
+        "",
+        "F7 — Adaptive subject consistency",
+        "-" * 78,
+        f"available: {f7_summary.get('available')}",
+        (
+            "selected_primary_lead: "
+            f"{f7_summary.get('selected_primary_lead')}"
+        ),
+        (
+            "n_subjects_evaluated: "
+            f"{f7_summary.get('n_subjects_evaluated')}"
+        ),
+        (
+            "n_subjects_positive_lift: "
+            f"{f7_summary.get('n_subjects_positive_lift')}"
+        ),
+        (
+            "observed_fraction_positive_lift: "
+            f"{f7_summary.get('observed_fraction_positive_lift')}"
+        ),
+        (
+            "official_required_subjects: "
+            f"{f7_summary.get('official_required_subjects')}"
+        ),
+        (
+            "official_required_fraction: "
+            f"{f7_summary.get('official_required_fraction')}"
+        ),
+        (
+            "official_passed_by_data: "
+            f"{f7_summary.get('official_passed_by_data')}"
+        ),
+        (
+            "interpretation: "
+            f"{f7_summary.get('interpretation')}"
+        ),
+        "",
+        "F8 — Complexity penalty sensitivity",
+        "-" * 78,
+        f"available: {f8_summary.get('available')}",
+        (
+            "selected_primary_lead: "
+            f"{f8_summary.get('selected_primary_lead')}"
+        ),
+        (
+            "official_bic_improvement: "
+            f"{f8_summary.get('official_bic_improvement')}"
+        ),
+        (
+            "aic_improvement: "
+            f"{f8_summary.get('aic_improvement')}"
+        ),
+        (
+            "heldout_ll_improvement: "
+            f"{f8_summary.get('heldout_ll_improvement')}"
+        ),
+        (
+            "observed_complexity_penalty: "
+            f"{f8_summary.get('observed_complexity_penalty')}"
+        ),
+        (
+            "critical_complexity_penalty_scale: "
+            f"{f8_summary.get('critical_complexity_penalty_scale')}"
+        ),
+        (
+            "official_passed_by_data: "
+            f"{f8_summary.get('official_passed_by_data')}"
+        ),
+        (
+            "interpretation: "
+            f"{f8_summary.get('interpretation')}"
+        ),
+        "",
+        "F12 — Epsilon saturation diagnostic",
+        "-" * 78,
+        f"available: {f12_summary.get('available')}",
+        (
+            "official_eps_saturation_value: "
+            f"{f12_summary.get('official_eps_saturation_value')}"
+        ),
+        (
+            "official_warning_fraction: "
+            f"{f12_summary.get('official_warning_fraction')}"
+        ),
+        (
+            "official_saturation_fraction: "
+            f"{f12_summary.get('official_saturation_fraction')}"
+        ),
+        (
+            "official_warning_by_data: "
+            f"{f12_summary.get('official_warning_by_data')}"
+        ),
+        (
+            "interpretation: "
+            f"{f12_summary.get('interpretation')}"
+        ),
+        "",
+        "Overall interpretation",
+        "-" * 78,
+        result.interpretation,
+        "=" * 78,
+    ]
+
     path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-
-    lines: List[str] = []
-
-    lines.append("=" * 78)
-    lines.append("Phase III.2E — Gate Sensitivity Summary")
-    lines.append("F7 / F8 / F12 diagnostics without changing official gates")
-    lines.append("=" * 78)
-    lines.append("")
-    lines.append(f"status: {result.status}")
-    lines.append(f"protocol_only: {result.protocol_only}")
-    lines.append(f"can_proceed_to_diagnostics: {result.can_proceed_to_diagnostics}")
-    lines.append(f"can_claim_empirical_cdr: {result.can_claim_empirical_cdr}")
-    lines.append("")
-    lines.append("Official gate statuses")
-    lines.append("-" * 78)
-    lines.append(f"F7 official status: {official_gate_status(gates_payload, 'F7')}")
-    lines.append(f"F8 official status: {official_gate_status(gates_payload, 'F8')}")
-    lines.append(f"F12 official status: {official_gate_status(gates_payload, 'F12')}")
-    lines.append("")
-    lines.append("F7 — Subject consistency")
-    lines.append("-" * 78)
-    lines.append(f"available: {f7_summary.get('available')}")
-    lines.append(f"official_threshold: {f7_summary.get('official_threshold')}")
-    lines.append(f"max_primary_fraction_positive_lift: {f7_summary.get('max_primary_fraction_positive_lift')}")
-    lines.append(f"distance_to_official_threshold: {f7_summary.get('distance_to_official_threshold')}")
-    lines.append(f"official_passed_by_data: {f7_summary.get('official_passed_by_data')}")
-    lines.append(f"strictest_threshold_passed: {f7_summary.get('strictest_threshold_passed')}")
-    lines.append(f"interpretation: {f7_summary.get('interpretation')}")
-    lines.append("")
-    lines.append("F8 — Complexity penalty / BIC")
-    lines.append("-" * 78)
-    lines.append(f"available: {f8_summary.get('available')}")
-    lines.append(f"official_threshold: {f8_summary.get('official_threshold')}")
-    lines.append(f"max_primary_bic_improvement: {f8_summary.get('max_primary_bic_improvement')}")
-    lines.append(f"max_primary_aic_improvement: {f8_summary.get('max_primary_aic_improvement')}")
-    lines.append(f"max_primary_ll_improvement: {f8_summary.get('max_primary_ll_improvement')}")
-    lines.append(f"distance_to_official_threshold: {f8_summary.get('distance_to_official_threshold')}")
-    lines.append(f"official_passed_by_data: {f8_summary.get('official_passed_by_data')}")
-    lines.append(f"bic_failed_but_aic_positive: {f8_summary.get('bic_failed_but_aic_positive')}")
-    lines.append(f"bic_failed_but_ll_positive: {f8_summary.get('bic_failed_but_ll_positive')}")
-    lines.append(f"interpretation: {f8_summary.get('interpretation')}")
-    lines.append("")
-    lines.append("F12 — Epsilon saturation")
-    lines.append("-" * 78)
-    lines.append(f"available: {f12_summary.get('available')}")
-    lines.append(f"official_eps_saturation_value: {f12_summary.get('official_eps_saturation_value')}")
-    lines.append(f"official_warning_fraction: {f12_summary.get('official_warning_fraction')}")
-    lines.append(f"official_saturation_fraction: {f12_summary.get('official_saturation_fraction')}")
-    lines.append(f"distance_to_warning_fraction: {f12_summary.get('distance_to_warning_fraction')}")
-    lines.append(f"official_warning_by_data: {f12_summary.get('official_warning_by_data')}")
-    lines.append(f"max_epsilon: {f12_summary.get('max_epsilon')}")
-    lines.append(f"interpretation: {f12_summary.get('interpretation')}")
-    lines.append("")
-    lines.append("Overall interpretation")
-    lines.append("-" * 78)
-    lines.append(result.interpretation)
-    lines.append("")
-    lines.append("=" * 78)
-
-    with open(path, "w", encoding="utf-8") as f:
-        f.write("\n".join(lines))
+    path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+    path.write_text(
+        "\n".join(lines),
+        encoding="utf-8",
+    )
 
 
-# =========================================================
-# Save outputs
-# =========================================================
+def build_input_audit(
+    pair_df: pd.DataFrame,
+    model_df: pd.DataFrame,
+    gates_payload: Mapping[str, Any],
+    cfg: Phase32EConfig,
+) -> Dict[str, Any]:
+    valid = valid_pair_rows(pair_df)
+
+    primary_count = (
+        int(
+            effective_primary_mask(
+                valid,
+                cfg,
+            ).sum()
+        )
+        if not valid.empty
+        else 0
+    )
+
+    lead = selected_primary_lead(
+        pair_df,
+        cfg,
+    )
+
+    payload = {
+        "pair_rows": int(len(pair_df)),
+        "valid_pair_rows": int(len(valid)),
+        "primary_pair_rows": primary_count,
+        "model_rows": int(len(model_df)),
+        "gates_available": bool(
+            gates_payload.get("available")
+        ),
+        "metrics_status": (
+            gates_payload.get(
+                "final_status",
+                {},
+            ).get("status")
+            if isinstance(
+                gates_payload.get(
+                    "final_status",
+                    {},
+                ),
+                dict,
+            )
+            else None
+        ),
+        "primary_windows": list(
+            primary_windows(cfg)
+        ),
+        "primary_lags": list(
+            primary_lags(cfg)
+        ),
+        "primary_pairs": [
+            list(pair)
+            for pair in primary_pairs(cfg)
+        ],
+        "selected_primary_lead": (
+            _row_payload(lead)
+        ),
+    }
+
+    payload["fingerprint"] = _fingerprint(
+        payload
+    )
+
+    return payload
+
 
 def save_gate_sensitivity_outputs(
     cfg: Phase32EConfig,
@@ -1083,160 +1892,409 @@ def save_gate_sensitivity_outputs(
     pair_df: pd.DataFrame,
     model_df: pd.DataFrame,
 ) -> Dict[str, Any]:
-    Path(cfg.results_dir).mkdir(parents=True, exist_ok=True)
+    Path(cfg.results_dir).mkdir(
+        parents=True,
+        exist_ok=True,
+    )
 
-    f7_df.to_csv(f7_sensitivity_csv_path(cfg), index=False)
-    f8_df.to_csv(f8_sensitivity_csv_path(cfg), index=False)
-    f12_df.to_csv(f12_sensitivity_csv_path(cfg), index=False)
+    f7_df.to_csv(
+        f7_sensitivity_csv_path(cfg),
+        index=False,
+    )
+    f8_df.to_csv(
+        f8_sensitivity_csv_path(cfg),
+        index=False,
+    )
+    f12_df.to_csv(
+        f12_sensitivity_csv_path(cfg),
+        index=False,
+    )
+
+    input_audit = build_input_audit(
+        pair_df,
+        model_df,
+        gates_payload,
+        cfg,
+    )
 
     report = {
         "phase": cfg.phase_name,
         "project_name": cfg.project_name,
         "module": GATE_SENSITIVITY_MODULE,
-        "gate_sensitivity_version": GATE_SENSITIVITY_VERSION,
+        "gate_sensitivity_version": (
+            GATE_SENSITIVITY_VERSION
+        ),
         "created_at": _now_str(),
         "status": result.status,
         "result": asdict(result),
+        "input_audit": input_audit,
         "official_gate_statuses": {
-            "F7": official_gate_status(gates_payload, "F7"),
-            "F8": official_gate_status(gates_payload, "F8"),
-            "F12": official_gate_status(gates_payload, "F12"),
-        },
-        "f7_subject_consistency": dict(f7_summary),
-        "f8_complexity_penalty": dict(f8_summary),
-        "f12_epsilon_saturation": dict(f12_summary),
-        "input_shapes": {
-            "pair_rows": int(len(pair_df)),
-            "model_rows": int(len(model_df)),
-        },
-        "files": {
-            "f7_sensitivity_csv": str(f7_sensitivity_csv_path(cfg)),
-            "f8_sensitivity_csv": str(f8_sensitivity_csv_path(cfg)),
-            "f12_sensitivity_csv": str(f12_sensitivity_csv_path(cfg)),
-            "gate_sensitivity_report_json": str(gate_sensitivity_report_json_path(cfg)),
-            "gate_sensitivity_summary_txt": str(gate_sensitivity_summary_txt_path(cfg)),
-        },
-        "config": describe_config(cfg),
-        "official_gate_rule_preservation": {
-            "official_gates_changed": False,
-            "note": (
-                "This module evaluates sensitivity scenarios only. It does not alter "
-                "official F7/F8/F12 thresholds or final empirical claim rules."
+            "F7": official_gate_status(
+                gates_payload,
+                "F7",
+            ),
+            "F8": official_gate_status(
+                gates_payload,
+                "F8",
+            ),
+            "F12": official_gate_status(
+                gates_payload,
+                "F12",
             ),
         },
+        "f7_subject_consistency": dict(
+            f7_summary
+        ),
+        "f8_complexity_penalty": dict(
+            f8_summary
+        ),
+        "f12_epsilon_saturation": dict(
+            f12_summary
+        ),
+        "files": {
+            "f7_sensitivity_csv": str(
+                f7_sensitivity_csv_path(cfg)
+            ),
+            "f8_sensitivity_csv": str(
+                f8_sensitivity_csv_path(cfg)
+            ),
+            "f12_sensitivity_csv": str(
+                f12_sensitivity_csv_path(cfg)
+            ),
+            "gate_sensitivity_report_json": str(
+                gate_sensitivity_report_json_path(
+                    cfg
+                )
+            ),
+            "gate_sensitivity_summary_txt": str(
+                gate_sensitivity_summary_txt_path(
+                    cfg
+                )
+            ),
+        },
+        "official_gate_rule_preservation": {
+            "official_gates_changed": False,
+            "f7_rule": (
+                "adaptive subject count/fraction "
+                "from the selected primary lead"
+            ),
+            "f8_rule": (
+                "official BIC improvement >= 0"
+            ),
+            "f12_rule": (
+                "diagnostic saturation warning only"
+            ),
+            "note": (
+                "Sensitivity scenarios explain the "
+                "current result and never replace "
+                "official metrics gates."
+            ),
+        },
+        "config": describe_config(cfg),
     }
 
-    save_json(gate_sensitivity_report_json_path(cfg), report)
-
-    write_gate_sensitivity_summary_txt(
-        path=gate_sensitivity_summary_txt_path(cfg),
-        result=result,
-        f7_summary=f7_summary,
-        f8_summary=f8_summary,
-        f12_summary=f12_summary,
-        gates_payload=gates_payload,
+    save_json(
+        gate_sensitivity_report_json_path(cfg),
+        report,
     )
 
-    print(f"[Phase3.2E GateSensitivity] Saved F7 CSV: {f7_sensitivity_csv_path(cfg)}")
-    print(f"[Phase3.2E GateSensitivity] Saved F8 CSV: {f8_sensitivity_csv_path(cfg)}")
-    print(f"[Phase3.2E GateSensitivity] Saved F12 CSV: {f12_sensitivity_csv_path(cfg)}")
-    print(f"[Phase3.2E GateSensitivity] Saved report: {gate_sensitivity_report_json_path(cfg)}")
-    print(f"[Phase3.2E GateSensitivity] Saved summary: {gate_sensitivity_summary_txt_path(cfg)}")
+    write_gate_sensitivity_summary_txt(
+        gate_sensitivity_summary_txt_path(cfg),
+        result,
+        f7_summary,
+        f8_summary,
+        f12_summary,
+        gates_payload,
+    )
+
+    print(
+        "[Phase3.2E GateSensitivity] "
+        f"Saved F7 CSV: "
+        f"{f7_sensitivity_csv_path(cfg)}"
+    )
+    print(
+        "[Phase3.2E GateSensitivity] "
+        f"Saved F8 CSV: "
+        f"{f8_sensitivity_csv_path(cfg)}"
+    )
+    print(
+        "[Phase3.2E GateSensitivity] "
+        f"Saved F12 CSV: "
+        f"{f12_sensitivity_csv_path(cfg)}"
+    )
+    print(
+        "[Phase3.2E GateSensitivity] "
+        f"Saved report: "
+        f"{gate_sensitivity_report_json_path(cfg)}"
+    )
+    print(
+        "[Phase3.2E GateSensitivity] "
+        f"Saved summary: "
+        f"{gate_sensitivity_summary_txt_path(cfg)}"
+    )
 
     return report
 
 
-# =========================================================
-# Main API
-# =========================================================
+def validate_inputs(
+    cfg: Phase32EConfig,
+) -> Dict[str, Any]:
+    pair_df = _load_csv(
+        conditional_pair_scores_csv_path(cfg)
+    )
+    model_df = _load_csv(
+        conditional_model_scores_csv_path(cfg)
+    )
+    gates_payload = load_official_gate_status(
+        cfg
+    )
+
+    audit = build_input_audit(
+        pair_df,
+        model_df,
+        gates_payload,
+        cfg,
+    )
+
+    audit["pair_scores_file"] = str(
+        conditional_pair_scores_csv_path(cfg)
+    )
+    audit["model_scores_file"] = str(
+        conditional_model_scores_csv_path(cfg)
+    )
+    audit["gates_json_file"] = str(
+        gates_json_path(cfg)
+    )
+    audit["ready"] = bool(
+        len(pair_df) > 0
+        and len(model_df) > 0
+        and gates_payload.get(
+            "available",
+            False,
+        )
+    )
+
+    return audit
+
 
 def run_phase3_2e_gate_sensitivity(
     cfg: Optional[Phase32EConfig] = None,
 ) -> Dict[str, Any]:
-    if cfg is None:
-        cfg = load_phase3_2e_config()
+    cfg = cfg or load_phase3_2e_config()
 
-    pair_df = _load_csv(conditional_pair_scores_csv_path(cfg))
-    model_df = _load_csv(conditional_model_scores_csv_path(cfg))
-    gates_payload = load_official_gate_status(cfg)
+    pair_df = _load_csv(
+        conditional_pair_scores_csv_path(cfg)
+    )
+    model_df = _load_csv(
+        conditional_model_scores_csv_path(cfg)
+    )
+    gates_payload = load_official_gate_status(
+        cfg
+    )
 
-    f7_df, f7_summary = build_f7_subject_sensitivity(pair_df, cfg)
-    f8_df, f8_summary = build_f8_complexity_sensitivity(pair_df, cfg)
-    f12_df, f12_summary = build_f12_epsilon_sensitivity(model_df, pair_df, cfg)
+    f7_df, f7_summary = (
+        build_f7_subject_sensitivity(
+            pair_df,
+            cfg,
+        )
+    )
+    f8_df, f8_summary = (
+        build_f8_complexity_sensitivity(
+            pair_df,
+            model_df,
+            cfg,
+        )
+    )
+    f12_df, f12_summary = (
+        build_f12_epsilon_sensitivity(
+            model_df,
+            pair_df,
+            cfg,
+        )
+    )
 
     result = build_gate_sensitivity_result(
-        f7_summary=f7_summary,
-        f8_summary=f8_summary,
-        f12_summary=f12_summary,
-        gates_payload=gates_payload,
-        cfg=cfg,
+        f7_summary,
+        f8_summary,
+        f12_summary,
+        gates_payload,
+        cfg,
     )
 
-    report = save_gate_sensitivity_outputs(
-        cfg=cfg,
-        result=result,
-        f7_df=f7_df,
-        f8_df=f8_df,
-        f12_df=f12_df,
-        f7_summary=f7_summary,
-        f8_summary=f8_summary,
-        f12_summary=f12_summary,
-        gates_payload=gates_payload,
-        pair_df=pair_df,
-        model_df=model_df,
+    return save_gate_sensitivity_outputs(
+        cfg,
+        result,
+        f7_df,
+        f8_df,
+        f12_df,
+        f7_summary,
+        f8_summary,
+        f12_summary,
+        gates_payload,
+        pair_df,
+        model_df,
     )
 
-    return report
-
-
-# =========================================================
-# CLI
-# =========================================================
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run Phase III.2E F7/F8/F12 gate sensitivity diagnostics."
+        description=(
+            "Run Phase III.2E F7/F8/F12 "
+            "gate-sensitivity diagnostics."
+        )
+    )
+
+    parser.add_argument(
+        "--validate-only",
+        action="store_true",
+        help=(
+            "Validate existing conditional/metrics "
+            "outputs without rebuilding anything."
+        ),
     )
 
     return parser.parse_args()
 
 
 def main() -> None:
-    _ = parse_args()
-
+    args = parse_args()
     cfg = load_phase3_2e_config()
 
-    report = run_phase3_2e_gate_sensitivity(cfg)
+    if args.validate_only:
+        audit = validate_inputs(cfg)
 
-    result = report.get("result", {})
-    f7 = report.get("f7_subject_consistency", {})
-    f8 = report.get("f8_complexity_penalty", {})
-    f12 = report.get("f12_epsilon_saturation", {})
+        print(
+            json.dumps(
+                audit,
+                indent=2,
+                ensure_ascii=False,
+                default=_json_default,
+            )
+        )
+
+        raise SystemExit(
+            0
+            if audit.get("ready")
+            else 1
+        )
+
+    report = run_phase3_2e_gate_sensitivity(
+        cfg
+    )
+
+    result = report.get(
+        "result",
+        {},
+    )
+    f7 = report.get(
+        "f7_subject_consistency",
+        {},
+    )
+    f8 = report.get(
+        "f8_complexity_penalty",
+        {},
+    )
+    f12 = report.get(
+        "f12_epsilon_saturation",
+        {},
+    )
 
     print("\n" + "=" * 78)
-    print("Phase III.2E gate sensitivity completed")
-    print("F7 / F8 / F12 diagnostics without changing official gates")
+    print(
+        "Phase III.2E gate sensitivity completed"
+    )
+    print(
+        "Adaptive F7 / official-BIC F8 / "
+        "diagnostic F12"
+    )
     print("=" * 78)
-    print(f"status: {result.get('status')}")
-    print(f"protocol_only: {result.get('protocol_only')}")
-    print(f"can_proceed_to_diagnostics: {result.get('can_proceed_to_diagnostics')}")
-    print(f"can_claim_empirical_cdr: {result.get('can_claim_empirical_cdr')}")
+
+    print(
+        f"status: "
+        f"{result.get('status')}"
+    )
+    print(
+        f"protocol_only: "
+        f"{result.get('protocol_only')}"
+    )
+    print(
+        "can_proceed_to_diagnostics: "
+        f"{result.get('can_proceed_to_diagnostics')}"
+    )
+    print(
+        "can_claim_empirical_cdr: "
+        f"{result.get('can_claim_empirical_cdr')}"
+    )
+
     print("")
-    print(f"F7 available: {f7.get('available')}")
-    print(f"F7 best value: {f7.get('max_primary_fraction_positive_lift')}")
-    print(f"F7 distance to official: {f7.get('distance_to_official_threshold')}")
+    print(
+        "F7 official status: "
+        f"{report.get('official_gate_statuses', {}).get('F7')}"
+    )
+    print(
+        "F7 selected subjects: "
+        f"{f7.get('n_subjects_positive_lift')}/"
+        f"{f7.get('n_subjects_evaluated')}"
+    )
+    print(
+        "F7 required subjects: "
+        f"{f7.get('official_required_subjects')}"
+    )
+    print(
+        "F7 fraction distance: "
+        f"{f7.get('fraction_distance_to_official')}"
+    )
+
     print("")
-    print(f"F8 available: {f8.get('available')}")
-    print(f"F8 best BIC: {f8.get('max_primary_bic_improvement')}")
-    print(f"F8 distance to official: {f8.get('distance_to_official_threshold')}")
+    print(
+        "F8 official status: "
+        f"{report.get('official_gate_statuses', {}).get('F8')}"
+    )
+    print(
+        "F8 selected BIC improvement: "
+        f"{f8.get('official_bic_improvement')}"
+    )
+    print(
+        "F8 selected AIC improvement: "
+        f"{f8.get('aic_improvement')}"
+    )
+    print(
+        "F8 selected held-out LL improvement: "
+        f"{f8.get('heldout_ll_improvement')}"
+    )
+    print(
+        "F8 critical complexity scale: "
+        f"{f8.get('critical_complexity_penalty_scale')}"
+    )
+
     print("")
-    print(f"F12 available: {f12.get('available')}")
-    print(f"F12 official saturation fraction: {f12.get('official_saturation_fraction')}")
-    print(f"F12 distance to warning: {f12.get('distance_to_warning_fraction')}")
+    print(
+        "F12 official status: "
+        f"{report.get('official_gate_statuses', {}).get('F12')}"
+    )
+    print(
+        "F12 official saturation fraction: "
+        f"{f12.get('official_saturation_fraction')}"
+    )
+    print(
+        "F12 distance to warning: "
+        f"{f12.get('distance_to_warning_fraction')}"
+    )
+
     print("")
-    print(f"report_json: {gate_sensitivity_report_json_path(cfg)}")
-    print(f"summary_txt: {gate_sensitivity_summary_txt_path(cfg)}")
-    print(f"interpretation: {result.get('interpretation')}")
+    print(
+        f"report_json: "
+        f"{gate_sensitivity_report_json_path(cfg)}"
+    )
+    print(
+        f"summary_txt: "
+        f"{gate_sensitivity_summary_txt_path(cfg)}"
+    )
+    print(
+        f"interpretation: "
+        f"{result.get('interpretation')}"
+    )
+
     print("=" * 78 + "\n")
 
 

@@ -2,27 +2,108 @@
   "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
   "phase": "Phase III.2E",
   "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
-  "version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
-  "runner_version": "phase3_2e_runner_v1_full_protocol_sync_gate_sensitivity",
+  "version": "v1.1-phase3_2e_evidence_guided_surrogate_replication",
+  "runner_version": "phase3_2e_runner_v2_safe_resume_primary_lead_bic_limited_aware",
   "module": "phase3_2e_runner",
-  "started_at": "2026-06-05 00:39:28",
-  "finished_at": "2026-06-05 21:41:30",
-  "elapsed_seconds": 75722.18168067932,
+  "started_at": "2026-06-09 11:48:51",
+  "finished_at": "2026-06-09 11:51:45",
+  "elapsed_seconds": 173.35410475730896,
   "options": {
-    "force_rebuild": true,
-    "skip_controls": false,
-    "skip_diagnostics": false
+    "force_rebuild": false,
+    "safe_resume": true,
+    "reuse_conditional": true,
+    "reuse_controls": true,
+    "skip_diagnostics": false,
+    "confirm_heavy_rebuild": false
+  },
+  "heavy_artifact_validation": {
+    "conditional": {
+      "valid": true,
+      "files": {
+        "conditional_model_scores": {
+          "path": "results\\phase3_2e\\phase3_2e_conditional_model_scores.csv",
+          "exists": true,
+          "size_bytes": 53352,
+          "valid": true,
+          "rows": 147,
+          "reason": "ok"
+        },
+        "conditional_pair_scores": {
+          "path": "results\\phase3_2e\\phase3_2e_conditional_pair_scores.csv",
+          "exists": true,
+          "size_bytes": 26514,
+          "valid": true,
+          "rows": 84,
+          "reason": "ok"
+        },
+        "conditional_summary_json": {
+          "path": "results\\phase3_2e\\phase3_2e_conditional_summary.json",
+          "exists": true,
+          "size_bytes": 8486,
+          "valid": true,
+          "status": "conditional_exploratory_leads",
+          "reason": "ok"
+        },
+        "conditional_report": {
+          "path": "results\\phase3_2e\\phase3_2e_conditional_report.json",
+          "exists": true,
+          "size_bytes": 16203,
+          "valid": true,
+          "status": "conditional_exploratory_leads",
+          "reason": "ok"
+        }
+      }
+    },
+    "controls": {
+      "valid": true,
+      "passed": true,
+      "files": {
+        "control_runs": {
+          "path": "results\\phase3_2e\\phase3_2e_control_runs.csv",
+          "exists": true,
+          "size_bytes": 477756,
+          "valid": true,
+          "rows": 2268,
+          "reason": "ok"
+        },
+        "control_pair_scores": {
+          "path": "results\\phase3_2e\\phase3_2e_control_pair_scores.csv",
+          "exists": true,
+          "size_bytes": 3206394,
+          "valid": true,
+          "rows": 9072,
+          "reason": "ok"
+        },
+        "controls_json": {
+          "path": "results\\phase3_2e\\phase3_2e_controls.json",
+          "exists": true,
+          "size_bytes": 38990,
+          "valid": true,
+          "status": "controls_passed",
+          "reason": "ok"
+        },
+        "controls_report": {
+          "path": "results\\phase3_2e\\phase3_2e_controls_report.json",
+          "exists": true,
+          "size_bytes": 38990,
+          "valid": true,
+          "status": "controls_passed",
+          "reason": "ok"
+        }
+      }
+    },
+    "safe_resume_ready": true
   },
   "config": {
     "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
     "phase_name": "Phase III.2E",
     "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
-    "version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
+    "version": "v1.1-phase3_2e_evidence_guided_surrogate_replication",
     "protocol_status": "protocol_ready",
-    "empirical_execution_status": "pending_synchronized_eeg_qrng_data",
+    "empirical_execution_status": "surrogate_replication_ready",
     "synchronized_input_csv": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
     "allow_protocol_only_without_data": true,
-    "allow_synthetic_demo_data": false,
+    "allow_synthetic_demo_data": true,
     "require_real_synchronized_data_for_claim": true,
     "required_schema_columns": [
       "subject_id",
@@ -92,41 +173,38 @@
     "secondary_eeg_channel": "EEG Pz-Oz",
     "use_multichannel_eeg": true,
     "primary_window_seconds": [
-      5,
-      10
+      30,
+      60
     ],
     "secondary_window_seconds": [
-      1,
-      2,
-      30
+      5,
+      30,
+      60,
+      90
     ],
     "all_window_seconds": [
-      1,
-      2,
       5,
-      10,
-      30
+      30,
+      60,
+      90
     ],
     "primary_lags_windows": [
-      0,
-      1,
-      2
-    ],
-    "secondary_lags_windows": [
-      -5,
-      -3,
-      -1,
-      3,
-      5
-    ],
-    "all_lags_windows": [
-      -5,
-      -3,
       -1,
       0,
       1,
       2,
       3,
+      4,
+      5
+    ],
+    "secondary_lags_windows": [],
+    "all_lags_windows": [
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
       5
     ],
     "conditional_models": [
@@ -146,6 +224,10 @@
       [
         "E2_QRNG_next_given_QRNG",
         "E3_QRNG_next_given_QRNG_EEG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E6_QRNG_next_given_QRNG_MCEEG"
       ]
     ],
     "multichannel_conditional_pairs": [
@@ -168,12 +250,12 @@
         "E3_QRNG_next_given_QRNG_EEG"
       ],
       [
-        "E4_MCEEG_next_given_MCEEG",
-        "E5_MCEEG_next_given_MCEEG_QRNG"
-      ],
-      [
         "E2_QRNG_next_given_QRNG",
         "E6_QRNG_next_given_QRNG_MCEEG"
+      ],
+      [
+        "E4_MCEEG_next_given_MCEEG",
+        "E5_MCEEG_next_given_MCEEG_QRNG"
       ]
     ],
     "official_gates": [
@@ -226,21 +308,28 @@
     "n_controls": 12,
     "eps_grid_short": [
       0.0,
-      0.2
+      0.5
     ],
     "eps_grid_medium": [
       0.0,
-      0.5
+      1.0
     ],
     "eps_grid_full": [
       0.0,
-      0.8
+      2.0
     ],
-    "eps_saturation_value": 0.8,
-    "eps_moderate_upper_bound": 0.3,
+    "eps_saturation_value": 2.0,
+    "eps_saturation_warning_fraction": 0.95,
+    "eps_moderate_upper_bound": 1.0,
+    "eps_auto_expand_enabled": true,
+    "eps_auto_expand_factor": 1.5,
+    "eps_auto_expand_max": 5.0,
     "conditional_lift_min": 0.03,
     "strong_eps_min": 0.07,
-    "subject_effect_fraction": 0.6,
+    "subject_effect_fraction": 0.1,
+    "min_positive_subjects": 1,
+    "large_cohort_subject_fraction_min": 0.01,
+    "large_cohort_subject_fraction_max": 0.03,
     "multiple_comparison_guard": true
   },
   "active_conditional_pairs": [
@@ -253,36 +342,37 @@
       "E3_QRNG_next_given_QRNG_EEG"
     ],
     [
-      "E4_MCEEG_next_given_MCEEG",
-      "E5_MCEEG_next_given_MCEEG_QRNG"
-    ],
-    [
       "E2_QRNG_next_given_QRNG",
       "E6_QRNG_next_given_QRNG_MCEEG"
+    ],
+    [
+      "E4_MCEEG_next_given_MCEEG",
+      "E5_MCEEG_next_given_MCEEG_QRNG"
     ]
   ],
   "scientific_guardrail": {
     "protocol_only_allowed": true,
     "requires_real_synchronized_data_for_claim": true,
     "synchronized_input_csv": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
-    "interpretation": "Phase III.2E may complete as a protocol implementation without real synchronized data, but empirical EEG–QRNG claims remain blocked."
+    "bic_limited_is_operational_success": true,
+    "interpretation": "A BIC-limited primary lead is a completed scientific classification, not a runner error. Surrogate provenance still blocks an empirical claim."
   },
   "steps": {
     "config": {
       "title": "Config check",
       "module": "config.phase3_2e_config",
       "status": "ok",
-      "elapsed_seconds": 0.02197432518005371,
+      "elapsed_seconds": 0.05833292007446289,
       "module_args": [],
       "payload_status": "ok",
-      "protocol_only": true,
+      "protocol_only": false,
       "interpretation": "Phase III.2E config loaded successfully."
     },
     "schema": {
       "title": "Schema validation",
       "module": "src.phase3_2e_schema",
       "status": "ok",
-      "elapsed_seconds": 12.943268060684204,
+      "elapsed_seconds": 17.157293796539307,
       "module_args": [],
       "payload_status": "schema_valid",
       "protocol_only": false,
@@ -292,17 +382,17 @@
       "title": "Synchronization validation",
       "module": "src.phase3_2e_sync_validator",
       "status": "ok",
-      "elapsed_seconds": 39.27130389213562,
+      "elapsed_seconds": 38.6578848361969,
       "module_args": [],
-      "payload_status": "missing_payload",
+      "payload_status": "sync_valid",
       "protocol_only": false,
-      "interpretation": "Expected payload not found after step sync_validator."
+      "interpretation": "The synchronized EEG–QRNG input passed synchronization validation. The dataset can proceed to empirical synchronized CDR, subject to later windowing, feature, control and gate checks."
     },
     "loader": {
       "title": "Synchronized loader",
       "module": "src.phase3_2e_loader",
       "status": "ok",
-      "elapsed_seconds": 52.099409103393555,
+      "elapsed_seconds": 43.727741956710815,
       "module_args": [],
       "payload_status": "loaded_synchronized_data",
       "protocol_only": false,
@@ -312,17 +402,17 @@
       "title": "Window builder",
       "module": "src.phase3_2e_windows",
       "status": "ok",
-      "elapsed_seconds": 1.4961438179016113,
+      "elapsed_seconds": 2.0463387966156006,
       "module_args": [],
-      "payload_status": "windows_ready_exploratory_only",
+      "payload_status": "windows_ready",
       "protocol_only": false,
-      "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
+      "interpretation": "Synchronized windows were built successfully. At least one primary registered window configuration is ready for feature construction and synchronized conditional CDR. Empirical interpretation remains controlled by source provenance and the real-data guardrail."
     },
     "features": {
       "title": "Feature builder",
       "module": "src.phase3_2e_features",
       "status": "ok",
-      "elapsed_seconds": 1.6797852516174316,
+      "elapsed_seconds": 2.9908478260040283,
       "module_args": [],
       "payload_status": "features_ready",
       "protocol_only": false,
@@ -332,71 +422,132 @@
       "title": "Lagged alignment",
       "module": "src.phase3_2e_alignment",
       "status": "ok",
-      "elapsed_seconds": 112.84238386154175,
-      "module_args": [
-        "--force-rebuild",
-        "--force-rebuild-features",
-        "--force-rebuild-windows",
-        "--force-rebuild-loader"
-      ],
-      "payload_status": "alignment_ready_exploratory_only",
+      "elapsed_seconds": 0.04444408416748047,
+      "module_args": [],
+      "payload_status": "alignment_ready",
       "protocol_only": false,
-      "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
+      "interpretation": "Lagged synchronized alignment frames were built successfully. At least one primary registered alignment is ready for conditional CDR."
     },
     "conditional": {
       "title": "Conditional CDR",
       "module": "src.phase3_2e_conditional",
-      "status": "ok",
-      "elapsed_seconds": 439.8459107875824,
-      "module_args": [
-        "--force-rebuild",
-        "--force-rebuild-alignment"
-      ],
+      "status": "reused",
+      "elapsed_seconds": 0.0,
+      "module_args": [],
       "payload_status": "conditional_exploratory_leads",
       "protocol_only": false,
-      "interpretation": "Conditional CDR produced exploratory positive-lift rows. These require controls, F7/F8/F12 diagnostics and final gates before interpretation."
+      "interpretation": "Existing conditional outputs were validated and reused; the module was not executed.",
+      "reuse_validation": {
+        "valid": true,
+        "files": {
+          "conditional_model_scores": {
+            "path": "results\\phase3_2e\\phase3_2e_conditional_model_scores.csv",
+            "exists": true,
+            "size_bytes": 53352,
+            "valid": true,
+            "rows": 147,
+            "reason": "ok"
+          },
+          "conditional_pair_scores": {
+            "path": "results\\phase3_2e\\phase3_2e_conditional_pair_scores.csv",
+            "exists": true,
+            "size_bytes": 26514,
+            "valid": true,
+            "rows": 84,
+            "reason": "ok"
+          },
+          "conditional_summary_json": {
+            "path": "results\\phase3_2e\\phase3_2e_conditional_summary.json",
+            "exists": true,
+            "size_bytes": 8486,
+            "valid": true,
+            "status": "conditional_exploratory_leads",
+            "reason": "ok"
+          },
+          "conditional_report": {
+            "path": "results\\phase3_2e\\phase3_2e_conditional_report.json",
+            "exists": true,
+            "size_bytes": 16203,
+            "valid": true,
+            "status": "conditional_exploratory_leads",
+            "reason": "ok"
+          }
+        }
+      }
     },
     "controls": {
       "title": "Negative controls",
       "module": "src.phase3_2e_controls",
-      "status": "ok",
-      "elapsed_seconds": 36226.37989783287,
-      "module_args": [
-        "--force-rebuild",
-        "--force-rebuild-alignment"
-      ],
+      "status": "reused",
+      "elapsed_seconds": 0.0,
+      "module_args": [],
       "payload_status": "controls_passed",
       "protocol_only": false,
-      "interpretation": "Required synchronized negative controls passed. This permits metrics and gate evaluation, but does not by itself establish a positive claim."
+      "interpretation": "Existing controls outputs were validated and reused; the module was not executed.",
+      "reuse_validation": {
+        "valid": true,
+        "passed": true,
+        "files": {
+          "control_runs": {
+            "path": "results\\phase3_2e\\phase3_2e_control_runs.csv",
+            "exists": true,
+            "size_bytes": 477756,
+            "valid": true,
+            "rows": 2268,
+            "reason": "ok"
+          },
+          "control_pair_scores": {
+            "path": "results\\phase3_2e\\phase3_2e_control_pair_scores.csv",
+            "exists": true,
+            "size_bytes": 3206394,
+            "valid": true,
+            "rows": 9072,
+            "reason": "ok"
+          },
+          "controls_json": {
+            "path": "results\\phase3_2e\\phase3_2e_controls.json",
+            "exists": true,
+            "size_bytes": 38990,
+            "valid": true,
+            "status": "controls_passed",
+            "reason": "ok"
+          },
+          "controls_report": {
+            "path": "results\\phase3_2e\\phase3_2e_controls_report.json",
+            "exists": true,
+            "size_bytes": 38990,
+            "valid": true,
+            "status": "controls_passed",
+            "reason": "ok"
+          }
+        }
+      }
     },
     "metrics": {
       "title": "Metrics and official gates",
       "module": "src.phase3_2e_metrics",
       "status": "ok",
-      "elapsed_seconds": 38789.75822019577,
-      "module_args": [
-        "--force-rebuild-conditional",
-        "--force-rebuild-controls"
-      ],
-      "payload_status": "exploratory_lead_with_saturation_warning",
+      "elapsed_seconds": 0.3328430652618408,
+      "module_args": [],
+      "payload_status": "primary_lead_bic_limited",
       "protocol_only": false,
-      "interpretation": "Exploratory synchronized conditional lift appeared, but epsilon saturation diagnostics raised a warning. The result cannot be interpreted as evidence without additional diagnostics."
+      "interpretation": "A registered primary lead passed controls, held-out likelihood, lift, adaptive subject consistency, lag/window registration and the multiple-comparison guard, but official BIC did not favor the augmented model. Source provenance blocks an empirical claim for this run."
     },
     "gate_sensitivity": {
       "title": "F7/F8/F12 gate sensitivity",
       "module": "src.phase3_2e_gate_sensitivity",
       "status": "ok",
-      "elapsed_seconds": 0.06253814697265625,
+      "elapsed_seconds": 0.18323874473571777,
       "module_args": [],
       "payload_status": "gate_sensitivity_completed",
       "protocol_only": false,
-      "interpretation": "Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds."
+      "interpretation": "F7/F8/F12 sensitivity diagnostics completed without changing official gates. F7 uses the adaptive selected-lead rule, F8 preserves BIC as official while reporting weaker complexity sensitivities, and F12 remains diagnostic."
     },
     "diagnostics": {
       "title": "Final diagnostics",
       "module": "src.phase3_2e_diagnostics",
       "status": "ok",
-      "elapsed_seconds": 2.3674376010894775,
+      "elapsed_seconds": 6.305415153503418,
       "module_args": [],
       "payload_status": "unknown",
       "protocol_only": false,
@@ -408,7 +559,7 @@
     "runner_summary_txt": "results\\phase3_2e\\phase3_2e_runner_summary.txt",
     "synchronized_input_csv": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
     "schema_report": "results\\phase3_2e\\phase3_2e_schema_report.json",
-    "sync_validation_report": "results\\phase3_2e\\phase3_2e_sync_validation_report.json",
+    "sync_validation_report": "results\\phase3_2e\\phase3_2e_sync_report.json",
     "loader_report": "results\\phase3_2e\\phase3_2e_loader_report.json",
     "windows_report": "results\\phase3_2e\\phase3_2e_windows_report.json",
     "features_report": "results\\phase3_2e\\phase3_2e_features_report.json",
@@ -430,39 +581,41 @@
   },
   "table_summary": {
     "loaded_rows": 27597,
-    "window_rows": 27597,
-    "feature_rows": 27597,
-    "alignment_inventory_rows": 40,
-    "conditional_model_rows": 56,
-    "conditional_pair_rows": 32,
-    "control_run_rows": 864,
-    "control_pair_rows": 3456,
+    "window_rows": 50590,
+    "feature_rows": 50590,
+    "alignment_inventory_rows": 28,
+    "conditional_model_rows": 147,
+    "conditional_pair_rows": 84,
+    "control_run_rows": 2268,
+    "control_pair_rows": 9072,
     "metrics_table_rows": 11,
-    "f7_sensitivity_rows": 0,
-    "f8_sensitivity_rows": 0,
-    "f12_sensitivity_rows": 56,
-    "alignment_total_n_valid_alignment_rows": 220576,
-    "alignment_total_n_valid_primary_alignment_rows": 0,
-    "alignment_total_n_valid_conditional_rows": 220576,
-    "alignment_total_n_valid_mc_conditional_rows": 220576,
+    "f7_sensitivity_rows": 10,
+    "f8_sensitivity_rows": 9,
+    "f12_sensitivity_rows": 70,
+    "alignment_total_n_valid_alignment_rows": 353650,
+    "alignment_total_n_valid_primary_alignment_rows": 289438,
+    "alignment_total_n_valid_conditional_rows": 353650,
+    "alignment_total_n_valid_mc_conditional_rows": 353650,
     "alignment_scope_counts": {
-      "exploratory": 34,
-      "primary": 6
+      "exploratory": 14,
+      "primary": 14
     },
     "lag_direction_counts": {
       "future_target": 20,
-      "past_target": 15,
-      "concurrent": 5
+      "past_target": 4,
+      "concurrent": 4
     },
-    "conditional_valid_pair_rows": 32,
-    "conditional_positive_lift_rows": 2,
-    "conditional_max_lift": 0.8,
-    "conditional_primary_pair_rows": 0
+    "conditional_valid_pair_rows": 84,
+    "conditional_primary_pair_rows": 42,
+    "conditional_exploratory_pair_rows": 42,
+    "conditional_positive_lift_rows": 1,
+    "conditional_primary_positive_lift_rows": 1,
+    "conditional_max_lift": 1.0
   },
   "payload_status": {
     "config": {
       "payload_status": "ok",
-      "protocol_only": true,
+      "protocol_only": false,
       "interpretation": "Phase III.2E config loaded successfully."
     },
     "schema": {
@@ -471,9 +624,9 @@
       "interpretation": "The synchronized input file satisfies the Phase III.2E schema contract. The next step is synchronization validation."
     },
     "sync_validator": {
-      "payload_status": "missing_payload",
+      "payload_status": "sync_valid",
       "protocol_only": false,
-      "interpretation": "Expected payload not found after step sync_validator."
+      "interpretation": "The synchronized EEG–QRNG input passed synchronization validation. The dataset can proceed to empirical synchronized CDR, subject to later windowing, feature, control and gate checks."
     },
     "loader": {
       "payload_status": "loaded_synchronized_data",
@@ -481,9 +634,9 @@
       "interpretation": "Synchronized EEG–QRNG input CSV was loaded successfully after schema and synchronization validation. The dataset can proceed to windowing, feature construction, controls and empirical synchronized CDR."
     },
     "windows": {
-      "payload_status": "windows_ready_exploratory_only",
+      "payload_status": "windows_ready",
       "protocol_only": false,
-      "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
+      "interpretation": "Synchronized windows were built successfully. At least one primary registered window configuration is ready for feature construction and synchronized conditional CDR. Empirical interpretation remains controlled by source provenance and the real-data guardrail."
     },
     "features": {
       "payload_status": "features_ready",
@@ -491,9 +644,9 @@
       "interpretation": "Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR."
     },
     "alignment": {
-      "payload_status": "alignment_ready_exploratory_only",
+      "payload_status": "alignment_ready",
       "protocol_only": false,
-      "interpretation": "Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference."
+      "interpretation": "Lagged synchronized alignment frames were built successfully. At least one primary registered alignment is ready for conditional CDR."
     },
     "conditional": {
       "payload_status": "conditional_exploratory_leads",
@@ -503,17 +656,17 @@
     "controls": {
       "payload_status": "controls_passed",
       "protocol_only": false,
-      "interpretation": "Required synchronized negative controls passed. This permits metrics and gate evaluation, but does not by itself establish a positive claim."
+      "interpretation": "Required synchronized negative controls passed. This permits metrics and gate evaluation, but does not by itself establish a positive empirical claim, especially for surrogate data."
     },
     "metrics": {
-      "payload_status": "exploratory_lead_with_saturation_warning",
+      "payload_status": "primary_lead_bic_limited",
       "protocol_only": false,
-      "interpretation": "Exploratory synchronized conditional lift appeared, but epsilon saturation diagnostics raised a warning. The result cannot be interpreted as evidence without additional diagnostics."
+      "interpretation": "A registered primary lead passed controls, held-out likelihood, lift, adaptive subject consistency, lag/window registration and the multiple-comparison guard, but official BIC did not favor the augmented model. Source provenance blocks an empirical claim for this run."
     },
     "gate_sensitivity": {
       "payload_status": "gate_sensitivity_completed",
       "protocol_only": false,
-      "interpretation": "Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds."
+      "interpretation": "F7/F8/F12 sensitivity diagnostics completed without changing official gates. F7 uses the adaptive selected-lead rule, F8 preserves BIC as official while reporting weaker complexity sensitivities, and F12 remains diagnostic."
     },
     "diagnostics": {
       "payload_status": "unknown",
@@ -538,14 +691,14 @@
       "size_bytes": 855
     },
     "sync_validation_report": {
-      "path": "results\\phase3_2e\\phase3_2e_sync_validation_report.json",
-      "exists": false,
-      "size_bytes": 0
+      "path": "results\\phase3_2e\\phase3_2e_sync_report.json",
+      "exists": true,
+      "size_bytes": 2805
     },
     "sync_validation_summary": {
-      "path": "results\\phase3_2e\\phase3_2e_sync_validation_summary.txt",
-      "exists": false,
-      "size_bytes": 0
+      "path": "results\\phase3_2e\\phase3_2e_sync_summary.txt",
+      "exists": true,
+      "size_bytes": 1074
     },
     "loaded_windows": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_loaded_synchronized_windows.csv",
@@ -555,7 +708,7 @@
     "loader_metadata": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_loader_metadata.json",
       "exists": true,
-      "size_bytes": 10045
+      "size_bytes": 10397
     },
     "loader_report": {
       "path": "results\\phase3_2e\\phase3_2e_loader_report.json",
@@ -570,191 +723,204 @@
     "windows": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_windows.csv",
       "exists": true,
-      "size_bytes": 28650854
+      "size_bytes": 54305531
     },
     "window_inventory": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_window_inventory.csv",
       "exists": true,
-      "size_bytes": 854
+      "size_bytes": 829
     },
     "windows_report": {
       "path": "results\\phase3_2e\\phase3_2e_windows_report.json",
       "exists": true,
-      "size_bytes": 7227
+      "size_bytes": 7764
     },
     "windows_summary": {
       "path": "results\\phase3_2e\\phase3_2e_windows_summary.txt",
       "exists": true,
-      "size_bytes": 1391
+      "size_bytes": 1716
     },
     "features": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_features.csv",
       "exists": true,
-      "size_bytes": 33868495
+      "size_bytes": 63877197
     },
     "feature_specs": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_feature_specs.json",
       "exists": true,
-      "size_bytes": 10087
+      "size_bytes": 10239
     },
     "features_report": {
       "path": "results\\phase3_2e\\phase3_2e_features_report.json",
       "exists": true,
-      "size_bytes": 15441
+      "size_bytes": 15979
     },
     "features_summary": {
       "path": "results\\phase3_2e\\phase3_2e_features_summary.txt",
       "exists": true,
-      "size_bytes": 1338
+      "size_bytes": 1382
     },
     "alignment_inventory": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_alignment_inventory.csv",
       "exists": true,
-      "size_bytes": 6508
+      "size_bytes": 6038
     },
     "alignment_metadata": {
       "path": "data\\interim\\phase3_2e\\phase3_2e_alignment_metadata.json",
       "exists": true,
-      "size_bytes": 7538
+      "size_bytes": 7854
     },
     "alignment_report": {
       "path": "results\\phase3_2e\\phase3_2e_alignment_report.json",
       "exists": true,
-      "size_bytes": 37860
+      "size_bytes": 35678
     },
     "alignment_summary": {
       "path": "results\\phase3_2e\\phase3_2e_alignment_summary.txt",
       "exists": true,
-      "size_bytes": 1660
+      "size_bytes": 3501
     },
     "conditional_model_scores": {
       "path": "results\\phase3_2e\\phase3_2e_conditional_model_scores.csv",
       "exists": true,
-      "size_bytes": 20639
+      "size_bytes": 53352
     },
     "conditional_pair_scores": {
       "path": "results\\phase3_2e\\phase3_2e_conditional_pair_scores.csv",
       "exists": true,
-      "size_bytes": 10472
+      "size_bytes": 26514
     },
     "conditional_summary_json": {
       "path": "results\\phase3_2e\\phase3_2e_conditional_summary.json",
       "exists": true,
-      "size_bytes": 10683
+      "size_bytes": 8486
     },
     "conditional_summary_txt": {
       "path": "results\\phase3_2e\\phase3_2e_conditional_summary.txt",
       "exists": true,
-      "size_bytes": 3583
+      "size_bytes": 3571
     },
     "conditional_report": {
       "path": "results\\phase3_2e\\phase3_2e_conditional_report.json",
       "exists": true,
-      "size_bytes": 18108
+      "size_bytes": 16203
     },
     "control_runs": {
       "path": "results\\phase3_2e\\phase3_2e_control_runs.csv",
       "exists": true,
-      "size_bytes": 167170
+      "size_bytes": 477756
     },
     "control_pair_scores": {
       "path": "results\\phase3_2e\\phase3_2e_control_pair_scores.csv",
       "exists": true,
-      "size_bytes": 1216739
+      "size_bytes": 3206394
     },
     "controls_json": {
       "path": "results\\phase3_2e\\phase3_2e_controls.json",
       "exists": true,
-      "size_bytes": 19444
+      "size_bytes": 38990
     },
     "controls_summary": {
       "path": "results\\phase3_2e\\phase3_2e_controls_summary.txt",
       "exists": true,
-      "size_bytes": 8162
+      "size_bytes": 5575
     },
     "controls_report": {
       "path": "results\\phase3_2e\\phase3_2e_controls_report.json",
       "exists": true,
-      "size_bytes": 19444
+      "size_bytes": 38990
     },
     "gates_json": {
       "path": "results\\phase3_2e\\phase3_2e_gates.json",
       "exists": true,
-      "size_bytes": 53412
+      "size_bytes": 46306
     },
     "multiple_comparison_guard": {
       "path": "results\\phase3_2e\\phase3_2e_multiple_comparison_guard.json",
       "exists": true,
-      "size_bytes": 5897
+      "size_bytes": 2227
     },
     "metrics_table": {
       "path": "results\\phase3_2e\\phase3_2e_metrics_table.csv",
       "exists": true,
-      "size_bytes": 10596
+      "size_bytes": 5932
     },
     "metrics_summary": {
       "path": "results\\phase3_2e\\phase3_2e_metrics_summary.txt",
       "exists": true,
-      "size_bytes": 7720
+      "size_bytes": 5281
     },
     "metrics_report": {
       "path": "results\\phase3_2e\\phase3_2e_metrics_report.json",
       "exists": true,
-      "size_bytes": 53412
+      "size_bytes": 46306
     },
     "gate_sensitivity_report": {
       "path": "results\\phase3_2e\\phase3_2e_gate_sensitivity_report.json",
       "exists": true,
-      "size_bytes": 9749
+      "size_bytes": 18277
     },
     "gate_sensitivity_summary": {
       "path": "results\\phase3_2e\\phase3_2e_gate_sensitivity_summary.txt",
       "exists": true,
-      "size_bytes": 2356
+      "size_bytes": 4247
     },
     "f7_sensitivity": {
       "path": "results\\phase3_2e\\phase3_2e_f7_subject_sensitivity.csv",
       "exists": true,
-      "size_bytes": 142
+      "size_bytes": 701
     },
     "f8_sensitivity": {
       "path": "results\\phase3_2e\\phase3_2e_f8_complexity_sensitivity.csv",
       "exists": true,
-      "size_bytes": 206
+      "size_bytes": 1599
     },
     "f12_sensitivity": {
       "path": "results\\phase3_2e\\phase3_2e_f12_epsilon_saturation_sensitivity.csv",
       "exists": true,
-      "size_bytes": 5909
+      "size_bytes": 4740
     },
     "diagnostics_report": {
       "path": "results\\phase3_2e\\diagnostics\\phase3_2e_diagnostics_report.json",
       "exists": true,
-      "size_bytes": 144336
+      "size_bytes": 53012
     },
     "diagnostics_summary": {
       "path": "results\\phase3_2e\\diagnostics\\phase3_2e_diagnostics_summary.txt",
       "exists": true,
-      "size_bytes": 7528
+      "size_bytes": 3227
     },
     "runner_report": {
       "path": "results\\phase3_2e\\phase3_2e_runner_report.json",
       "exists": true,
-      "size_bytes": 17315
+      "size_bytes": 22861
     },
     "runner_summary": {
       "path": "results\\phase3_2e\\phase3_2e_runner_summary.txt",
       "exists": true,
-      "size_bytes": 4987
+      "size_bytes": 9076
     }
   },
   "final_status": {
-    "status": "exploratory_lead_with_saturation_warning",
-    "headline": "Phase III.2E produced exploratory synchronized conditional leads only.",
-    "interpretation": "Phase III.2E produced exploratory synchronized conditional leads only.",
-    "recommendation": "Document exploratory leads but do not claim empirical CDR unless controls, F7, F8, F12 and primary-gate criteria are satisfied.",
+    "status": "pipeline_completed",
+    "operational_status": "pipeline_completed",
+    "scientific_status": "primary_lead_bic_limited",
+    "scientific_classification": "surrogate_primary_localized_predictive_lead_bic_limited",
+    "candidate_detected": true,
+    "headline": "A registered primary localized predictive lead was detected; only the current official global BIC gate remains unsatisfied.",
+    "interpretation": "A registered primary localized predictive lead was detected; only the current official global BIC gate remains unsatisfied.",
+    "recommendation": "Preserve the Phase III.2E v2 result as BIC-limited. A future v3 may prospectively re-evaluate F8 using effective sample size, effective complexity, state-density correction or subject-level selection, before any real-data analysis.",
     "protocol_only": false,
+    "surrogate": true,
     "can_claim_empirical_cdr": false,
+    "failed_gates": [
+      "F8"
+    ],
+    "warning_gates": [],
+    "not_evaluated_gates": [
+      "F1",
+      "F5"
+    ],
     "source": "diagnostics"
   }
 }

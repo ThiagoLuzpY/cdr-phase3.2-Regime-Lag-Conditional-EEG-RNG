@@ -1,125 +1,39 @@
 ==============================================================================
 CDR Phase III.2E — Diagnostics Summary
-Synchronized EEG–QRNG protocol and gate-sensitivity version
+Primary lead / adaptive F7 / BIC-limited F8 / diagnostic F12
 ==============================================================================
-
-Final interpretation
-------------------------------------------------------------------------------
-headline: Phase III.2E produced exploratory synchronized conditional leads only.
-status: exploratory_lead_with_saturation_warning
-protocol_only: False
+status: primary_lead_bic_limited
+classification: surrogate_primary_localized_predictive_lead_bic_limited
+headline: A registered primary localized predictive lead was detected; only the current official global BIC gate remains unsatisfied.
+surrogate: True
 can_claim_empirical_cdr: False
+recommendation: Preserve the Phase III.2E v2 result as BIC-limited. A future v3 may prospectively re-evaluate F8 using effective sample size, effective complexity, state-density correction or subject-level selection, before any real-data analysis.
 
-- The current III.2E execution used empirical synchronized rows.
-- Protocol empirical readiness: False.
-- Positive conditional lift rows: 2; primary positive rows: 0.
-- Strong candidate rows: 0; primary strong candidates: 0.
-- Multichannel synchronized positive lift rows: 2.
-- Failed official gates: ['F9', 'F10'].
-- Warning gates: ['F12'].
-- Not evaluated gates: ['F1', 'F5', 'F6', 'F7', 'F8'].
-- F7/F8/F12 sensitivity diagnostics were generated without changing official gate thresholds.
-- A positive claim remains prohibited unless synchronized data exist and all required controls/gates support the result.
-
-recommendation: Document exploratory leads but do not claim empirical CDR unless controls, F7, F8, F12 and primary-gate criteria are satisfied.
-
-Protocol readiness
+Conditional
 ------------------------------------------------------------------------------
-status: sync_pipeline_not_empirically_ready
-synchronized_input: {'path': 'data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv', 'exists': True, 'size_bytes': 23514699}
-any_protocol_only_stage: False
-can_proceed_to_empirical_cdr: False
-interpretation: A synchronized input path may exist, but one or more upstream stages do not report empirical readiness.
+pair_rows: 84
+valid_rows: 84
+primary_rows: 42
+primary_positive_rows: 1
+exploratory_positive_rows: 0
+localized_predictive_support: True
+selected_primary_lead: {'window_seconds': '30', 'lag_windows': '5', 'lag_seconds': '150', 'lag_label': 'p5', 'lag_direction': 'future_target', 'alignment_scope': 'primary', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'valid': 'True', 'primary': 'True', 'multichannel': 'True', 'baseline_eps_test': '0.0', 'augmented_eps_test': '1.0', 'conditional_lift': '1.0', 'baseline_ll_test': '-5735.436874371776', 'augmented_ll_test': '-5729.368356979312', 'll_improvement': '6.068517392463946', 'baseline_bic_test': '11488.915011937048', 'augmented_bic_test': '11621.108082700091', 'bic_improvement': '-132.19307076304358', 'baseline_aic_test': '11474.873748743552', 'augmented_aic_test': '11494.736713958624', 'aic_improvement': '-19.86296521507211', 'n_subjects_evaluated': '10', 'n_subjects_positive_lift': '1', 'fraction_positive_lift': '0.1', 'reason': 'ok'}
+F7: {'passed': True, 'n_subjects_evaluated': 10, 'n_subjects_positive_lift': 1, 'fraction_positive_lift': 0.1, 'required_positive_subjects': 1, 'required_positive_fraction': 0.1}
+F8: {'official_rule': 'bic_improvement >= 0', 'official_passed': False, 'bic_improvement': -132.19307076304358, 'aic_improvement': -19.86296521507211, 'heldout_ll_improvement': 6.068517392463946, 'does_not_negate_localized_structure': True, 'future_v3_review': {'prospective_only': True, 'preserve_current_v2_result': True, 'options': ['effective_sample_size_BIC', 'state_density_corrected_BIC', 'effective_complexity', 'subject_level_model_selection']}}
 
-Pipeline table diagnostics
-------------------------------------------------------------------------------
-loaded_windows_rows: 27597
-windows_rows: 27597
-features_rows: 27597
-alignment_inventory_rows: 40
-loaded_subjects: 10
-loaded_sessions: 10
-windows_subjects: 10
-windows_sessions: 10
-features_subjects: 10
-features_sessions: 10
-alignment_inventory_subjects: 0
-alignment_inventory_sessions: 0
-alignment_total_n_valid_alignment_rows: 220576
-alignment_total_n_valid_primary_alignment_rows: 0
-alignment_total_n_valid_conditional_rows: 220576
-alignment_total_n_valid_mc_conditional_rows: 220576
-alignment_scope_counts: {'exploratory': 34, 'primary': 6}
-lag_direction_counts: {'future_target': 20, 'past_target': 15, 'concurrent': 5}
-
-Conditional diagnostics
-------------------------------------------------------------------------------
-status: conditional_exploratory_leads
-protocol_only: False
-n_model_rows: 56
-n_pair_rows: 32
-n_valid_rows: 32
-n_primary_rows: 0
-n_positive_lift_rows: 2
-n_primary_positive_lift_rows: 0
-n_exploratory_lift_rows: 2
-n_strong_candidate_rows: 0
-n_primary_strong_candidate_rows: 0
-n_high_epsilon_zero_lift_rows: 4
-n_single_channel_rows: 16
-n_multichannel_rows: 16
-n_multichannel_positive_lift_rows: 2
-interpretation: Positive synchronized conditional lift rows exist, but they remain exploratory unless all gates and controls pass.
-
-Epsilon saturation
-------------------------------------------------------------------------------
-pair_saturation: {'available': True, 'eps_saturation_value': 0.8, 'warning_fraction': 0.5, 'n_valid_pair_rows': 32, 'max_baseline_eps_test': 0.8, 'max_augmented_eps_test': 0.8, 'n_either_saturated': 10, 'n_both_saturated': 4, 'either_saturation_fraction': 0.3125, 'both_saturation_fraction': 0.125, 'warning': False, 'reason': 'ok'}
-model_saturation: {'available': True, 'eps_saturation_value': 0.8, 'warning_fraction': 0.5, 'n_model_rows': 56, 'columns': {'eps_candidate': {'max': 0.8, 'mean': 0.7000000000000001, 'median': 0.8, 'n_saturated': 49, 'saturation_fraction': 0.875}, 'eps_calib': {'max': 0.8, 'mean': 0.7000000000000001, 'median': 0.8, 'n_saturated': 49, 'saturation_fraction': 0.875}, 'eps_test': {'max': 0.8, 'mean': 0.14285714285714285, 'median': 0.0, 'n_saturated': 10, 'saturation_fraction': 0.17857142857142858}}, 'max_saturation_fraction': 0.875, 'warning': True, 'reason': 'epsilon_saturation_warning'}
-
-Control diagnostics
+Controls
 ------------------------------------------------------------------------------
 status: controls_passed
-protocol_only: False
-available: True
-n_control_runs: 864
-n_valid_control_runs: 864
-n_control_types: 9
-n_failed_control_types: 0
+passed: True
+runs: 2268/2268
 failed_control_types: []
-required_control_types: ['within_subject_qrng_shuffle', 'within_subject_eeg_shuffle', 'circular_qrng_shift', 'subject_mismatch', 'conditional_target_shuffle', 'sync_break_control']
-interpretation: All synchronized negative controls collapsed under the official criteria.
 
 Official gates
 ------------------------------------------------------------------------------
-status: exploratory_lead_with_saturation_warning
-protocol_only: False
-passed_gates: ['F2', 'F3', 'F11']
-failed_gates: ['F9', 'F10']
-warning_gates: ['F12']
-not_evaluated_gates: ['F1', 'F5', 'F6', 'F7', 'F8']
-can_claim_empirical_cdr: False
+passed: ['F2', 'F3', 'F6', 'F7', 'F9', 'F10', 'F11', 'F12']
+failed: ['F8']
+warnings: []
+not_evaluated: ['F1', 'F5']
 
-Gate sensitivity — F7/F8/F12
-------------------------------------------------------------------------------
-status: gate_sensitivity_completed
-protocol_only: False
-available: True
-official_gate_statuses: {'F7': 'NOT_EVALUATED', 'F8': 'NOT_EVALUATED', 'F12': 'WARN'}
-f7_subject_consistency: {'available': False, 'reason': 'no_primary_pair_rows', 'official_threshold': 0.6, 'max_primary_fraction_positive_lift': 0.0, 'distance_to_official_threshold': -0.6, 'official_passed_by_data': False, 'closest_threshold_passed': None, 'strictest_threshold_passed': None, 'interpretation': 'F7 cannot be diagnosed because there are no primary pair rows.'}
-f8_complexity_penalty: {'available': False, 'reason': 'no_primary_pair_rows', 'official_threshold': 0.0, 'max_primary_bic_improvement': 0.0, 'max_primary_aic_improvement': 0.0, 'max_primary_ll_improvement': 0.0, 'distance_to_official_threshold': 0.0, 'official_passed_by_data': False, 'bic_failed_but_aic_positive': False, 'bic_failed_but_ll_positive': False, 'interpretation': 'F8 cannot be diagnosed because there are no primary pair rows.'}
-f12_epsilon_saturation: {'available': True, 'reason': 'ok', 'official_eps_saturation_value': 0.8, 'official_warning_fraction': 0.5, 'official_saturation_fraction': 0.5258620689655172, 'official_warning_by_data': True, 'max_saturation_fraction': 0.5258620689655172, 'distance_to_warning_fraction': 0.025862068965517238, 'n_model_eps_values': 168, 'n_pair_eps_values': 64, 'n_total_eps_values': 232, 'max_epsilon': 0.8, 'mean_epsilon': 0.42068965517241386, 'median_epsilon': 0.8, 'interpretation': 'F12 raises an official epsilon saturation warning. This does not prove absence of signal, but blocks strong interpretation until additional diagnostics explain why epsilon saturates.'}
-interpretation: Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds.
-
-Multiple-comparison guard
-------------------------------------------------------------------------------
-available: True
-enabled: True
-n_valid_tests: 32
-n_positive_lift_tests: 2
-n_primary_positive_lift_tests: 0
-n_exploratory_lift_tests: 2
-n_strong_candidate_tests: 0
-n_primary_strong_candidate_tests: 0
-n_multichannel_tests: 16
-
+future_v3_f8_review: {'allowed': True, 'prospective_only': True, 'must_precede_real_data_analysis': True, 'must_preserve_current_v2_result': True}
 ==============================================================================

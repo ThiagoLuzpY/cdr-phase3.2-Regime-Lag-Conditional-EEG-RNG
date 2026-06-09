@@ -2,81 +2,313 @@
   "phase": "Phase III.2E",
   "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
   "module": "phase3_2e_gate_sensitivity",
-  "gate_sensitivity_version": "phase3_2e_gate_sensitivity_v1_f7_f8_f12_diagnostics",
-  "created_at": "2026-06-05 21:41:19",
+  "gate_sensitivity_version": "phase3_2e_gate_sensitivity_v2_adaptive_f7_selected_lead_f8_f12_diagnostic",
+  "created_at": "2026-06-09 11:51:22",
   "status": "gate_sensitivity_completed",
   "result": {
     "status": "gate_sensitivity_completed",
     "protocol_only": false,
-    "official_f7_threshold": 0.6,
+    "official_f7_required_subjects": 1,
+    "official_f7_required_fraction": 0.1,
     "official_f8_threshold": 0.0,
-    "official_f12_eps_saturation_value": 0.8,
-    "official_f12_warning_fraction": 0.5,
-    "f7_available": false,
-    "f8_available": false,
+    "official_f12_eps_saturation_value": 2.0,
+    "official_f12_warning_fraction": 0.95,
+    "f7_available": true,
+    "f8_available": true,
     "f12_available": true,
-    "f7_official_passed": false,
+    "f7_official_passed": true,
     "f8_official_passed": false,
-    "f12_official_warning": true,
-    "f7_best_value": 0.0,
-    "f8_best_bic_value": 0.0,
-    "f12_max_saturation_fraction": 0.5258620689655172,
-    "f7_distance_to_threshold": -0.6,
-    "f8_distance_to_threshold": 0.0,
-    "f12_distance_to_warning": 0.025862068965517238,
+    "f12_official_warning": false,
+    "f7_selected_fraction": 0.1,
+    "f7_selected_positive_subjects": 1,
+    "f8_selected_bic_improvement": -132.19307076304358,
+    "f8_selected_aic_improvement": -19.86296521507211,
+    "f8_selected_ll_improvement": 6.068517392463946,
+    "f12_official_saturation_fraction": 0.0,
+    "f7_fraction_distance_to_official": 0.0,
+    "f7_subject_count_distance_to_official": 0,
+    "f8_distance_to_official": -132.19307076304358,
+    "f12_distance_to_warning": -0.95,
     "can_proceed_to_diagnostics": true,
     "can_claim_empirical_cdr": false,
-    "interpretation": "Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds."
+    "interpretation": "F7/F8/F12 sensitivity diagnostics completed without changing official gates. F7 uses the adaptive selected-lead rule, F8 preserves BIC as official while reporting weaker complexity sensitivities, and F12 remains diagnostic."
+  },
+  "input_audit": {
+    "pair_rows": 84,
+    "valid_pair_rows": 84,
+    "primary_pair_rows": 42,
+    "model_rows": 147,
+    "gates_available": true,
+    "metrics_status": "primary_lead_bic_limited",
+    "primary_windows": [
+      30,
+      60
+    ],
+    "primary_lags": [
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "primary_pairs": [
+      [
+        "E0_EEG_next_given_EEG",
+        "E1_EEG_next_given_EEG_QRNG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E3_QRNG_next_given_QRNG_EEG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E6_QRNG_next_given_QRNG_MCEEG"
+      ]
+    ],
+    "selected_primary_lead": {
+      "window_seconds": "30",
+      "lag_windows": "5",
+      "lag_seconds": "150",
+      "lag_label": "p5",
+      "lag_direction": "future_target",
+      "alignment_scope": "primary",
+      "family": "QRNG_next",
+      "baseline_model": "E2_QRNG_next_given_QRNG",
+      "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+      "valid": "True",
+      "primary": "True",
+      "multichannel": "True",
+      "baseline_eps_test": "0.0",
+      "augmented_eps_test": "1.0",
+      "conditional_lift": "1.0",
+      "baseline_ll_test": "-5735.436874371776",
+      "augmented_ll_test": "-5729.368356979312",
+      "ll_improvement": "6.068517392463946",
+      "baseline_bic_test": "11488.915011937048",
+      "augmented_bic_test": "11621.108082700091",
+      "bic_improvement": "-132.19307076304358",
+      "baseline_aic_test": "11474.873748743552",
+      "augmented_aic_test": "11494.736713958624",
+      "aic_improvement": "-19.86296521507211",
+      "n_subjects_evaluated": "10",
+      "n_subjects_positive_lift": "1",
+      "fraction_positive_lift": "0.1",
+      "reason": "ok"
+    },
+    "fingerprint": "d088963113be54a7c66f179bc902d9c28c7f1a0ba1ee036bea01f0764a458618"
   },
   "official_gate_statuses": {
-    "F7": "NOT_EVALUATED",
-    "F8": "NOT_EVALUATED",
-    "F12": "WARN"
+    "F7": "PASS",
+    "F8": "FAIL",
+    "F12": "PASS"
   },
   "f7_subject_consistency": {
-    "available": false,
-    "reason": "no_primary_pair_rows",
-    "official_threshold": 0.6,
-    "max_primary_fraction_positive_lift": 0.0,
-    "distance_to_official_threshold": -0.6,
-    "official_passed_by_data": false,
-    "closest_threshold_passed": null,
-    "strictest_threshold_passed": null,
-    "interpretation": "F7 cannot be diagnosed because there are no primary pair rows."
+    "available": true,
+    "reason": "ok",
+    "selected_primary_lead": {
+      "window_seconds": "30",
+      "lag_windows": "5",
+      "lag_seconds": "150",
+      "lag_label": "p5",
+      "lag_direction": "future_target",
+      "alignment_scope": "primary",
+      "family": "QRNG_next",
+      "baseline_model": "E2_QRNG_next_given_QRNG",
+      "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+      "valid": "True",
+      "primary": "True",
+      "multichannel": "True",
+      "baseline_eps_test": "0.0",
+      "augmented_eps_test": "1.0",
+      "conditional_lift": "1.0",
+      "baseline_ll_test": "-5735.436874371776",
+      "augmented_ll_test": "-5729.368356979312",
+      "ll_improvement": "6.068517392463946",
+      "baseline_bic_test": "11488.915011937048",
+      "augmented_bic_test": "11621.108082700091",
+      "bic_improvement": "-132.19307076304358",
+      "baseline_aic_test": "11474.873748743552",
+      "augmented_aic_test": "11494.736713958624",
+      "aic_improvement": "-19.86296521507211",
+      "n_subjects_evaluated": "10",
+      "n_subjects_positive_lift": "1",
+      "fraction_positive_lift": "0.1",
+      "reason": "ok"
+    },
+    "n_subjects_evaluated": 10,
+    "n_subjects_positive_lift": 1,
+    "observed_fraction_positive_lift": 0.1,
+    "official_required_subjects": 1,
+    "official_required_fraction": 0.1,
+    "official_passed_by_data": true,
+    "fraction_distance_to_official": 0.0,
+    "subject_count_distance_to_official": 0,
+    "strictest_fraction_passed": 0.1,
+    "strictest_subject_count_passed": 1,
+    "interpretation": "The selected primary lead satisfies the adaptive F7 rule."
   },
   "f8_complexity_penalty": {
-    "available": false,
-    "reason": "no_primary_pair_rows",
+    "available": true,
+    "reason": "ok",
+    "selected_primary_lead": {
+      "window_seconds": "30",
+      "lag_windows": "5",
+      "lag_seconds": "150",
+      "lag_label": "p5",
+      "lag_direction": "future_target",
+      "alignment_scope": "primary",
+      "family": "QRNG_next",
+      "baseline_model": "E2_QRNG_next_given_QRNG",
+      "augmented_model": "E6_QRNG_next_given_QRNG_MCEEG",
+      "valid": "True",
+      "primary": "True",
+      "multichannel": "True",
+      "baseline_eps_test": "0.0",
+      "augmented_eps_test": "1.0",
+      "conditional_lift": "1.0",
+      "baseline_ll_test": "-5735.436874371776",
+      "augmented_ll_test": "-5729.368356979312",
+      "ll_improvement": "6.068517392463946",
+      "baseline_bic_test": "11488.915011937048",
+      "augmented_bic_test": "11621.108082700091",
+      "bic_improvement": "-132.19307076304358",
+      "baseline_aic_test": "11474.873748743552",
+      "augmented_aic_test": "11494.736713958624",
+      "aic_improvement": "-19.86296521507211",
+      "n_subjects_evaluated": "10",
+      "n_subjects_positive_lift": "1",
+      "fraction_positive_lift": "0.1",
+      "reason": "ok"
+    },
     "official_threshold": 0.0,
-    "max_primary_bic_improvement": 0.0,
-    "max_primary_aic_improvement": 0.0,
-    "max_primary_ll_improvement": 0.0,
-    "distance_to_official_threshold": 0.0,
+    "official_bic_improvement": -132.19307076304358,
     "official_passed_by_data": false,
-    "bic_failed_but_aic_positive": false,
-    "bic_failed_but_ll_positive": false,
-    "interpretation": "F8 cannot be diagnosed because there are no primary pair rows."
+    "distance_to_official_threshold": -132.19307076304358,
+    "aic_improvement": -19.86296521507211,
+    "heldout_ll_improvement": 6.068517392463946,
+    "aic_positive": false,
+    "heldout_ll_positive": true,
+    "observed_complexity_penalty": 144.33010554797147,
+    "critical_complexity_penalty_scale": 0.08409219087624006,
+    "baseline_n_params": 2,
+    "augmented_n_params": 18,
+    "parameter_delta": 16,
+    "baseline_n_test": 8272,
+    "augmented_n_test": 8272,
+    "baseline_model_score": {
+      "model": "E2_QRNG_next_given_QRNG",
+      "label": "QRNG self-transition baseline",
+      "family": "QRNG_next",
+      "window_seconds": "30",
+      "lag_windows": "5",
+      "lag_seconds": "150",
+      "lag_label": "p5",
+      "lag_direction": "future_target",
+      "alignment_scope": "primary",
+      "valid": "True",
+      "primary": "True",
+      "multichannel": "False",
+      "n_rows_total": "27597",
+      "n_rows_model": "27547",
+      "n_ref": "13770",
+      "n_calib": "5505",
+      "n_test": "8272",
+      "n_current_states": "2",
+      "n_target_states": "2",
+      "n_params": "2",
+      "eps_train": "0.0",
+      "eps_calib": "1.0",
+      "eps_candidate": "1.0",
+      "eps_test": "0.0",
+      "eps_saturated": "False",
+      "ll_train": "-9543.75914366742",
+      "ll_calib": "-3815.1866899023576",
+      "ll_calib_eps0": "-3816.511362097163",
+      "ll_calib_gain_from_eps": "1.3246721948053164",
+      "ll_test": "-5735.436874371776",
+      "ll_test_eps0": "-5735.436874371776",
+      "ll_test_gain_from_eps": "0.0",
+      "bic_test": "11488.915011937048",
+      "aic_test": "11474.873748743552",
+      "transitions_per_current_state": "6885.0",
+      "reason": "ok"
+    },
+    "augmented_model_score": {
+      "model": "E6_QRNG_next_given_QRNG_MCEEG",
+      "label": "QRNG transition conditioned by multichannel EEG",
+      "family": "QRNG_next",
+      "window_seconds": "30",
+      "lag_windows": "5",
+      "lag_seconds": "150",
+      "lag_label": "p5",
+      "lag_direction": "future_target",
+      "alignment_scope": "primary",
+      "valid": "True",
+      "primary": "True",
+      "multichannel": "True",
+      "n_rows_total": "27597",
+      "n_rows_model": "27547",
+      "n_ref": "13770",
+      "n_calib": "5505",
+      "n_test": "8272",
+      "n_current_states": "18",
+      "n_target_states": "2",
+      "n_params": "18",
+      "eps_train": "0.0",
+      "eps_calib": "1.0",
+      "eps_candidate": "1.0",
+      "eps_test": "1.0",
+      "eps_saturated": "False",
+      "ll_train": "-9535.6101178055",
+      "ll_calib": "-3808.60287476768",
+      "ll_calib_eps0": "-3819.035124843731",
+      "ll_calib_gain_from_eps": "10.432250076051332",
+      "ll_test": "-5729.368356979312",
+      "ll_test_eps0": "-5739.849772308474",
+      "ll_test_gain_from_eps": "10.481415329161791",
+      "bic_test": "11621.108082700091",
+      "aic_test": "11494.736713958624",
+      "transitions_per_current_state": "765.0",
+      "reason": "ok"
+    },
+    "interpretation": "The selected primary lead fails official BIC, while held-out likelihood and/or AIC provide weaker support. Complexity-scaled scenarios are diagnostic only and do not replace official BIC."
   },
   "f12_epsilon_saturation": {
     "available": true,
     "reason": "ok",
-    "official_eps_saturation_value": 0.8,
-    "official_warning_fraction": 0.5,
-    "official_saturation_fraction": 0.5258620689655172,
-    "official_warning_by_data": true,
-    "max_saturation_fraction": 0.5258620689655172,
-    "distance_to_warning_fraction": 0.025862068965517238,
-    "n_model_eps_values": 168,
-    "n_pair_eps_values": 64,
-    "n_total_eps_values": 232,
-    "max_epsilon": 0.8,
-    "mean_epsilon": 0.42068965517241386,
-    "median_epsilon": 0.8,
-    "interpretation": "F12 raises an official epsilon saturation warning. This does not prove absence of signal, but blocks strong interpretation until additional diagnostics explain why epsilon saturates."
-  },
-  "input_shapes": {
-    "pair_rows": 32,
-    "model_rows": 56
+    "official_eps_saturation_value": 2.0,
+    "official_warning_fraction": 0.95,
+    "official_saturation_fraction": 0.0,
+    "official_warning_by_data": false,
+    "distance_to_warning_fraction": -0.95,
+    "max_model_epsilon": 1.0,
+    "max_baseline_pair_epsilon": 1.0,
+    "max_augmented_pair_epsilon": 1.0,
+    "metrics_model_saturation_summary": {
+      "available": true,
+      "epsilon_column_used": "eps_test",
+      "eps_saturation_value": 2.0,
+      "eps_saturation_warning_fraction": 0.95,
+      "n_model_rows": 147,
+      "n_saturated_rows": 0,
+      "saturation_fraction": 0.0,
+      "warning": false,
+      "diagnostic_only": true
+    },
+    "metrics_pair_saturation_summary": {
+      "available": true,
+      "eps_saturation_value": 2.0,
+      "eps_saturation_warning_fraction": 0.95,
+      "n_valid_pair_rows": 84,
+      "n_either_saturated_rows": 0,
+      "either_saturation_fraction": 0.0,
+      "warning": false,
+      "diagnostic_only": true
+    },
+    "diagnostic_only": true,
+    "interpretation": "F12 does not raise an official diagnostic saturation warning. Exploratory threshold scenarios remain diagnostic only."
   },
   "files": {
     "f7_sensitivity_csv": "results\\phase3_2e\\phase3_2e_f7_subject_sensitivity.csv",
@@ -85,16 +317,23 @@
     "gate_sensitivity_report_json": "results\\phase3_2e\\phase3_2e_gate_sensitivity_report.json",
     "gate_sensitivity_summary_txt": "results\\phase3_2e\\phase3_2e_gate_sensitivity_summary.txt"
   },
+  "official_gate_rule_preservation": {
+    "official_gates_changed": false,
+    "f7_rule": "adaptive subject count/fraction from the selected primary lead",
+    "f8_rule": "official BIC improvement >= 0",
+    "f12_rule": "diagnostic saturation warning only",
+    "note": "Sensitivity scenarios explain the current result and never replace official metrics gates."
+  },
   "config": {
     "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
     "phase_name": "Phase III.2E",
     "phase_title": "Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation",
-    "version": "v1.0-phase3_2e_protocol_sync_gate_sensitivity",
+    "version": "v1.1-phase3_2e_evidence_guided_surrogate_replication",
     "protocol_status": "protocol_ready",
-    "empirical_execution_status": "pending_synchronized_eeg_qrng_data",
+    "empirical_execution_status": "surrogate_replication_ready",
     "synchronized_input_csv": "data\\raw\\phase3_2e\\synchronized\\phase3_2e_synchronized_input.csv",
     "allow_protocol_only_without_data": true,
-    "allow_synthetic_demo_data": false,
+    "allow_synthetic_demo_data": true,
     "require_real_synchronized_data_for_claim": true,
     "required_schema_columns": [
       "subject_id",
@@ -164,41 +403,38 @@
     "secondary_eeg_channel": "EEG Pz-Oz",
     "use_multichannel_eeg": true,
     "primary_window_seconds": [
-      5,
-      10
+      30,
+      60
     ],
     "secondary_window_seconds": [
-      1,
-      2,
-      30
+      5,
+      30,
+      60,
+      90
     ],
     "all_window_seconds": [
-      1,
-      2,
       5,
-      10,
-      30
+      30,
+      60,
+      90
     ],
     "primary_lags_windows": [
-      0,
-      1,
-      2
-    ],
-    "secondary_lags_windows": [
-      -5,
-      -3,
-      -1,
-      3,
-      5
-    ],
-    "all_lags_windows": [
-      -5,
-      -3,
       -1,
       0,
       1,
       2,
       3,
+      4,
+      5
+    ],
+    "secondary_lags_windows": [],
+    "all_lags_windows": [
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
       5
     ],
     "conditional_models": [
@@ -218,6 +454,10 @@
       [
         "E2_QRNG_next_given_QRNG",
         "E3_QRNG_next_given_QRNG_EEG"
+      ],
+      [
+        "E2_QRNG_next_given_QRNG",
+        "E6_QRNG_next_given_QRNG_MCEEG"
       ]
     ],
     "multichannel_conditional_pairs": [
@@ -240,12 +480,12 @@
         "E3_QRNG_next_given_QRNG_EEG"
       ],
       [
-        "E4_MCEEG_next_given_MCEEG",
-        "E5_MCEEG_next_given_MCEEG_QRNG"
-      ],
-      [
         "E2_QRNG_next_given_QRNG",
         "E6_QRNG_next_given_QRNG_MCEEG"
+      ],
+      [
+        "E4_MCEEG_next_given_MCEEG",
+        "E5_MCEEG_next_given_MCEEG_QRNG"
       ]
     ],
     "official_gates": [
@@ -298,25 +538,28 @@
     "n_controls": 12,
     "eps_grid_short": [
       0.0,
-      0.2
+      0.5
     ],
     "eps_grid_medium": [
       0.0,
-      0.5
+      1.0
     ],
     "eps_grid_full": [
       0.0,
-      0.8
+      2.0
     ],
-    "eps_saturation_value": 0.8,
-    "eps_moderate_upper_bound": 0.3,
+    "eps_saturation_value": 2.0,
+    "eps_saturation_warning_fraction": 0.95,
+    "eps_moderate_upper_bound": 1.0,
+    "eps_auto_expand_enabled": true,
+    "eps_auto_expand_factor": 1.5,
+    "eps_auto_expand_max": 5.0,
     "conditional_lift_min": 0.03,
     "strong_eps_min": 0.07,
-    "subject_effect_fraction": 0.6,
+    "subject_effect_fraction": 0.1,
+    "min_positive_subjects": 1,
+    "large_cohort_subject_fraction_min": 0.01,
+    "large_cohort_subject_fraction_max": 0.03,
     "multiple_comparison_guard": true
-  },
-  "official_gate_rule_preservation": {
-    "official_gates_changed": false,
-    "note": "This module evaluates sensitivity scenarios only. It does not alter official F7/F8/F12 thresholds or final empirical claim rules."
   }
 }

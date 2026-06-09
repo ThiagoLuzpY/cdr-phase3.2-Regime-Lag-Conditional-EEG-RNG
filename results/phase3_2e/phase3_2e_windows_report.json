@@ -2,9 +2,9 @@
   "phase": "Phase III.2E",
   "project_name": "Phase3.2-Regime-Lag-Conditional-EEG-RNG",
   "module": "phase3_2e_windows",
-  "window_version": "phase3_2e_windows_v1_protocol_sync_aware",
-  "status": "windows_ready_exploratory_only",
-  "created_at": "2026-06-05 00:42:29",
+  "window_version": "phase3_2e_windows_v2_multiresolution_registered_windows",
+  "status": "windows_ready",
+  "created_at": "2026-06-06 20:11:00",
   "loader_status": "loaded_synchronized_data",
   "loader_summary": {
     "n_rows": 27597,
@@ -52,101 +52,119 @@
       "EEG Pz-Oz": 27597
     }
   },
+  "multiresolution_build": {
+    "source_rows": 27597,
+    "native_registered_rows": 27597,
+    "output_rows": 50590,
+    "registered_seconds": [
+      5,
+      30,
+      60,
+      90
+    ],
+    "native_seconds": [
+      30
+    ],
+    "generated_seconds": [
+      60,
+      90
+    ],
+    "available_seconds": [
+      30,
+      60,
+      90
+    ],
+    "unavailable_seconds": [
+      5
+    ],
+    "generated_rows_by_seconds": {
+      "60": 13797,
+      "90": 9196
+    },
+    "non_overlapping_aggregation": true,
+    "shorter_windows_fabricated": false,
+    "note": "Longer windows were generated only from complete, contiguous and non-overlapping native blocks. Shorter unavailable durations were not fabricated."
+  },
   "result": {
-    "status": "windows_ready_exploratory_only",
+    "status": "windows_ready",
     "protocol_only": false,
-    "input_rows": 27597,
-    "output_rows": 27597,
+    "input_rows": 50590,
+    "output_rows": 50590,
     "n_subjects": 10,
     "n_sessions": 10,
-    "n_valid_windows": 27597,
-    "n_primary_valid_windows": 0,
-    "n_exploratory_valid_windows": 27597,
-    "n_registered_window_sizes": 1,
+    "n_valid_windows": 50590,
+    "n_primary_valid_windows": 41394,
+    "n_exploratory_valid_windows": 50590,
+    "n_registered_window_sizes": 3,
     "n_unregistered_window_rows": 0,
     "can_proceed_to_feature_construction": true,
-    "can_proceed_to_empirical_cdr": false,
-    "interpretation": "Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked."
+    "can_proceed_to_empirical_cdr": true,
+    "interpretation": "Synchronized windows were built successfully. At least one primary registered window configuration is ready for feature construction and synchronized conditional CDR. Empirical interpretation remains controlled by source provenance and the real-data guardrail."
   },
   "summary": {
-    "n_rows": 27597,
+    "n_rows": 50590,
     "n_subjects": 10,
     "n_sessions": 10,
-    "n_valid_windows": 27597,
-    "n_primary_valid_windows": 0,
-    "n_exploratory_valid_windows": 27597,
+    "n_valid_windows": 50590,
+    "n_primary_valid_windows": 41394,
+    "n_exploratory_valid_windows": 50590,
     "n_unregistered_window_rows": 0,
     "window_seconds_counts": {
-      "30": 27597
+      "30": 27597,
+      "60": 13797,
+      "90": 9196
     },
     "window_status_counts": {
-      "ready_window": 27597
+      "ready_window": 50590
     },
     "window_scope_counts": {
-      "exploratory": 27597
+      "primary": 41394,
+      "exploratory": 9196
+    },
+    "window_derivation_counts": {
+      "native": 27597,
+      "aggregated_nonoverlapping": 22993
+    },
+    "native_window_seconds_counts": {
+      "30": 27597
+    },
+    "generated_window_seconds_counts": {
+      "60": 13797,
+      "90": 9196
     },
     "sync_quality": {
       "min": 0.9849868015959592,
-      "mean": 0.9930010368948892,
-      "median": 0.9933133221340424,
+      "mean": 0.9925319503805549,
+      "median": 0.9927521830884748,
       "max": 0.9949999011330124
     },
     "eeg_qrng_gap_ms": {
       "min": 0.0,
-      "mean": 2.026452150596079,
-      "median": 2.0,
+      "mean": 1.1060272781182048,
+      "median": 0.003,
       "max": 10.0
     },
     "clock_drift_abs_ms": {
       "min": 9.886698759679616e-05,
-      "mean": 1.9989631051106351,
-      "median": 1.686677865957682,
+      "mean": 2.468049619445251,
+      "median": 2.247816911525203,
       "max": 10.013198404040686
     },
     "ready_window_specs": [
-      "w30s"
+      "w30s",
+      "w60s",
+      "w90s"
     ],
-    "primary_ready_window_specs": []
+    "primary_ready_window_specs": [
+      "w30s",
+      "w60s"
+    ]
   },
   "inventory": [
     {
-      "window_spec_name": "w01s",
-      "window_seconds": 1,
-      "primary": false,
-      "min_windows_total": 1000,
-      "min_windows_per_subject": 100,
-      "n_rows": 0,
-      "n_valid_windows": 0,
-      "n_subjects": 0,
-      "min_windows_per_subject_observed": 0,
-      "median_windows_per_subject_observed": 0.0,
-      "max_windows_per_subject_observed": 0,
-      "meets_total_minimum": false,
-      "meets_subject_minimum": false,
-      "window_size_ready": false,
-      "description": "High temporal resolution; high noise sensitivity."
-    },
-    {
-      "window_spec_name": "w02s",
-      "window_seconds": 2,
-      "primary": false,
-      "min_windows_total": 800,
-      "min_windows_per_subject": 80,
-      "n_rows": 0,
-      "n_valid_windows": 0,
-      "n_subjects": 0,
-      "min_windows_per_subject_observed": 0,
-      "median_windows_per_subject_observed": 0.0,
-      "max_windows_per_subject_observed": 0,
-      "meets_total_minimum": false,
-      "meets_subject_minimum": false,
-      "window_size_ready": false,
-      "description": "Short exploratory window."
-    },
-    {
       "window_spec_name": "w05s",
       "window_seconds": 5,
-      "primary": true,
+      "primary": false,
       "min_windows_total": 500,
       "min_windows_per_subject": 50,
       "n_rows": 0,
@@ -158,29 +176,12 @@
       "meets_total_minimum": false,
       "meets_subject_minimum": false,
       "window_size_ready": false,
-      "description": "Primary synchronized window balancing temporal precision and EEG feature stability."
-    },
-    {
-      "window_spec_name": "w10s",
-      "window_seconds": 10,
-      "primary": true,
-      "min_windows_total": 300,
-      "min_windows_per_subject": 30,
-      "n_rows": 0,
-      "n_valid_windows": 0,
-      "n_subjects": 0,
-      "min_windows_per_subject_observed": 0,
-      "median_windows_per_subject_observed": 0.0,
-      "max_windows_per_subject_observed": 0,
-      "meets_total_minimum": false,
-      "meets_subject_minimum": false,
-      "window_size_ready": false,
-      "description": "Primary synchronized window with stronger EEG band-power stability."
+      "description": "Secondary short window retained to test faster subject-specific responses."
     },
     {
       "window_spec_name": "w30s",
       "window_seconds": 30,
-      "primary": false,
+      "primary": true,
       "min_windows_total": 150,
       "min_windows_per_subject": 15,
       "n_rows": 27597,
@@ -192,49 +193,75 @@
       "meets_total_minimum": true,
       "meets_subject_minimum": true,
       "window_size_ready": true,
-      "description": "Compatibility window comparable to Sleep-EDF epochs."
+      "description": "Primary window anchored to the positive multichannel surrogate lead."
+    },
+    {
+      "window_spec_name": "w60s",
+      "window_seconds": 60,
+      "primary": true,
+      "min_windows_total": 80,
+      "min_windows_per_subject": 8,
+      "n_rows": 13797,
+      "n_valid_windows": 13797,
+      "n_subjects": 10,
+      "min_windows_per_subject_observed": 1284,
+      "median_windows_per_subject_observed": 1397.5,
+      "max_windows_per_subject_observed": 1424,
+      "meets_total_minimum": true,
+      "meets_subject_minimum": true,
+      "window_size_ready": true,
+      "description": "Primary longer window for subtle and slower structural-selection dynamics."
+    },
+    {
+      "window_spec_name": "w90s",
+      "window_seconds": 90,
+      "primary": false,
+      "min_windows_total": 50,
+      "min_windows_per_subject": 5,
+      "n_rows": 9196,
+      "n_valid_windows": 9196,
+      "n_subjects": 10,
+      "min_windows_per_subject_observed": 856,
+      "median_windows_per_subject_observed": 931.5,
+      "max_windows_per_subject_observed": 949,
+      "meets_total_minimum": true,
+      "meets_subject_minimum": true,
+      "window_size_ready": true,
+      "description": "Secondary long window for slower or delayed subject-specific effects."
     }
   ],
   "config_window_specs": [
     {
-      "name": "w01s",
-      "seconds": 1,
-      "primary": false,
-      "min_windows_total": 1000,
-      "min_windows_per_subject": 100,
-      "description": "High temporal resolution; high noise sensitivity."
-    },
-    {
-      "name": "w02s",
-      "seconds": 2,
-      "primary": false,
-      "min_windows_total": 800,
-      "min_windows_per_subject": 80,
-      "description": "Short exploratory window."
-    },
-    {
       "name": "w05s",
       "seconds": 5,
-      "primary": true,
+      "primary": false,
       "min_windows_total": 500,
       "min_windows_per_subject": 50,
-      "description": "Primary synchronized window balancing temporal precision and EEG feature stability."
-    },
-    {
-      "name": "w10s",
-      "seconds": 10,
-      "primary": true,
-      "min_windows_total": 300,
-      "min_windows_per_subject": 30,
-      "description": "Primary synchronized window with stronger EEG band-power stability."
+      "description": "Secondary short window retained to test faster subject-specific responses."
     },
     {
       "name": "w30s",
       "seconds": 30,
-      "primary": false,
+      "primary": true,
       "min_windows_total": 150,
       "min_windows_per_subject": 15,
-      "description": "Compatibility window comparable to Sleep-EDF epochs."
+      "description": "Primary window anchored to the positive multichannel surrogate lead."
+    },
+    {
+      "name": "w60s",
+      "seconds": 60,
+      "primary": true,
+      "min_windows_total": 80,
+      "min_windows_per_subject": 8,
+      "description": "Primary longer window for subtle and slower structural-selection dynamics."
+    },
+    {
+      "name": "w90s",
+      "seconds": 90,
+      "primary": false,
+      "min_windows_total": 50,
+      "min_windows_per_subject": 5,
+      "description": "Secondary long window for slower or delayed subject-specific effects."
     }
   ]
 }

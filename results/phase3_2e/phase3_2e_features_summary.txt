@@ -4,15 +4,15 @@ Phase III.2E — Feature Summary
 
 status: features_ready
 protocol_only: False
-input_rows: 27597
-output_rows: 27597
+input_rows: 50590
+output_rows: 50590
 n_subjects: 10
 n_sessions: 10
-n_window_sizes: 1
+n_window_sizes: 3
 
-n_valid_feature_rows: 27597
-n_valid_next_state_rows: 27587
-n_valid_mc_next_state_rows: 27587
+n_valid_feature_rows: 50590
+n_valid_next_state_rows: 50560
+n_valid_mc_next_state_rows: 50560
 
 eeg_state_n_unique: 9
 qrng_state_n_unique: 2
@@ -22,13 +22,13 @@ can_proceed_to_alignment: True
 can_proceed_to_conditional_cdr: True
 can_proceed_to_empirical_cdr: True
 
-window_seconds_counts: {'30': 27597}
-feature_status_counts: {'valid_feature_row': 27597}
-window_scope_counts: {'exploratory': 27597}
+window_seconds_counts: {'30': 27597, '60': 13797, '90': 9196}
+feature_status_counts: {'valid_feature_row': 50590}
+window_scope_counts: {'primary': 41394, 'exploratory': 9196}
 
-sync_quality: {'min': 0.9849868015959592, 'mean': 0.9930010368948892, 'median': 0.9933133221340424, 'max': 0.9949999011330124}
-eeg_qrng_gap_ms: {'min': 0.0, 'mean': 2.026452150596079, 'median': 2.0, 'max': 10.0}
-clock_drift_abs_ms: {'min': 9.886698759679616e-05, 'mean': 1.9989631051106351, 'median': 1.686677865957682, 'max': 10.013198404040686}
+sync_quality: {'min': 0.9849868015959592, 'mean': 0.9925319503805546, 'median': 0.9927521830884748, 'max': 0.9949999011330124}
+eeg_qrng_gap_ms: {'min': 0.0, 'mean': 1.1060272781182048, 'median': 0.003, 'max': 10.0}
+clock_drift_abs_ms: {'min': 9.886698759679616e-05, 'mean': 2.468049619445251, 'median': 2.247816911525203, 'max': 10.013198404040686}
 
 interpretation:
 Phase III.2E synchronized feature/state layer was built successfully. The dataset can proceed to lagged alignment and conditional CDR.

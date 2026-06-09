@@ -1,8 +1,7 @@
 ==============================================================================
 Phase III.2E — Gate Sensitivity Summary
-F7 / F8 / F12 diagnostics without changing official gates
+Adaptive F7 / official-BIC F8 / diagnostic F12
 ==============================================================================
-
 status: gate_sensitivity_completed
 protocol_only: False
 can_proceed_to_diagnostics: True
@@ -10,46 +9,44 @@ can_claim_empirical_cdr: False
 
 Official gate statuses
 ------------------------------------------------------------------------------
-F7 official status: NOT_EVALUATED
-F8 official status: NOT_EVALUATED
-F12 official status: WARN
+F7 official status: PASS
+F8 official status: FAIL
+F12 official status: PASS
 
-F7 — Subject consistency
-------------------------------------------------------------------------------
-available: False
-official_threshold: 0.6
-max_primary_fraction_positive_lift: 0.0
-distance_to_official_threshold: -0.6
-official_passed_by_data: False
-strictest_threshold_passed: None
-interpretation: F7 cannot be diagnosed because there are no primary pair rows.
-
-F8 — Complexity penalty / BIC
-------------------------------------------------------------------------------
-available: False
-official_threshold: 0.0
-max_primary_bic_improvement: 0.0
-max_primary_aic_improvement: 0.0
-max_primary_ll_improvement: 0.0
-distance_to_official_threshold: 0.0
-official_passed_by_data: False
-bic_failed_but_aic_positive: False
-bic_failed_but_ll_positive: False
-interpretation: F8 cannot be diagnosed because there are no primary pair rows.
-
-F12 — Epsilon saturation
+F7 — Adaptive subject consistency
 ------------------------------------------------------------------------------
 available: True
-official_eps_saturation_value: 0.8
-official_warning_fraction: 0.5
-official_saturation_fraction: 0.5258620689655172
-distance_to_warning_fraction: 0.025862068965517238
-official_warning_by_data: True
-max_epsilon: 0.8
-interpretation: F12 raises an official epsilon saturation warning. This does not prove absence of signal, but blocks strong interpretation until additional diagnostics explain why epsilon saturates.
+selected_primary_lead: {'window_seconds': '30', 'lag_windows': '5', 'lag_seconds': '150', 'lag_label': 'p5', 'lag_direction': 'future_target', 'alignment_scope': 'primary', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'valid': 'True', 'primary': 'True', 'multichannel': 'True', 'baseline_eps_test': '0.0', 'augmented_eps_test': '1.0', 'conditional_lift': '1.0', 'baseline_ll_test': '-5735.436874371776', 'augmented_ll_test': '-5729.368356979312', 'll_improvement': '6.068517392463946', 'baseline_bic_test': '11488.915011937048', 'augmented_bic_test': '11621.108082700091', 'bic_improvement': '-132.19307076304358', 'baseline_aic_test': '11474.873748743552', 'augmented_aic_test': '11494.736713958624', 'aic_improvement': '-19.86296521507211', 'n_subjects_evaluated': '10', 'n_subjects_positive_lift': '1', 'fraction_positive_lift': '0.1', 'reason': 'ok'}
+n_subjects_evaluated: 10
+n_subjects_positive_lift: 1
+observed_fraction_positive_lift: 0.1
+official_required_subjects: 1
+official_required_fraction: 0.1
+official_passed_by_data: True
+interpretation: The selected primary lead satisfies the adaptive F7 rule.
+
+F8 — Complexity penalty sensitivity
+------------------------------------------------------------------------------
+available: True
+selected_primary_lead: {'window_seconds': '30', 'lag_windows': '5', 'lag_seconds': '150', 'lag_label': 'p5', 'lag_direction': 'future_target', 'alignment_scope': 'primary', 'family': 'QRNG_next', 'baseline_model': 'E2_QRNG_next_given_QRNG', 'augmented_model': 'E6_QRNG_next_given_QRNG_MCEEG', 'valid': 'True', 'primary': 'True', 'multichannel': 'True', 'baseline_eps_test': '0.0', 'augmented_eps_test': '1.0', 'conditional_lift': '1.0', 'baseline_ll_test': '-5735.436874371776', 'augmented_ll_test': '-5729.368356979312', 'll_improvement': '6.068517392463946', 'baseline_bic_test': '11488.915011937048', 'augmented_bic_test': '11621.108082700091', 'bic_improvement': '-132.19307076304358', 'baseline_aic_test': '11474.873748743552', 'augmented_aic_test': '11494.736713958624', 'aic_improvement': '-19.86296521507211', 'n_subjects_evaluated': '10', 'n_subjects_positive_lift': '1', 'fraction_positive_lift': '0.1', 'reason': 'ok'}
+official_bic_improvement: -132.19307076304358
+aic_improvement: -19.86296521507211
+heldout_ll_improvement: 6.068517392463946
+observed_complexity_penalty: 144.33010554797147
+critical_complexity_penalty_scale: 0.08409219087624006
+official_passed_by_data: False
+interpretation: The selected primary lead fails official BIC, while held-out likelihood and/or AIC provide weaker support. Complexity-scaled scenarios are diagnostic only and do not replace official BIC.
+
+F12 — Epsilon saturation diagnostic
+------------------------------------------------------------------------------
+available: True
+official_eps_saturation_value: 2.0
+official_warning_fraction: 0.95
+official_saturation_fraction: 0.0
+official_warning_by_data: False
+interpretation: F12 does not raise an official diagnostic saturation warning. Exploratory threshold scenarios remain diagnostic only.
 
 Overall interpretation
 ------------------------------------------------------------------------------
-Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds.
-
+F7/F8/F12 sensitivity diagnostics completed without changing official gates. F7 uses the adaptive selected-lead rule, F8 preserves BIC as official while reporting weaker complexity sensitivities, and F12 remains diagnostic.
 ==============================================================================

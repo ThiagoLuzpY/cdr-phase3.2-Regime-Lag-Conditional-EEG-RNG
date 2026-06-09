@@ -2,34 +2,37 @@
 Phase III.2E — Window Summary
 ==============================================================================
 
-status: windows_ready_exploratory_only
+status: windows_ready
 protocol_only: False
-input_rows: 27597
-output_rows: 27597
+input_rows: 50590
+output_rows: 50590
 n_subjects: 10
 n_sessions: 10
 
-n_valid_windows: 27597
-n_primary_valid_windows: 0
-n_exploratory_valid_windows: 27597
-n_registered_window_sizes: 1
+n_valid_windows: 50590
+n_primary_valid_windows: 41394
+n_exploratory_valid_windows: 50590
+n_registered_window_sizes: 3
 n_unregistered_window_rows: 0
 
 can_proceed_to_feature_construction: True
-can_proceed_to_empirical_cdr: False
+can_proceed_to_empirical_cdr: True
 
-window_seconds_counts: {'30': 27597}
-window_status_counts: {'ready_window': 27597}
-window_scope_counts: {'exploratory': 27597}
+window_seconds_counts: {'30': 27597, '60': 13797, '90': 9196}
+window_status_counts: {'ready_window': 50590}
+window_scope_counts: {'primary': 41394, 'exploratory': 9196}
+window_derivation_counts: {'native': 27597, 'aggregated_nonoverlapping': 22993}
+native_window_seconds_counts: {'30': 27597}
+generated_window_seconds_counts: {'60': 13797, '90': 9196}
 
-sync_quality: {'min': 0.9849868015959592, 'mean': 0.9930010368948892, 'median': 0.9933133221340424, 'max': 0.9949999011330124}
-eeg_qrng_gap_ms: {'min': 0.0, 'mean': 2.026452150596079, 'median': 2.0, 'max': 10.0}
-clock_drift_abs_ms: {'min': 9.886698759679616e-05, 'mean': 1.9989631051106351, 'median': 1.686677865957682, 'max': 10.013198404040686}
+sync_quality: {'min': 0.9849868015959592, 'mean': 0.9925319503805549, 'median': 0.9927521830884748, 'max': 0.9949999011330124}
+eeg_qrng_gap_ms: {'min': 0.0, 'mean': 1.1060272781182048, 'median': 0.003, 'max': 10.0}
+clock_drift_abs_ms: {'min': 9.886698759679616e-05, 'mean': 2.468049619445251, 'median': 2.247816911525203, 'max': 10.013198404040686}
 
-ready_window_specs: ['w30s']
-primary_ready_window_specs: []
+ready_window_specs: ['w30s', 'w60s', 'w90s']
+primary_ready_window_specs: ['w30s', 'w60s']
 
 interpretation:
-Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked.
+Synchronized windows were built successfully. At least one primary registered window configuration is ready for feature construction and synchronized conditional CDR. Empirical interpretation remains controlled by source provenance and the real-data guardrail.
 
 ==============================================================================

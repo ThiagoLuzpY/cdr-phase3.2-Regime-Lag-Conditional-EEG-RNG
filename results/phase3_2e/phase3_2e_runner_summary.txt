@@ -1,6 +1,6 @@
 ==============================================================================
 CDR Phase III.2E — Runner Summary
-Synchronized EEG–QRNG protocol and gate-sensitivity version
+Safe-resume synchronized EEG–QRNG protocol
 ==============================================================================
 
 Project
@@ -8,21 +8,23 @@ Project
 project_name: Phase3.2-Regime-Lag-Conditional-EEG-RNG
 phase: Phase III.2E
 phase_title: Synchronized EEG–QRNG Protocol and Gate-Sensitivity Validation
-version: v1.0-phase3_2e_protocol_sync_gate_sensitivity
-runner_version: phase3_2e_runner_v1_full_protocol_sync_gate_sensitivity
+version: v1.1-phase3_2e_evidence_guided_surrogate_replication
+runner_version: phase3_2e_runner_v2_safe_resume_primary_lead_bic_limited_aware
 
 Execution
 ------------------------------------------------------------------------------
-started_at: 2026-06-05 00:39:28
-finished_at: 2026-06-05 21:41:30
-elapsed_seconds: 75722.18168067932
-force_rebuild: True
-skip_controls: False
+started_at: 2026-06-09 11:48:51
+finished_at: 2026-06-09 11:51:45
+elapsed_seconds: 173.35410475730896
+force_rebuild: False
+safe_resume: True
+reuse_conditional: True
+reuse_controls: True
 skip_diagnostics: False
 
 Scientific guardrail
 ------------------------------------------------------------------------------
-Phase III.2E requires real synchronized EEG + QRNG acquisition timestamps for empirical interpretation. Protocol-only outputs do not support an EEG–QRNG coupling claim.
+Real synchronized EEG + QRNG acquisition timestamps are required for an empirical claim. A surrogate run may validate the pipeline and identify a primary candidate, but cannot be presented as empirical EEG–QRNG evidence.
 
 Steps
 ------------------------------------------------------------------------------
@@ -30,17 +32,17 @@ config:
   title: Config check
   module: config.phase3_2e_config
   status: ok
-  elapsed_seconds: 0.02197432518005371
+  elapsed_seconds: 0.05833292007446289
   module_args: []
   payload_status: ok
-  protocol_only: True
+  protocol_only: False
   interpretation: Phase III.2E config loaded successfully.
 
 schema:
   title: Schema validation
   module: src.phase3_2e_schema
   status: ok
-  elapsed_seconds: 12.943268060684204
+  elapsed_seconds: 17.157293796539307
   module_args: []
   payload_status: schema_valid
   protocol_only: False
@@ -50,17 +52,17 @@ sync_validator:
   title: Synchronization validation
   module: src.phase3_2e_sync_validator
   status: ok
-  elapsed_seconds: 39.27130389213562
+  elapsed_seconds: 38.6578848361969
   module_args: []
-  payload_status: missing_payload
+  payload_status: sync_valid
   protocol_only: False
-  interpretation: Expected payload not found after step sync_validator.
+  interpretation: The synchronized EEG–QRNG input passed synchronization validation. The dataset can proceed to empirical synchronized CDR, subject to later windowing, feature, control and gate checks.
 
 loader:
   title: Synchronized loader
   module: src.phase3_2e_loader
   status: ok
-  elapsed_seconds: 52.099409103393555
+  elapsed_seconds: 43.727741956710815
   module_args: []
   payload_status: loaded_synchronized_data
   protocol_only: False
@@ -70,17 +72,17 @@ windows:
   title: Window builder
   module: src.phase3_2e_windows
   status: ok
-  elapsed_seconds: 1.4961438179016113
+  elapsed_seconds: 2.0463387966156006
   module_args: []
-  payload_status: windows_ready_exploratory_only
+  payload_status: windows_ready
   protocol_only: False
-  interpretation: Synchronized windows were built and exploratory windows are available, but no primary registered window configuration satisfies the readiness criteria. Strong claims remain blocked.
+  interpretation: Synchronized windows were built successfully. At least one primary registered window configuration is ready for feature construction and synchronized conditional CDR. Empirical interpretation remains controlled by source provenance and the real-data guardrail.
 
 features:
   title: Feature builder
   module: src.phase3_2e_features
   status: ok
-  elapsed_seconds: 1.6797852516174316
+  elapsed_seconds: 2.9908478260040283
   module_args: []
   payload_status: features_ready
   protocol_only: False
@@ -90,57 +92,59 @@ alignment:
   title: Lagged alignment
   module: src.phase3_2e_alignment
   status: ok
-  elapsed_seconds: 112.84238386154175
-  module_args: ['--force-rebuild', '--force-rebuild-features', '--force-rebuild-windows', '--force-rebuild-loader']
-  payload_status: alignment_ready_exploratory_only
+  elapsed_seconds: 0.04444408416748047
+  module_args: []
+  payload_status: alignment_ready
   protocol_only: False
-  interpretation: Lagged synchronized alignment frames were built and exploratory conditional rows are available, but no primary registered alignment is ready for strong inference.
+  interpretation: Lagged synchronized alignment frames were built successfully. At least one primary registered alignment is ready for conditional CDR.
 
 conditional:
   title: Conditional CDR
   module: src.phase3_2e_conditional
-  status: ok
-  elapsed_seconds: 439.8459107875824
-  module_args: ['--force-rebuild', '--force-rebuild-alignment']
+  status: reused
+  elapsed_seconds: 0.0
+  module_args: []
   payload_status: conditional_exploratory_leads
   protocol_only: False
-  interpretation: Conditional CDR produced exploratory positive-lift rows. These require controls, F7/F8/F12 diagnostics and final gates before interpretation.
+  interpretation: Existing conditional outputs were validated and reused; the module was not executed.
+  reuse_validation: {'valid': True, 'files': {'conditional_model_scores': {'path': 'results\\phase3_2e\\phase3_2e_conditional_model_scores.csv', 'exists': True, 'size_bytes': 53352, 'valid': True, 'rows': 147, 'reason': 'ok'}, 'conditional_pair_scores': {'path': 'results\\phase3_2e\\phase3_2e_conditional_pair_scores.csv', 'exists': True, 'size_bytes': 26514, 'valid': True, 'rows': 84, 'reason': 'ok'}, 'conditional_summary_json': {'path': 'results\\phase3_2e\\phase3_2e_conditional_summary.json', 'exists': True, 'size_bytes': 8486, 'valid': True, 'status': 'conditional_exploratory_leads', 'reason': 'ok'}, 'conditional_report': {'path': 'results\\phase3_2e\\phase3_2e_conditional_report.json', 'exists': True, 'size_bytes': 16203, 'valid': True, 'status': 'conditional_exploratory_leads', 'reason': 'ok'}}}
 
 controls:
   title: Negative controls
   module: src.phase3_2e_controls
-  status: ok
-  elapsed_seconds: 36226.37989783287
-  module_args: ['--force-rebuild', '--force-rebuild-alignment']
+  status: reused
+  elapsed_seconds: 0.0
+  module_args: []
   payload_status: controls_passed
   protocol_only: False
-  interpretation: Required synchronized negative controls passed. This permits metrics and gate evaluation, but does not by itself establish a positive claim.
+  interpretation: Existing controls outputs were validated and reused; the module was not executed.
+  reuse_validation: {'valid': True, 'passed': True, 'files': {'control_runs': {'path': 'results\\phase3_2e\\phase3_2e_control_runs.csv', 'exists': True, 'size_bytes': 477756, 'valid': True, 'rows': 2268, 'reason': 'ok'}, 'control_pair_scores': {'path': 'results\\phase3_2e\\phase3_2e_control_pair_scores.csv', 'exists': True, 'size_bytes': 3206394, 'valid': True, 'rows': 9072, 'reason': 'ok'}, 'controls_json': {'path': 'results\\phase3_2e\\phase3_2e_controls.json', 'exists': True, 'size_bytes': 38990, 'valid': True, 'status': 'controls_passed', 'reason': 'ok'}, 'controls_report': {'path': 'results\\phase3_2e\\phase3_2e_controls_report.json', 'exists': True, 'size_bytes': 38990, 'valid': True, 'status': 'controls_passed', 'reason': 'ok'}}}
 
 metrics:
   title: Metrics and official gates
   module: src.phase3_2e_metrics
   status: ok
-  elapsed_seconds: 38789.75822019577
-  module_args: ['--force-rebuild-conditional', '--force-rebuild-controls']
-  payload_status: exploratory_lead_with_saturation_warning
+  elapsed_seconds: 0.3328430652618408
+  module_args: []
+  payload_status: primary_lead_bic_limited
   protocol_only: False
-  interpretation: Exploratory synchronized conditional lift appeared, but epsilon saturation diagnostics raised a warning. The result cannot be interpreted as evidence without additional diagnostics.
+  interpretation: A registered primary lead passed controls, held-out likelihood, lift, adaptive subject consistency, lag/window registration and the multiple-comparison guard, but official BIC did not favor the augmented model. Source provenance blocks an empirical claim for this run.
 
 gate_sensitivity:
   title: F7/F8/F12 gate sensitivity
   module: src.phase3_2e_gate_sensitivity
   status: ok
-  elapsed_seconds: 0.06253814697265625
+  elapsed_seconds: 0.18323874473571777
   module_args: []
   payload_status: gate_sensitivity_completed
   protocol_only: False
-  interpretation: Gate sensitivity diagnostics completed. These diagnostics do not alter official F7/F8/F12 gates; they only explain how close the current data are to the official thresholds.
+  interpretation: F7/F8/F12 sensitivity diagnostics completed without changing official gates. F7 uses the adaptive selected-lead rule, F8 preserves BIC as official while reporting weaker complexity sensitivities, and F12 remains diagnostic.
 
 diagnostics:
   title: Final diagnostics
   module: src.phase3_2e_diagnostics
   status: ok
-  elapsed_seconds: 2.3674376010894775
+  elapsed_seconds: 6.305415153503418
   module_args: []
   payload_status: unknown
   protocol_only: False
@@ -148,27 +152,29 @@ diagnostics:
 Table summary
 ------------------------------------------------------------------------------
 loaded_rows: 27597
-window_rows: 27597
-feature_rows: 27597
-alignment_inventory_rows: 40
-conditional_model_rows: 56
-conditional_pair_rows: 32
-control_run_rows: 864
-control_pair_rows: 3456
+window_rows: 50590
+feature_rows: 50590
+alignment_inventory_rows: 28
+conditional_model_rows: 147
+conditional_pair_rows: 84
+control_run_rows: 2268
+control_pair_rows: 9072
 metrics_table_rows: 11
-f7_sensitivity_rows: 0
-f8_sensitivity_rows: 0
-f12_sensitivity_rows: 56
-alignment_total_n_valid_alignment_rows: 220576
-alignment_total_n_valid_primary_alignment_rows: 0
-alignment_total_n_valid_conditional_rows: 220576
-alignment_total_n_valid_mc_conditional_rows: 220576
-alignment_scope_counts: {'exploratory': 34, 'primary': 6}
-lag_direction_counts: {'future_target': 20, 'past_target': 15, 'concurrent': 5}
-conditional_valid_pair_rows: 32
-conditional_positive_lift_rows: 2
-conditional_max_lift: 0.8
-conditional_primary_pair_rows: 0
+f7_sensitivity_rows: 10
+f8_sensitivity_rows: 9
+f12_sensitivity_rows: 70
+alignment_total_n_valid_alignment_rows: 353650
+alignment_total_n_valid_primary_alignment_rows: 289438
+alignment_total_n_valid_conditional_rows: 353650
+alignment_total_n_valid_mc_conditional_rows: 353650
+alignment_scope_counts: {'exploratory': 14, 'primary': 14}
+lag_direction_counts: {'future_target': 20, 'past_target': 4, 'concurrent': 4}
+conditional_valid_pair_rows: 84
+conditional_primary_pair_rows: 42
+conditional_exploratory_pair_rows: 42
+conditional_positive_lift_rows: 1
+conditional_primary_positive_lift_rows: 1
+conditional_max_lift: 1.0
 
 Output files
 ------------------------------------------------------------------------------
@@ -176,7 +182,7 @@ runner_report_json: results\phase3_2e\phase3_2e_runner_report.json
 runner_summary_txt: results\phase3_2e\phase3_2e_runner_summary.txt
 synchronized_input_csv: data\raw\phase3_2e\synchronized\phase3_2e_synchronized_input.csv
 schema_report: results\phase3_2e\phase3_2e_schema_report.json
-sync_validation_report: results\phase3_2e\phase3_2e_sync_validation_report.json
+sync_validation_report: results\phase3_2e\phase3_2e_sync_report.json
 loader_report: results\phase3_2e\phase3_2e_loader_report.json
 windows_report: results\phase3_2e\phase3_2e_windows_report.json
 features_report: results\phase3_2e\phase3_2e_features_report.json
@@ -198,12 +204,19 @@ f12_sensitivity: results\phase3_2e\phase3_2e_f12_epsilon_saturation_sensitivity.
 
 Final status
 ------------------------------------------------------------------------------
-status: exploratory_lead_with_saturation_warning
-headline: Phase III.2E produced exploratory synchronized conditional leads only.
+operational_status: pipeline_completed
+scientific_status: primary_lead_bic_limited
+scientific_classification: surrogate_primary_localized_predictive_lead_bic_limited
+candidate_detected: True
+headline: A registered primary localized predictive lead was detected; only the current official global BIC gate remains unsatisfied.
 protocol_only: False
+surrogate: True
 can_claim_empirical_cdr: False
 source: diagnostics
-interpretation: Phase III.2E produced exploratory synchronized conditional leads only.
-recommendation: Document exploratory leads but do not claim empirical CDR unless controls, F7, F8, F12 and primary-gate criteria are satisfied.
+interpretation: A registered primary localized predictive lead was detected; only the current official global BIC gate remains unsatisfied.
+recommendation: Preserve the Phase III.2E v2 result as BIC-limited. A future v3 may prospectively re-evaluate F8 using effective sample size, effective complexity, state-density correction or subject-level selection, before any real-data analysis.
+failed_gates: ['F8']
+warning_gates: []
+not_evaluated_gates: ['F1', 'F5']
 
 ==============================================================================
