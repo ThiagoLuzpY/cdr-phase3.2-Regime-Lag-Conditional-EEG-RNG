@@ -13,7 +13,8 @@
 - **Phase III.0.2** (RNG-only experimental stochastic baseline validation) ✅ **COMPLETE**
 - **Phase III.0.3** (Joint EEG + RNG validation) ✅ **COMPLETE**
 - **Phase III.1** (Advanced multi-subject EEG + RNG redesign with latent and quantum-aware proxies) ✅ **COMPLETE — CLEAN NULL RESULT**
-- **Phase III.2** (Regime-aware, lagged and conditional EEG–RNG validation) 📋 **PLANNED**
+- **Phase III.2A–D** (Regime-aware, lagged, leakage-safe conditional and multichannel EEG–RNG validation) ✅ **COMPLETE — EXPLORATORY LEADS; NON-SYNCHRONIZED PUBLIC DATA; NO CONFIRMATORY CLAIM**
+- **Phase III.2E** (Synchronized EEG–QRNG protocol validation) ✅ **COMPLETE ON SURROGATE INPUT — PRIMARY LOCALIZED LEAD, BIC-LIMITED; REAL SYNCHRONIZED ACQUISITION PENDING**
 
 ---
 
@@ -39,19 +40,23 @@ Instead of relying solely on p-values, CDR requires multiple orthogonal validati
 
 ## Current empirical status
 
-The framework has now been tested across macroscopic, biological, neural, stochastic and joint experimental domains. 
+The framework has now been tested across macroscopic, biological, neural, stochastic and joint experimental domains.
 
-The current empirical status is: 
+The current empirical status is:
 
-- CDR successfully detects injected structure when the representation is adequate 
-- controls collapse cleanly across all validated phases 
-- neural domains show low but non-zero residual structure 
-- RNG-only behaves as a clean stochastic null baseline 
-- simple and advanced EEG + RNG joint models have not yet produced robust cross-domain coupling 
-- Phase III.1 produced a clean null_result under stricter multi-subject, latent and quantum-aware validation 
+- CDR successfully detects injected structure when the representation is adequate
+- controls collapse cleanly across the validated empirical phases
+- neural domains show low but non-zero residual structure
+- RNG-only behaves as a clean stochastic null baseline
+- simple and advanced EEG + RNG joint models have not produced robust cross-domain coupling
+- Phase III.1 produced a clean `null_result` under stricter multi-subject, latent and quantum-aware validation
+- Phase III.2A–D reframed the public-data experiment through sleep regimes, registered lags, leakage-safe conditional models and real two-channel EEG enrichment; it produced controlled exploratory leads but no strong candidate
+- Phase III.2A–D still used Sleep-EDF and ANU QRNG streams that were not physically co-acquired or synchronized, so their outputs cannot establish temporal EEG–QRNG coupling
+- Phase III.2E completed the synchronized EEG–QRNG analysis pipeline using a **surrogate, software-timestamp-aligned input**, not a real concurrent acquisition
+- the final Phase III.2E surrogate run identified one registered primary, multichannel and temporally localized predictive lead, but the augmented model was not favored by BIC
+- Phase III.2E therefore validates the protocol and prioritizes a real-data replication target; it does **not** constitute empirical evidence of EEG–QRNG coupling
 
-
-The next planned stage, Phase III.2, will test whether any possible EEG–RNG relationship is regime-dependent, lag-dependent, conditional, or better captured by enriched EEG features.
+The next scientific requirement is a real concurrent EEG + QRNG acquisition with a shared and auditable time base.
 
 ---
 
@@ -71,7 +76,8 @@ The CDR validation program is divided into empirical phases.
 | **Phase III.0.2**        | RNG-only baseline validation | ✅ Complete |
 | **Phase III.0.3**        | Joint EEG + RNG validation | ✅ Complete |
 | **Phase III.1** | Advanced multi-subject EEG + RNG redesign with informational, latent and quantum-aware proxy layers | ✅ Complete — clean null result | 
-| **Phase III.2** | Regime-aware, lagged and conditional EEG–RNG validation | 📋 Planned |
+| **Phase III.2A–D** | Regime-aware, lagged, leakage-safe conditional and multichannel EEG–RNG validation on non-synchronized public data | ✅ Complete — exploratory, non-confirmatory |
+| **Phase III.2E** | Synchronized EEG–QRNG protocol and gate-sensitivity validation | ✅ Complete on surrogate input — real synchronized acquisition pending |
 
 
 
@@ -725,7 +731,7 @@ This phase confirms that:
 
 ## Updated Cross-Domain Conclusions (Phase II + Phase III)
 
-Across **nine empirical domains / experimental configurations**:
+Across **nine empirical domains / experimental configurations**, plus one surrogate synchronized protocol-validation configuration:
 
 | Domain | Result |
 |--------|--------|
@@ -737,12 +743,14 @@ Across **nine empirical domains / experimental configurations**:
 | EEG-only | ε ≈ 0.04 |
 | RNG-only | ε ≈ 0 |
 | Joint EEG + RNG | ε ≈ 0.00–0.03 |
-| Advanced multi-subject EEG + RNG redesign | ε_joint ≈ 0.00; clean null_result |
+| Advanced multi-subject EEG + RNG redesign | ε_joint ≈ 0.00; clean `null_result` |
+| Regime/lag/conditional/multichannel EEG–RNG validation (Phase III.2A–D) | 13 positive conditional rows, including 7 multichannel rows; 0 strong candidates; exploratory only |
+| Synchronized EEG–QRNG protocol validation (Phase III.2E) | surrogate primary localized predictive lead; BIC-limited; non-empirical |
 
 
 ---
 
-The cumulative empirical picture now shows that CDR can distinguish at least **three broad operational regimes**:
+The cumulative picture now shows that CDR can distinguish at least **four broad operational regimes**:
 
 ### 1. Structurally sufficient systems
 
@@ -814,9 +822,21 @@ The advanced joint redesign introduced:
 
 Despite this stronger design, the final advanced joint model did **not** reveal residual joint structure beyond the EEG-only or RNG-only baselines.
 
-The result is therefore interpreted as a **clean null_result**, not as a technical failure.
+The result is therefore interpreted as a **clean `null_result`**, not as a technical failure.
 
 This indicates that, under the present public observational EEG + RNG setup, the hypothesized joint EEG–RNG structure is not detectable through a global joint-state model, even after adding latent and quantum-aware proxy layers.
+
+---
+
+### 5. Surrogate synchronized protocol-validation systems
+
+Observed in:
+
+- Phase III.2E synchronized EEG–QRNG protocol validation
+
+Phase III.2E used a software-timestamp-aligned surrogate dataset constructed from previously processed Phase III.2/III.2D artifacts. It identified one registered primary predictive lead, but the result remained limited by BIC and cannot be treated as empirical EEG–QRNG coupling.
+
+This category is kept separate from empirical domains because the EEG and QRNG streams were not acquired concurrently from real instruments.
 
 ---
 
@@ -1780,8 +1800,10 @@ The main conclusion of Phase III is therefore:
 - stochastic RNG baselines remain structurally sufficient at the tested resolution
 - simple joint EEG + RNG state construction does not show robust coupling
 - advanced joint modeling with `I_t`, `Z_t` and `Q_t` also does not reveal robust coupling under the current public observational setup
+- Phase III.2A–D found regime- and lag-localized exploratory conditional leads, but none survived all subject-consistency, complexity and saturation requirements
+- Phase III.2E identified a primary surrogate lead and a concrete real-data replication target, while remaining explicitly non-empirical
 - subject-level LOSO leads must be validated internally before interpretation
-- CDR can produce clean null results without inflating false positives
+- CDR can produce clean null and BIC-limited results without inflating false positives
 
 
 The main conclusion of Phase III is: 
@@ -1791,193 +1813,652 @@ The main conclusion of Phase III is:
 - the EEG + RNG joint domain remains unresolved 
 - a deeper test requires regime-aware, lagged and conditional modeling rather than a single global joint-state model
 
-## Future Validation Domains
+## Phase III.2 — Regime-Aware, Lagged and Conditional EEG–RNG Validation
 
-### Phase III.2 — Regime-Aware, Lagged and Conditional EEG–RNG Validation
+🔗 **GitHub repository:**
 
-The next stage of the project is **not** to repeat the Phase III.1 global joint-state model.
+https://github.com/ThiagoLuzpY/cdr-phase3.2-Regime-Lag-Conditional-EEG-RNG
 
-Phase III.1 showed that:
+---
 
-- EEG-only residual structure remains detectable
-- RNG-only remains globally consistent with a stochastic baseline
-- the advanced multi-subject joint model did not produce robust joint lift
-- isolated LOSO leads disappeared under internal subject diagnostics
-- Wake epochs dominate the Sleep-EDF records
-- global EEG + RNG state construction may be too coarse for subtle coupling hypotheses
+### Scientific motivation
 
-This motivates a new stage:
+Phase III.1 tested increasingly rich global EEG + RNG joint-state models and obtained a clean null result. Phase III.2 therefore changed the question from:
 
+```text
+Does the global EEG + RNG joint state contain residual structure?
+```
 
+to the more specific conditional questions:
 
-Phase III.2 — Regime-Aware, Lagged and Conditional EEG–RNG Validation
+```text
+Does RNG_t add predictive information about EEG_{t+1}
+beyond EEG_t itself?
 
+Does EEG_t add predictive information about RNG_{t+1}
+beyond RNG_t itself?
+```
+
+The phase was organized as one program with four completed subphases:
+
+```text
+III.2A — sleep-stage / regime-aware validation
+III.2B — lagged EEG–RNG alignment
+III.2C — leakage-safe conditional CDR
+III.2D — multichannel EEG enrichment
+```
+
+Phase III.2E was then implemented as the synchronized-protocol extension described in the following section.
+
+---
+
+### Data provenance and limitation through III.2D
+
+Phase III.2A–D used:
+
+```text
+EEG: Sleep-EDF Expanded
+RNG: ANU Quantum Random Number Generator
+subjects: 10
+EEG epochs: 27,597
+valid next-state rows: 27,587
+epoch duration: 30 seconds
+```
+
+The EEG and ANU QRNG streams were **not physically co-acquired and did not share an experimental clock**.
+
+Their pairing was an analytical alignment inherited from the public-data design. Consequently, III.2A–D can evaluate representation, conditional prediction, controls and model behavior, but cannot establish real-time EEG–QRNG coupling.
+
+---
+
+## Phase III.2A — Regime-Aware Sleep-Stage Validation
+
+### Objective
+
+Determine whether a weak conditional relationship could be diluted by a global kernel that mixes physiologically distinct Wake and sleep states.
+
+### Regimes
+
+| Regime | Definition | Epochs | Subjects |
+|--------|------------|-------:|---------:|
+| `full` | Wake + N1 + N2 + N3 + REM | 27,597 | 10 |
+| `no_wake` | N1 + N2 + N3 + REM | 8,985 | 10 |
+| `stable_sleep` | N2 + N3 | 6,078 | 10 |
+| `deep_sleep` | N3 only | 1,267 | 10 |
+| `rem_only` | REM only | 1,902 | 10 |
+| `transition_epochs` | epochs surrounding stage changes | 4,388 | 10 |
+
+All six registered regimes satisfied the validity requirements.
+
+### Methodological result
+
+III.2A established a regime inventory that allowed the later conditional analysis to distinguish:
+
+- global behavior
+- sleep-only behavior
+- stable non-REM behavior
+- deep-sleep behavior
+- REM behavior
+- stage-transition behavior
+
+This prevented a global Wake-dominated kernel from being the only representation tested.
+
+---
+
+## Phase III.2B — Lagged EEG–RNG Alignment
+
+### Objective
+
+Test temporal alignment sensitivity rather than assuming that any possible relationship must occur at lag zero.
+
+### Registered lags
+
+```text
+-5, -3, -1, 0, +1, +3, +5 epochs
+```
+
+At 30 seconds per epoch:
+
+```text
+-150 s, -90 s, -30 s, 0 s, +30 s, +90 s, +150 s
+```
+
+Lag convention:
+
+```text
+lag > 0:
+EEG_t aligned with future RNG
+
+lag < 0:
+RNG_t aligned with future EEG
+
+lag = 0:
+direct analytical alignment
+```
+
+### Result
+
+```text
+6 regimes × 7 lags = 42 regime/lag frames
+valid lagged frames: 42
+```
+
+Lag construction prevented transitions from crossing subject or recording boundaries.
+
+III.2B was interpreted strictly as **temporal alignment sensitivity**, not as evidence of causal direction.
+
+---
+
+## Phase III.2C — Leakage-Safe Conditional CDR
+
+### Objective
+
+Compare self-transition baselines with cross-domain augmented models while preventing reference, calibration and test leakage.
+
+### Registered single-channel models
+
+```text
+C0:
+P(EEG_{t+1} | EEG_t)
+
+C1:
+P(EEG_{t+1} | EEG_t, RNG_t)
+
+C2:
+P(RNG_{t+1} | RNG_t)
+
+C3:
+P(RNG_{t+1} | RNG_t, EEG_t)
+```
+
+### Leakage-safe estimation
+
+The corrected estimator used three separated partitions:
+
+```text
+reference/train:
+estimate P₀
+
+calibration:
+estimate Δχ and select ε
+
+test holdout:
+evaluate the selected ε out of sample
+```
+
+If the selected `ε` did not improve held-out likelihood relative to `ε = 0`, the test epsilon was reset to zero.
+
+This correction was also propagated to target shuffles and negative controls.
+
+---
+
+## Phase III.2D — Multichannel EEG Enrichment
+
+### Objective
+
+Test whether a richer neural state representation improves sensitivity without weakening controls.
+
+### EEG channels
+
+```text
+primary: EEG Fpz-Cz
+secondary: EEG Pz-Oz
+```
+
+### Multichannel representation
+
+The enrichment used:
+
+- primary and secondary delta power
+- primary and secondary alpha power
+- interchannel delta and alpha ratios
+- fronto-parietal delta and alpha shifts
+- multichannel activation and cross-channel information scores
+
+Final multichannel state:
+
+```text
+9 EEG states
+3 multichannel information bins
+27,587 valid multichannel conditional rows
+approximately 3,065 valid transitions per state
+```
+
+The multichannel state space therefore remained dense relative to the available transitions.
+
+### Added conditional models
+
+```text
+D0:
+P(MCEEG_{t+1} | MCEEG_t)
+
+D1:
+P(MCEEG_{t+1} | MCEEG_t, RNG_t)
+
+D2:
+P(RNG_{t+1} | RNG_t, MCEEG_t)
+```
+
+---
+
+## Combined Phase III.2A–D Results
+
+### Conditional analysis
+
+```text
+valid pair rows: 168
+primary pair rows: 4
+positive conditional-lift rows: 13
+primary positive rows: 1
+strong candidate rows: 0
+
+multichannel pair rows: 84
+multichannel positive-lift rows: 7
+multichannel strong candidate rows: 0
+```
+
+Representative maximum conditional lift:
+
+```text
+regime: deep_sleep
+lag: +3 epochs / +90 seconds
+baseline: C2_RNG_next_given_RNG
+augmented: D2_RNG_next_given_RNG_MCEEG
+
+baseline_eps_test: 0.0
+augmented_eps_test: 0.8
+conditional_lift: 0.8
+BIC_improvement: -66.078581
+```
+
+Another multichannel deep-sleep row showed positive direction in 4 of 8 evaluated subjects, but its held-out likelihood and complexity criteria did not support a strong candidate.
+
+The only primary positive row occurred in:
+
+```text
+regime: stable_sleep
+lag: 0
+baseline: C2_RNG_next_given_RNG
+augmented: C3_RNG_next_given_RNG_EEG
+
+conditional_lift: 0.8
+subjects_positive: 4 / 10
+BIC_improvement: -134.645738
+```
+
+Thus, positive epsilon separation alone was insufficient for confirmation.
+
+---
+
+### Negative controls
+
+The Phase III.2A–D control suite used six multichannel-aware control families:
+
+- circular RNG shift
+- conditional target shuffle
+- sleep-stage-preserving RNG shuffle
+- subject mismatch
+- within-subject EEG shuffle
+- within-subject RNG shuffle
+
+Execution totals:
+
+```text
+control runs: 216
+conditional pair results under controls: 864
+multichannel control pair results: 432
+multichannel strong candidates under controls: 0
+```
+
+All six required control families passed.
+
+```text
+minimum control-collapse fraction: 0.805556
+required threshold: 0.75
+aggregate collapsed fraction: approximately 0.8843
+failed control types: none
+```
+
+This indicates that the exploratory rows were not accepted merely because the control system was absent or globally broken. It does not convert them into confirmatory evidence.
+
+---
+
+### Gates
+
+| Gate | Meaning | Result |
+|------|---------|--------|
+| **F2** | Negative-control collapse | PASS |
+| **F3** | Held-out generalization | PASS |
+| **F6** | Conditional lift | PASS |
+| **F7** | Subject-level consistency | **FAIL** |
+| **F8** | Complexity penalty / BIC | **FAIL** |
+| **F9** | Registered lag localization | PASS |
+| **F10** | Regime localization | PASS |
+| **F11** | Multiple-comparison guard | PASS |
+| **F12** | Epsilon-saturation diagnostic | **WARNING** |
+
+`F1` and `F5` were not evaluated in the standalone metrics report and were not counted as scientific failures.
+
+F12 raised a substantial boundary diagnostic:
+
+```text
+model rows at candidate epsilon boundary: 294 / 294
+pair rows with either model saturated: 89 / 168
+either-model pair saturation fraction: 0.529762
+official epsilon boundary: 0.8
+```
+
+### Final status through III.2D
+
+```text
+exploratory_lead_with_saturation_warning
+```
+
+Scientific interpretation:
+
+> Phase III.2A–D increased analytical resolution and produced controlled exploratory conditional leads, especially after real two-channel EEG enrichment. However, no row simultaneously satisfied lift, subject consistency, held-out support, BIC and saturation requirements. The result does not support a confirmatory EEG–RNG coupling claim.
+
+The completed A–D sequence justified the synchronized-protocol and gate-sensitivity work undertaken in Phase III.2E.
+
+---
+
+## Phase III.2E — Synchronized EEG–QRNG Protocol Validation (Completed on Surrogate Input)
+
+🔗 **GitHub repository:**
+
+https://github.com/ThiagoLuzpY/cdr-phase3.2-Regime-Lag-Conditional-EEG-RNG
 
 ---
 
 ### Objective
 
-Test whether the absence of robust EEG–RNG joint structure in Phase III.1 is due to limitations of global state construction.
+Phase III.2E implemented the synchronized EEG–QRNG protocol required to test whether conditional predictive structure can be localized across registered temporal windows and lags.
 
-Phase III.2 will investigate whether any possible EEG–RNG effect is:
+The phase was designed to evaluate:
 
-- regime-dependent
-- sleep-stage-dependent
-- lag-dependent
-- conditional rather than directly joint
-- better captured through enriched EEG features
-
----
-
-### Planned submodules
-
-#### III.2A — Regime-aware / sleep-stage analysis
-
-Phase III.2A will test whether the EEG–RNG relationship changes when the data are separated by sleep regime.
-
-Planned regimes:
-
-
-```
-full
-no_wake
-stable_sleep = N2 + N3
-deep_sleep = N3
-REM_only
-transition_epochs
-```
-
-Purpose:
-
-- test whether Wake dominates or dilutes the joint signal
-- evaluate whether sleep-only states show stronger residual structure
-- separate global null results from regime-specific behavior
+- schema and synchronization contracts
+- leakage-safe reference/calibration/test estimation
+- registered primary and exploratory windows
+- lag-localized conditional models
+- multichannel EEG enrichment
+- synchronized negative controls
+- holdout behavior
+- subject-level persistence
+- complexity penalties
+- multiple-comparison safeguards
+- epsilon-saturation diagnostics
 
 ---
 
-#### III.2B — Lagged EEG–RNG alignment
+### Data provenance and scientific guardrail
 
-Phase III.2B will test whether the possible relationship depends on temporal offset.
+No public dataset containing concurrently acquired EEG and QRNG streams with a shared, auditable time base was available.
 
-Pre-registered lags:
+The analyzed input was therefore generated by the Phase III.2E surrogate builder from previously processed Phase III.2/III.2D artifacts.
 
+The generated dataset explicitly records:
 
-```
--5, -3, -1, 0, +1, +3, +5 epochs
-```
-
-With 30-second EEG epochs, these correspond to:
-
-
-```
--150 s, -90 s, -30 s, 0 s, +30 s, +90 s, +150 s
+```text
+source_mode = surrogate_from_phase3_2d
+sync_mode = software_timestamp_aligned
+empirical_claim_allowed = False
 ```
 
-Purpose:
+The final analyzed run used:
 
-- test temporal alignment sensitivity
-- avoid assuming that any possible relationship must occur at lag 0
-- preserve falsifiability by limiting lags to a fixed pre-defined set
+```text
+inject_signal = False
+inject_strength = 0.0
+```
+
+The builder programmatically generated synchronized timestamps, small clock-drift values, synchronization-quality metadata and schema-required derived fields. When source features were unavailable, the builder reconstructed or approximated them from existing processed features.
+
+Therefore:
+
+> Phase III.2E validates the analytical protocol and identifies a candidate configuration for real-data replication. It does not provide empirical evidence of EEG–QRNG coupling.
 
 ---
 
-#### III.2C — Conditional CDR
+### Surrogate dataset
 
-Phase III.2C will test conditional relationships rather than direct joint-state coupling.
-
-Main comparisons:
-
-
-```
-C0: P(EEG_{t+1} | EEG_t)
-C1: P(EEG_{t+1} | EEG_t, RNG_t)
-
-C2: P(RNG_{t+1} | RNG_t)
-C3: P(RNG_{t+1} | RNG_t, EEG_t)
+```text
+rows: 27,597
+subjects: 10
+sessions: 10
+native window: 30 seconds
 ```
 
-Purpose:
-
-- test whether RNG_t adds information about EEG_{t+1}
-- test whether EEG_t adds information about RNG_{t+1}
-- avoid diluting signal in a large global joint state
-- distinguish conditional influence from simple joint-state structure
-
-This is expected to be the most important Phase III.2 module.
+The input preserved the multi-subject EEG structure used in the preceding Phase III analyses while creating a schema-compliant synchronized EEG–QRNG table for end-to-end protocol testing.
 
 ---
 
-#### III.2D — Multi-channel EEG enrichment
+### Registered analysis grid
 
-Phase III.2D will evaluate whether a richer EEG representation improves detection.
+Final populated windows:
 
-The current validated EEG channel is:
-
-
-```
-EEG Fpz-Cz
-```
-
-Future enrichment may include:
-
-
-```
-EEG Pz-Oz
+```text
+30 s
+60 s
+90 s
 ```
 
-and derived cross-channel features such as:
+Primary windows:
 
-- power differences
-- spectral balance differences
-- simple epoch-level channel correlation
-- cross-channel spectral ratios
+```text
+30 s
+60 s
+```
 
-Purpose:
+Exploratory window:
 
-- test whether a single EEG channel is too limited
-- evaluate whether spatial EEG structure improves CDR sensitivity
-- prepare for future synchronized EEG + QRNG experiments
+```text
+90 s
+```
+
+Registered lags:
+
+```text
+-1, 0, +1, +2, +3, +4, +5 windows
+```
+
+At the native 30-second resolution, the detected candidate at `+5` corresponds to:
+
+```text
++150 seconds
+```
+
+The final conditional analysis produced:
+
+```text
+84 valid pair comparisons
+42 primary comparisons
+42 non-primary comparisons
+```
 
 ---
 
-#### III.2E — Future synchronized EEG + QRNG protocol
+### Primary localized predictive lead
 
-The current EEG and RNG data were not collected simultaneously.
+Exactly one positive conditional-lift row was detected, and it was located inside the registered primary region.
 
-A stronger future experiment would require:
-
-
+```text
+window_seconds: 30
+lag_windows: +5
+lag_seconds: +150
+direction: future_target
+scope: primary
+multichannel: True
 ```
+
+Model comparison:
+
+```text
+baseline:
+E2_QRNG_next_given_QRNG
+
+augmented:
+E6_QRNG_next_given_QRNG_MCEEG
+```
+
+Candidate values:
+
+```text
+baseline_eps_test: 0.0
+augmented_eps_test: 1.0
+conditional_lift: 1.0
+
+held-out_ll_improvement: +6.068517
+subjects_evaluated: 10
+subjects_with_positive_lift: 1
+fraction_positive_lift: 0.10
+```
+
+This result is classified as a **primary localized predictive lead**, not as a confirmed empirical effect.
+
+---
+
+### Negative controls
+
+The final control stage evaluated:
+
+```text
+2,268 control runs
+9,072 conditional pair results
+9 control families
+12 replicates per frame/control combination
+```
+
+The final required-control collapse result was:
+
+```text
+control_collapse_value: 0.8849206349
+required_threshold: 0.75
+failed_required_control_types: none
+```
+
+All required synchronized negative-control families passed the final collapse criterion.
+
+The controls included temporal, within-subject, cross-subject, synchronization-breaking and target-randomization procedures. Weak residual artifacts were tracked separately from strong-candidate survival.
+
+---
+
+### Official gate results
+
+| Gate | Meaning | Result |
+|------|---------|--------|
+| **F2** | Required negative-control collapse | PASS |
+| **F3** | Held-out generalization | PASS |
+| **F6** | Positive conditional lift | PASS |
+| **F7** | Adaptive subject consistency | PASS |
+| **F8** | Complexity penalty / BIC | **FAIL** |
+| **F9** | Registered lag localization | PASS |
+| **F10** | Registered window localization | PASS |
+| **F11** | Multiple-comparison guard | PASS |
+| **F12** | Epsilon-saturation diagnostic | PASS |
+
+Final gate count:
+
+```text
+8 of 9 official gates passed
+```
+
+---
+
+### F8 complexity result
+
+The sole failed official gate was F8.
+
+```text
+baseline_BIC: 11488.915012
+augmented_BIC: 11621.108083
+BIC_improvement: -132.193071
+```
+
+Because lower BIC is preferred, the baseline model remained favored after penalizing the augmented model for its additional parameters.
+
+The zero boundary for `BIC_improvement >= 0` is mathematically natural: it marks the point at which the augmented model becomes at least as favorable as the baseline under BIC.
+
+However, treating BIC as an absolute veto for this specific surrogate architecture is a methodological design choice that has not yet been externally calibrated for synchronized EEG–QRNG CDR. The result should therefore be reported transparently as **BIC-limited**, rather than interpreted as proof that no predictive structure exists.
+
+The held-out likelihood improvement and the BIC result jointly indicate:
+
+- the augmented model predicted the held-out sequence better
+- the improvement was not large enough to compensate for its added complexity under standard BIC
+- the candidate remains suitable for targeted real-data replication
+- the candidate is not a strong or confirmed empirical CDR effect
+
+---
+
+### Epsilon saturation and multiple comparisons
+
+The F12 diagnostic found no official-grid epsilon saturation:
+
+```text
+model_rows: 147
+saturated_model_rows: 0
+pair_rows: 84
+saturated_pair_rows: 0
+saturation_fraction: 0.0
+```
+
+The multiple-comparison guard also passed:
+
+```text
+valid_tests: 84
+positive_tests: 1
+primary_positive_tests: 1
+exploratory_positive_tests: 0
+```
+
+Thus, the sole positive row was localized in the registered primary region rather than emerging only from the exploratory search space.
+
+---
+
+### Final scientific classification
+
+```text
+scientific_status:
+primary_lead_bic_limited
+
+scientific_classification:
+surrogate_primary_localized_predictive_lead_bic_limited
+```
+
+The final interpretation is:
+
+> Phase III.2E found a registered, multichannel and temporally localized surrogate predictive lead that survived required controls, holdout, adaptive subject consistency, localization, multiple-comparison and saturation checks, but was not justified by the standard BIC complexity penalty.
+
+This result supports protocol readiness and a focused real-data replication target. It does not support a claim of physical, causal or empirical EEG–QRNG coupling.
+
+---
+
+### Required next experiment
+
+The next stage requires real concurrent acquisition:
+
+```text
 real-time EEG
 +
 real-time QRNG
 +
-shared timestamps
+shared hardware or validated software clock
 +
 same subject
 +
 same session
 +
-controlled sleep, rest, meditation or cognitive conditions
+recorded synchronization diagnostics
 ```
 
-This future design would test a much stronger version of the EEG–QRNG hypothesis than the current public-data observational setup.
+The primary replication target identified by the surrogate run is:
 
----
+```text
+window: 30 seconds
+lag: +5 windows / +150 seconds
+direction: EEG multichannel information added to QRNG-next prediction
+```
 
-### Scientific meaning of Phase III.2
-
-Phase III.2 will answer a more refined question than Phase III.1:
-
-> If a deeper EEG–RNG relationship exists, does it appear only under specific neural regimes, temporal lags, or conditional transition structures rather than in a global joint-state model?
-
-The goal is not to force a positive result.
-
-The goal is to test whether the Phase III.1 null result is:
-
-- a true null under public EEG + RNG data
-- a limitation of global joint-state representation
-- or a sign that more precise regime-aware and conditional modeling is required
+This target must remain pre-registered before the real synchronized dataset is analyzed.
 
 ---
 
@@ -1997,13 +2478,18 @@ cdr-phase1-validation/
 │   └── phase3_config_joint.py
 │   └── phase3_config_rng.py
 │   └── phase3_1_config.py
+│   └── phase3_2_config.py
+│   └── phase3_2e_config.py
 │
 ├── data/
 │   ├── interim/
 │       ├── interion/
 │       │   ├── phase3_1/
+│       │   ├── phase3_2/
+│       │   ├── phase3_2e/
 │   ├── processed/
-│       ├── phase3_1/
+│       ├── phase3_2/
+│       ├── phase3_2e/
 │   └── raw/
 │       ├── ecology/
 │       ├── fmri/
@@ -2012,6 +2498,10 @@ cdr-phase1-validation/
 │       ├── rng/
 │       ├── opsp/
 │       └── protein/
+│       └── phase3_2e/
+│
+├── docs/
+│   ├── phase3_2e_synchronized_eeg_qrgn_protocol.md/
 │
 ├── results/
 │   ├── golden_run_phase1_plus_v1/
@@ -2024,6 +2514,8 @@ cdr-phase1-validation/
 │   ├── phase3_joint/
 │   ├── phase3_rng/
 │   ├── phase3_1/
+│   ├── phase3_2/
+│   ├── phase3_2e/
 │   └── .gitkeep
 │
 ├── scripts/
@@ -2031,6 +2523,10 @@ cdr-phase1-validation/
 │   ├── make_audit_bundle.py
 │   ├── download_qrng.py
 │   └── run_phase1_plus_full.py
+│   └── make_audit_bundle.py
+│   └── make_phase3_2_audit_bundle.py
+│   └── make_phase3_2e_audit_bundle.py
+│   └── build_phase3_2e_surrogate_sync_input.py
 │
 ├── src/
 │   ├── kernels/
@@ -2076,6 +2572,28 @@ cdr-phase1-validation/
 │   ├── phase3_1_loader.py
 │   ├── phase3_1_metrics.py
 │   ├── phase3_1_runner.py
+│   ├── phase3_2_conditional.py
+│   ├── phase3_2_controls.py
+│   ├── phase3_2_diagnostics.py
+│   ├── phase3_2_features.py
+│   ├── phase3_2_lagging.py
+│   ├── phase3_2_loader.py
+│   ├── phase3_2_metrics.py
+│   ├── phase3_2_multichannel.py
+│   ├── phase3_2_regimes.py
+│   ├── phase3_2_runner.py
+│   ├── phase3_2e_alignment.py
+│   ├── phase3_2e_conditional.py
+│   ├── phase3_2e_controls.py
+│   ├── phase3_2e_diagnostics.py
+│   ├── phase3_2e_features.py
+│   ├── phase3_2e_gate_sensitivity.py
+│   ├── phase3_2e_loader.py
+│   ├── phase3_2e_metrics.py
+│   ├── phase3_2e_runner.py
+│   ├── phase3_2e_schema.py
+│   ├── phase3_2e_sync_validator.py
+│   ├── phase3_2e_windows.py
 │   ├── protein_loader.py
 │   ├── rng_loader.py
 │   ├── statistics.py
@@ -2145,9 +2663,35 @@ python -m src.phase3_runner_joint
 
 **Advanced Phase III.1 EEG + RNG redesign:**
 ```bash
- python -m src.phase3_1_runner 
- python -m src.phase3_1_diagnostics
- ```
+python -m src.phase3_1_runner
+python -m src.phase3_1_diagnostics
+```
+
+**Run Phase III.2A–D (regime, lag, conditional and multichannel):**
+```bash
+python -m src.phase3_2_runner
+python -m src.phase3_2_diagnostics
+```
+
+**Build the Phase III.2A–D audit bundle:**
+```bash
+python scripts/make_phase3_2_audit_bundle.py
+```
+
+**Build the Phase III.2E surrogate synchronized input:**
+```bash
+python scripts/build_phase3_2e_surrogate_sync_input.py --force
+```
+
+**Run the complete Phase III.2E pipeline:**
+```bash
+python -m src.phase3_2e_runner
+```
+
+**Build the Phase III.2E audit bundle:**
+```bash
+python scripts/make_phase3_2e_audit_bundle.py
+```
 
 **Results saved in:**
 ```
@@ -2161,6 +2705,9 @@ results/phase3_rng/
 results/phase3_joint/
 results/phase3_1/
 results/phase3_1/diagnostics/
+results/phase3_2/
+results/phase3_2/diagnostics/
+results/phase3_2e/
 ```
 
 ---
@@ -2178,9 +2725,9 @@ The pipeline ensures reproducibility via:
 - ✅ Explicit separation between observational domains, neural domains, stochastic baselines, and joint domains
 - ✅ Stable compact state-space redesign when sparsity becomes dominant
 
-Additional reproducibility safeguards introduced in Phase III.1: 
+Additional reproducibility safeguards introduced in Phase III.1:
 
-- ✅ Multi-subject EEG loading with explicit subject identifiers 
+- ✅ Multi-subject EEG loading with explicit subject identifiers
 - ✅ Prevention of artificial transitions across subject / recording boundaries 
 - ✅ RNG alignment audit 
 - ✅ Corrected proxy ablations using within-subject shuffle rather than constant replacement 
@@ -2188,6 +2735,33 @@ Additional reproducibility safeguards introduced in Phase III.1:
 - ✅ LOSO leads separated from within-subject persistent effects 
 - ✅ Explicit BIC / complexity-penalty evaluation 
 - ✅ Separation between registered model results and post-run diagnostics
+
+Additional reproducibility safeguards introduced in Phase III.2A–D:
+
+- ✅ Explicit sleep-stage regime inventory
+- ✅ Registered lag set with subject/recording boundary protection
+- ✅ Separation of primary and exploratory regime/lag tests
+- ✅ Leakage-safe reference/calibration/test partitions
+- ✅ Held-out confirmation of calibration-selected epsilon
+- ✅ Multichannel state-density diagnostics
+- ✅ Stage-preserving, temporal, within-subject and cross-subject controls
+- ✅ Explicit BIC and epsilon-saturation diagnostics
+- ✅ Separate reporting of positive rows and strong candidates
+- ✅ Explicit statement that Sleep-EDF and ANU QRNG were not physically synchronized
+
+Additional reproducibility safeguards introduced in Phase III.2E:
+
+- ✅ Explicit `source_mode`, `sync_mode` and `empirical_claim_allowed` fields
+- ✅ Deterministic surrogate generation under a fixed random seed
+- ✅ Explicit `inject_signal` and `inject_strength` provenance
+- ✅ Schema and synchronization validation before conditional analysis
+- ✅ Registered primary and exploratory windows and lags
+- ✅ Leakage-safe reference/calibration/test estimation
+- ✅ Separate tracking of primary and exploratory positive rows
+- ✅ Required negative-control families with repeated runs
+- ✅ Cache fingerprints tied to configuration and upstream outputs
+- ✅ Multiple-comparison and epsilon-saturation diagnostics
+- ✅ Explicit prohibition of empirical claims from surrogate input
 
 All experiments are deterministic under identical configurations.
 
@@ -2340,4 +2914,4 @@ Thanks to the open scientific ecosystem:
 ---
 
 **Last updated:** June 2026  
-**Status:** Phase I complete ✅ | Phase II.1A complete ✅ | Phase II.1B complete ✅ | Phase II.2 complete ✅ | Phase II.3 complete ✅ | Phase II.4 complete ✅ | Phase III.0.1 complete ✅ | Phase III.0.2 complete ✅ | Phase III.0.3 complete ✅ | Phase III.1 complete ✅ | Phase III.2 planned 📋
+**Status:** Phase I complete ✅ | Phase II.1A complete ✅ | Phase II.1B complete ✅ | Phase II.2 complete ✅ | Phase II.3 complete ✅ | Phase II.4 complete ✅ | Phase III.0.1 complete ✅ | Phase III.0.2 complete ✅ | Phase III.0.3 complete ✅ | Phase III.1 complete ✅ | Phase III.2A–D exploratory public-data validation complete ✅ | Phase III.2E surrogate protocol validation complete ✅ | Real synchronized EEG–QRNG acquisition pending
