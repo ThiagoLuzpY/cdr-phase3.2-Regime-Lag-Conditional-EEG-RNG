@@ -975,6 +975,88 @@ Taken together, these results support the following view:
 
 ---
 
+## Emergent Scientific Findings
+
+The cross-domain CDR validation program has produced several findings that extend beyond the outcome of any single phase. These findings should be interpreted as **project-level scientific and methodological hypotheses** supported by the current experiments, not as universal laws. Each remains open to external replication, formal analysis and domain-specific refinement. Not all of these observations were defined as primary pre-registered hypotheses; several emerged progressively across successive validation phases and are therefore reported as scientifically relevant patterns for future testing rather than as confirmatory conclusions.
+
+| Finding | Evidence observed in CDR | Scientific implication | Current status |
+|---------|---------------------------|------------------------|----------------|
+| **Injectability classes** | Injected structure was recovered robustly in engineered, mobility, ecological and molecular systems, typically at approximately `ε_inj = 0.30` with near-zero recovery error. fMRI, EEG, RNG and joint EEG–RNG representations generally supported only lower injections around `ε_inj = 0.05`, often near the registered tolerance boundary. | Injection recovery may measure not only estimator correctness, but also how readily a domain and its chosen representation can express an imposed perturbation. The observed contrast may reflect temporal structure, state-space density, signal-to-noise ratio, discretization, kernel adequacy or the specific injection mechanism; the causal explanation has not yet been established. | **Supported across multiple domains; numerical contrast observed, but formal classification and mechanism remain provisional.** |
+| **Dual meaning of `ε = 0`** | Near-zero epsilon appeared both in the RNG-only stochastic baseline and in strongly constrained or structurally sufficient systems such as energy, mobility, ecology and protein dynamics. | `ε = 0` does not have a unique scientific meaning. It may indicate stochastic absence of structure or that the reference kernel already explains the system sufficiently. | **Strongly supported as an interpretive distinction.** |
+| **Neural domains occupy an intermediate operational regime** | Across the tested configurations, fMRI produced approximately `ε ≈ 0.06–0.08` and EEG approximately `ε ≈ 0.04`, placing both above the near-zero stochastic and structural-sufficiency baselines but below strongly recoverable injected structure. | The tested neural datasets may retain low residual organization not fully absorbed by the reference kernel at the selected resolution. Because this pattern currently rests on a limited number of neural datasets and representations, it should not yet be generalized to neural dynamics as a whole. | **Cross-dataset pattern observed; scientifically suggestive but still provisional.** |
+| **Joint-state dilution** | In Phase III.1, EEG-only reached approximately `ε_test = 0.10`, while the advanced joint EEG + RNG model remained at `ε_joint_test = 0.00`. Several individual-domain signals disappeared after joint-state construction. | Combining domains can suppress rather than amplify detectable structure when signals are weak, orthogonal, conditionally related or diluted by state-space expansion. | **Supported by Phase III.1; representation-dependent.** |
+| **Conditional models can reveal structure hidden from global joint states** | Phase III.2A–D produced 13 positive conditional-lift rows, including 7 multichannel rows, after the global joint models of Phase III.1 had produced a clean null result. None became a strong candidate. | A relationship may be conditional, regime-specific or lag-localized rather than visible in a single global joint state. Positive conditional lift remains only a lead until all validation gates pass. | **Supported as a methodological advantage, not as proof of coupling.** |
+| **Regime dependence matters in neural systems** | Phase III.2A separated full, no-wake, stable-sleep, deep-sleep, REM and transition regimes. Several of the largest exploratory lifts occurred in restricted sleep regimes rather than in the full dataset. | A single global neural kernel may average across physiologically distinct regimes and conceal localized structure. | **Supported as an analysis requirement; empirical coupling remains unconfirmed.** |
+| **Temporal localization is more informative than unrestricted lag search** | Phase III.2B used a pre-registered lag set and generated 42 valid regime/lag frames. Phase III.2E later localized its only primary surrogate lead at a 30-second window and `+5` windows (`+150 s`). | Pre-registering a compact lag grid preserves falsifiability while allowing temporal structure to be localized. Lag association must not be interpreted automatically as causality. | **Methodologically supported; causal interpretation prohibited.** |
+| **State-space density is a core stability variable** | Sparse high-dimensional states produced unstable estimation, while compact representations were more reproducible. Phase III.2D maintained 9 multichannel EEG states with approximately 3,065 valid transitions per state. | Effective state-space size must remain small relative to observed transitions. Transition density should be treated as a first-class diagnostic rather than a secondary implementation detail. | **Strongly supported operationally.** |
+| **The heuristic `n_states ≤ √n_transitions` is useful but non-universal** | The heuristic emerged after repeated failures of sparse EEG, RNG and joint representations and was consistent with the improved stability of compact models. | The heuristic can serve as a conservative design screen, but cannot replace empirical checks of occupancy, transition density, controls, holdout and sensitivity. | **Provisional design heuristic.** |
+| **Subject heterogeneity can mimic generalization or represent a rare individual effect** | Phase III.1 LOSO leads disappeared under within-subject chronological diagnostics, showing that cross-subject structure can reflect subject shift or split dependence. In Phase III.2A–D, positive global rows often lacked sufficient subject-level persistence. At the same time, biological effects may be genuinely heterogeneous and detectable in only a minority of individuals. | Cross-subject train/test separation may detect subject shift rather than a persistent within-subject effect, so LOSO leads require internal chronological validation. A pre-registered lead observed in even `1/10` subjects may be scientifically useful for targeted replication if it survives controls, within-subject holdout, localization and non-saturation checks; it must not be interpreted as population-level generalization without independent replication. | **Artifact risk strongly supported; rare-effect interpretation retained as a testable biological hypothesis.** |
+| **BIC is an essential safeguard against flexible models** | Phase III.1 strongly penalized the 703-parameter advanced model. In Phase III.2A–D, positive lifts remained BIC-negative. In Phase III.2E, the primary surrogate lead improved held-out likelihood but had `BIC_improvement = -132.193071`. | Richer models must justify their added complexity. Conditional lift or likelihood improvement alone is insufficient for a strong CDR claim. | **Strongly supported as a safeguard.** |
+| **BIC-limited does not mean mathematically identical to no predictive structure** | The Phase III.2E augmented model improved held-out log-likelihood by approximately `+6.07` but remained disfavored after the BIC parameter penalty. | A result can contain predictive improvement while remaining statistically unjustified as the preferred model. Such outcomes should be reported as **BIC-limited leads**, not as confirmed effects or simple nulls. | **Supported as a reporting distinction; veto policy requires further methodological review.** |
+| **Epsilon saturation is a model-resolution diagnostic** | Phase III.2A–D showed substantial boundary saturation at the then-registered epsilon maximum, producing an F12 warning. The revised Phase III.2E grid produced zero official saturation rows. | Boundary saturation may indicate that the epsilon search grid, state representation or estimator resolution is insufficient. It should trigger diagnostics rather than be treated automatically as evidence for a large effect. | **Supported as a necessary diagnostic.** |
+| **Negative controls must distinguish weak artifacts from strong-candidate survival** | Phase III.2 controls occasionally produced isolated positive lifts, but no multichannel strong candidates survived. Phase III.2E required repeated control families and passed its aggregate collapse criterion. | Controls should not require every transformed run to be numerically zero. Their main role is to show that the complete candidate pattern does not persist under structure-breaking transformations. | **Supported by the revised control framework.** |
+| **Primary versus exploratory separation is scientifically consequential** | Phase III.2A–D produced many exploratory positive rows but no strong candidate. Phase III.2E produced exactly one positive row, located inside the registered primary region, with zero exploratory positives. | A positive result inside a pre-registered primary region carries a different evidential status from one found only after exploratory search, although it still requires all other gates. | **Supported as a core reporting rule.** |
+| **Clean null results are scientifically valid outputs** | Phase III.1 passed injection, controls, holdout and sensitivity while rejecting the advanced joint hypothesis under lift, subject and complexity gates. | CDR can reject theoretically attractive models without converting complexity or post-hoc flexibility into a positive claim. | **Strongly supported by Phase III.1.** |
+| **Synchronization defines the empirical boundary** | Phase III.2A–D used independently collected Sleep-EDF and ANU QRNG streams. Phase III.2E used software-generated surrogate synchronization with `empirical_claim_allowed = False`. | Non-synchronized or surrogate-aligned data can validate pipelines and identify replication targets, but cannot establish physical EEG–QRNG coupling. | **Definitive methodological boundary.** |
+
+---
+
+### Interpretive rules emerging from the validation program
+
+The findings above support the following project-level rules:
+
+1. **Epsilon must never be interpreted alone.**  
+   Its meaning depends on the reference kernel, state density, controls, holdout behavior, subject persistence, model complexity and domain structure.
+
+2. **Positive conditional lift is a lead, not a claim.**  
+   A strong candidate must also survive held-out evaluation, negative controls, subject consistency, complexity penalties, localization rules, multiple-comparison safeguards and saturation diagnostics.
+
+3. **A richer model is not automatically a better scientific model.**  
+   Added variables, latent states, proxy layers or multichannel features must produce enough out-of-sample improvement to justify their additional degrees of freedom.
+
+4. **Null, exploratory and BIC-limited results are distinct outcomes.**  
+   They should not be collapsed into a binary pass/fail vocabulary:
+   - `clean_null_result`
+   - `exploratory_lead`
+   - `primary_lead_bic_limited`
+   - `strong_candidate`
+   - `empirical_claim`
+
+5. **Surrogate validation and empirical validation must remain separate.**  
+   A surrogate can validate code paths, controls, gates and registered candidate locations. Only concurrent real EEG + QRNG acquisition with auditable timing can test physical coupling.
+
+6. **The current real-data replication target must remain pre-registered.**  
+   The Phase III.2E surrogate run prioritized:
+   ```text
+   window: 30 seconds
+   lag: +5 windows / +150 seconds
+   direction: multichannel EEG information added to QRNG-next prediction
+   ```
+   This target should not be changed after inspecting the future synchronized dataset.
+
+7. **Individual-level leads and population-level effects are different evidential categories.**  
+   A lead localized in a small number of subjects can justify targeted replication and repeated-session testing. It does not establish prevalence, homogeneous response or population generalization unless it is reproduced in independent participants and sessions under the same pre-registered conditions.
+
+---
+
+### Broader interpretation
+
+Taken together, the program suggests that CDR is best understood as a framework for evaluating:
+
+- **structural sufficiency**
+- **representation adequacy**
+- **domain-dependent injectability**
+- **neural residual-structure regimes**
+- **conditional predictive gain**
+- **individual heterogeneity versus population generalization**
+- **cross-domain model justification**
+- **the boundary between exploratory leads and defensible claims**
+
+CDR is therefore not a generic detector of randomness, and a positive epsilon is not an automatic indicator of causality. Its scientific value lies in requiring a candidate structure to survive multiple independent failure modes before its interpretation is strengthened.
+
+---
+
+
 # Phase III — Experimental Validation (Completed)
 
 🔗 **GitHub repository:**
